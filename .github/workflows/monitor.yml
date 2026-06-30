@@ -34,8 +34,8 @@ jobs:
 
       - name: Commit history.json
         run: |
-          git config user.name "Capone Watcher Bot"
-          git config user.email "noreply@capone.market"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/history.json
           git diff --staged --quiet || git commit -m "chore: daily snapshot $(date -u +'%Y-%m-%d %H:%M UTC')"
           git push

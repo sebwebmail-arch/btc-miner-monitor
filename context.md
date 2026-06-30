@@ -55,9 +55,9 @@ git pull --rebase --autostash origin main && git push
 | `ALERT_EMAIL_CMINE` | `support@cyberianmine.de` |
 | `ALERT_EMAIL_EVERMINER` | `support@cyberianmine.de` |
 | `TELEGRAM_BOT_TOKEN` | `8631394959:AAEKKObqAtE01ClQztCNJotFnX9GxdU6jno` |
-| `TELEGRAM_CHAT_ID` | `4857292784` (fallback) |
-| `TELEGRAM_CHAT_ID_CMINE` | `4857292784` (same for now — separate later) |
-| `TELEGRAM_CHAT_ID_EVERMINER` | `4857292784` (same for now — separate later) |
+| `TELEGRAM_CHAT_ID` | `-4857292784` (fallback) |
+| `TELEGRAM_CHAT_ID_CMINE` | `-4857292784` (same for now — separate later) |
+| `TELEGRAM_CHAT_ID_EVERMINER` | `-4857292784` (same for now — separate later) |
 
 ## f2pool API
 
@@ -134,5 +134,5 @@ Works for both issue workers (from `history.json`) and online workers (derived f
 
 - `data/alert-state.json` and `data/worker-issues.json` may not exist on first run — both scripts handle this gracefully
 - Hashrate anomaly detection requires **9h+ of data** before it can fire (needs baseline window)
-- Telegram chat IDs for cmine and everminer both point to `4857292784` for now — separate when real groups are set up
+- Telegram chat IDs for cmine and everminer both point to `-4857292784` for now — separate when real groups are set up
 - Gmail blocks `raw.githubusercontent.com` images and base64 URIs → always use hosted SVG at `https://capone.market/capone-fish-avatar-48-orange.svg`

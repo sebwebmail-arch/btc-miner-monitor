@@ -929,19 +929,21 @@ function renderHashrateChart(key, rangeH) {
     </div>`;
   }
 
-  const maxHR  = Math.max(...pts.map(p => p.hr), 1);
-  const maxTH  = maxHR / 1e12;
-  const tStart = new Date(pts[0].ts).getTime();
-  const tEnd   = new Date(pts[pts.length - 1].ts).getTime();
-  const tSpan  = tEnd - tStart || 1;
+  const maxHR = Math.max(...pts.map(p => p.hr), 1);
+  const maxTH = maxHR / 1e12;
 
-  const px = (i) => PL + (new Date(pts[i].ts).getTime() - tStart) / tSpan * cW;
+  // Axe X fixe = fenêtre demandée (maintenant - rangeH → maintenant)
+  const tAxisEnd   = Date.now();
+  const tAxisStart = tAxisEnd - rangeH * 3600000;
+  const tAxisSpan  = rangeH * 3600000;
+
+  const px = (i) => PL + (new Date(pts[i].ts).getTime() - tAxisStart) / tAxisSpan * cW;
   const py = (i) => PT + cH - (pts[i].hr / maxHR) * cH;
 
   // Polyline path
   const linePts = pts.map((_,i) => `${px(i).toFixed(1)},${py(i).toFixed(1)}`).join(' ');
-  // Fill area
-  const fillPts = `${PL},${PT+cH} ` + pts.map((_,i) => `${px(i).toFixed(1)},${py(i).toFixed(1)}`).join(' ') + ` ${px(pts.length-1).toFixed(1)},${PT+cH}`;
+  // Fill area — ferme sur le premier et dernier point réel
+  const fillPts = `${px(0).toFixed(1)},${PT+cH} ` + pts.map((_,i) => `${px(i).toFixed(1)},${py(i).toFixed(1)}`).join(' ') + ` ${px(pts.length-1).toFixed(1)},${PT+cH}`;
 
   // Y axis labels (0, mid, max)
   const yLabels = [0, maxTH/2, maxTH].map((v,i) => {
@@ -949,15 +951,18 @@ function renderHashrateChart(key, rangeH) {
     return `<text x="${PL-4}" y="${y+4}" text-anchor="end" font-size="9" fill="#ccc">${v.toFixed(0)}</text>`;
   }).join('');
 
-  // X axis labels: every 6h (or every 12h for 72h range)
-  const stepH = rangeH <= 24 ? 6 : 12;
+  // X axis : ticks aux heures rondes avec date au changement de jour
+  const MONTHS_M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const stepH  = rangeH <= 24 ? 6 : 12;
+  const stepMs = stepH * 3600000;
   const xLabels = [];
-  for (let h = 0; h <= rangeH; h += stepH) {
-    const t = tStart + (h / rangeH) * tSpan;
-    const d = new Date(t);
-    const label = `${String(d.getUTCHours()).padStart(2,'0')}:00`;
-    const x = PL + (h / rangeH) * cW;
-    xLabels.push(`<text x="${x.toFixed(1)}" y="${PT+cH+14}" text-anchor="middle" font-size="9" fill="#ccc">${label}</text>`);
+  const firstTick = Math.ceil(tAxisStart / stepMs) * stepMs;
+  for (let t = firstTick; t <= tAxisEnd; t += stepMs) {
+    const d   = new Date(t);
+    const hh  = d.getUTCHours();
+    const lbl = hh === 0 ? `${MONTHS_M[d.getUTCMonth()]} ${d.getUTCDate()}` : `${String(hh).padStart(2,'0')}:00`;
+    const x   = (PL + (t - tAxisStart) / tAxisSpan * cW).toFixed(1);
+    xLabels.push(`<text x="${x}" y="${PT+cH+14}" text-anchor="middle" font-size="9" fill="${hh===0?'#aaa':'#ccc'}" font-weight="${hh===0?'600':'400'}">${lbl}</text>`);
   }
 
   return `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:${H}px;display:block;background:#f8f9fb;border-radius:8px">
@@ -1230,14 +1235,8 @@ function renderOnlineTable() {
   // Cache for dropdown enumeration
   _onlineAllWorkers = all;
 
-  // Update summary count
-  const anomalyCount = all.filter(w => w.issue).length;
-  if (cnt) cnt.textContent = anomalyCount
-    ? `${all.length} workers · ⚠️ ${anomalyCount} anomalie${anomalyCount > 1 ? 's' : ''}`
-    : `${all.length} workers`;
-
   // Apply filters
-  const hasFilters = _onlineSearch || _onlineFilters.account.size || _onlineFilters.datacenter.size || _onlineFilters.status.size;
+  const hasFilters = _dcFilter.size || _onlineSearch || _onlineFilters.account.size || _onlineFilters.datacenter.size || _onlineFilters.status.size;
 
   const rb = document.getElementById('online-reset-btn');
   if (rb) rb.style.display = hasFilters ? 'block' : 'none';
@@ -1251,7 +1250,15 @@ function renderOnlineTable() {
     return true;
   });
 
-  // Update filter count label
+  // Update panel-note count (filtré si filtre actif)
+  const anomalyCount = workers.filter(w => w.issue).length;
+  if (cnt) cnt.textContent = hasFilters
+    ? `${workers.length} / ${all.length} workers${anomalyCount ? ` · ⚠️ ${anomalyCount}` : ''}`
+    : anomalyCount
+      ? `${all.length} workers · ⚠️ ${anomalyCount} anomalie${anomalyCount > 1 ? 's' : ''}`
+      : `${all.length} workers`;
+
+  // Update filter count label (search bar)
   const fcnt = document.getElementById('online-filter-count');
   if (fcnt) fcnt.textContent = hasFilters ? `${workers.length} / ${all.length} workers` : '';
 

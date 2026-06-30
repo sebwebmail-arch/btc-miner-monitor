@@ -439,15 +439,8 @@ async function main() {
   }
   if (workerIssueCount === 0) console.log('   Aucune anomalie détectée.');
 
-  // Envoi alertes workers
-  for (const { issue, account, stateKey } of workerAlertsToSend) {
-    try {
-      await sendWorkerAlert(account, issue, now);
-      alertState[stateKey] = now.toISOString();
-    } catch (err) {
-      console.error(`   ❌ Alerte worker non envoyée pour ${issue.worker}: ${err.message}`);
-    }
-  }
+  // Alertes Telegram worker désactivées — trop de bruit (fluctuations normales)
+  // Les anomalies restent visibles dans le dashboard (worker-issues.json)
 
   // ── 4. Sauvegarde nouveaux snapshots ──────────────────────────────────────
   for (const account of ACCOUNTS) {

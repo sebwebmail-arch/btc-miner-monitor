@@ -176,7 +176,7 @@ function buildEmail(offlineByAccount, workerIssues) {
     const rows = anomalyList.map(w => {
       const badge = w.type === 'level_drop'
         ? `<span style="display:inline-block;padding:2px 7px;border-radius:4px;background:#fdecea;color:#c0392b;font-size:11px;font-weight:700">📉 Drop ${w.drop_pct}%</span>`
-        : `<span style="display:inline-block;padding:2px 7px;border-radius:4px;background:#fef9e7;color:#b7950b;font-size:11px;font-weight:700">📊 Instable</span>`;
+        : `<span style="display:inline-block;padding:2px 7px;border-radius:4px;background:#fef9e7;color:#b7950b;font-size:11px;font-weight:700">📊 Unstable</span>`;
       return `
         <tr>
           <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;font-family:monospace;font-size:13px">${w.worker}</td>

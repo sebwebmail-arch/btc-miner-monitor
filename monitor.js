@@ -65,6 +65,10 @@ function findOffline(workers, accountUser) {
     .map((w) => {
       const name = w.hash_rate_info?.name || '?';
       const group = getGroup(name);
+      return group.id === 'No Group' ? null : { name, group, w, accountUser };
+    })
+    .filter(Boolean)
+    .map(({ name, group, w, accountUser }) => {
       const lastShare = w.last_share_at || 0;
       const minutesAgo = Math.round((Date.now() / 1000 - lastShare) / 60);
       const lastSeen = lastShare
@@ -93,7 +97,7 @@ function formatHashrate(hs) {
 // ─── Email HTML ─────────────────────────────────────────────────────────────
 
 function buildEmail(offlineByAccount) {
-  const date = new Date().toLocaleDateString('fr-FR', {
+  const date = new Date().toLocaleDateString('en-GB', {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
     timeZone: 'UTC',
   });
@@ -140,7 +144,7 @@ function buildEmail(offlineByAccount) {
           <thead>
             <tr style="background:#f5f5f5">
               <th style="padding:8px 12px;text-align:left;font-size:12px;color:#666;font-weight:600">WORKER</th>
-              <th style="padding:8px 12px;text-align:left;font-size:12px;color:#666;font-weight:600">DERNIER SHARE</th>
+              <th style="padding:8px 12px;text-align:left;font-size:12px;color:#666;font-weight:600">LAST SHARE</th>
               <th style="padding:8px 12px;text-align:left;font-size:12px;color:#666;font-weight:600">HOST</th>
             </tr>
           </thead>
@@ -163,7 +167,8 @@ function buildEmail(offlineByAccount) {
     <div style="padding:24px 32px">
       ${accountBlocks}
       <p style="margin-top:32px;color:#999;font-size:12px;border-top:1px solid #f0f0f0;padding-top:16px">
-        Rapport généré automatiquement — Bitcoin Miner Monitor via f2pool API
+        This report was generated automatically by the Bitcoin Miner Monitor (f2pool API).<br>
+        This email was sent automatically — please do not reply.
       </p>
     </div>
 
@@ -171,7 +176,7 @@ function buildEmail(offlineByAccount) {
 </body>
 </html>`;
 
-  const subject = `[ALERTE] ${totalOffline} worker${totalOffline > 1 ? 's' : ''} offline — ${date}`;
+  const subject = `[ALERT] ${totalOffline} worker${totalOffline > 1 ? 's' : ''} offline — ${date}`;
 
   return { html, subject };
 }

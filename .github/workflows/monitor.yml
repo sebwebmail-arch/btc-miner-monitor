@@ -2,8 +2,9 @@ name: Bitcoin Miner Monitor
 
 on:
   schedule:
-    # Chaque jour à 07:00 UTC (09:00 Paris heure d'été)
-    - cron: '0 7 * * *'
+    # Chaque jour à 05:00 UTC = 07:00 heure française (CEST, UTC+2, avril–octobre)
+    # En hiver (CET, UTC+1) : changer en '0 6 * * *' pour rester à 07:00 locale
+    - cron: '0 5 * * *'
   workflow_dispatch:
     # Permet de lancer manuellement depuis GitHub Actions
 

@@ -28,7 +28,7 @@ const GROUPS = [
   {
     id: 'U1+U2',
     provider: 'Dataprana',
-    test: (name) => /^(ngs|yna|pie|olt)/i.test(name),
+    test: (name) => /^(ngs|yna|pie|olt|dga)/i.test(name),
   },
   {
     id: 'U3',

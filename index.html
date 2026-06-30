@@ -212,6 +212,24 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 @media (max-width: 640px) {
   .health-row { grid-template-columns: repeat(2, 1fr); }
   .dc-grid { grid-template-columns: repeat(3, 1fr); }
+
+  /* Dead tracker + Trend: stack vertically */
+  .dead-trend-grid { grid-template-columns: 1fr !important; }
+
+  /* Issues table: enable horizontal scroll */
+  #issues-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  /* Reduce table cell padding */
+  .issues-table td { padding: 7px 10px; }
+  .issues-table .th-inner { padding: 7px 10px; }
+  .online-table td { padding: 5px 10px; }
+  .online-table .th-inner { padding: 7px 10px; }
+
+  /* Hide less critical columns on mobile */
+  .mob-hide { display: none !important; }
+
+  /* Slightly tighten page horizontal padding */
+  .page { padding: 0 10px 40px; }
 }
 </style>
 </head>
@@ -623,8 +641,8 @@ function applyFilters() {
         <th><div class="th-inner ${_sortCol==='account'?'sorted':''}" onclick="sortBy('account')">Account ${si('account')}</div>${filterBtn('account')}</th>
         <th><div class="th-inner ${_sortCol==='group'?'sorted':''}" onclick="sortBy('group')">Datacenter ${si('group')}</div>${filterBtn('group')}</th>
         <th><div class="th-inner ${_sortCol==='status'?'sorted':''}" onclick="sortBy('status')">Status ${si('status')}</div>${filterBtn('status')}</th>
-        <th><div class="th-inner ${_sortCol==='age'?'sorted':''}" onclick="sortBy('age')">Last Share (UTC) ${si('age')}</div></th>
-        <th><div class="th-inner">Action</div></th>
+        <th class="mob-hide"><div class="th-inner ${_sortCol==='age'?'sorted':''}" onclick="sortBy('age')">Last Share (UTC) ${si('age')}</div></th>
+        <th class="mob-hide"><div class="th-inner">Action</div></th>
       </tr></thead></table>
       <div class="no-results">No workers match the current filters.</div>`;
     return;
@@ -637,8 +655,8 @@ function applyFilters() {
       <td><span class="account-label">${w.account}</span></td>
       <td><span class="group-badge">${w.group_id}</span> ${w.provider}</td>
       <td><span class="age-pill ${pillClass(cat)}">${pillLabel(cat, w.last_share)}</span></td>
-      <td style="color:#aaa;font-size:11px">${w.last_share?new Date(w.last_share).toUTCString().replace(' GMT',''):'—'}</td>
-      <td><span class="action-tag" style="cursor:pointer" onclick="openWorkerModal('${w.account}.${w.name}')">${actionLabel(cat)}</span></td>
+      <td class="mob-hide" style="color:#aaa;font-size:11px">${w.last_share?new Date(w.last_share).toUTCString().replace(' GMT',''):'—'}</td>
+      <td class="mob-hide"><span class="action-tag" style="cursor:pointer" onclick="openWorkerModal('${w.account}.${w.name}')">${actionLabel(cat)}</span></td>
     </tr>`;
   }).join('');
 
@@ -648,8 +666,8 @@ function applyFilters() {
       <th><div class="th-inner ${_sortCol==='account'?'sorted':''}" onclick="sortBy('account')">Account ${si('account')}</div>${filterBtn('account')}</th>
       <th><div class="th-inner ${_sortCol==='group'?'sorted':''}" onclick="sortBy('group')">Datacenter ${si('group')}</div>${filterBtn('group')}</th>
       <th><div class="th-inner ${_sortCol==='status'?'sorted':''}" onclick="sortBy('status')">Status ${si('status')}</div>${filterBtn('status')}</th>
-      <th><div class="th-inner ${_sortCol==='age'?'sorted':''}" onclick="sortBy('age')">Last Share (UTC) ${si('age')}</div></th>
-      <th><div class="th-inner">Action</div></th>
+      <th class="mob-hide"><div class="th-inner ${_sortCol==='age'?'sorted':''}" onclick="sortBy('age')">Last Share (UTC) ${si('age')}</div></th>
+      <th class="mob-hide"><div class="th-inner">Action</div></th>
     </tr></thead>
     <tbody>${tbody}</tbody>
   </table>`;
@@ -1316,9 +1334,9 @@ function renderOnlineTable() {
       <td><span class="group-badge">${w.groupId}</span> ${w.provider}</td>
       <td>${statusCell}</td>
       <td class="hr-now">${nowTH} TH/s</td>
-      <td class="hr-avg">${avg3TH} TH/s</td>
-      <td class="spark-td">${spark}</td>
-      <td><span class="action-tag" style="cursor:pointer" onclick="openWorkerModal('${w.key}')">📈 Monitor</span></td>
+      <td class="hr-avg mob-hide">${avg3TH} TH/s</td>
+      <td class="spark-td mob-hide">${spark}</td>
+      <td class="mob-hide"><span class="action-tag" style="cursor:pointer" onclick="openWorkerModal('${w.key}')">📈 Monitor</span></td>
     </tr>`;
   }).join('');
 
@@ -1333,9 +1351,9 @@ function renderOnlineTable() {
       <th><div class="th-inner ${_onlineSortCol==='datacenter'?'sorted':''}" onclick="sortOnline('datacenter')">Datacenter ${si('datacenter')}</div>${filterBtn('datacenter')}</th>
       <th><div class="th-inner">Status</div>${filterBtn('status')}</th>
       <th><div class="th-inner ${_onlineSortCol==='hr'?'sorted':''}" onclick="sortOnline('hr')">Now TH/s ${si('hr')}</div></th>
-      <th>Avg 3h</th>
-      <th>6h trend</th>
-      <th></th>
+      <th class="mob-hide">Avg 3h</th>
+      <th class="mob-hide">6h trend</th>
+      <th class="mob-hide"></th>
     </tr></thead>
     <tbody>${emptyRow || tbody}</tbody>
   </table>`;
@@ -1608,7 +1626,7 @@ async function render() {
     buildHashrateSection() +
     buildDatacenters(issues) +
     buildIssuesTable(issues) +
-    `<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">` +
+    `<div class="dead-trend-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:20px">` +
       buildDeadTracker(issues) +
       buildTrend(snapshots) +
     `</div>` +

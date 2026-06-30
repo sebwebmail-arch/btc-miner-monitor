@@ -1008,7 +1008,7 @@ window.sortOnline = sortOnline;
 function buildOnlineWorkers() {
   return `
   <div>
-    <div class="section-label">Online workers — healthy fleet</div>
+    <div class="section-label">Online workers</div>
     <div class="panel">
       <div class="panel-header">
         <div class="panel-title">All active workers</div>
@@ -1053,14 +1053,28 @@ function renderOnlineTable() {
     workers.push({ key, accountUser, workerName, accountName: accountMeta.name, groupId: grp.id, provider: grp.provider, lastHR: last.hr, avg3h });
   }
 
-  if (cnt) cnt.textContent = `${workers.length} workers`;
+  // Enrichit chaque worker avec son anomalie éventuelle
+  const wIssues = _workerIssues?.issues || {};
+  workers.forEach(w => { w.issue = wIssues[w.key] || null; });
 
-  // Tri
+  const anomalyCount = workers.filter(w => w.issue).length;
+  if (cnt) cnt.textContent = anomalyCount
+    ? `${workers.length} workers · ⚠️ ${anomalyCount} anomalie${anomalyCount > 1 ? 's' : ''}`
+    : `${workers.length} workers`;
+
+  // Priorité tri : anomalies d'abord (level_drop > volatile > normal), puis par colonne choisie
+  const anomalySortKey = w => w.issue?.type === 'level_drop' ? 0 : w.issue?.type === 'volatile' ? 1 : 2;
+
   workers.sort((a, b) => {
+    // Anomalies toujours en tête si tri par défaut (hr)
+    if (_onlineSortCol === 'hr') {
+      const ap = anomalySortKey(a), bp = anomalySortKey(b);
+      if (ap !== bp) return ap - bp;
+    }
     let va, vb;
-    if (_onlineSortCol === 'name')    { va = a.workerName;  vb = b.workerName; }
+    if (_onlineSortCol === 'name')         { va = a.workerName;  vb = b.workerName; }
     else if (_onlineSortCol === 'account') { va = a.accountName; vb = b.accountName; }
-    else { va = a.lastHR; vb = b.lastHR; }
+    else                                   { va = a.lastHR;      vb = b.lastHR; }
     if (va < vb) return _onlineSortAsc ? -1 : 1;
     if (va > vb) return _onlineSortAsc ?  1 : -1;
     return 0;
@@ -1069,13 +1083,26 @@ function renderOnlineTable() {
   const si = col => `<span class="sort-icon">${_onlineSortCol===col?(_onlineSortAsc?'↑':'↓'):'↕'}</span>`;
 
   const tbody = workers.map(w => {
-    const nowTH  = (w.lastHR  / 1e12).toFixed(1);
-    const avg3TH = (w.avg3h   / 1e12).toFixed(1);
+    const nowTH  = (w.lastHR / 1e12).toFixed(1);
+    const avg3TH = (w.avg3h  / 1e12).toFixed(1);
     const spark  = miniSparkline(w.key, 12);
-    return `<tr>
+
+    let statusCell, rowStyle = '';
+    if (w.issue?.type === 'level_drop') {
+      statusCell = `<span class="anomaly-badge badge-drop">📉 Drop ${w.issue.drop_pct}%</span>`;
+      rowStyle   = 'background:#fffbfb';
+    } else if (w.issue?.type === 'volatile') {
+      statusCell = `<span class="anomaly-badge badge-volt">📊 Instable</span>`;
+      rowStyle   = 'background:#fffef5';
+    } else {
+      statusCell = `<span style="color:#27ae60;font-size:12px;font-weight:600">✓</span>`;
+    }
+
+    return `<tr style="${rowStyle}">
       <td><span class="worker-name" style="cursor:pointer;text-decoration:underline dotted" onclick="openWorkerModal('${w.key}')">${w.workerName}</span></td>
       <td><span class="account-label">${w.accountName}</span></td>
       <td><span class="group-badge">${w.groupId}</span> ${w.provider}</td>
+      <td>${statusCell}</td>
       <td class="hr-now">${nowTH} TH/s</td>
       <td class="hr-avg">${avg3TH} TH/s</td>
       <td class="spark-td">${spark}</td>
@@ -1088,6 +1115,7 @@ function renderOnlineTable() {
       <th onclick="sortOnline('name')">Worker ${si('name')}</th>
       <th onclick="sortOnline('account')">Account ${si('account')}</th>
       <th>Datacenter</th>
+      <th>Status</th>
       <th onclick="sortOnline('hr')">Now TH/s ${si('hr')}</th>
       <th>Avg 3h</th>
       <th>6h trend</th>
@@ -1263,7 +1291,6 @@ async function render() {
   app.innerHTML =
     buildHealthCards(issues, snapshots) +
     buildHashrateSection() +
-    buildWorkerAnomalies() +
     buildDatacenters(issues) +
     buildIssuesTable(issues) +
     `<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">` +

@@ -129,8 +129,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 
 /* ── Online workers table ── */
 .online-table { width: 100%; border-collapse: collapse; }
-.online-table th { font-size: 10px; color: #bbb; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; padding: 9px 14px; text-align: left; background: #fafafa; border-bottom: 1px solid #f0f0f0; white-space: nowrap; cursor: pointer; user-select: none; }
-.online-table th:hover { color: #666; }
+.online-table th { font-size: 10px; color: #bbb; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; padding: 0; text-align: left; background: #fafafa; border-bottom: 1px solid #f0f0f0; white-space: nowrap; position: relative; }
 .online-table td { padding: 7px 14px; border-bottom: 1px solid #f8f8f8; font-size: 12px; vertical-align: middle; }
 .online-table tr:last-child td { border-bottom: none; }
 .online-table tr:hover td { background: #fafafa; }
@@ -581,10 +580,11 @@ function applyFilters() {
   </table>`;
 }
 
-// Close dropdowns on outside click
+// Close dropdowns on outside click (covers both issues table and online table)
 document.addEventListener('click', (e) => {
   if (!e.target.closest('.th-filter-btn') && !e.target.closest('.col-dropdown')) {
     closeAllDropdowns();
+    closeOnlineDropdowns();
   }
 });
 
@@ -995,15 +995,99 @@ function buildWorkerAnomalies() {
 
 // ── Online workers (healthy — bas de page) ────────────────────────────────────
 
-let _onlineSortCol = 'hr';
-let _onlineSortAsc = false;
+let _onlineSortCol = 'account';
+let _onlineSortAsc = true;
+let _onlineSearch  = '';
+let _onlineFilters = { account: new Set(), datacenter: new Set(), status: new Set() };
+let _openOnlineDropdown = null;
+let _onlineAllWorkers = []; // cache for dropdown value enumeration
+
+const ONLINE_STATUS_LABELS = {
+  normal:     '✓ Normal',
+  level_drop: '📉 Level drop',
+  volatile:   '📊 Instable',
+};
 
 function sortOnline(col) {
   if (_onlineSortCol === col) _onlineSortAsc = !_onlineSortAsc;
-  else { _onlineSortCol = col; _onlineSortAsc = col === 'name'; }
+  else { _onlineSortCol = col; _onlineSortAsc = col !== 'hr'; }
   renderOnlineTable();
 }
 window.sortOnline = sortOnline;
+
+// ── Online table dropdowns ────────────────────────────────────────────────────
+
+function openOnlineDropdown(col, btn) {
+  if (_openOnlineDropdown && _openOnlineDropdown !== col) closeOnlineDropdowns();
+  const existing = document.getElementById('odd-' + col);
+  if (existing && existing.classList.contains('open')) { closeOnlineDropdowns(); return; }
+
+  let values = [];
+  if (col === 'account')    values = [...new Set(_onlineAllWorkers.map(w => w.accountName))].sort();
+  if (col === 'datacenter') values = [...new Set(_onlineAllWorkers.map(w => w.groupId))].sort();
+  if (col === 'status')     values = ['level_drop', 'volatile', 'normal'];
+
+  const active = _onlineFilters[col];
+  const label  = col === 'status' ? (v => ONLINE_STATUS_LABELS[v] || v) : (v => v);
+
+  const items = values.map(v => `
+    <label class="col-dropdown-item">
+      <input type="checkbox" onchange="toggleOnlineFilter('${col}','${v}',this.checked)" ${active.has(v)?'checked':''}>
+      ${label(v)}
+    </label>`).join('');
+
+  const dd = document.getElementById('odd-' + col);
+  if (!dd) return;
+  dd.innerHTML = `
+    <div class="col-dropdown-actions">
+      <span class="col-dropdown-action" onclick="selectAllOnline('${col}')">Select all</span>
+      <span class="col-dropdown-action" onclick="clearOnline('${col}')">Clear</span>
+    </div>
+    <div class="col-dropdown-sep"></div>
+    ${items}`;
+  dd.classList.add('open');
+  _openOnlineDropdown = col;
+}
+
+function closeOnlineDropdowns() {
+  document.querySelectorAll('#odd-account,#odd-datacenter,#odd-status').forEach(d => d.classList.remove('open'));
+  _openOnlineDropdown = null;
+}
+
+function toggleOnlineFilter(col, val, checked) {
+  if (checked) _onlineFilters[col].add(val);
+  else _onlineFilters[col].delete(val);
+  renderOnlineTable();
+}
+
+function selectAllOnline(col) {
+  _onlineFilters[col].clear();
+  renderOnlineTable();
+  closeOnlineDropdowns();
+}
+
+function clearOnline(col) {
+  _onlineFilters[col].clear();
+  renderOnlineTable();
+  closeOnlineDropdowns();
+}
+
+function resetOnlineFilters() {
+  _onlineFilters = { account: new Set(), datacenter: new Set(), status: new Set() };
+  _onlineSearch = '';
+  const s = document.getElementById('online-search');
+  if (s) s.value = '';
+  renderOnlineTable();
+}
+
+window.openOnlineDropdown  = openOnlineDropdown;
+window.closeOnlineDropdowns = closeOnlineDropdowns;
+window.toggleOnlineFilter  = toggleOnlineFilter;
+window.selectAllOnline     = selectAllOnline;
+window.clearOnline         = clearOnline;
+window.resetOnlineFilters  = resetOnlineFilters;
+
+// ── Build + Render ────────────────────────────────────────────────────────────
 
 function buildOnlineWorkers() {
   return `
@@ -1014,12 +1098,23 @@ function buildOnlineWorkers() {
         <div class="panel-title">All active workers</div>
         <div class="panel-note" id="online-count"></div>
       </div>
+      <div class="filter-bar">
+        <input class="filter-search" id="online-search" type="text" placeholder="🔍  Search worker name…" oninput="onOnlineSearch()">
+        <div class="filter-count" id="online-filter-count"></div>
+        <div class="filter-reset" id="online-reset-btn" onclick="resetOnlineFilters()" style="display:none">✕ Reset filters</div>
+      </div>
       <div style="overflow-x:auto" id="online-table-wrap">
         <div style="padding:24px;text-align:center;color:#ccc;font-size:12px">Loading…</div>
       </div>
     </div>
   </div>`;
 }
+
+function onOnlineSearch() {
+  _onlineSearch = (document.getElementById('online-search')?.value || '').toLowerCase();
+  renderOnlineTable();
+}
+window.onOnlineSearch = onOnlineSearch;
 
 function renderOnlineTable() {
   const wrap = document.getElementById('online-table-wrap');
@@ -1031,56 +1126,90 @@ function renderOnlineTable() {
     return;
   }
 
-  const workers = [];
-
+  // Build full worker list
+  const all = [];
   for (const [key, snaps] of Object.entries(_hashrate.workers)) {
     if (snaps.length < 1) continue;
-    const last = snaps[snaps.length - 1];
-
-    // Avg sur les 6 derniers snapshots (3h)
+    const last    = snaps[snaps.length - 1];
     const recent6 = snaps.slice(-6);
     const avg3h   = recent6.reduce((s, p) => s + p.hr, 0) / recent6.length;
-
-    // Worker considéré "online" si avg récent > 1 TH/s
     if (avg3h < 1e12) continue;
 
-    const dot = key.indexOf('.');
+    const dot         = key.indexOf('.');
     const accountUser = key.slice(0, dot);
     const workerName  = key.slice(dot + 1);
     const accountMeta = ACCOUNTS_META[accountUser] || { name: accountUser };
     const grp         = getGroupFromName(workerName);
 
-    workers.push({ key, accountUser, workerName, accountName: accountMeta.name, groupId: grp.id, provider: grp.provider, lastHR: last.hr, avg3h });
+    all.push({ key, accountUser, workerName, accountName: accountMeta.name,
+               groupId: grp.id, provider: grp.provider, lastHR: last.hr, avg3h });
   }
 
-  // Enrichit chaque worker avec son anomalie éventuelle
+  // Enrich with anomalies
   const wIssues = _workerIssues?.issues || {};
-  workers.forEach(w => { w.issue = wIssues[w.key] || null; });
+  all.forEach(w => {
+    w.issue      = wIssues[w.key] || null;
+    w.statusKey  = w.issue?.type || 'normal';
+  });
 
-  const anomalyCount = workers.filter(w => w.issue).length;
+  // Cache for dropdown enumeration
+  _onlineAllWorkers = all;
+
+  // Update summary count
+  const anomalyCount = all.filter(w => w.issue).length;
   if (cnt) cnt.textContent = anomalyCount
-    ? `${workers.length} workers · ⚠️ ${anomalyCount} anomalie${anomalyCount > 1 ? 's' : ''}`
-    : `${workers.length} workers`;
+    ? `${all.length} workers · ⚠️ ${anomalyCount} anomalie${anomalyCount > 1 ? 's' : ''}`
+    : `${all.length} workers`;
 
-  // Priorité tri : anomalies d'abord (level_drop > volatile > normal), puis par colonne choisie
+  // Apply filters
+  const hasFilters = _onlineSearch || _onlineFilters.account.size || _onlineFilters.datacenter.size || _onlineFilters.status.size;
+
+  const rb = document.getElementById('online-reset-btn');
+  if (rb) rb.style.display = hasFilters ? 'block' : 'none';
+
+  let workers = all.filter(w => {
+    if (_onlineFilters.account.size    && !_onlineFilters.account.has(w.accountName)) return false;
+    if (_onlineFilters.datacenter.size && !_onlineFilters.datacenter.has(w.groupId))  return false;
+    if (_onlineFilters.status.size     && !_onlineFilters.status.has(w.statusKey))    return false;
+    if (_onlineSearch && !w.workerName.toLowerCase().includes(_onlineSearch))          return false;
+    return true;
+  });
+
+  // Update filter count label
+  const fcnt = document.getElementById('online-filter-count');
+  if (fcnt) fcnt.textContent = hasFilters ? `${workers.length} / ${all.length} workers` : '';
+
+  // Sort: anomalies always first, then by selected column, tie-break account → group → name
   const anomalySortKey = w => w.issue?.type === 'level_drop' ? 0 : w.issue?.type === 'volatile' ? 1 : 2;
 
   workers.sort((a, b) => {
-    // Anomalies toujours en tête si tri par défaut (hr)
-    if (_onlineSortCol === 'hr') {
-      const ap = anomalySortKey(a), bp = anomalySortKey(b);
-      if (ap !== bp) return ap - bp;
-    }
+    const ap = anomalySortKey(a), bp = anomalySortKey(b);
+    if (ap !== bp) return ap - bp;   // anomalies always first
+
     let va, vb;
-    if (_onlineSortCol === 'name')         { va = a.workerName;  vb = b.workerName; }
-    else if (_onlineSortCol === 'account') { va = a.accountName; vb = b.accountName; }
-    else                                   { va = a.lastHR;      vb = b.lastHR; }
+    if      (_onlineSortCol === 'name')       { va = a.workerName;  vb = b.workerName; }
+    else if (_onlineSortCol === 'account')    { va = a.accountName; vb = b.accountName; }
+    else if (_onlineSortCol === 'datacenter') { va = a.groupId;     vb = b.groupId; }
+    else                                      { va = a.lastHR;      vb = b.lastHR; }
     if (va < vb) return _onlineSortAsc ? -1 : 1;
     if (va > vb) return _onlineSortAsc ?  1 : -1;
-    return 0;
+
+    // Tie-break: account → group → name
+    if (_onlineSortCol !== 'account' && a.accountName !== b.accountName)
+      return a.accountName < b.accountName ? -1 : 1;
+    if (_onlineSortCol !== 'datacenter' && a.groupId !== b.groupId)
+      return a.groupId < b.groupId ? -1 : 1;
+    return a.workerName < b.workerName ? -1 : a.workerName > b.workerName ? 1 : 0;
   });
 
   const si = col => `<span class="sort-icon">${_onlineSortCol===col?(_onlineSortAsc?'↑':'↓'):'↕'}</span>`;
+
+  const filterBtn = (col) => {
+    const active = _onlineFilters[col].size > 0;
+    return `<span class="th-filter-btn ${active?'active':''}" onclick="event.stopPropagation();openOnlineDropdown('${col}',this)" title="Filter">▼
+      <div class="col-dropdown" id="odd-${col}"></div>
+    </span>`;
+  };
 
   const tbody = workers.map(w => {
     const nowTH  = (w.lastHR / 1e12).toFixed(1);
@@ -1110,18 +1239,22 @@ function renderOnlineTable() {
     </tr>`;
   }).join('');
 
+  const emptyRow = workers.length === 0
+    ? `<tr><td colspan="8" style="padding:20px;text-align:center;color:#aaa;font-size:12px">No workers match the current filters.</td></tr>`
+    : '';
+
   wrap.innerHTML = `<table class="online-table">
     <thead><tr>
-      <th onclick="sortOnline('name')">Worker ${si('name')}</th>
-      <th onclick="sortOnline('account')">Account ${si('account')}</th>
-      <th>Datacenter</th>
-      <th>Status</th>
-      <th onclick="sortOnline('hr')">Now TH/s ${si('hr')}</th>
+      <th><div class="th-inner ${_onlineSortCol==='name'?'sorted':''}" onclick="sortOnline('name')">Worker ${si('name')}</div></th>
+      <th><div class="th-inner ${_onlineSortCol==='account'?'sorted':''}" onclick="sortOnline('account')">Account ${si('account')}</div>${filterBtn('account')}</th>
+      <th><div class="th-inner ${_onlineSortCol==='datacenter'?'sorted':''}" onclick="sortOnline('datacenter')">Datacenter ${si('datacenter')}</div>${filterBtn('datacenter')}</th>
+      <th><div class="th-inner">Status</div>${filterBtn('status')}</th>
+      <th><div class="th-inner ${_onlineSortCol==='hr'?'sorted':''}" onclick="sortOnline('hr')">Now TH/s ${si('hr')}</div></th>
       <th>Avg 3h</th>
       <th>6h trend</th>
       <th></th>
     </tr></thead>
-    <tbody>${tbody}</tbody>
+    <tbody>${emptyRow || tbody}</tbody>
   </table>`;
 }
 

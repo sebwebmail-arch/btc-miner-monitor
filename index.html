@@ -1586,7 +1586,7 @@ async function render() {
   // Topbar — affiche le timestamp hashrate.json (collecte 30min) en priorité
   const fmtTs = iso => {
     const d = new Date(iso);
-    return `${d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'})} at ${d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})} UTC`;
+    return `${d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',timeZone:'UTC'})} at ${d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:'UTC'})} UTC`;
   };
   const hrTs  = _hashrate?.last_updated || null;
   const monTs = data.last_updated || null;

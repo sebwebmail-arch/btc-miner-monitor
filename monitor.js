@@ -47,24 +47,36 @@ async function fetchWorkers(account) {
 }
 
 // ─── Offline detection ──────────────────────────────────────────────────────
+// Stratégie : on ne se fie PAS au champ `status` de l'API f2pool (peu fiable).
+// Un worker est considéré offline si son dernier share remonte à plus de OFFLINE_MINUTES.
+// Seuil : 30 min — suffisamment conservateur pour éviter les faux positifs.
+
+const OFFLINE_MINUTES = 60; // alerte si aucun share depuis plus de 1 heure
+
+function isWorkerOffline(w) {
+  const lastShare = w.last_share_at || 0;
+  const minutesSinceLastShare = (Date.now() / 1000 - lastShare) / 60;
+  return minutesSinceLastShare > OFFLINE_MINUTES;
+}
 
 function findOffline(workers, accountUser) {
   return workers
-    .filter((w) => w.status !== 0) // 0=online, 1=offline
+    .filter(isWorkerOffline)
     .map((w) => {
       const name = w.hash_rate_info?.name || '?';
       const group = getGroup(name);
-      const lastSeen = w.last_share_at
-        ? new Date(w.last_share_at * 1000).toISOString().replace('T', ' ').slice(0, 19) + ' UTC'
+      const lastShare = w.last_share_at || 0;
+      const minutesAgo = Math.round((Date.now() / 1000 - lastShare) / 60);
+      const lastSeen = lastShare
+        ? `${new Date(lastShare * 1000).toISOString().replace('T', ' ').slice(0, 19)} UTC (${minutesAgo}m ago)`
         : 'never';
-      const hashrate = formatHashrate(w.hash_rate_info?.h1_hash_rate || 0);
       return {
         account: accountUser,
         name,
         groupId: group.id,
         provider: group.provider,
         lastSeen,
-        hashrate,
+        minutesAgo,
         host: w.host || '?',
         status: w.status,
       };

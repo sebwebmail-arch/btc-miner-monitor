@@ -230,6 +230,20 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 
   /* Slightly tighten page horizontal padding */
   .page { padding: 0 10px 40px; }
+
+  /* Panel-level horizontal scroll (panel overflow:hidden bloque les enfants sur iOS) */
+  .panel-table { overflow-x: auto !important; -webkit-overflow-scrolling: touch; }
+
+  /* Truncate long worker names */
+  .worker-name { max-width: 76px; overflow: hidden; text-overflow: ellipsis;
+                 white-space: nowrap; display: inline-block; vertical-align: middle; }
+
+  /* Account: show short name only */
+  .acct-long { display: none; }
+  .acct-short { display: inline !important; }
+
+  /* Datacenter: hide provider text, keep badge only */
+  .prov-name { display: none; }
 }
 </style>
 </head>
@@ -486,7 +500,7 @@ function buildIssuesTable(issues) {
   return `
   <div>
     <div class="section-label">Workers requiring attention</div>
-    <div class="panel">
+    <div class="panel panel-table">
       <div class="panel-header">
         <div class="panel-title">Offline &amp; Dead (≤ 90 days)</div>
         <div class="panel-note">${hidden} archived workers hidden (dead &gt; 90 days)</div>
@@ -652,8 +666,8 @@ function applyFilters() {
     const cat = categoryOf(w);
     return `<tr>
       <td><span class="worker-name" style="cursor:pointer;text-decoration:underline dotted" onclick="openWorkerModal('${w.account}.${w.name}')">${w.name}</span></td>
-      <td><span class="account-label">${w.account}</span></td>
-      <td><span class="group-badge">${w.group_id}</span> ${w.provider}</td>
+      <td><span class="account-label acct-long">${w.account}</span><span class="account-label acct-short" style="display:none">${w.account}</span></td>
+      <td><span class="group-badge">${w.group_id}</span><span class="prov-name"> ${w.provider}</span></td>
       <td><span class="age-pill ${pillClass(cat)}">${pillLabel(cat, w.last_share)}</span></td>
       <td class="mob-hide" style="color:#aaa;font-size:11px">${w.last_share?new Date(w.last_share).toUTCString().replace(' GMT',''):'—'}</td>
       <td class="mob-hide"><span class="action-tag" style="cursor:pointer" onclick="openWorkerModal('${w.account}.${w.name}')">${actionLabel(cat)}</span></td>
@@ -1191,7 +1205,7 @@ function buildOnlineWorkers() {
   return `
   <div>
     <div class="section-label">Online workers</div>
-    <div class="panel">
+    <div class="panel panel-table">
       <div class="panel-header">
         <div class="panel-title">All active workers</div>
         <div class="panel-note" id="online-count"></div>
@@ -1330,8 +1344,8 @@ function renderOnlineTable() {
 
     return `<tr style="${rowStyle}">
       <td><span class="worker-name" style="cursor:pointer;text-decoration:underline dotted" onclick="openWorkerModal('${w.key}')">${w.workerName}</span></td>
-      <td><span class="account-label">${w.accountName}</span></td>
-      <td><span class="group-badge">${w.groupId}</span> ${w.provider}</td>
+      <td><span class="account-label acct-long">${w.accountName}</span><span class="account-label acct-short" style="display:none">${w.accountUser}</span></td>
+      <td><span class="group-badge">${w.groupId}</span><span class="prov-name"> ${w.provider}</span></td>
       <td>${statusCell}</td>
       <td class="hr-now">${nowTH} TH/s</td>
       <td class="hr-avg mob-hide">${avg3TH} TH/s</td>

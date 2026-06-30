@@ -97,10 +97,24 @@ function formatHashrate(hs) {
 // ─── Email HTML ─────────────────────────────────────────────────────────────
 
 function buildEmail(offlineByAccount) {
-  const date = new Date().toLocaleDateString('en-GB', {
+  const now = new Date();
+
+  const date = now.toLocaleDateString('en-GB', {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
     timeZone: 'UTC',
   });
+
+  // UTC time
+  const timeUTC = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' });
+
+  // Paris local time + offset label (handles DST automatically)
+  const timeParis = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' });
+  const offsetMin = -new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Paris' })).getTimezoneOffset?.() ??
+    (now - new Date(now.toLocaleString('en-US', { timeZone: 'UTC' }))) / 60000;
+  // Determine offset label via Intl
+  const offsetLabel = new Intl.DateTimeFormat('en', { timeZoneName: 'short', timeZone: 'Europe/Paris' })
+    .formatToParts(now).find(p => p.type === 'timeZoneName')?.value || 'CET';
+  const timeHeader = `${timeUTC} UTC — ${timeParis} ${offsetLabel}`;
 
   const totalOffline = offlineByAccount.reduce((s, a) => s + a.workers.length, 0);
 
@@ -162,6 +176,7 @@ function buildEmail(offlineByAccount) {
     <div style="background:#c0392b;padding:24px 32px">
       <h1 style="margin:0;color:#fff;font-size:20px">⚠️ ${totalOffline} worker${totalOffline > 1 ? 's' : ''} offline</h1>
       <p style="margin:4px 0 0;color:rgba(255,255,255,.85);font-size:14px">${date}</p>
+      <p style="margin:2px 0 0;color:rgba(255,255,255,.7);font-size:13px">${timeHeader}</p>
     </div>
 
     <div style="padding:24px 32px">

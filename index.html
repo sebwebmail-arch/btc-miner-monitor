@@ -231,8 +231,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
   /* Slightly tighten page horizontal padding */
   .page { padding: 0 10px 40px; }
 
-  /* Panel-level horizontal scroll (panel overflow:hidden bloque les enfants sur iOS) */
-  .panel-table { overflow-x: auto !important; -webkit-overflow-scrolling: touch; }
+  /* Panel-level horizontal scroll — overflow:auto écrase overflow:hidden du parent */
+  .panel-table { overflow: auto !important; -webkit-overflow-scrolling: touch; }
 
   /* Truncate long worker names */
   .worker-name { max-width: 76px; overflow: hidden; text-overflow: ellipsis;
@@ -972,10 +972,19 @@ function renderHashrateChart(key, rangeH) {
   const px = (i) => PL + (new Date(pts[i].ts).getTime() - tAxisStart) / tAxisSpan * cW;
   const py = (i) => PT + cH - (pts[i].hr / maxHR) * cH;
 
-  // Polyline path
-  const linePts = pts.map((_,i) => `${px(i).toFixed(1)},${py(i).toFixed(1)}`).join(' ');
-  // Fill area — ferme sur le premier et dernier point réel
-  const fillPts = `${px(0).toFixed(1)},${PT+cH} ` + pts.map((_,i) => `${px(i).toFixed(1)},${py(i).toFixed(1)}`).join(' ') + ` ${px(pts.length-1).toFixed(1)},${PT+cH}`;
+  // Segments continus + lacunes → pointillés sur les runs manqués
+  const { segs, gaps } = buildChartSegments(pts, px, py);
+  const mFillElems = segs.map(idxs => {
+    const f = `${px(idxs[0]).toFixed(1)},${PT+cH} ` + idxs.map(i=>`${px(i).toFixed(1)},${py(i).toFixed(1)}`).join(' ') + ` ${px(idxs[idxs.length-1]).toFixed(1)},${PT+cH}`;
+    return `<polygon points="${f}" fill="url(#hrGrad)"/>`;
+  }).join('');
+  const mLineElems = segs.map(idxs => {
+    const l = idxs.map(i=>`${px(i).toFixed(1)},${py(i).toFixed(1)}`).join(' ');
+    return `<polyline points="${l}" fill="none" stroke="#3498db" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+  }).join('');
+  const mDashElems = gaps.map(g =>
+    `<line x1="${g.x1.toFixed(1)}" y1="${g.y1.toFixed(1)}" x2="${g.x2.toFixed(1)}" y2="${g.y1.toFixed(1)}" stroke="#3498db" stroke-width="1.2" stroke-dasharray="5,4" opacity="0.4"/>`
+  ).join('');
 
   // Y axis labels (0, mid, max)
   const yLabels = [0, maxTH/2, maxTH].map((v,i) => {
@@ -1008,10 +1017,10 @@ function renderHashrateChart(key, rangeH) {
     <line x1="${PL}" y1="${PT}" x2="${PL+cW}" y2="${PT}" stroke="#eee" stroke-width="1"/>
     <line x1="${PL}" y1="${PT+cH/2}" x2="${PL+cW}" y2="${PT+cH/2}" stroke="#eee" stroke-width="1" stroke-dasharray="3,3"/>
     <line x1="${PL}" y1="${PT+cH}" x2="${PL+cW}" y2="${PT+cH}" stroke="#eee" stroke-width="1"/>
-    <!-- Fill -->
-    <polygon points="${fillPts}" fill="url(#hrGrad)"/>
-    <!-- Line -->
-    <polyline points="${linePts}" fill="none" stroke="#3498db" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <!-- Fill + Line (segments) + pointillés (lacunes) -->
+    ${mFillElems}
+    ${mDashElems}
+    ${mLineElems}
     <!-- Y labels -->
     ${yLabels}
     <!-- X labels -->
@@ -1373,6 +1382,35 @@ function renderOnlineTable() {
   </table>`;
 }
 
+// ── Helpers graphes hashrate ───────────────────────────────────────────────────
+
+const GAP_MS = 45 * 60 * 1000; // gap > 45min = run manqué → pointillés
+
+/**
+ * Découpe un tableau de points en segments continus + calcule les lacunes.
+ * Retourne { segments: [[idx,...], ...], gaps: [{x1,y1,x2},...] }
+ * px(i) / py(i) = fonctions de projection coordonnées SVG pour le point i.
+ */
+function buildChartSegments(pts, px, py) {
+  const segs = [];
+  let cur = [0];
+  for (let i = 1; i < pts.length; i++) {
+    const dt = new Date(pts[i].ts).getTime() - new Date(pts[i-1].ts).getTime();
+    if (dt > GAP_MS) { segs.push(cur); cur = [i]; }
+    else              { cur.push(i); }
+  }
+  segs.push(cur);
+
+  const gaps = [];
+  for (let s = 0; s < segs.length - 1; s++) {
+    const last = segs[s][segs[s].length - 1];
+    const next = segs[s + 1][0];
+    gaps.push({ x1: px(last), y1: py(last), x2: px(next) });
+    // y2 = py(last) → ligne horizontale à la dernière valeur connue
+  }
+  return { segs, gaps };
+}
+
 // ── Hashrate agrégé par account ───────────────────────────────────────────────
 
 let _hrRange     = { cmine: 24, everminer: 24 };
@@ -1486,9 +1524,19 @@ function buildAccountHashrateChart(accountUser, rangeH) {
   const px = i => PL + (new Date(pts[i].ts).getTime() - tAxisStart) / tAxisSpan * cW;
   const py = i => PT + cH - (pts[i].hr / maxHR) * cH;
 
-  const linePts = pts.map((_,i) => `${px(i).toFixed(1)},${py(i).toFixed(1)}`).join(' ');
-  // Fill : ferme le polygone sur l'axe bas au niveau du premier et dernier point réel
-  const fillPts = `${px(0).toFixed(1)},${PT+cH} ` + pts.map((_,i) => `${px(i).toFixed(1)},${py(i).toFixed(1)}`).join(' ') + ` ${px(pts.length-1).toFixed(1)},${PT+cH}`;
+  // Segments continus + lacunes (runs manqués) → pointillés sur les lacunes
+  const { segs, gaps } = buildChartSegments(pts, px, py);
+  const fillElems = segs.map(idxs => {
+    const f = `${px(idxs[0]).toFixed(1)},${PT+cH} ` + idxs.map(i=>`${px(i).toFixed(1)},${py(i).toFixed(1)}`).join(' ') + ` ${px(idxs[idxs.length-1]).toFixed(1)},${PT+cH}`;
+    return `<polygon points="${f}" fill="url(#${gradId})"/>`;
+  }).join('');
+  const lineElems = segs.map(idxs => {
+    const l = idxs.map(i=>`${px(i).toFixed(1)},${py(i).toFixed(1)}`).join(' ');
+    return `<polyline points="${l}" fill="none" stroke="#3498db" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
+  }).join('');
+  const dashElems = gaps.map(g =>
+    `<line x1="${g.x1.toFixed(1)}" y1="${g.y1.toFixed(1)}" x2="${g.x2.toFixed(1)}" y2="${g.y1.toFixed(1)}" stroke="#3498db" stroke-width="1.5" stroke-dasharray="6,5" opacity="0.4"/>`
+  ).join('');
 
   // Y axis — 4 ticks
   const yLabels = [0,1,2,3,4].map(i => {
@@ -1535,8 +1583,9 @@ function buildAccountHashrateChart(accountUser, rangeH) {
       </defs>
       ${yLabels}
       ${xLabels.join('')}
-      <polygon points="${fillPts}" fill="url(#${gradId})"/>
-      <polyline points="${linePts}" fill="none" stroke="#3498db" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+      ${fillElems}
+      ${dashElems}
+      ${lineElems}
       <circle cx="${px(pts.length-1).toFixed(1)}" cy="${py(pts.length-1).toFixed(1)}" r="3.5" fill="#3498db"/>
       <!-- Hover elements -->
       <line id="hrc-cross-${accountUser}" x1="0" y1="${PT}" x2="0" y2="${PT+cH}" stroke="#3498db" stroke-width="1" stroke-dasharray="4,3" opacity="0" pointer-events="none"/>

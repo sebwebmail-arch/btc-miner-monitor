@@ -42,6 +42,10 @@ const REF_SNAPSHOTS   = 3;    // 3 derniers snapshots = référence 1h30
 const DROP_THRESHOLD  = 0.30; // alerte si chute > 30% (groupe)
 const COOLDOWN_H      = 4;    // pas de double alerte sur le même groupe avant 4h
 
+// Groupes exclus des alertes temps-réel (hashrate drop + anomalie worker)
+// E1 = BitCluster : hashrate yoyo quotidien normal, pas une anomalie
+const ALERT_EXCLUDED_GROUPS = ['E1'];
+
 // ─── Anomalie par worker (hashrate dégradé / instable) ───────────────────────
 const CURRENT_WINDOW   = 6;    // 6 derniers snapshots = 3h "actuel"
 const BASELINE_SNAPS   = 24;   // 12h de baseline (snaps 7 à 30)
@@ -213,6 +217,9 @@ function detectWorkerAnomalies(hrData) {
 
     const group = require('./groups').getGroup(workerName);
 
+    // Groupes exclus des alertes (yoyo normal)
+    if (ALERT_EXCLUDED_GROUPS.includes(group.id)) continue;
+
     issues[key] = {
       account:          accountUser,
       account_name:     account.name,
@@ -367,6 +374,12 @@ async function main() {
       const gid      = group.id;
       const provider = group.provider;
       const stateKey = `${account.user}.${gid}`;
+
+      // Groupes exclus des alertes temps-réel (ex: E1/BitCluster — yoyo normal)
+      if (ALERT_EXCLUDED_GROUPS.includes(gid)) {
+        console.log(`   ⏭️  ${stateKey}: exclu des alertes hashrate (${provider})`);
+        continue;
+      }
 
       const currentHR = groupCurrentHR(allWorkers[account.user], account.user, gid);
       const refHR     = groupReferenceHR(h, account.user, gid);

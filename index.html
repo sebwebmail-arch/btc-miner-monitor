@@ -1503,11 +1503,23 @@ async function render() {
   const issues = data.current_issues || {};
   const snapshots = data.snapshots || [];
 
-  // Topbar
-  const upd = data.last_updated ? new Date(data.last_updated) : null;
-  document.getElementById('topbar-updated').innerHTML = upd
-    ? `Last check: <span>${upd.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'})} at ${upd.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})} UTC</span>`
-    : 'No data yet';
+  // Topbar — affiche le timestamp hashrate.json (collecte 30min) en priorité
+  const fmtTs = iso => {
+    const d = new Date(iso);
+    return `${d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'})} at ${d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})} UTC`;
+  };
+  const hrTs  = _hashrate?.last_updated || null;
+  const monTs = data.last_updated || null;
+  let topbarHtml;
+  if (hrTs) {
+    const monPart = monTs ? ` · Daily check: ${fmtTs(monTs)}` : '';
+    topbarHtml = `Hashrate: <span>${fmtTs(hrTs)}</span><span style="color:rgba(255,255,255,.25);font-size:10px">${monPart}</span>`;
+  } else if (monTs) {
+    topbarHtml = `Last check: <span>${fmtTs(monTs)}</span>`;
+  } else {
+    topbarHtml = 'No data yet';
+  }
+  document.getElementById('topbar-updated').innerHTML = topbarHtml;
 
   // Render sections
   const app = document.getElementById('app');

@@ -95,9 +95,20 @@ function formatHashrate(hs) {
   return '0';
 }
 
+// ─── Worker issues (hashrate anomalies from worker-issues.json) ──────────────
+
+const WORKERISSUES_PATH = path.join(__dirname, 'data', 'worker-issues.json');
+
+function loadWorkerIssues() {
+  try {
+    const d = JSON.parse(fs.readFileSync(WORKERISSUES_PATH, 'utf8'));
+    return d.issues || {};
+  } catch { return {}; }
+}
+
 // ─── Email HTML ─────────────────────────────────────────────────────────────
 
-function buildEmail(offlineByAccount) {
+function buildEmail(offlineByAccount, workerIssues) {
   const now = new Date();
 
   const date = now.toLocaleDateString('en-GB', {
@@ -117,41 +128,34 @@ function buildEmail(offlineByAccount) {
     .formatToParts(now).find(p => p.type === 'timeZoneName')?.value || 'CET';
   const timeHeader = `${timeUTC} UTC — ${timeParis} ${offsetLabel}`;
 
-  const totalOffline = offlineByAccount.reduce((s, a) => s + a.workers.length, 0);
+  const totalOffline  = offlineByAccount.reduce((s, a) => s + a.workers.length, 0);
+  const anomalyList   = Object.values(workerIssues);
+  const totalAnomalies = anomalyList.length;
 
-  const accountBlocks = offlineByAccount
+  // ── Section workers offline ───────────────────────────────────────────────
+  const offlineSection = offlineByAccount
     .filter((a) => a.workers.length > 0)
     .map(({ accountName, workers }) => {
-      // Group by datacenter
       const byGroup = {};
       for (const w of workers) {
         const key = `${w.groupId} — ${w.provider}`;
         if (!byGroup[key]) byGroup[key] = [];
         byGroup[key].push(w);
       }
-
-      const groupRows = Object.entries(byGroup)
-        .map(([groupLabel, ws]) => {
-          const workerRows = ws
-            .map(
-              (w) => `
-              <tr>
-                <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;font-family:monospace;font-size:13px">${w.name}</td>
-                <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;color:#666;font-size:13px">${w.lastSeen}</td>
-                <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;color:#999;font-size:13px">${w.host}</td>
-              </tr>`
-            )
-            .join('');
-
-          return `
-            <tr>
-              <td colspan="3" style="padding:8px 12px;background:#fff3cd;font-weight:600;font-size:13px;color:#856404">
-                ${groupLabel} — ${ws.length} worker${ws.length > 1 ? 's' : ''} offline
-              </td>
-            </tr>
-            ${workerRows}`;
-        })
-        .join('');
+      const groupRows = Object.entries(byGroup).map(([groupLabel, ws]) => {
+        const workerRows = ws.map(w => `
+          <tr>
+            <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;font-family:monospace;font-size:13px">${w.name}</td>
+            <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;color:#666;font-size:13px">${w.lastSeen}</td>
+            <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;color:#999;font-size:13px">${w.host}</td>
+          </tr>`).join('');
+        return `
+          <tr>
+            <td colspan="3" style="padding:8px 12px;background:#fff3cd;font-weight:600;font-size:13px;color:#856404">
+              ${groupLabel} — ${ws.length} worker${ws.length > 1 ? 's' : ''} offline
+            </td>
+          </tr>${workerRows}`;
+      }).join('');
 
       return `
         <h3 style="margin:24px 0 8px;color:#333;font-size:16px">${accountName}</h3>
@@ -165,8 +169,47 @@ function buildEmail(offlineByAccount) {
           </thead>
           <tbody>${groupRows}</tbody>
         </table>`;
-    })
-    .join('');
+    }).join('');
+
+  // ── Section anomalies hashrate ────────────────────────────────────────────
+  const anomalySection = totalAnomalies === 0 ? '' : (() => {
+    const rows = anomalyList.map(w => {
+      const badge = w.type === 'level_drop'
+        ? `<span style="display:inline-block;padding:2px 7px;border-radius:4px;background:#fdecea;color:#c0392b;font-size:11px;font-weight:700">📉 Drop ${w.drop_pct}%</span>`
+        : `<span style="display:inline-block;padding:2px 7px;border-radius:4px;background:#fef9e7;color:#b7950b;font-size:11px;font-weight:700">📊 Instable</span>`;
+      return `
+        <tr>
+          <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;font-family:monospace;font-size:13px">${w.worker}</td>
+          <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;font-size:12px;color:#666">${w.account_name} · ${w.provider} (${w.group_id})</td>
+          <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0">${badge}</td>
+          <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;font-size:12px;color:#333;font-weight:600">${w.current_avg_ths} TH/s</td>
+          <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;font-size:12px;color:#aaa">${w.baseline_avg_ths} TH/s</td>
+        </tr>`;
+    }).join('');
+
+    return `
+      <h3 style="margin:28px 0 8px;color:#333;font-size:16px">⚡ Hashrate anomalies — degraded or unstable workers</h3>
+      <p style="margin:0 0 10px;font-size:12px;color:#999">Based on last 3h avg vs 12h baseline · requires 9h+ of data to activate</p>
+      <table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:1px solid #ddd;border-radius:6px;overflow:hidden">
+        <thead>
+          <tr style="background:#f5f5f5">
+            <th style="padding:8px 12px;text-align:left;font-size:12px;color:#666;font-weight:600">WORKER</th>
+            <th style="padding:8px 12px;text-align:left;font-size:12px;color:#666;font-weight:600">ACCOUNT · DATACENTER</th>
+            <th style="padding:8px 12px;text-align:left;font-size:12px;color:#666;font-weight:600">ISSUE</th>
+            <th style="padding:8px 12px;text-align:left;font-size:12px;color:#666;font-weight:600">NOW (3H AVG)</th>
+            <th style="padding:8px 12px;text-align:left;font-size:12px;color:#666;font-weight:600">BASELINE (12H)</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  })();
+
+  // ── En-tête email — couleur + titre selon ce qu'il y a ───────────────────
+  const headerBg    = totalOffline > 0 ? '#c0392b' : '#e67e22';
+  const headerTitle = [
+    totalOffline  > 0 ? `⚠️ ${totalOffline} worker${totalOffline > 1 ? 's' : ''} offline` : '',
+    totalAnomalies > 0 ? `⚡ ${totalAnomalies} hashrate anomalie${totalAnomalies > 1 ? 's' : ''}` : '',
+  ].filter(Boolean).join(' · ');
 
   const html = `
 <!DOCTYPE html>
@@ -174,16 +217,18 @@ function buildEmail(offlineByAccount) {
 <body style="margin:0;padding:0;background:#f9f9f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
   <div style="max-width:680px;margin:32px auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.08)">
 
-    <div style="background:#c0392b;padding:24px 32px">
-      <h1 style="margin:0;color:#fff;font-size:20px">⚠️ ${totalOffline} worker${totalOffline > 1 ? 's' : ''} offline</h1>
+    <div style="background:${headerBg};padding:24px 32px">
+      <h1 style="margin:0;color:#fff;font-size:20px">${headerTitle}</h1>
       <p style="margin:4px 0 0;color:rgba(255,255,255,.85);font-size:14px">${date}</p>
       <p style="margin:2px 0 0;color:rgba(255,255,255,.7);font-size:13px">${timeHeader}</p>
     </div>
 
     <div style="padding:24px 32px">
-      ${accountBlocks}
+      ${offlineSection}
+      ${anomalySection}
       <div style="margin-top:32px;border-top:1px solid #f0f0f0;padding-top:24px;text-align:center">
-        <img src="https://capone.market/capone-fish-avatar-48-orange.svg" alt="Capone" width="72" height="72" style="margin-bottom:8px;display:block;margin-left:auto;margin-right:auto" />
+        <a href="https://watcher.capone.market" style="display:inline-block;margin-bottom:16px;padding:8px 20px;background:#1a1a2e;color:#fff;text-decoration:none;border-radius:6px;font-size:13px;font-weight:600">Open dashboard →</a><br>
+        <img src="https://capone.market/capone-fish-avatar-48-orange.svg" alt="Capone" width="56" height="56" style="display:block;margin:0 auto 8px" />
         <p style="margin:4px 0 2px;color:#555;font-size:13px;font-weight:600">Report generated by Capone Watcher</p>
         <p style="margin:0;color:#999;font-size:11px">This email was sent automatically — please do not reply.</p>
       </div>
@@ -193,7 +238,11 @@ function buildEmail(offlineByAccount) {
 </body>
 </html>`;
 
-  const subject = `[ALERT] ${totalOffline} worker${totalOffline > 1 ? 's' : ''} offline — ${date}`;
+  const subjectParts = [
+    totalOffline   > 0 ? `${totalOffline} offline`                  : '',
+    totalAnomalies > 0 ? `${totalAnomalies} anomalie${totalAnomalies > 1 ? 's' : ''}` : '',
+  ].filter(Boolean);
+  const subject = `[ALERT] ${subjectParts.join(' · ')} — ${date}`;
 
   return { html, subject };
 }
@@ -347,24 +396,37 @@ async function main() {
   saveHistory(updated);
   console.log(`   Snapshots stored: ${updated.snapshots.length} — Issues tracked: ${Object.keys(updated.current_issues).length}`);
 
-  // Email alert (only if issues)
-  const totalOffline = offlineByAccount.reduce((s, a) => s + a.workers.length, 0);
-
-  if (totalOffline === 0) {
-    console.log('\n✅ All workers online. No alert sent.\n');
-    return;
-  }
-
-  console.log(`\n🚨 ${totalOffline} worker(s) offline — sending alert...`);
-  for (const { accountName, workers } of offlineByAccount) {
-    if (workers.length === 0) continue;
-    console.log(`\n  ${accountName}:`);
-    for (const w of workers) {
-      console.log(`    [${w.groupId}] ${w.account}.${w.name} — last share: ${w.lastSeen}`);
+  // Load worker-issues.json (generated by hashrate-collector, max 30min old)
+  const workerIssues = loadWorkerIssues();
+  const totalAnomalies = Object.keys(workerIssues).length;
+  if (totalAnomalies > 0) {
+    console.log(`\n⚡ ${totalAnomalies} hashrate anomalie(s) détectée(s):`);
+    for (const [key, w] of Object.entries(workerIssues)) {
+      console.log(`   ${key}: ${w.type} — ${w.current_avg_ths} TH/s (baseline ${w.baseline_avg_ths} TH/s)`);
     }
   }
 
-  const { subject, html } = buildEmail(offlineByAccount);
+  // Email alert (offline workers OR hashrate anomalies)
+  const totalOffline = offlineByAccount.reduce((s, a) => s + a.workers.length, 0);
+
+  if (totalOffline === 0 && totalAnomalies === 0) {
+    console.log('\n✅ All workers online, no anomalies. No alert sent.\n');
+    return;
+  }
+
+  if (totalOffline > 0) {
+    console.log(`\n🚨 ${totalOffline} worker(s) offline:`);
+    for (const { accountName, workers } of offlineByAccount) {
+      if (workers.length === 0) continue;
+      console.log(`\n  ${accountName}:`);
+      for (const w of workers) {
+        console.log(`    [${w.groupId}] ${w.account}.${w.name} — last share: ${w.lastSeen}`);
+      }
+    }
+  }
+
+  console.log('\n📧 Sending alert email...');
+  const { subject, html } = buildEmail(offlineByAccount, workerIssues);
   await sendAlert(subject, html);
 
   console.log('\nDone.\n');

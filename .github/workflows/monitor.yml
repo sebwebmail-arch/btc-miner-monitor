@@ -21,7 +21,6 @@ jobs:
           node-version: '20'
 
       - name: Run monitor
-        working-directory: btc-miner-monitor
         env:
           F2POOL_TOKEN_CMINE: ${{ secrets.F2POOL_TOKEN_CMINE }}
           F2POOL_TOKEN_EVERMINER: ${{ secrets.F2POOL_TOKEN_EVERMINER }}

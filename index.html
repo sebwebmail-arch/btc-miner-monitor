@@ -1263,7 +1263,68 @@ function renderOnlineTable() {
 
 // ── Hashrate agrégé par account ───────────────────────────────────────────────
 
-let _hrRange = { cmine: 24, everminer: 24 };
+let _hrRange     = { cmine: 24, everminer: 24 };
+let _hrChartData = {}; // { accountUser: { pts, tAxisStart, tAxisSpan, maxHR } }
+
+function hrChartHover(event, accountUser) {
+  const d = _hrChartData[accountUser];
+  if (!d) return;
+  const { pts, tAxisStart, tAxisSpan, maxHR } = d;
+  const W = 860, H = 150, PL = 64, PR = 16, PT = 14, PB = 28;
+  const cW = W - PL - PR, cH = H - PT - PB;
+
+  // Conversion coords souris → coords SVG
+  const svg   = event.currentTarget.closest('svg');
+  const bbox  = svg.getBoundingClientRect();
+  const svgX  = (event.clientX - bbox.left) * (W / bbox.width);
+
+  // Timestamp correspondant à la position X
+  const tHover = tAxisStart + (svgX - PL) / cW * tAxisSpan;
+
+  // Point le plus proche
+  let nearest = pts[0], minDist = Infinity;
+  for (const p of pts) {
+    const dist = Math.abs(new Date(p.ts).getTime() - tHover);
+    if (dist < minDist) { minDist = dist; nearest = p; }
+  }
+
+  const xPos = PL + (new Date(nearest.ts).getTime() - tAxisStart) / tAxisSpan * cW;
+  const yPos = PT + cH - (nearest.hr / maxHR) * cH;
+  const thVal = (nearest.hr / 1e12).toFixed(0);
+  const dt    = new Date(nearest.ts);
+  const MONTHS_S = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const timeStr = `${MONTHS_S[dt.getUTCMonth()]} ${dt.getUTCDate()}, ${String(dt.getUTCHours()).padStart(2,'0')}:${String(dt.getUTCMinutes()).padStart(2,'0')}`;
+
+  const cross = document.getElementById(`hrc-cross-${accountUser}`);
+  const dot   = document.getElementById(`hrc-dot-${accountUser}`);
+  const tip   = document.getElementById(`hrc-tip-${accountUser}`);
+  const tipTime = document.getElementById(`hrc-tip-time-${accountUser}`);
+  const tipVal  = document.getElementById(`hrc-tip-val-${accountUser}`);
+
+  if (cross) { cross.setAttribute('x1', xPos); cross.setAttribute('x2', xPos); cross.setAttribute('opacity','1'); }
+  if (dot)   { dot.setAttribute('cx', xPos); dot.setAttribute('cy', yPos); dot.setAttribute('opacity','1'); }
+
+  if (tip && tipTime && tipVal) {
+    const TW = 136, TH = 38;
+    const tipX = (xPos + TW + 12 > W - PR) ? xPos - TW - 10 : xPos + 10;
+    const tipY = PT + 4;
+    tip.setAttribute('transform', `translate(${tipX.toFixed(1)},${tipY})`);
+    tip.setAttribute('opacity','1');
+    document.getElementById(`hrc-tip-bg-${accountUser}`).setAttribute('width', TW);
+    tipTime.textContent = timeStr;
+    tipVal.textContent  = `${thVal} TH/s`;
+  }
+}
+
+function hrChartLeave(accountUser) {
+  ['cross','dot','tip'].forEach(el => {
+    const node = document.getElementById(`hrc-${el}-${accountUser}`);
+    if (node) node.setAttribute('opacity','0');
+  });
+}
+
+window.hrChartHover = hrChartHover;
+window.hrChartLeave = hrChartLeave;
 
 function setHrRange(accountUser, h) {
   _hrRange[accountUser] = h;
@@ -1349,6 +1410,9 @@ function buildAccountHashrateChart(accountUser, rangeH) {
   const lastTH  = (pts[pts.length-1].hr / 1e12).toFixed(0);
   const gradId  = `hrGrad${accountUser}`;
 
+  // Stocke les données pour le tooltip hover
+  _hrChartData[accountUser] = { pts, tAxisStart, tAxisSpan, maxHR };
+
   return `<div style="position:relative">
     <svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
       <defs>
@@ -1362,6 +1426,18 @@ function buildAccountHashrateChart(accountUser, rangeH) {
       <polygon points="${fillPts}" fill="url(#${gradId})"/>
       <polyline points="${linePts}" fill="none" stroke="#3498db" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
       <circle cx="${px(pts.length-1).toFixed(1)}" cy="${py(pts.length-1).toFixed(1)}" r="3.5" fill="#3498db"/>
+      <!-- Hover elements -->
+      <line id="hrc-cross-${accountUser}" x1="0" y1="${PT}" x2="0" y2="${PT+cH}" stroke="#3498db" stroke-width="1" stroke-dasharray="4,3" opacity="0" pointer-events="none"/>
+      <circle id="hrc-dot-${accountUser}" cx="0" cy="0" r="4" fill="white" stroke="#3498db" stroke-width="2" opacity="0" pointer-events="none"/>
+      <g id="hrc-tip-${accountUser}" opacity="0" pointer-events="none">
+        <rect id="hrc-tip-bg-${accountUser}" x="0" y="0" width="136" height="38" rx="5" fill="white" stroke="#e0e0e0" stroke-width="1" filter="drop-shadow(0 2px 6px rgba(0,0,0,.1))"/>
+        <text id="hrc-tip-time-${accountUser}" x="10" y="14" font-size="10" fill="#999"></text>
+        <text id="hrc-tip-val-${accountUser}"  x="10" y="29" font-size="13" fill="#1a1a2e" font-weight="700"></text>
+      </g>
+      <!-- Zone de capture souris -->
+      <rect x="${PL}" y="${PT}" width="${cW}" height="${cH}" fill="transparent" style="cursor:crosshair"
+        onmousemove="hrChartHover(event,'${accountUser}')"
+        onmouseleave="hrChartLeave('${accountUser}')"/>
     </svg>
     <div style="position:absolute;top:10px;right:16px;text-align:right">
       <div style="font-size:26px;font-weight:800;color:#1a1a2e;line-height:1">${lastTH}</div>

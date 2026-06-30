@@ -1,9 +1,10 @@
 #!/usr/bin/env node
-// Bitcoin Miner Monitor — f2pool → Resend alert
+// Bitcoin Miner Monitor — f2pool → Resend alert + history tracker
 // Runs via GitHub Actions cron each morning.
-// IMPORTANT: f2pool status codes: 0 = ONLINE, 1 = OFFLINE
 
 const { getGroup } = require('./groups');
+const fs = require('fs');
+const path = require('path');
 
 // ─── Config ────────────────────────────────────────────────────────────────
 
@@ -219,12 +220,105 @@ async function sendAlert(subject, html) {
   console.log(`✉️  Email envoyé — id: ${data.id}`);
 }
 
+// ─── History ─────────────────────────────────────────────────────────────────
+
+const HISTORY_PATH = path.join(__dirname, 'data', 'history.json');
+const DEAD_THRESHOLD_H = 24;      // f2pool classifie "dead" après ~24h sans share
+const MAX_SNAPSHOTS = 35;         // ~30 jours + marge
+
+function loadHistory() {
+  try {
+    return JSON.parse(fs.readFileSync(HISTORY_PATH, 'utf8'));
+  } catch {
+    return { last_updated: null, snapshots: [], current_issues: {} };
+  }
+}
+
+function saveHistory(h) {
+  fs.mkdirSync(path.dirname(HISTORY_PATH), { recursive: true });
+  fs.writeFileSync(HISTORY_PATH, JSON.stringify(h, null, 2));
+}
+
+function classifyWorker(w) {
+  // Returns category based on how long the worker has been without a share
+  const ageH = (Date.now() / 1000 - (w.last_share_at || 0)) / 3600;
+  if (ageH < DEAD_THRESHOLD_H) return 'offline';
+  const ageD = ageH / 24;
+  if (ageD <= 7)  return 'dead_recent';   // 1–7 days
+  if (ageD <= 90) return 'dead_mid';      // 8–90 days
+  return 'dead_old';                       // >90 days — archived
+}
+
+function updateHistory(h, now, allResults) {
+  // Build current issues map (all workers with last_share_at > OFFLINE_MINUTES)
+  const issues = {};
+  for (const { accountName, accountUser, allWorkers } of allResults) {
+    for (const w of allWorkers) {
+      const ageMin = (Date.now() / 1000 - (w.last_share_at || 0)) / 60;
+      if (ageMin <= OFFLINE_MINUTES) continue; // online, skip
+      const name = w.hash_rate_info?.name || '?';
+      const group = getGroup(name);
+      if (group.id === 'No Group') continue;
+      const key = `${accountUser}.${name}`;
+      issues[key] = {
+        account: accountUser,
+        account_name: accountName,
+        name,
+        group_id: group.id,
+        provider: group.provider,
+        host: w.host || '?',
+        last_share: w.last_share_at ? new Date(w.last_share_at * 1000).toISOString() : null,
+        category: classifyWorker(w),
+      };
+    }
+  }
+
+  // Count by category
+  const counts = { offline: 0, dead_recent: 0, dead_mid: 0, dead_old: 0 };
+  for (const w of Object.values(issues)) counts[w.category]++;
+
+  // Build per-account totals
+  const by_account = {};
+  for (const { accountName, accountUser, totalWorkers, allWorkers } of allResults) {
+    const accountIssues = Object.values(issues).filter(w => w.account === accountUser);
+    by_account[accountUser] = {
+      name: accountName,
+      total: totalWorkers,
+      online: totalWorkers - accountIssues.length,
+      offline: accountIssues.filter(w => w.category === 'offline').length,
+      dead: accountIssues.filter(w => w.category !== 'offline').length,
+    };
+  }
+
+  // Append daily snapshot
+  h.snapshots.push({
+    ts: now.toISOString(),
+    by_account,
+    offline: counts.offline,
+    dead_recent: counts.dead_recent,
+    dead_mid: counts.dead_mid,
+    dead_old: counts.dead_old,
+  });
+
+  // Keep only last MAX_SNAPSHOTS
+  if (h.snapshots.length > MAX_SNAPSHOTS) {
+    h.snapshots = h.snapshots.slice(-MAX_SNAPSHOTS);
+  }
+
+  h.last_updated = now.toISOString();
+  h.current_issues = issues;
+
+  return h;
+}
+
 // ─── Main ────────────────────────────────────────────────────────────────────
 
 async function main() {
-  console.log(`\n🔍 Bitcoin Miner Monitor — ${new Date().toISOString()}\n`);
+  const now = new Date();
+  console.log(`\n🔍 Bitcoin Miner Monitor — ${now.toISOString()}\n`);
 
-  const offlineByAccount = [];
+  const offlineByAccount = []; // for email (filtered, no dead_old)
+  const allResults = [];       // for history (everything)
 
   for (const account of ACCOUNTS) {
     if (!account.token) {
@@ -237,29 +331,36 @@ async function main() {
       const workers = await fetchWorkers(account);
       const offline = findOffline(workers, account.user);
 
-      console.log(`   Total: ${workers.length} workers — Offline: ${offline.length}`);
-      offlineByAccount.push({ accountName: account.name, workers: offline });
+      console.log(`   Total: ${workers.length} workers — Issues: ${offline.length}`);
+      offlineByAccount.push({ accountName: account.name, accountUser: account.user, workers: offline });
+      allResults.push({ accountName: account.name, accountUser: account.user, totalWorkers: workers.length, allWorkers: workers });
     } catch (err) {
       console.error(`   ❌ Erreur: ${err.message}`);
-      offlineByAccount.push({ accountName: account.name, workers: [] });
+      offlineByAccount.push({ accountName: account.name, accountUser: account.user, workers: [] });
     }
   }
 
+  // Always save history (even if all online — needed for trend chart)
+  console.log('\n💾 Saving history...');
+  const history = loadHistory();
+  const updated = updateHistory(history, now, allResults);
+  saveHistory(updated);
+  console.log(`   Snapshots stored: ${updated.snapshots.length} — Issues tracked: ${Object.keys(updated.current_issues).length}`);
+
+  // Email alert (only if issues)
   const totalOffline = offlineByAccount.reduce((s, a) => s + a.workers.length, 0);
 
   if (totalOffline === 0) {
-    console.log('\n✅ Tous les workers sont online. Aucune alerte envoyée.\n');
+    console.log('\n✅ All workers online. No alert sent.\n');
     return;
   }
 
-  console.log(`\n🚨 ${totalOffline} worker(s) offline détectés — envoi de l'alerte...`);
-
-  // Log détail dans la console (visible dans GitHub Actions)
+  console.log(`\n🚨 ${totalOffline} worker(s) offline — sending alert...`);
   for (const { accountName, workers } of offlineByAccount) {
     if (workers.length === 0) continue;
     console.log(`\n  ${accountName}:`);
     for (const w of workers) {
-      console.log(`    [${w.groupId}] ${w.account}.${w.name} — last share: ${w.lastSeen} — host: ${w.host}`);
+      console.log(`    [${w.groupId}] ${w.account}.${w.name} — last share: ${w.lastSeen}`);
     }
   }
 

@@ -6,11 +6,13 @@ on:
     # En hiver (CET, UTC+1) : changer en '0 6 * * *' pour rester à 07:00 locale
     - cron: '0 5 * * *'
   workflow_dispatch:
-    # Permet de lancer manuellement depuis GitHub Actions
 
 jobs:
   monitor:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: write  # nécessaire pour committer history.json
 
     steps:
       - name: Checkout
@@ -29,3 +31,11 @@ jobs:
           ALERT_EMAIL: ${{ secrets.ALERT_EMAIL }}
           ALERT_FROM: ${{ secrets.ALERT_FROM }}
         run: node monitor.js
+
+      - name: Commit history.json
+        run: |
+          git config user.name "Capone Watcher Bot"
+          git config user.email "noreply@capone.market"
+          git add data/history.json
+          git diff --staged --quiet || git commit -m "chore: daily snapshot $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push

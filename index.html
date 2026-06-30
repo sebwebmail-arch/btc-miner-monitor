@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Capone Watcher — Bitcoin Miner Monitor</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f4f5f7; color: #1a1a2e; font-size: 14px; min-height: 100vh; }
+
+/* ── Topbar ── */
+.topbar { background: #1a1a2e; padding: 14px 28px; display: flex; align-items: center; gap: 12px; color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,.3); }
+.topbar img { width: 36px; height: 36px; }
+.topbar .title { font-size: 17px; font-weight: 700; }
+.topbar .subtitle { font-size: 11px; color: rgba(255,255,255,.45); margin-top: 1px; }
+.topbar .spacer { flex: 1; }
+.topbar .updated { font-size: 11px; color: rgba(255,255,255,.4); text-align: right; }
+.topbar .updated span { color: rgba(255,255,255,.7); font-weight: 600; }
+
+/* ── Layout ── */
+.page { max-width: 1080px; margin: 0 auto; padding: 24px 20px; display: flex; flex-direction: column; gap: 20px; }
+.section-label { font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: #999; margin-bottom: 8px; }
+
+/* ── Health cards ── */
+.health-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.health-card { background: white; border-radius: 10px; padding: 18px 20px; border-left: 4px solid #ddd; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+.health-card .label { font-size: 10px; color: #999; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; }
+.health-card .value { font-size: 32px; font-weight: 700; margin: 6px 0 3px; line-height: 1; }
+.health-card .sub { font-size: 11px; color: #bbb; }
+.card-online  { border-color: #27ae60; } .card-online .value  { color: #27ae60; }
+.card-offline { border-color: #e67e22; } .card-offline .value { color: #e67e22; }
+.card-dead    { border-color: #c0392b; } .card-dead .value    { color: #c0392b; }
+.card-arch    { border-color: #bdc3c7; } .card-arch .value    { color: #bdc3c7; }
+
+/* ── Panel ── */
+.panel { background: white; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,.06); overflow: hidden; }
+.panel-header { padding: 14px 20px; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; justify-content: space-between; }
+.panel-title { font-size: 13px; font-weight: 700; }
+.panel-note { font-size: 11px; color: #bbb; }
+
+/* ── Tabs ── */
+.tabs { display: flex; border-bottom: 2px solid #f0f0f0; padding: 0 20px; }
+.tab { padding: 10px 14px; font-size: 12px; font-weight: 600; color: #bbb; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: color .15s; }
+.tab.active { color: #c0392b; border-color: #c0392b; }
+.tab-content { display: none; } .tab-content.active { display: block; }
+
+/* ── DC Grid ── */
+.dc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; padding: 16px 20px; }
+.dc-cell { border-radius: 8px; padding: 12px 10px; text-align: center; border: 1px solid #eee; transition: transform .1s; }
+.dc-cell:hover { transform: translateY(-1px); }
+.dc-cell.ok       { background: #f0faf4; border-color: #a8ddb8; }
+.dc-cell.warn     { background: #fff8f0; border-color: #f5cba7; }
+.dc-cell.critical { background: #fdf0ef; border-color: #f5b7b1; }
+.dc-group { font-size: 9px; color: #bbb; font-weight: 700; margin-bottom: 2px; }
+.dc-name  { font-size: 11px; font-weight: 700; color: #444; margin-bottom: 6px; }
+.dc-status { font-size: 20px; font-weight: 800; }
+.dc-cell.ok .dc-status { color: #27ae60; }
+.dc-cell.warn .dc-status { color: #e67e22; }
+.dc-cell.critical .dc-status { color: #c0392b; }
+.dc-sub { font-size: 10px; color: #aaa; margin-top: 3px; }
+
+/* ── Issues table ── */
+.issues-table { width: 100%; border-collapse: collapse; }
+.issues-table th { font-size: 10px; color: #bbb; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; padding: 9px 16px; text-align: left; background: #fafafa; border-bottom: 1px solid #f0f0f0; }
+.issues-table td { padding: 9px 16px; border-bottom: 1px solid #f8f8f8; font-size: 12px; vertical-align: middle; }
+.issues-table tr:last-child td { border-bottom: none; }
+.issues-table tr:hover td { background: #fafafa; }
+.worker-name { font-family: monospace; font-weight: 700; font-size: 12px; }
+.account-label { font-size: 11px; color: #999; }
+.group-badge { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: 700; background: #eef2ff; color: #3730a3; }
+.age-pill { display: inline-block; padding: 3px 9px; border-radius: 10px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+.pill-offline     { background: #fff3e0; color: #d35400; }
+.pill-dead-recent { background: #fdecea; color: #c0392b; }
+.pill-dead-mid    { background: #fdecea; color: #922b21; }
+.pill-dead-old    { background: #f0f0f0; color: #999; }
+.action-tag { font-size: 11px; color: #888; }
+
+/* ── Dead tracker ── */
+.dead-section { padding: 14px 20px; border-bottom: 1px solid #f5f5f5; }
+.dead-section:last-child { border-bottom: none; }
+.dead-section-title { font-size: 10px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; color: #888; margin-bottom: 10px; display: flex; align-items: center; gap: 7px; }
+.dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.dot-red { background: #c0392b; } .dot-orange { background: #e67e22; } .dot-grey { background: #bdc3c7; }
+.dead-row { display: flex; align-items: center; gap: 10px; padding: 5px 0; border-bottom: 1px solid #fafafa; }
+.dead-row:last-child { border-bottom: none; }
+.dead-row .dw { font-family: monospace; font-size: 12px; flex: 1; font-weight: 600; }
+.dead-row .dp { font-size: 11px; color: #aaa; }
+.dead-row .dd { font-size: 12px; font-weight: 700; min-width: 48px; text-align: right; }
+.dead-row.red .dd { color: #c0392b; } .dead-row.orange .dd { color: #e67e22; } .dead-row.grey .dd { color: #bbb; }
+.dead-account { font-size: 10px; color: #ccc; }
+.dead-empty { font-size: 12px; color: #ccc; font-style: italic; padding: 8px 0; }
+.arch-note { font-size: 11px; color: #ccc; font-style: italic; }
+
+/* ── Trend chart ── */
+.trend-wrap { padding: 20px; }
+.trend-top { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 12px; }
+.trend-title { font-size: 12px; font-weight: 700; color: #555; }
+.trend-legend { display: flex; gap: 14px; }
+.legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #888; }
+.legend-dot { width: 10px; height: 10px; border-radius: 2px; }
+.bars-wrap { display: flex; align-items: flex-end; gap: 2px; height: 80px; overflow: hidden; }
+.bar-col { display: flex; flex-direction: column; align-items: center; gap: 0; flex: 1; min-width: 0; }
+.bar-stack { display: flex; flex-direction: column; justify-content: flex-end; flex: 1; width: 100%; }
+.bar-seg { width: 100%; border-radius: 2px 2px 0 0; min-height: 1px; }
+.bar-seg.offline { background: #e67e22; }
+.bar-seg.dead { background: #c0392b; }
+.bar-seg.empty { background: #eee; border-radius: 2px; }
+.bar-label { font-size: 8px; color: #ccc; margin-top: 3px; white-space: nowrap; overflow: hidden; }
+.trend-bottom { margin-top: 8px; text-align: center; font-size: 10px; color: #ddd; }
+
+/* ── Loading / error ── */
+#loading { display: flex; align-items: center; justify-content: center; height: 40vh; flex-direction: column; gap: 12px; color: #bbb; }
+#error-msg { display: none; background: #fdf0ef; border: 1px solid #f5b7b1; color: #c0392b; padding: 16px 20px; border-radius: 8px; margin: 20px; font-size: 13px; }
+
+@media (max-width: 640px) {
+  .health-row { grid-template-columns: repeat(2, 1fr); }
+  .dc-grid { grid-template-columns: repeat(3, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <img src="https://capone.market/capone-fish-avatar-48-orange.svg" alt="Capone">
+  <div>
+    <div class="title">Capone Watcher</div>
+    <div class="subtitle">Bitcoin Miner Fleet Monitor</div>
+  </div>
+  <div class="spacer"></div>
+  <div class="updated" id="topbar-updated">Loading…</div>
+</div>
+
+<div class="page">
+  <div id="loading">
+    <img src="https://capone.market/capone-fish-avatar-48-orange.svg" width="48" style="opacity:.3;animation:pulse 1.5s ease-in-out infinite">
+    <span>Loading fleet data…</span>
+  </div>
+  <div id="error-msg"></div>
+  <div id="app" style="display:none; display:flex; flex-direction:column; gap:20px;"></div>
+</div>
+
+<style>
+@keyframes pulse { 0%,100%{opacity:.2} 50%{opacity:.5} }
+</style>
+
+<script>
+const ACCOUNTS_META = {
+  cmine:    { name: 'Cyberian Mine' },
+  everminer:{ name: 'Everminer' },
+};
+const GROUPS_META = {
+  'R1':   { name: 'IZTM' },
+  'R3':   { name: 'Minto' },
+  'E1':   { name: 'BitCluster' },
+  'E2':   { name: 'AmityAge' },
+  'U1+U2':{ name: 'Dataprana' },
+  'U3':   { name: 'ValueHash' },
+  'P1':   { name: 'Altos' },
+  'F1':   { name: 'Terahash' },
+};
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+
+function ageHours(isoStr) {
+  if (!isoStr) return Infinity;
+  return (Date.now() - new Date(isoStr).getTime()) / 3600000;
+}
+function ageDays(isoStr) { return ageHours(isoStr) / 24; }
+
+function categoryOf(w) {
+  const h = ageHours(w.last_share);
+  if (h < 24)  return 'offline';
+  const d = h / 24;
+  if (d <= 7)  return 'dead_recent';
+  if (d <= 90) return 'dead_mid';
+  return 'dead_old';
+}
+
+function fmtAge(isoStr) {
+  const h = ageHours(isoStr);
+  if (h < 1)    return `${Math.round(h * 60)}m`;
+  if (h < 24)   return `${Math.round(h)}h`;
+  const d = Math.floor(h / 24);
+  return `${d}d`;
+}
+
+function pillClass(cat) {
+  return { offline:'pill-offline', dead_recent:'pill-dead-recent', dead_mid:'pill-dead-mid', dead_old:'pill-dead-old' }[cat];
+}
+function pillLabel(cat, isoStr) {
+  const age = fmtAge(isoStr);
+  if (cat === 'offline')     return `Offline ${age}`;
+  if (cat === 'dead_recent') return `Dead ${age}`;
+  if (cat === 'dead_mid')    return `Dead ${age}`;
+  return `Dead ${age}`;
+}
+function actionLabel(cat) {
+  if (cat === 'offline')     return '👀 Monitor';
+  if (cat === 'dead_recent') return '📋 Follow up';
+  if (cat === 'dead_mid')    return '🔔 Escalate';
+  return '📦 Archive';
+}
+
+// ── Build sections ────────────────────────────────────────────────────────────
+
+function buildHealthCards(issues, snapshots) {
+  const online  = snapshots.length ? Object.values(snapshots[snapshots.length-1].by_account).reduce((s,a)=>s+a.online,0) : '—';
+  const offline = Object.values(issues).filter(w => categoryOf(w) === 'offline').length;
+  const dead    = Object.values(issues).filter(w => ['dead_recent','dead_mid'].includes(categoryOf(w))).length;
+  const arch    = Object.values(issues).filter(w => categoryOf(w) === 'dead_old').length;
+
+  return `
+  <div>
+    <div class="section-label">Fleet health — all accounts</div>
+    <div class="health-row">
+      <div class="health-card card-online">
+        <div class="label">Online</div>
+        <div class="value">${online}</div>
+        <div class="sub">workers active</div>
+      </div>
+      <div class="health-card card-offline">
+        <div class="label">Offline &lt; 24h</div>
+        <div class="value">${offline}</div>
+        <div class="sub">no share &gt; 1h</div>
+      </div>
+      <div class="health-card card-dead">
+        <div class="label">Dead — actionable</div>
+        <div class="value">${dead}</div>
+        <div class="sub">1–90 days — follow up</div>
+      </div>
+      <div class="health-card card-arch">
+        <div class="label">Dead — archived</div>
+        <div class="value">${arch}</div>
+        <div class="sub">&gt; 90 days — likely gone</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function buildDCGrid(issues, accountKey) {
+  const accountIssues = Object.values(issues).filter(w => w.account === accountKey);
+
+  return Object.entries(GROUPS_META).map(([gid, gmeta]) => {
+    const groupIssues = accountIssues.filter(w => w.group_id === gid);
+    const issueCount = groupIssues.filter(w => categoryOf(w) !== 'dead_old').length;
+    const cls = issueCount === 0 ? 'ok' : issueCount <= 3 ? 'warn' : 'critical';
+    const statusText = issueCount === 0 ? '✓' : String(issueCount);
+    const subText = issueCount === 0 ? 'all online' : `issue${issueCount > 1 ? 's' : ''}`;
+    return `<div class="dc-cell ${cls}">
+      <div class="dc-group">${gid}</div>
+      <div class="dc-name">${gmeta.name}</div>
+      <div class="dc-status">${statusText}</div>
+      <div class="dc-sub">${subText}</div>
+    </div>`;
+  }).join('');
+}
+
+function buildDatacenters(issues) {
+  const accounts = Object.keys(ACCOUNTS_META);
+  const tabs = accounts.map((k,i) => `<div class="tab ${i===0?'active':''}" onclick="switchTab(this,'tab-dc-${k}')">${ACCOUNTS_META[k].name}</div>`).join('');
+  const contents = accounts.map((k,i) => `
+    <div class="tab-content ${i===0?'active':''}" id="tab-dc-${k}">
+      <div class="dc-grid">${buildDCGrid(issues, k)}</div>
+    </div>`).join('');
+
+  return `
+  <div>
+    <div class="section-label">Datacenters at a glance</div>
+    <div class="panel">
+      <div class="tabs">${tabs}</div>
+      ${contents}
+    </div>
+  </div>`;
+}
+
+function buildIssuesTable(issues) {
+  const rows = Object.entries(issues)
+    .filter(([,w]) => categoryOf(w) !== 'dead_old') // hide archived
+    .sort(([,a],[,b]) => ageHours(a.last_share) - ageHours(b.last_share))
+    .map(([,w]) => {
+      const cat = categoryOf(w);
+      return `<tr>
+        <td><span class="worker-name">${w.name}</span></td>
+        <td><span class="account-label">${w.account}</span></td>
+        <td><span class="group-badge">${w.group_id}</span> ${w.provider}</td>
+        <td><span class="age-pill ${pillClass(cat)}">${pillLabel(cat, w.last_share)}</span></td>
+        <td style="color:#aaa;font-size:11px">${w.last_share ? new Date(w.last_share).toUTCString().replace(' GMT','') : '—'}</td>
+        <td><span class="action-tag">${actionLabel(cat)}</span></td>
+      </tr>`;
+    }).join('');
+
+  const hidden = Object.values(issues).filter(w => categoryOf(w) === 'dead_old').length;
+
+  return `
+  <div>
+    <div class="section-label">Workers requiring attention</div>
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">Offline &amp; Dead (≤ 90 days)</div>
+        <div class="panel-note">${hidden} archived workers hidden (dead &gt; 90 days)</div>
+      </div>
+      ${rows ? `<table class="issues-table">
+        <thead><tr>
+          <th>Worker</th><th>Account</th><th>Datacenter</th>
+          <th>Status</th><th>Last Share (UTC)</th><th>Action</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>` : '<div style="padding:24px;text-align:center;color:#bbb;font-size:13px">✅ All workers online</div>'}
+    </div>
+  </div>`;
+}
+
+function buildDeadTracker(issues) {
+  const cats = [
+    { key:'dead_recent', label:'1–7 days — recent, monitor daily',    dotCls:'dot-red',    rowCls:'red' },
+    { key:'dead_mid',    label:'8–90 days — contact provider',         dotCls:'dot-orange', rowCls:'orange' },
+    { key:'dead_old',    label:'> 90 days — likely gone',              dotCls:'dot-grey',   rowCls:'grey' },
+  ];
+
+  const sections = cats.map(({ key, label, dotCls, rowCls }) => {
+    const workers = Object.values(issues)
+      .filter(w => categoryOf(w) === key)
+      .sort((a,b) => ageHours(b.last_share) - ageHours(a.last_share));
+
+    let content;
+    if (key === 'dead_old') {
+      content = `<div class="arch-note">${workers.length} worker${workers.length !== 1 ? 's' : ''} archived — hidden from daily view</div>`;
+    } else if (workers.length === 0) {
+      content = `<div class="dead-empty">None</div>`;
+    } else {
+      content = workers.map(w => `
+        <div class="dead-row ${rowCls}">
+          <span class="dw">${w.name}</span>
+          <span class="dp">${w.provider} ${w.group_id}</span>
+          <span class="dead-account">${w.account}</span>
+          <span class="dd">${fmtAge(w.last_share)}</span>
+        </div>`).join('');
+    }
+
+    return `<div class="dead-section">
+      <div class="dead-section-title"><div class="dot ${dotCls}"></div>${label}</div>
+      ${content}
+    </div>`;
+  }).join('');
+
+  return `
+  <div>
+    <div class="section-label">Dead workers — lifecycle tracking</div>
+    <div class="panel">${sections}</div>
+  </div>`;
+}
+
+function buildTrend(snapshots) {
+  if (!snapshots || snapshots.length === 0) {
+    return `<div><div class="section-label">30-day trend</div><div class="panel" style="padding:24px;color:#ccc;text-align:center;font-size:13px">No historical data yet — chart will populate after the first runs.</div></div>`;
+  }
+
+  const last30 = snapshots.slice(-30);
+  const maxVal = Math.max(1, ...last30.map(s => (s.offline||0) + (s.dead_recent||0) + (s.dead_mid||0)));
+
+  const bars = last30.map((s, i) => {
+    const off = s.offline || 0;
+    const dead = (s.dead_recent||0) + (s.dead_mid||0);
+    const total = off + dead;
+    const h = 70;
+    const offH  = Math.round(off  / maxVal * h);
+    const deadH = Math.round(dead / maxVal * h);
+    const emptyH = h - offH - deadH;
+
+    const date = new Date(s.ts);
+    const label = i % 5 === 0 ? `${date.getDate()}/${date.getMonth()+1}` : '';
+
+    return `<div class="bar-col">
+      <div class="bar-stack">
+        ${emptyH > 0 ? `<div class="bar-seg empty" style="height:${emptyH}px"></div>` : ''}
+        ${deadH > 0  ? `<div class="bar-seg dead"  style="height:${deadH}px"></div>` : ''}
+        ${offH > 0   ? `<div class="bar-seg offline" style="height:${offH}px"></div>` : ''}
+      </div>
+      <div class="bar-label">${label}</div>
+    </div>`;
+  }).join('');
+
+  return `
+  <div>
+    <div class="section-label">30-day trend — offline + dead (actionable)</div>
+    <div class="panel">
+      <div class="trend-wrap">
+        <div class="trend-top">
+          <div class="trend-title">Daily worker issues</div>
+          <div class="trend-legend">
+            <div class="legend-item"><div class="legend-dot" style="background:#e67e22"></div>Offline</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#c0392b"></div>Dead (actionable)</div>
+          </div>
+        </div>
+        <div class="bars-wrap">${bars}</div>
+        <div class="trend-bottom">Each bar = one daily check</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ── Two-column layout ─────────────────────────────────────────────────────────
+
+function buildTwoCol(left, right) {
+  return `<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">${left}${right}</div>`;
+}
+
+// ── Tab switching ─────────────────────────────────────────────────────────────
+function switchTab(el, targetId) {
+  const tabs = el.parentElement.querySelectorAll('.tab');
+  tabs.forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  const panel = el.closest('.panel');
+  panel.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  panel.querySelector('#' + targetId).classList.add('active');
+}
+
+// ── Render ────────────────────────────────────────────────────────────────────
+
+async function render() {
+  let data;
+  try {
+    const res = await fetch('./data/history.json?t=' + Date.now());
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    data = await res.json();
+  } catch(e) {
+    document.getElementById('loading').style.display = 'none';
+    const err = document.getElementById('error-msg');
+    err.style.display = 'block';
+    err.textContent = 'Could not load fleet data: ' + e.message;
+    return;
+  }
+
+  const issues = data.current_issues || {};
+  const snapshots = data.snapshots || [];
+
+  // Topbar
+  const upd = data.last_updated ? new Date(data.last_updated) : null;
+  document.getElementById('topbar-updated').innerHTML = upd
+    ? `Last check: <span>${upd.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'})} at ${upd.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})} UTC</span>`
+    : 'No data yet';
+
+  // Render sections
+  const app = document.getElementById('app');
+  app.innerHTML =
+    buildHealthCards(issues, snapshots) +
+    buildDatacenters(issues) +
+    buildIssuesTable(issues) +
+    `<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">` +
+      buildDeadTracker(issues) +
+      buildTrend(snapshots) +
+    `</div>`;
+
+  document.getElementById('loading').style.display = 'none';
+  app.style.display = 'flex';
+  app.style.flexDirection = 'column';
+  app.style.gap = '20px';
+}
+
+render();
+</script>
+</body>
+</html>

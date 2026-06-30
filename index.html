@@ -1580,7 +1580,11 @@ function buildAccountHashrateChart(accountUser, rangeH) {
   // Stocke les données pour le tooltip hover
   _hrChartData[accountUser] = { pts, tAxisStart, tAxisSpan, maxHR };
 
-  return `<div style="position:relative">
+  return `<div>
+    <div style="text-align:right;padding:0 4px 4px 0">
+      <span style="font-size:26px;font-weight:800;color:#1a1a2e;line-height:1">${lastTH}</span>
+      <span style="font-size:11px;color:#bbb;margin-left:4px">TH/s now</span>
+    </div>
     <svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
       <defs>
         <linearGradient id="${gradId}" x1="0" y1="0" x2="0" y2="1">
@@ -1607,10 +1611,6 @@ function buildAccountHashrateChart(accountUser, rangeH) {
         onmousemove="hrChartHover(event,'${accountUser}')"
         onmouseleave="hrChartLeave('${accountUser}')"/>
     </svg>
-    <div style="position:absolute;top:10px;right:16px;text-align:right">
-      <div style="font-size:26px;font-weight:800;color:#1a1a2e;line-height:1">${lastTH}</div>
-      <div style="font-size:11px;color:#bbb;margin-top:2px">TH/s now</div>
-    </div>
   </div>`;
 }
 

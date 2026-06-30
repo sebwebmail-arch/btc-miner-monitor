@@ -1,0 +1,38 @@
+name: Hashrate Collector
+
+on:
+  schedule:
+    # Every 30 minutes: 00:00, 00:30, 01:00, 01:30 ... 23:00, 23:30 UTC
+    - cron: '0,30 * * * *'
+  workflow_dispatch:
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Collect hashrate
+        env:
+          F2POOL_TOKEN_CMINE: ${{ secrets.F2POOL_TOKEN_CMINE }}
+          F2POOL_TOKEN_EVERMINER: ${{ secrets.F2POOL_TOKEN_EVERMINER }}
+        run: node hashrate-collector.js
+
+      - name: Commit hashrate.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin main
+          git add data/hashrate.json
+          git diff --staged --quiet || git commit -m "data: hashrate $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push

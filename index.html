@@ -170,6 +170,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .modal-foot { padding: 14px 24px; border-top: 1px solid #f0f0f0; display: flex; align-items: center; justify-content: space-between; }
 .modal-f2pool-link { font-size: 12px; color: #3498db; text-decoration: none; font-weight: 600; }
 .modal-f2pool-link:hover { text-decoration: underline; }
+.range-btn { padding: 3px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; color: #bbb; cursor: pointer; border: 1px solid #e8e8e8; background: white; }
+.range-btn:hover { color: #555; border-color: #ccc; }
+.range-btn.active { background: #1a1a2e; color: white; border-color: #1a1a2e; }
 
 /* ── Loading / error ── */
 #loading { display: flex; align-items: center; justify-content: center; height: 40vh; flex-direction: column; gap: 12px; color: #bbb; }
@@ -670,62 +673,53 @@ function switchTab(el, targetId) {
 
 // ── Worker modal ──────────────────────────────────────────────────────────────
 
+let _hashrate = null; // chargé une fois au render
+
+async function loadHashrateData() {
+  try {
+    const res = await fetch('./data/hashrate.json?t=' + Date.now());
+    if (!res.ok) return;
+    _hashrate = await res.json();
+  } catch { /* hashrate.json pas encore dispo */ }
+}
+
+// Sélecteur de plage actif dans la modale (24h ou 72h)
+let _modalRange = 24;
+let _modalKey   = null;
+
 function openWorkerModal(key) {
   const w = _issues[key];
   if (!w) return;
+  _modalKey = key;
 
-  const cat   = categoryOf(w);
-  const h     = ageHours(w.last_share);
-  const d     = h / 24;
+  const cat = categoryOf(w);
+  const h   = ageHours(w.last_share);
+  const d   = h / 24;
 
-  // Duration display
-  let durText, durCls, fillCls, fillPct;
-  if (cat === 'offline') {
-    durText = `${Math.round(h)}h offline`;
-    durCls = 'dur-orange'; fillCls = 'fill-orange';
-    fillPct = Math.min(100, (h / 24) * 100);
-  } else if (cat === 'dead_recent') {
-    durText = `${Math.floor(d)}d dead`;
-    durCls = 'dur-red'; fillCls = 'fill-red';
-    fillPct = Math.min(100, (d / 7) * 100);
-  } else if (cat === 'dead_mid') {
-    durText = `${Math.floor(d)}d dead`;
-    durCls = 'dur-red'; fillCls = 'fill-red';
-    fillPct = Math.min(100, ((d - 7) / 83) * 100);
-  } else {
-    durText = `${Math.floor(d)}d dead`;
-    durCls = 'dur-grey'; fillCls = 'fill-grey'; fillPct = 100;
-  }
-
-  // Timeline labels
-  let tlLeft = 'Now', tlRight = '';
-  if (cat === 'offline')     { tlLeft = '1h'; tlRight = '24h'; }
-  if (cat === 'dead_recent') { tlLeft = '1d'; tlRight = '7d'; }
-  if (cat === 'dead_mid')    { tlLeft = '8d'; tlRight = '90d'; }
-
-  // Recommendation
+  // Recommandation
   let recoTitle, recoText, recoCls = '';
   if (cat === 'offline') {
     recoTitle = '👀 Monitor';
-    recoText = 'Worker went offline recently. Wait for the next morning report — may recover on its own. If still offline tomorrow, contact the datacenter.';
+    recoText  = 'Worker went offline recently. Wait for the next morning report — may recover on its own. If still offline tomorrow, contact the datacenter.';
   } else if (cat === 'dead_recent') {
     recoTitle = '📋 Follow up';
-    recoText = `Worker has been dead for ${Math.floor(d)} day${Math.floor(d)>1?'s':''}. Contact ${w.provider} to investigate. Escalate if no response within 48h.`;
-    recoCls = 'reco-red';
+    recoText  = `Worker has been dead for ${Math.floor(d)} day${Math.floor(d)>1?'s':''}. Contact ${w.provider} to investigate. Escalate if no response within 48h.`;
+    recoCls   = 'reco-red';
   } else if (cat === 'dead_mid') {
     recoTitle = '🔔 Escalate';
-    recoText = `Worker has been dead for ${Math.floor(d)} days. Formal escalation required with ${w.provider}. Consider replacement if no resolution within 7 days.`;
-    recoCls = 'reco-red';
+    recoText  = `Worker has been dead for ${Math.floor(d)} days. Formal escalation required with ${w.provider}. Consider replacement if no resolution within 7 days.`;
+    recoCls   = 'reco-red';
   } else {
     recoTitle = '📦 Archive';
-    recoText = `Worker has been dead for over 90 days. Likely permanently offline. No further action unless the miner is recovered.`;
+    recoText  = 'Worker has been dead for over 90 days. Likely permanently offline. No further action unless the miner is recovered.';
   }
 
   const lastShareFmt = w.last_share
     ? new Date(w.last_share).toUTCString().replace(' GMT', ' UTC')
     : 'Never';
 
-  const f2poolUrl = `https://www.f2pool.com/mining-user/${w.account === 'cmine' ? 'dad5e8d0452ce3262084e3afef6003ec' : 'd87416827c22b5c9aadb86e10535c4e0'}?user_name=${w.account}`;
+  const f2poolKey = w.account === 'cmine' ? 'dad5e8d0452ce3262084e3afef6003ec' : 'd87416827c22b5c9aadb86e10535c4e0';
+  const f2poolUrl = `https://www.f2pool.com/mining-user/${f2poolKey}?user_name=${w.account}`;
 
   document.getElementById('worker-modal-inner').innerHTML = `
     <div class="modal-head">
@@ -744,16 +738,19 @@ function openWorkerModal(key) {
         <div class="modal-field"><div class="mf-label">Host / IP</div><div class="mf-value mono">${w.host || '—'}</div></div>
         <div class="modal-field"><div class="mf-label">Last Share</div><div class="mf-value mono" style="font-size:11px">${lastShareFmt}</div></div>
       </div>
-      <div class="modal-status-bar">
-        <div class="modal-status-top">
-          <div class="modal-status-label">Duration without share</div>
-          <div class="modal-duration ${durCls}">${durText}</div>
+
+      <!-- Graphe hashrate -->
+      <div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <div class="mf-label">Hashrate (TH/s)</div>
+          <div style="display:flex;gap:4px">
+            <div class="range-btn ${_modalRange===24?'active':''}" onclick="setModalRange(24)">24h</div>
+            <div class="range-btn ${_modalRange===72?'active':''}" onclick="setModalRange(72)">72h</div>
+          </div>
         </div>
-        <div class="modal-timeline">
-          <div class="modal-timeline-fill ${fillCls}" style="width:${fillPct}%"></div>
-        </div>
-        <div class="modal-timeline-labels"><span>${tlLeft}</span><span>${tlRight}</span></div>
+        <div id="modal-chart-wrap">${renderHashrateChart(key, _modalRange)}</div>
       </div>
+
       <div class="modal-reco ${recoCls}">
         <div class="reco-title">${recoTitle}</div>
         ${recoText}
@@ -767,13 +764,98 @@ function openWorkerModal(key) {
   document.getElementById('worker-modal').classList.add('open');
 }
 
+function setModalRange(h) {
+  _modalRange = h;
+  if (_modalKey) {
+    document.getElementById('modal-chart-wrap').innerHTML = renderHashrateChart(_modalKey, h);
+    // Update buttons
+    document.querySelectorAll('.range-btn').forEach(b => {
+      b.classList.toggle('active', parseInt(b.textContent) === h);
+    });
+  }
+}
+
+function renderHashrateChart(key, rangeH) {
+  const W = 420, H = 120, PL = 44, PR = 8, PT = 8, PB = 22;
+  const cW = W - PL - PR, cH = H - PT - PB;
+
+  if (!_hashrate || !_hashrate.workers || !_hashrate.workers[key]) {
+    return `<div style="height:${H}px;display:flex;align-items:center;justify-content:center;background:#f8f8f8;border-radius:8px;color:#ccc;font-size:12px">
+      Hashrate data not yet available — populates every 30 min
+    </div>`;
+  }
+
+  const allPts = _hashrate.workers[key];
+  const cutoff = Date.now() - rangeH * 3600000;
+  const pts    = allPts.filter(p => new Date(p.ts).getTime() >= cutoff);
+
+  if (pts.length < 2) {
+    return `<div style="height:${H}px;display:flex;align-items:center;justify-content:center;background:#f8f8f8;border-radius:8px;color:#ccc;font-size:12px">
+      Not enough data yet for this range
+    </div>`;
+  }
+
+  const maxHR  = Math.max(...pts.map(p => p.hr), 1);
+  const maxTH  = maxHR / 1e12;
+  const tStart = new Date(pts[0].ts).getTime();
+  const tEnd   = new Date(pts[pts.length - 1].ts).getTime();
+  const tSpan  = tEnd - tStart || 1;
+
+  const px = (i) => PL + (new Date(pts[i].ts).getTime() - tStart) / tSpan * cW;
+  const py = (i) => PT + cH - (pts[i].hr / maxHR) * cH;
+
+  // Polyline path
+  const linePts = pts.map((_,i) => `${px(i).toFixed(1)},${py(i).toFixed(1)}`).join(' ');
+  // Fill area
+  const fillPts = `${PL},${PT+cH} ` + pts.map((_,i) => `${px(i).toFixed(1)},${py(i).toFixed(1)}`).join(' ') + ` ${px(pts.length-1).toFixed(1)},${PT+cH}`;
+
+  // Y axis labels (0, mid, max)
+  const yLabels = [0, maxTH/2, maxTH].map((v,i) => {
+    const y = PT + cH - (i * cH / 2);
+    return `<text x="${PL-4}" y="${y+4}" text-anchor="end" font-size="9" fill="#ccc">${v.toFixed(0)}</text>`;
+  }).join('');
+
+  // X axis labels: every 6h (or every 12h for 72h range)
+  const stepH = rangeH <= 24 ? 6 : 12;
+  const xLabels = [];
+  for (let h = 0; h <= rangeH; h += stepH) {
+    const t = tStart + (h / rangeH) * tSpan;
+    const d = new Date(t);
+    const label = `${String(d.getUTCHours()).padStart(2,'0')}:00`;
+    const x = PL + (h / rangeH) * cW;
+    xLabels.push(`<text x="${x.toFixed(1)}" y="${PT+cH+14}" text-anchor="middle" font-size="9" fill="#ccc">${label}</text>`);
+  }
+
+  return `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:${H}px;display:block;background:#f8f9fb;border-radius:8px">
+    <defs>
+      <linearGradient id="hrGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#3498db" stop-opacity="0.25"/>
+        <stop offset="100%" stop-color="#3498db" stop-opacity="0.02"/>
+      </linearGradient>
+    </defs>
+    <!-- Grid lines -->
+    <line x1="${PL}" y1="${PT}" x2="${PL+cW}" y2="${PT}" stroke="#eee" stroke-width="1"/>
+    <line x1="${PL}" y1="${PT+cH/2}" x2="${PL+cW}" y2="${PT+cH/2}" stroke="#eee" stroke-width="1" stroke-dasharray="3,3"/>
+    <line x1="${PL}" y1="${PT+cH}" x2="${PL+cW}" y2="${PT+cH}" stroke="#eee" stroke-width="1"/>
+    <!-- Fill -->
+    <polygon points="${fillPts}" fill="url(#hrGrad)"/>
+    <!-- Line -->
+    <polyline points="${linePts}" fill="none" stroke="#3498db" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <!-- Y labels -->
+    ${yLabels}
+    <!-- X labels -->
+    ${xLabels.join('')}
+  </svg>`;
+}
+
 function closeModal() {
   document.getElementById('worker-modal').classList.remove('open');
 }
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 window.openWorkerModal = openWorkerModal;
-window.closeModal = closeModal;
+window.setModalRange   = setModalRange;
+window.closeModal      = closeModal;
 
 // ── Render ────────────────────────────────────────────────────────────────────
 
@@ -818,6 +900,9 @@ async function render() {
 
   // Populate the issues table (filter + sort engine)
   applyFilters();
+
+  // Préchargement hashrate.json (silencieux — peut ne pas encore exister)
+  loadHashrateData();
 }
 
 render();

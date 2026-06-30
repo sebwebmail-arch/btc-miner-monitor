@@ -121,6 +121,22 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .dead-empty { font-size: 12px; color: #ccc; font-style: italic; padding: 8px 0; }
 .arch-note { font-size: 11px; color: #ccc; font-style: italic; }
 
+/* ── Anomaly badges ── */
+.anomaly-badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; white-space: nowrap; }
+.badge-drop { background: #fdecea; color: #c0392b; }
+.badge-volt { background: #fef9e7; color: #b7950b; }
+.spark-td { line-height: 0; }
+
+/* ── Online workers table ── */
+.online-table { width: 100%; border-collapse: collapse; }
+.online-table th { font-size: 10px; color: #bbb; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; padding: 9px 14px; text-align: left; background: #fafafa; border-bottom: 1px solid #f0f0f0; white-space: nowrap; cursor: pointer; user-select: none; }
+.online-table th:hover { color: #666; }
+.online-table td { padding: 7px 14px; border-bottom: 1px solid #f8f8f8; font-size: 12px; vertical-align: middle; }
+.online-table tr:last-child td { border-bottom: none; }
+.online-table tr:hover td { background: #fafafa; }
+.hr-now { font-weight: 700; color: #1a1a2e; font-size: 12px; }
+.hr-avg { font-size: 11px; color: #aaa; }
+
 /* ── Trend chart ── */
 .trend-wrap { padding: 20px; }
 .trend-top { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 12px; }
@@ -219,6 +235,21 @@ const ACCOUNTS_META = {
   cmine:    { name: 'Cyberian Mine' },
   everminer:{ name: 'Everminer' },
 };
+// Réplication client-side du groups.js pour la modale online workers
+const GROUPS_RULES = [
+  { id:'R1',    provider:'IZTM',           test: n => /^r/i.test(n) },
+  { id:'R3',    provider:'Minto',          test: n => /^k2lx/i.test(n) },
+  { id:'E1',    provider:'BitCluster',     test: n => /^\d+$/.test(n) },
+  { id:'E2',    provider:'AmityAge',       test: n => /^aa/i.test(n) },
+  { id:'U1+U2', provider:'Dataprana',      test: n => /^(ngs|yna|pie|olt|dga)/i.test(n) },
+  { id:'U3',    provider:'ValueHash (NY)', test: n => /^(c21|e21)/i.test(n) },
+  { id:'P1',    provider:'Altos',          test: n => /^s21/i.test(n) },
+  { id:'F1',    provider:'Terahash',       test: n => /^18x/i.test(n) },
+];
+function getGroupFromName(name) {
+  return GROUPS_RULES.find(g => g.test(name)) || { id:'?', provider:'Unknown' };
+}
+
 const GROUPS_META = {
   'R1':   { name: 'IZTM' },
   'R3':   { name: 'Minto' },
@@ -673,7 +704,8 @@ function switchTab(el, targetId) {
 
 // ── Worker modal ──────────────────────────────────────────────────────────────
 
-let _hashrate = null; // chargé une fois au render
+let _hashrate      = null; // hashrate.json
+let _workerIssues  = null; // worker-issues.json
 
 async function loadHashrateData() {
   try {
@@ -688,17 +720,40 @@ let _modalRange = 24;
 let _modalKey   = null;
 
 function openWorkerModal(key) {
-  const w = _issues[key];
-  if (!w) return;
+  // Fonctionne pour workers en issue ET workers online
+  let w = _issues[key];
+  if (!w) {
+    // Reconstruit les infos depuis la clé hashrate
+    const dot = key.indexOf('.');
+    const accountUser = key.slice(0, dot);
+    const workerName  = key.slice(dot + 1);
+    const grp = getGroupFromName(workerName);
+    w = {
+      name: workerName, account: accountUser,
+      account_name: ACCOUNTS_META[accountUser]?.name || accountUser,
+      group_id: grp.id, provider: grp.provider,
+      last_share: null,
+    };
+  }
   _modalKey = key;
 
-  const cat = categoryOf(w);
-  const h   = ageHours(w.last_share);
+  // Détermine si worker online (last_share null = reconstruit depuis hashrate.json)
+  const isOnline = w.last_share === null && _hashrate?.workers?.[key]?.length > 0;
+  const cat = isOnline ? 'online' : categoryOf(w);
+  const h   = isOnline ? 0 : ageHours(w.last_share);
   const d   = h / 24;
+
+  // Dernière timestamp connue pour les workers online
+  const lastSnaps = _hashrate?.workers?.[key];
+  const lastSnapTs = lastSnaps?.length ? lastSnaps[lastSnaps.length-1].ts : null;
+  const lastHRTH  = lastSnaps?.length ? (lastSnaps[lastSnaps.length-1].hr / 1e12).toFixed(1) : null;
 
   // Recommandation
   let recoTitle, recoText, recoCls = '';
-  if (cat === 'offline') {
+  if (isOnline) {
+    recoTitle = '✓ Active';
+    recoText  = `Worker is online and mining${lastHRTH ? ` at ${lastHRTH} TH/s` : ''}. Hashrate tracked every 30 minutes.`;
+  } else if (cat === 'offline') {
     recoTitle = '👀 Monitor';
     recoText  = 'Worker went offline recently. Wait for the next morning report — may recover on its own. If still offline tomorrow, contact the datacenter.';
   } else if (cat === 'dead_recent') {
@@ -714,9 +769,13 @@ function openWorkerModal(key) {
     recoText  = 'Worker has been dead for over 90 days. Likely permanently offline. No further action unless the miner is recovered.';
   }
 
-  const lastShareFmt = w.last_share
-    ? new Date(w.last_share).toUTCString().replace(' GMT', ' UTC')
-    : 'Never';
+  const lastShareFmt = isOnline
+    ? (lastSnapTs ? `Last snapshot: ${new Date(lastSnapTs).toUTCString().replace(' GMT', ' UTC')}` : 'Active')
+    : (w.last_share ? new Date(w.last_share).toUTCString().replace(' GMT', ' UTC') : 'Never');
+
+  const statusPill = isOnline
+    ? `<span class="age-pill" style="background:#eafaf1;color:#27ae60">● Online${lastHRTH ? ' · ' + lastHRTH + ' TH/s' : ''}</span>`
+    : `<span class="age-pill ${pillClass(cat)}">${pillLabel(cat, w.last_share)}</span>`;
 
   const f2poolKey = w.account === 'cmine' ? 'dad5e8d0452ce3262084e3afef6003ec' : 'd87416827c22b5c9aadb86e10535c4e0';
   const f2poolUrl = `https://www.f2pool.com/mining-user/${f2poolKey}?user_name=${w.account}`;
@@ -725,7 +784,7 @@ function openWorkerModal(key) {
     <div class="modal-head">
       <div>
         <div class="modal-worker">${w.name}</div>
-        <div style="margin-top:4px"><span class="age-pill ${pillClass(cat)}">${pillLabel(cat, w.last_share)}</span></div>
+        <div style="margin-top:4px">${statusPill}</div>
       </div>
       <div class="modal-close" onclick="closeModal()">✕</div>
     </div>
@@ -856,6 +915,186 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
 window.openWorkerModal = openWorkerModal;
 window.setModalRange   = setModalRange;
 window.closeModal      = closeModal;
+
+// ── Mini sparkline (utilisé dans les tables workers) ─────────────────────────
+
+function miniSparkline(key, nSnaps = 12) {
+  const snaps = _hashrate?.workers?.[key];
+  if (!snaps || snaps.length < 2) return '<span style="color:#eee;font-size:10px">—</span>';
+  const pts  = snaps.slice(-nSnaps);
+  const W = 80, H = 24;
+  const maxHR = Math.max(...pts.map(p => p.hr), 1);
+  const minHR = Math.min(...pts.map(p => p.hr));
+  const span  = maxHR - minHR || 1;
+  const px = i => (i / (pts.length - 1)) * W;
+  const py = i => H - ((pts[i].hr - minHR) / span) * H;
+  const linePts = pts.map((_, i) => `${px(i).toFixed(0)},${py(i).toFixed(0)}`).join(' ');
+  const lastHR  = pts[pts.length-1].hr;
+  const firstHR = pts[0].hr;
+  const color   = lastHR < firstHR * 0.6 ? '#e67e22' : lastHR < firstHR * 0.85 ? '#f1c40f' : '#27ae60';
+  return `<svg viewBox="0 0 ${W} ${H}" style="width:80px;height:24px;display:block">
+    <polyline points="${linePts}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+  </svg>`;
+}
+
+// ── Anomalies workers (dégradé / instable) ────────────────────────────────────
+
+function buildWorkerAnomalies() {
+  const issues = _workerIssues?.issues || {};
+  const keys   = Object.keys(issues);
+
+  if (keys.length === 0) {
+    return `
+  <div>
+    <div class="section-label">Hashrate anomalies — degraded &amp; unstable workers</div>
+    <div class="panel" style="padding:18px 20px;display:flex;align-items:center;gap:10px;color:#27ae60;font-size:13px;font-weight:600">
+      <span style="font-size:16px">✓</span> No hashrate anomalies detected
+      <span style="font-size:11px;color:#bbb;font-weight:400;margin-left:auto">Based on last 3h vs 12h baseline — requires 9h+ of data</span>
+    </div>
+  </div>`;
+  }
+
+  const rows = keys.map(key => {
+    const w   = issues[key];
+    const cat = w.type === 'level_drop'
+      ? `<span class="anomaly-badge badge-drop">📉 Drop ${w.drop_pct}%</span>`
+      : `<span class="anomaly-badge badge-volt">📊 Unstable CV ${w.cv_pct}%</span>`;
+    const spark = miniSparkline(key, 12);
+    return `<tr>
+      <td><span class="worker-name" style="cursor:pointer;text-decoration:underline dotted" onclick="openWorkerModal('${key}')">${w.worker}</span></td>
+      <td><span class="account-label">${w.account_name}</span></td>
+      <td><span class="group-badge">${w.group_id}</span> ${w.provider}</td>
+      <td>${cat}</td>
+      <td class="hr-now">${w.current_avg_ths} TH/s</td>
+      <td class="hr-avg">${w.baseline_avg_ths} TH/s</td>
+      <td class="spark-td">${spark}</td>
+    </tr>`;
+  }).join('');
+
+  return `
+  <div>
+    <div class="section-label">Hashrate anomalies — degraded &amp; unstable workers <span style="color:#c0392b">${keys.length}</span></div>
+    <div class="panel">
+      <div style="overflow-x:auto">
+        <table class="issues-table">
+          <thead><tr>
+            <th><div class="th-inner">Worker</div></th>
+            <th><div class="th-inner">Account</div></th>
+            <th><div class="th-inner">Datacenter</div></th>
+            <th><div class="th-inner">Issue</div></th>
+            <th><div class="th-inner">Current (3h avg)</div></th>
+            <th><div class="th-inner">Baseline (12h)</div></th>
+            <th><div class="th-inner">6h trend</div></th>
+          </tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ── Online workers (healthy — bas de page) ────────────────────────────────────
+
+let _onlineSortCol = 'hr';
+let _onlineSortAsc = false;
+
+function sortOnline(col) {
+  if (_onlineSortCol === col) _onlineSortAsc = !_onlineSortAsc;
+  else { _onlineSortCol = col; _onlineSortAsc = col === 'name'; }
+  renderOnlineTable();
+}
+window.sortOnline = sortOnline;
+
+function buildOnlineWorkers() {
+  return `
+  <div>
+    <div class="section-label">Online workers — healthy fleet</div>
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">All active workers</div>
+        <div class="panel-note" id="online-count"></div>
+      </div>
+      <div style="overflow-x:auto" id="online-table-wrap">
+        <div style="padding:24px;text-align:center;color:#ccc;font-size:12px">Loading…</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderOnlineTable() {
+  const wrap = document.getElementById('online-table-wrap');
+  const cnt  = document.getElementById('online-count');
+  if (!wrap) return;
+
+  if (!_hashrate?.workers) {
+    wrap.innerHTML = `<div style="padding:24px;text-align:center;color:#ccc;font-size:12px">Hashrate data not yet available — collecting every 30 min</div>`;
+    return;
+  }
+
+  const cutoff = Date.now() - 90 * 60000; // 90 min
+  const workers = [];
+
+  for (const [key, snaps] of Object.entries(_hashrate.workers)) {
+    if (!snaps.length) continue;
+    const last = snaps[snaps.length - 1];
+    if (new Date(last.ts).getTime() < cutoff) continue; // snapshot trop vieux
+    if (last.hr < 1e12) continue; // < 1 TH/s = pas vraiment online
+
+    const dot = key.indexOf('.');
+    const accountUser = key.slice(0, dot);
+    const workerName  = key.slice(dot + 1);
+    const accountMeta = ACCOUNTS_META[accountUser] || { name: accountUser };
+
+    // Avg 3h (6 derniers snapshots)
+    const recent6 = snaps.slice(-6);
+    const avg3h   = recent6.reduce((s, p) => s + p.hr, 0) / recent6.length;
+
+    workers.push({ key, accountUser, workerName, accountName: accountMeta.name, lastHR: last.hr, avg3h });
+  }
+
+  if (cnt) cnt.textContent = `${workers.length} workers`;
+
+  // Tri
+  workers.sort((a, b) => {
+    let va, vb;
+    if (_onlineSortCol === 'name')    { va = a.workerName;  vb = b.workerName; }
+    else if (_onlineSortCol === 'account') { va = a.accountName; vb = b.accountName; }
+    else { va = a.lastHR; vb = b.lastHR; }
+    if (va < vb) return _onlineSortAsc ? -1 : 1;
+    if (va > vb) return _onlineSortAsc ?  1 : -1;
+    return 0;
+  });
+
+  const si = col => `<span class="sort-icon">${_onlineSortCol===col?(_onlineSortAsc?'↑':'↓'):'↕'}</span>`;
+
+  const tbody = workers.map(w => {
+    const nowTH  = (w.lastHR  / 1e12).toFixed(1);
+    const avg3TH = (w.avg3h   / 1e12).toFixed(1);
+    const spark  = miniSparkline(w.key, 12);
+    return `<tr>
+      <td><span class="worker-name" style="cursor:pointer;text-decoration:underline dotted" onclick="openWorkerModal('${w.key}')">${w.workerName}</span></td>
+      <td><span class="account-label">${w.accountName}</span></td>
+      <td></td>
+      <td class="hr-now">${nowTH} TH/s</td>
+      <td class="hr-avg">${avg3TH} TH/s</td>
+      <td class="spark-td">${spark}</td>
+      <td><span class="action-tag" style="cursor:pointer" onclick="openWorkerModal('${w.key}')">📈 Monitor</span></td>
+    </tr>`;
+  }).join('');
+
+  wrap.innerHTML = `<table class="online-table">
+    <thead><tr>
+      <th onclick="sortOnline('name')">Worker ${si('name')}</th>
+      <th onclick="sortOnline('account')">Account ${si('account')}</th>
+      <th>Datacenter</th>
+      <th onclick="sortOnline('hr')">Now TH/s ${si('hr')}</th>
+      <th>Avg 3h</th>
+      <th>6h trend</th>
+      <th></th>
+    </tr></thead>
+    <tbody>${tbody}</tbody>
+  </table>`;
+}
 
 // ── Hashrate agrégé par account ───────────────────────────────────────────────
 
@@ -992,13 +1231,15 @@ function buildHashrateSection() {
 async function render() {
   let data;
   try {
-    const [histRes, hrRes] = await Promise.all([
-      fetch('./data/history.json?t=' + Date.now()),
-      fetch('./data/hashrate.json?t=' + Date.now()).catch(() => null),
+    const [histRes, hrRes, wiRes] = await Promise.all([
+      fetch('./data/history.json?t='      + Date.now()),
+      fetch('./data/hashrate.json?t='     + Date.now()).catch(() => null),
+      fetch('./data/worker-issues.json?t='+ Date.now()).catch(() => null),
     ]);
     if (!histRes.ok) throw new Error(`HTTP ${histRes.status}`);
     data = await histRes.json();
-    if (hrRes && hrRes.ok) _hashrate = await hrRes.json();
+    if (hrRes && hrRes.ok) _hashrate     = await hrRes.json();
+    if (wiRes && wiRes.ok) _workerIssues = await wiRes.json();
   } catch(e) {
     document.getElementById('loading').style.display = 'none';
     const err = document.getElementById('error-msg');
@@ -1021,12 +1262,14 @@ async function render() {
   app.innerHTML =
     buildHealthCards(issues, snapshots) +
     buildHashrateSection() +
+    buildWorkerAnomalies() +
     buildDatacenters(issues) +
     buildIssuesTable(issues) +
     `<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">` +
       buildDeadTracker(issues) +
       buildTrend(snapshots) +
-    `</div>`;
+    `</div>` +
+    buildOnlineWorkers();
 
   document.getElementById('loading').style.display = 'none';
   app.style.display = 'flex';
@@ -1035,6 +1278,9 @@ async function render() {
 
   // Populate the issues table (filter + sort engine)
   applyFilters();
+
+  // Populate la table online workers (dérivée de hashrate.json)
+  renderOnlineTable();
 }
 
 render();

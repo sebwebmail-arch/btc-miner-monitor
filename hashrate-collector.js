@@ -32,14 +32,26 @@ const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const ALERT_FROM     = process.env.ALERT_FROM || 'noreply@capone.market';
 const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 
-const F2POOL_API      = 'https://api.f2pool.com/v2/hash_rate/worker/list';
-const HASHRATE_PATH   = path.join(__dirname, 'data', 'hashrate.json');
-const ALERTSTATE_PATH = path.join(__dirname, 'data', 'alert-state.json');
+const F2POOL_API        = 'https://api.f2pool.com/v2/hash_rate/worker/list';
+const HASHRATE_PATH     = path.join(__dirname, 'data', 'hashrate.json');
+const ALERTSTATE_PATH   = path.join(__dirname, 'data', 'alert-state.json');
+const WORKERISSUES_PATH = path.join(__dirname, 'data', 'worker-issues.json');
 
 const MAX_SNAPSHOTS   = 145;  // 72h × 2 + 1 points (3 jours glissants)
 const REF_SNAPSHOTS   = 3;    // 3 derniers snapshots = référence 1h30
-const DROP_THRESHOLD  = 0.30; // alerte si chute > 30%
+const DROP_THRESHOLD  = 0.30; // alerte si chute > 30% (groupe)
 const COOLDOWN_H      = 4;    // pas de double alerte sur le même groupe avant 4h
+
+// ─── Anomalie par worker (hashrate dégradé / instable) ───────────────────────
+const CURRENT_WINDOW   = 6;    // 6 derniers snapshots = 3h "actuel"
+const BASELINE_SNAPS   = 24;   // 12h de baseline (snaps 7 à 30)
+const MIN_BASELINE     = 12;   // baseline minimum pour être significatif
+const LEVEL_DROP_THR   = 0.40; // alerte si current < baseline * (1 - 0.40)
+const CV_THR           = 0.55; // alerte si stddev/mean > 55% (très volatile)
+const ZERO_RATE_THR    = 0.35; // alerte si >35% des points ≈ 0 (yoyo ON/OFF)
+const MIN_HR_TH        = 5e12; // < 5 TH/s = considéré "near zero"
+const MIN_ACTIVE_TH    = 5e12; // baseline doit dépasser 5 TH/s pour être analysé
+const WORKER_COOLDOWN_H = 8;   // pas de re-alerte sur le même worker avant 8h
 
 // ─── f2pool API ───────────────────────────────────────────────────────────────
 
@@ -151,6 +163,109 @@ async function sendEmail(to, subject, html) {
   console.log(`✉️  Email envoyé → ${to} — id: ${data.id}`);
 }
 
+// ─── Détection anomalies par worker ──────────────────────────────────────────
+
+function detectWorkerAnomalies(hrData) {
+  const issues = {};
+
+  for (const [key, snaps] of Object.entries(hrData.workers || {})) {
+    // Besoin de suffisamment d'historique
+    if (snaps.length < CURRENT_WINDOW + MIN_BASELINE) continue;
+
+    const current  = snaps.slice(-CURRENT_WINDOW);
+    const baseline = snaps.slice(-(CURRENT_WINDOW + BASELINE_SNAPS), -CURRENT_WINDOW);
+    if (baseline.length < MIN_BASELINE) continue;
+
+    const currentAvg  = current.reduce((s, p) => s + p.hr, 0) / current.length;
+    const baselineAvg = baseline.reduce((s, p) => s + p.hr, 0) / baseline.length;
+
+    // Baseline trop faible → worker peu actif, pas pertinent
+    if (baselineAvg < MIN_ACTIVE_TH) continue;
+
+    // Fraction des snapshots actuels proches de zéro
+    const zeroRate = current.filter(p => p.hr < MIN_HR_TH).length / current.length;
+
+    // Volatilité : coefficient de variation sur la fenêtre actuelle
+    const mean     = currentAvg || 1;
+    const variance = current.reduce((s, p) => s + Math.pow(p.hr - mean, 2), 0) / current.length;
+    const cv       = Math.sqrt(variance) / mean;
+
+    const dropPct = baselineAvg > 0 ? (baselineAvg - currentAvg) / baselineAvg : 0;
+
+    // Worker complètement offline → déjà suivi ailleurs, on skip
+    if (currentAvg < MIN_HR_TH) continue;
+
+    let type = null;
+    if (dropPct > LEVEL_DROP_THR && zeroRate < 0.5) {
+      type = 'level_drop';
+    } else if (cv > CV_THR || zeroRate > ZERO_RATE_THR) {
+      type = 'volatile';
+    }
+
+    if (!type) continue;
+
+    // Retrouve account à partir du préfixe de la clé
+    const dotIdx = key.indexOf('.');
+    const accountUser = key.slice(0, dotIdx);
+    const workerName  = key.slice(dotIdx + 1);
+    const account     = ACCOUNTS.find(a => a.user === accountUser);
+    if (!account) continue;
+
+    const group = require('./groups').getGroup(workerName);
+
+    issues[key] = {
+      account:          accountUser,
+      account_name:     account.name,
+      worker:           workerName,
+      group_id:         group.id,
+      provider:         group.provider,
+      type,
+      current_avg_ths:  +(currentAvg  / 1e12).toFixed(1),
+      baseline_avg_ths: +(baselineAvg / 1e12).toFixed(1),
+      drop_pct:         Math.round(dropPct * 100),
+      cv_pct:           Math.round(cv * 100),
+      zero_rate_pct:    Math.round(zeroRate * 100),
+    };
+  }
+
+  return issues;
+}
+
+async function sendWorkerAlert(account, issue, now) {
+  const timeUTC = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' });
+  const tzLabel = new Intl.DateTimeFormat('en', { timeZoneName: 'short', timeZone: 'Europe/Paris' })
+    .formatToParts(now).find(p => p.type === 'timeZoneName')?.value || 'CET';
+  const timeParis = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' });
+
+  let emoji, typeLabel, detail;
+  if (issue.type === 'level_drop') {
+    emoji     = '📉';
+    typeLabel = `Hashrate drop ${issue.drop_pct}%`;
+    detail    = `Before (avg 12h): <b>${issue.baseline_avg_ths} TH/s</b>\nNow (avg 3h):      <b>${issue.current_avg_ths} TH/s</b>`;
+  } else {
+    emoji     = '📊';
+    typeLabel = `Unstable hashrate`;
+    detail    = `Avg 3h: <b>${issue.current_avg_ths} TH/s</b>  |  Volatility: <b>${issue.cv_pct}%</b>\n${issue.zero_rate_pct}% of snapshots near zero`;
+  }
+
+  const tgText = [
+    `${emoji} <b>${typeLabel} — Capone Watcher</b>`,
+    ``,
+    `🔧 <b>${issue.worker}</b> — ${account.name}`,
+    `📍 ${issue.provider} (${issue.group_id})`,
+    ``,
+    detail,
+    ``,
+    `🕐 ${timeUTC} UTC — ${timeParis} ${tzLabel}`,
+    `📊 https://watcher.capone.market`,
+  ].join('\n');
+
+  await sendTelegram(account.telegramChatId, tgText);
+  console.log(`   📲 Alerte worker → ${issue.worker} (${issue.type})`);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+
 async function sendHashrateAlert(account, groupId, provider, currentHR, refHR, dropPct, now) {
   const timeUTC   = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' });
   const dateFmt   = now.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
@@ -243,6 +358,7 @@ async function main() {
   // ── 2. Détection chutes par groupe (avant de sauvegarder les nouveaux points) ──
   console.log('\n🔍 Vérification chutes hashrate par groupe...');
   const alertsToSend = [];
+  const workerAlertsToSend = [];
 
   for (const account of ACCOUNTS) {
     if (!allWorkers[account.user]?.length) continue;
@@ -289,6 +405,37 @@ async function main() {
 
   if (alertsToSend.length === 0) console.log('   Aucune chute détectée.');
 
+  // ── 3b. Détection anomalies par worker (dégradé / instable) ───────────────
+  console.log('\n🔬 Vérification anomalies workers (hashrate instable/dégradé)...');
+  const workerIssues = detectWorkerAnomalies(h);
+  let workerIssueCount = 0;
+
+  for (const [key, issue] of Object.entries(workerIssues)) {
+    const stateKey   = `w.${key}`;
+    const lastAlert  = alertState[stateKey];
+    const cooldownOk = !lastAlert || (now - new Date(lastAlert)) > WORKER_COOLDOWN_H * 3600000;
+
+    if (cooldownOk) {
+      const account = ACCOUNTS.find(a => a.user === issue.account);
+      if (account) workerAlertsToSend.push({ issue, account, stateKey });
+      console.log(`   🚨 ${key}: ${issue.type} — drop ${issue.drop_pct}% / CV ${issue.cv_pct}%`);
+    } else {
+      console.log(`   ⏳ ${key}: anomalie persistante (cooldown)`);
+    }
+    workerIssueCount++;
+  }
+  if (workerIssueCount === 0) console.log('   Aucune anomalie détectée.');
+
+  // Envoi alertes workers
+  for (const { issue, account, stateKey } of workerAlertsToSend) {
+    try {
+      await sendWorkerAlert(account, issue, now);
+      alertState[stateKey] = now.toISOString();
+    } catch (err) {
+      console.error(`   ❌ Alerte worker non envoyée pour ${issue.worker}: ${err.message}`);
+    }
+  }
+
   // ── 4. Sauvegarde nouveaux snapshots ──────────────────────────────────────
   for (const account of ACCOUNTS) {
     const workers = allWorkers[account.user] || [];
@@ -312,7 +459,14 @@ async function main() {
   saveHashrate(h);
   saveAlertState(alertState);
 
-  console.log(`\n✅ Sauvegardé — ${Object.keys(h.workers).length} workers | ${alertsToSend.length} alerte(s) envoyée(s)\n`);
+  // ── 5. Sauvegarde worker-issues.json (lu par le dashboard) ───────────────
+  fs.mkdirSync(path.dirname(WORKERISSUES_PATH), { recursive: true });
+  fs.writeFileSync(WORKERISSUES_PATH, JSON.stringify({
+    last_updated: now.toISOString(),
+    issues: workerIssues,
+  }, null, 2));
+
+  console.log(`\n✅ Sauvegardé — ${Object.keys(h.workers).length} workers | ${alertsToSend.length} alerte(s) groupe | ${workerAlertsToSend.length} alerte(s) worker\n`);
 }
 
 main().catch(err => { console.error('Fatal:', err); process.exit(1); });

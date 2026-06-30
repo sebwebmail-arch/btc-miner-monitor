@@ -1031,25 +1031,26 @@ function renderOnlineTable() {
     return;
   }
 
-  const cutoff = Date.now() - 90 * 60000; // 90 min
   const workers = [];
 
   for (const [key, snaps] of Object.entries(_hashrate.workers)) {
-    if (!snaps.length) continue;
+    if (snaps.length < 1) continue;
     const last = snaps[snaps.length - 1];
-    if (new Date(last.ts).getTime() < cutoff) continue; // snapshot trop vieux
-    if (last.hr < 1e12) continue; // < 1 TH/s = pas vraiment online
+
+    // Avg sur les 6 derniers snapshots (3h)
+    const recent6 = snaps.slice(-6);
+    const avg3h   = recent6.reduce((s, p) => s + p.hr, 0) / recent6.length;
+
+    // Worker considéré "online" si avg récent > 1 TH/s
+    if (avg3h < 1e12) continue;
 
     const dot = key.indexOf('.');
     const accountUser = key.slice(0, dot);
     const workerName  = key.slice(dot + 1);
     const accountMeta = ACCOUNTS_META[accountUser] || { name: accountUser };
+    const grp         = getGroupFromName(workerName);
 
-    // Avg 3h (6 derniers snapshots)
-    const recent6 = snaps.slice(-6);
-    const avg3h   = recent6.reduce((s, p) => s + p.hr, 0) / recent6.length;
-
-    workers.push({ key, accountUser, workerName, accountName: accountMeta.name, lastHR: last.hr, avg3h });
+    workers.push({ key, accountUser, workerName, accountName: accountMeta.name, groupId: grp.id, provider: grp.provider, lastHR: last.hr, avg3h });
   }
 
   if (cnt) cnt.textContent = `${workers.length} workers`;
@@ -1074,7 +1075,7 @@ function renderOnlineTable() {
     return `<tr>
       <td><span class="worker-name" style="cursor:pointer;text-decoration:underline dotted" onclick="openWorkerModal('${w.key}')">${w.workerName}</span></td>
       <td><span class="account-label">${w.accountName}</span></td>
-      <td></td>
+      <td><span class="group-badge">${w.groupId}</span> ${w.provider}</td>
       <td class="hr-now">${nowTH} TH/s</td>
       <td class="hr-avg">${avg3TH} TH/s</td>
       <td class="spark-td">${spark}</td>

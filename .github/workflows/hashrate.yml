@@ -1,9 +1,7 @@
 name: Hashrate Collector
 
 on:
-  schedule:
-    # Every 30 minutes: 00:00, 00:30, 01:00, 01:30 ... 23:00, 23:30 UTC
-    - cron: '0,30 * * * *'
+  # Déclenché exclusivement par cron-job.org via workflow_dispatch (GitHub cron trop peu fiable)
   workflow_dispatch:
 
 jobs:

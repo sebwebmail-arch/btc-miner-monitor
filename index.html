@@ -321,7 +321,15 @@ function actionLabel(cat) {
 // ── Build sections ────────────────────────────────────────────────────────────
 
 function buildHealthCards(issues, snapshots) {
-  const online  = snapshots.length ? Object.values(snapshots[snapshots.length-1].by_account).reduce((s,a)=>s+a.online,0) : '—';
+  // Compte les workers online depuis hashrate.json (exclut No Group, cohérent avec la table)
+  let online = '—';
+  if (_hashrate?.workers) {
+    online = Object.values(_hashrate.workers).filter(snaps => {
+      if (snaps.length < 1) return false;
+      const avg3h = snaps.slice(-6).reduce((s, p) => s + p.hr, 0) / Math.min(snaps.length, 6);
+      return avg3h >= 1e12;
+    }).length;
+  }
   const offline = Object.values(issues).filter(w => categoryOf(w) === 'offline').length;
   const dead    = Object.values(issues).filter(w => ['dead_recent','dead_mid'].includes(categoryOf(w))).length;
   const arch    = Object.values(issues).filter(w => categoryOf(w) === 'dead_old').length;

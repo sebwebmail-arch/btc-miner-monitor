@@ -59,12 +59,42 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .dc-cell.critical .dc-status { color: #c0392b; }
 .dc-sub { font-size: 10px; color: #aaa; margin-top: 3px; }
 
+/* ── Filter bar ── */
+.filter-bar { padding: 10px 16px; border-bottom: 1px solid #f0f0f0; display: flex; gap: 8px; align-items: center; background: #fafafa; }
+.filter-search { flex: 1; min-width: 160px; padding: 6px 10px; border: 1px solid #e0e0e0; border-radius: 6px; font-size: 12px; outline: none; background: white; }
+.filter-search:focus { border-color: #c0392b; box-shadow: 0 0 0 2px rgba(192,57,43,.1); }
+.filter-count { font-size: 11px; color: #bbb; margin-left: auto; white-space: nowrap; }
+.filter-reset { font-size: 11px; color: #c0392b; cursor: pointer; white-space: nowrap; padding: 4px 8px; border-radius: 4px; }
+.filter-reset:hover { background: #fdecea; }
+
 /* ── Issues table ── */
 .issues-table { width: 100%; border-collapse: collapse; }
-.issues-table th { font-size: 10px; color: #bbb; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; padding: 9px 16px; text-align: left; background: #fafafa; border-bottom: 1px solid #f0f0f0; }
+.issues-table th { font-size: 10px; color: #bbb; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; padding: 0; text-align: left; background: #fafafa; border-bottom: 1px solid #f0f0f0; white-space: nowrap; position: relative; }
+.th-inner { display: flex; align-items: center; padding: 9px 16px; gap: 6px; cursor: pointer; user-select: none; }
+.th-inner:hover { color: #666; }
+.th-inner.sorted { color: #c0392b; }
+.sort-icon { font-size: 10px; opacity: .5; }
+.th-inner.sorted .sort-icon { opacity: 1; }
+.th-filter-btn { padding: 2px 5px; border-radius: 3px; cursor: pointer; font-size: 11px; color: #ccc; transition: all .15s; position: relative; }
+.th-filter-btn:hover { background: #eee; color: #888; }
+.th-filter-btn.active { color: #c0392b; background: #fdecea; }
+
+/* ── Column dropdown ── */
+.col-dropdown { position: absolute; top: 100%; left: 0; z-index: 200; background: white; border: 1px solid #e0e0e0; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,.12); min-width: 160px; padding: 6px 0; display: none; }
+.col-dropdown.open { display: block; }
+.col-dropdown-search { margin: 6px 10px; padding: 5px 8px; border: 1px solid #e0e0e0; border-radius: 5px; font-size: 12px; outline: none; width: calc(100% - 20px); box-sizing: border-box; }
+.col-dropdown-item { display: flex; align-items: center; gap: 8px; padding: 6px 12px; cursor: pointer; font-size: 12px; color: #444; font-weight: normal; letter-spacing: 0; text-transform: none; }
+.col-dropdown-item:hover { background: #f5f5f5; }
+.col-dropdown-item input[type=checkbox] { accent-color: #c0392b; width: 13px; height: 13px; cursor: pointer; }
+.col-dropdown-sep { height: 1px; background: #f0f0f0; margin: 4px 0; }
+.col-dropdown-actions { display: flex; gap: 8px; padding: 6px 12px; }
+.col-dropdown-action { font-size: 11px; color: #c0392b; cursor: pointer; }
+.col-dropdown-action:hover { text-decoration: underline; }
+
 .issues-table td { padding: 9px 16px; border-bottom: 1px solid #f8f8f8; font-size: 12px; vertical-align: middle; }
 .issues-table tr:last-child td { border-bottom: none; }
 .issues-table tr:hover td { background: #fafafa; }
+.issues-table .no-results { padding: 24px; text-align: center; color: #ccc; font-size: 12px; font-style: italic; }
 .worker-name { font-family: monospace; font-weight: 700; font-size: 12px; }
 .account-label { font-size: 11px; color: #999; }
 .group-badge { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: 700; background: #eef2ff; color: #3730a3; }
@@ -108,6 +138,39 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .bar-label { font-size: 8px; color: #ccc; margin-top: 3px; white-space: nowrap; overflow: hidden; }
 .trend-bottom { margin-top: 8px; text-align: center; font-size: 10px; color: #ddd; }
 
+/* ── Worker modal ── */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; transition: opacity .15s; pointer-events: none; }
+.modal-overlay.open { opacity: 1; pointer-events: auto; }
+.modal { background: white; border-radius: 12px; width: 100%; max-width: 480px; box-shadow: 0 8px 32px rgba(0,0,0,.2); overflow: hidden; transform: translateY(8px); transition: transform .15s; }
+.modal-overlay.open .modal { transform: translateY(0); }
+.modal-head { padding: 20px 24px 16px; border-bottom: 1px solid #f0f0f0; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.modal-worker { font-family: monospace; font-size: 20px; font-weight: 800; color: #1a1a2e; }
+.modal-close { color: #bbb; font-size: 20px; cursor: pointer; line-height: 1; padding: 2px 6px; border-radius: 4px; flex-shrink: 0; }
+.modal-close:hover { background: #f0f0f0; color: #555; }
+.modal-body { padding: 20px 24px; display: flex; flex-direction: column; gap: 16px; }
+.modal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.modal-field { display: flex; flex-direction: column; gap: 3px; }
+.modal-field .mf-label { font-size: 10px; color: #bbb; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; }
+.modal-field .mf-value { font-size: 13px; color: #333; font-weight: 600; }
+.modal-field .mf-value.mono { font-family: monospace; font-size: 12px; }
+.modal-status-bar { background: #f8f8f8; border-radius: 8px; padding: 14px 16px; }
+.modal-status-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.modal-status-label { font-size: 11px; color: #aaa; font-weight: 600; text-transform: uppercase; letter-spacing: .8px; }
+.modal-duration { font-size: 22px; font-weight: 800; }
+.dur-orange { color: #e67e22; } .dur-red { color: #c0392b; } .dur-grey { color: #bbb; }
+.modal-timeline { height: 6px; background: #eee; border-radius: 3px; overflow: hidden; }
+.modal-timeline-fill { height: 100%; border-radius: 3px; transition: width .4s; }
+.fill-orange { background: linear-gradient(90deg, #f39c12, #e67e22); }
+.fill-red    { background: linear-gradient(90deg, #e74c3c, #c0392b); }
+.fill-grey   { background: #ccc; }
+.modal-timeline-labels { display: flex; justify-content: space-between; margin-top: 4px; font-size: 9px; color: #ccc; }
+.modal-reco { background: #fff8f0; border: 1px solid #f5cba7; border-radius: 8px; padding: 12px 14px; font-size: 12px; color: #7d4e00; line-height: 1.5; }
+.modal-reco.reco-red { background: #fdf0ef; border-color: #f5b7b1; color: #7b241c; }
+.modal-reco .reco-title { font-weight: 700; margin-bottom: 3px; }
+.modal-foot { padding: 14px 24px; border-top: 1px solid #f0f0f0; display: flex; align-items: center; justify-content: space-between; }
+.modal-f2pool-link { font-size: 12px; color: #3498db; text-decoration: none; font-weight: 600; }
+.modal-f2pool-link:hover { text-decoration: underline; }
+
 /* ── Loading / error ── */
 #loading { display: flex; align-items: center; justify-content: center; height: 40vh; flex-direction: column; gap: 12px; color: #bbb; }
 #error-msg { display: none; background: #fdf0ef; border: 1px solid #f5b7b1; color: #c0392b; padding: 16px 20px; border-radius: 8px; margin: 20px; font-size: 13px; }
@@ -142,6 +205,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 <style>
 @keyframes pulse { 0%,100%{opacity:.2} 50%{opacity:.5} }
 </style>
+
+<!-- Worker detail modal -->
+<div class="modal-overlay" id="worker-modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="worker-modal-inner"></div>
+</div>
 
 <script>
 const ACCOUNTS_META = {
@@ -273,22 +341,24 @@ function buildDatacenters(issues) {
   </div>`;
 }
 
-function buildIssuesTable(issues) {
-  const rows = Object.entries(issues)
-    .filter(([,w]) => categoryOf(w) !== 'dead_old') // hide archived
-    .sort(([,a],[,b]) => ageHours(a.last_share) - ageHours(b.last_share))
-    .map(([,w]) => {
-      const cat = categoryOf(w);
-      return `<tr>
-        <td><span class="worker-name">${w.name}</span></td>
-        <td><span class="account-label">${w.account}</span></td>
-        <td><span class="group-badge">${w.group_id}</span> ${w.provider}</td>
-        <td><span class="age-pill ${pillClass(cat)}">${pillLabel(cat, w.last_share)}</span></td>
-        <td style="color:#aaa;font-size:11px">${w.last_share ? new Date(w.last_share).toUTCString().replace(' GMT','') : '—'}</td>
-        <td><span class="action-tag">${actionLabel(cat)}</span></td>
-      </tr>`;
-    }).join('');
+// ── Issues table — filtres style Excel + tri par colonne ─────────────────────
 
+let _issues = {};
+let _sortCol = 'age';
+let _sortAsc = true;
+let _filterSearch = '';
+// Multi-select filters per column: Set of selected values, empty = all
+let _activeFilters = { account: new Set(), status: new Set(), group: new Set() };
+let _openDropdown = null;
+
+const STATUS_LABELS = {
+  offline:     'Offline (< 24h)',
+  dead_recent: 'Dead 1–7 days',
+  dead_mid:    'Dead 8–90 days',
+};
+
+function buildIssuesTable(issues) {
+  _issues = issues;
   const hidden = Object.values(issues).filter(w => categoryOf(w) === 'dead_old').length;
 
   return `
@@ -299,16 +369,199 @@ function buildIssuesTable(issues) {
         <div class="panel-title">Offline &amp; Dead (≤ 90 days)</div>
         <div class="panel-note">${hidden} archived workers hidden (dead &gt; 90 days)</div>
       </div>
-      ${rows ? `<table class="issues-table">
-        <thead><tr>
-          <th>Worker</th><th>Account</th><th>Datacenter</th>
-          <th>Status</th><th>Last Share (UTC)</th><th>Action</th>
-        </tr></thead>
-        <tbody>${rows}</tbody>
-      </table>` : '<div style="padding:24px;text-align:center;color:#bbb;font-size:13px">✅ All workers online</div>'}
+      <div class="filter-bar">
+        <input class="filter-search" id="issues-search" type="text" placeholder="🔍  Search worker name…" oninput="applyFilters()">
+        <div class="filter-count" id="issues-count"></div>
+        <div class="filter-reset" id="filter-reset-btn" onclick="resetFilters()" style="display:none">✕ Reset filters</div>
+      </div>
+      <div id="issues-table-wrap"></div>
     </div>
   </div>`;
 }
+
+// ── Dropdown management ───────────────────────────────────────────────────────
+
+function openDropdown(col, btn) {
+  // Close existing
+  if (_openDropdown && _openDropdown !== col) closeAllDropdowns();
+
+  const existing = document.getElementById('dd-' + col);
+  if (existing && existing.classList.contains('open')) { closeAllDropdowns(); return; }
+
+  // Build dropdown values from current data
+  let values = [];
+  if (col === 'account') values = [...new Set(Object.values(_issues).filter(w=>categoryOf(w)!=='dead_old').map(w=>w.account))].sort();
+  if (col === 'status')  values = ['offline','dead_recent','dead_mid'];
+  if (col === 'group')   values = [...new Set(Object.values(_issues).filter(w=>categoryOf(w)!=='dead_old').map(w=>w.group_id))].sort();
+
+  const active = _activeFilters[col];
+  const label = col === 'status' ? (v => STATUS_LABELS[v] || v) : (v => v);
+
+  const items = values.map(v => `
+    <label class="col-dropdown-item">
+      <input type="checkbox" onchange="toggleColFilter('${col}','${v}',this.checked)" ${active.has(v)?'checked':''}>
+      ${label(v)}
+    </label>`).join('');
+
+  const dd = document.getElementById('dd-' + col);
+  if (!dd) return;
+  dd.innerHTML = `
+    <div class="col-dropdown-actions">
+      <span class="col-dropdown-action" onclick="selectAllCol('${col}')">Select all</span>
+      <span class="col-dropdown-action" onclick="clearCol('${col}')">Clear</span>
+    </div>
+    <div class="col-dropdown-sep"></div>
+    ${items}`;
+  dd.classList.add('open');
+  _openDropdown = col;
+}
+
+function closeAllDropdowns() {
+  document.querySelectorAll('.col-dropdown').forEach(d => d.classList.remove('open'));
+  _openDropdown = null;
+}
+
+function toggleColFilter(col, val, checked) {
+  if (checked) _activeFilters[col].add(val);
+  else _activeFilters[col].delete(val);
+  applyFilters();
+}
+
+function selectAllCol(col) {
+  _activeFilters[col].clear();
+  applyFilters();
+  closeAllDropdowns();
+}
+
+function clearCol(col) {
+  let values = [];
+  if (col === 'account') values = [...new Set(Object.values(_issues).filter(w=>categoryOf(w)!=='dead_old').map(w=>w.account))];
+  if (col === 'status')  values = ['offline','dead_recent','dead_mid'];
+  if (col === 'group')   values = [...new Set(Object.values(_issues).filter(w=>categoryOf(w)!=='dead_old').map(w=>w.group_id))];
+  // "clear" = keep only unchecked = select none → show nothing? No, treat as "filter to nothing" = show nothing
+  // Better UX: "Clear" = remove filter (= show all)
+  _activeFilters[col].clear();
+  applyFilters();
+  closeAllDropdowns();
+}
+
+function resetFilters() {
+  _activeFilters = { account: new Set(), status: new Set(), group: new Set() };
+  _filterSearch = '';
+  const s = document.getElementById('issues-search');
+  if (s) s.value = '';
+  applyFilters();
+}
+
+// ── Sort + render ─────────────────────────────────────────────────────────────
+
+function sortBy(col) {
+  if (_sortCol === col) _sortAsc = !_sortAsc;
+  else { _sortCol = col; _sortAsc = true; }
+  applyFilters();
+}
+
+function applyFilters() {
+  _filterSearch = (document.getElementById('issues-search')?.value || '').toLowerCase();
+
+  const hasActiveFilters = _filterSearch ||
+    _activeFilters.account.size || _activeFilters.status.size || _activeFilters.group.size;
+
+  const rb = document.getElementById('filter-reset-btn');
+  if (rb) rb.style.display = hasActiveFilters ? 'block' : 'none';
+
+  let rows = Object.values(_issues).filter(w => {
+    if (categoryOf(w) === 'dead_old') return false;
+    if (_activeFilters.account.size && !_activeFilters.account.has(w.account)) return false;
+    if (_activeFilters.status.size  && !_activeFilters.status.has(categoryOf(w))) return false;
+    if (_activeFilters.group.size   && !_activeFilters.group.has(w.group_id)) return false;
+    if (_filterSearch && !w.name.toLowerCase().includes(_filterSearch)) return false;
+    return true;
+  });
+
+  rows.sort((a, b) => {
+    let va, vb;
+    if      (_sortCol==='name')    { va=a.name;       vb=b.name; }
+    else if (_sortCol==='account') { va=a.account;    vb=b.account; }
+    else if (_sortCol==='group')   { va=a.group_id;   vb=b.group_id; }
+    else if (_sortCol==='status')  { va=categoryOf(a);vb=categoryOf(b); }
+    else                           { va=ageHours(a.last_share);vb=ageHours(b.last_share); }
+    if (va<vb) return _sortAsc?-1:1;
+    if (va>vb) return _sortAsc?1:-1;
+    return 0;
+  });
+
+  const wrap = document.getElementById('issues-table-wrap');
+  if (!wrap) return;
+
+  const cnt = document.getElementById('issues-count');
+  const total = Object.values(_issues).filter(w=>categoryOf(w)!=='dead_old').length;
+  if (cnt) cnt.textContent = rows.length === total ? `${total} workers` : `${rows.length} / ${total} workers`;
+
+  // Helper: filter button for column header
+  const filterBtn = (col) => {
+    const active = _activeFilters[col].size > 0;
+    return `<span class="th-filter-btn ${active?'active':''}" onclick="event.stopPropagation();openDropdown('${col}',this)" title="Filter">▼
+      <div class="col-dropdown" id="dd-${col}"></div>
+    </span>`;
+  };
+
+  const si = (col) => `<span class="sort-icon">${_sortCol===col?(_sortAsc?'↑':'↓'):'↕'}</span>`;
+
+  if (rows.length === 0) {
+    wrap.innerHTML = `
+      <table class="issues-table"><thead><tr>
+        <th><div class="th-inner ${_sortCol==='name'?'sorted':''}" onclick="sortBy('name')">Worker ${si('name')}</div></th>
+        <th><div class="th-inner ${_sortCol==='account'?'sorted':''}" onclick="sortBy('account')">Account ${si('account')}</div>${filterBtn('account')}</th>
+        <th><div class="th-inner ${_sortCol==='group'?'sorted':''}" onclick="sortBy('group')">Datacenter ${si('group')}</div>${filterBtn('group')}</th>
+        <th><div class="th-inner ${_sortCol==='status'?'sorted':''}" onclick="sortBy('status')">Status ${si('status')}</div>${filterBtn('status')}</th>
+        <th><div class="th-inner ${_sortCol==='age'?'sorted':''}" onclick="sortBy('age')">Last Share (UTC) ${si('age')}</div></th>
+        <th><div class="th-inner">Action</div></th>
+      </tr></thead></table>
+      <div class="no-results">No workers match the current filters.</div>`;
+    return;
+  }
+
+  const tbody = rows.map(w => {
+    const cat = categoryOf(w);
+    return `<tr>
+      <td><span class="worker-name" style="cursor:pointer;text-decoration:underline dotted" onclick="openWorkerModal('${w.account}.${w.name}')">${w.name}</span></td>
+      <td><span class="account-label">${w.account}</span></td>
+      <td><span class="group-badge">${w.group_id}</span> ${w.provider}</td>
+      <td><span class="age-pill ${pillClass(cat)}">${pillLabel(cat, w.last_share)}</span></td>
+      <td style="color:#aaa;font-size:11px">${w.last_share?new Date(w.last_share).toUTCString().replace(' GMT',''):'—'}</td>
+      <td><span class="action-tag" style="cursor:pointer" onclick="openWorkerModal('${w.account}.${w.name}')">${actionLabel(cat)}</span></td>
+    </tr>`;
+  }).join('');
+
+  wrap.innerHTML = `<table class="issues-table">
+    <thead><tr>
+      <th><div class="th-inner ${_sortCol==='name'?'sorted':''}" onclick="sortBy('name')">Worker ${si('name')}</div></th>
+      <th><div class="th-inner ${_sortCol==='account'?'sorted':''}" onclick="sortBy('account')">Account ${si('account')}</div>${filterBtn('account')}</th>
+      <th><div class="th-inner ${_sortCol==='group'?'sorted':''}" onclick="sortBy('group')">Datacenter ${si('group')}</div>${filterBtn('group')}</th>
+      <th><div class="th-inner ${_sortCol==='status'?'sorted':''}" onclick="sortBy('status')">Status ${si('status')}</div>${filterBtn('status')}</th>
+      <th><div class="th-inner ${_sortCol==='age'?'sorted':''}" onclick="sortBy('age')">Last Share (UTC) ${si('age')}</div></th>
+      <th><div class="th-inner">Action</div></th>
+    </tr></thead>
+    <tbody>${tbody}</tbody>
+  </table>`;
+}
+
+// Close dropdowns on outside click
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.th-filter-btn') && !e.target.closest('.col-dropdown')) {
+    closeAllDropdowns();
+  }
+});
+
+// Expose
+window.openDropdown = openDropdown;
+window.toggleColFilter = toggleColFilter;
+window.selectAllCol = selectAllCol;
+window.clearCol = clearCol;
+window.resetFilters = resetFilters;
+window.sortBy = sortBy;
+window.applyFilters = applyFilters;
 
 function buildDeadTracker(issues) {
   const cats = [
@@ -415,6 +668,113 @@ function switchTab(el, targetId) {
   panel.querySelector('#' + targetId).classList.add('active');
 }
 
+// ── Worker modal ──────────────────────────────────────────────────────────────
+
+function openWorkerModal(key) {
+  const w = _issues[key];
+  if (!w) return;
+
+  const cat   = categoryOf(w);
+  const h     = ageHours(w.last_share);
+  const d     = h / 24;
+
+  // Duration display
+  let durText, durCls, fillCls, fillPct;
+  if (cat === 'offline') {
+    durText = `${Math.round(h)}h offline`;
+    durCls = 'dur-orange'; fillCls = 'fill-orange';
+    fillPct = Math.min(100, (h / 24) * 100);
+  } else if (cat === 'dead_recent') {
+    durText = `${Math.floor(d)}d dead`;
+    durCls = 'dur-red'; fillCls = 'fill-red';
+    fillPct = Math.min(100, (d / 7) * 100);
+  } else if (cat === 'dead_mid') {
+    durText = `${Math.floor(d)}d dead`;
+    durCls = 'dur-red'; fillCls = 'fill-red';
+    fillPct = Math.min(100, ((d - 7) / 83) * 100);
+  } else {
+    durText = `${Math.floor(d)}d dead`;
+    durCls = 'dur-grey'; fillCls = 'fill-grey'; fillPct = 100;
+  }
+
+  // Timeline labels
+  let tlLeft = 'Now', tlRight = '';
+  if (cat === 'offline')     { tlLeft = '1h'; tlRight = '24h'; }
+  if (cat === 'dead_recent') { tlLeft = '1d'; tlRight = '7d'; }
+  if (cat === 'dead_mid')    { tlLeft = '8d'; tlRight = '90d'; }
+
+  // Recommendation
+  let recoTitle, recoText, recoCls = '';
+  if (cat === 'offline') {
+    recoTitle = '👀 Monitor';
+    recoText = 'Worker went offline recently. Wait for the next morning report — may recover on its own. If still offline tomorrow, contact the datacenter.';
+  } else if (cat === 'dead_recent') {
+    recoTitle = '📋 Follow up';
+    recoText = `Worker has been dead for ${Math.floor(d)} day${Math.floor(d)>1?'s':''}. Contact ${w.provider} to investigate. Escalate if no response within 48h.`;
+    recoCls = 'reco-red';
+  } else if (cat === 'dead_mid') {
+    recoTitle = '🔔 Escalate';
+    recoText = `Worker has been dead for ${Math.floor(d)} days. Formal escalation required with ${w.provider}. Consider replacement if no resolution within 7 days.`;
+    recoCls = 'reco-red';
+  } else {
+    recoTitle = '📦 Archive';
+    recoText = `Worker has been dead for over 90 days. Likely permanently offline. No further action unless the miner is recovered.`;
+  }
+
+  const lastShareFmt = w.last_share
+    ? new Date(w.last_share).toUTCString().replace(' GMT', ' UTC')
+    : 'Never';
+
+  const f2poolUrl = `https://www.f2pool.com/mining-user/${w.account === 'cmine' ? 'dad5e8d0452ce3262084e3afef6003ec' : 'd87416827c22b5c9aadb86e10535c4e0'}?user_name=${w.account}`;
+
+  document.getElementById('worker-modal-inner').innerHTML = `
+    <div class="modal-head">
+      <div>
+        <div class="modal-worker">${w.name}</div>
+        <div style="margin-top:4px"><span class="age-pill ${pillClass(cat)}">${pillLabel(cat, w.last_share)}</span></div>
+      </div>
+      <div class="modal-close" onclick="closeModal()">✕</div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-row">
+        <div class="modal-field"><div class="mf-label">Account</div><div class="mf-value">${w.account_name || w.account}</div></div>
+        <div class="modal-field"><div class="mf-label">Datacenter</div><div class="mf-value"><span class="group-badge">${w.group_id}</span> ${w.provider}</div></div>
+      </div>
+      <div class="modal-row">
+        <div class="modal-field"><div class="mf-label">Host / IP</div><div class="mf-value mono">${w.host || '—'}</div></div>
+        <div class="modal-field"><div class="mf-label">Last Share</div><div class="mf-value mono" style="font-size:11px">${lastShareFmt}</div></div>
+      </div>
+      <div class="modal-status-bar">
+        <div class="modal-status-top">
+          <div class="modal-status-label">Duration without share</div>
+          <div class="modal-duration ${durCls}">${durText}</div>
+        </div>
+        <div class="modal-timeline">
+          <div class="modal-timeline-fill ${fillCls}" style="width:${fillPct}%"></div>
+        </div>
+        <div class="modal-timeline-labels"><span>${tlLeft}</span><span>${tlRight}</span></div>
+      </div>
+      <div class="modal-reco ${recoCls}">
+        <div class="reco-title">${recoTitle}</div>
+        ${recoText}
+      </div>
+    </div>
+    <div class="modal-foot">
+      <a class="modal-f2pool-link" href="${f2poolUrl}" target="_blank">→ View on f2pool ↗</a>
+      <div style="font-size:11px;color:#ddd">ESC to close</div>
+    </div>`;
+
+  document.getElementById('worker-modal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('worker-modal').classList.remove('open');
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+window.openWorkerModal = openWorkerModal;
+window.closeModal = closeModal;
+
 // ── Render ────────────────────────────────────────────────────────────────────
 
 async function render() {
@@ -455,6 +815,9 @@ async function render() {
   app.style.display = 'flex';
   app.style.flexDirection = 'column';
   app.style.gap = '20px';
+
+  // Populate the issues table (filter + sort engine)
+  applyFilters();
 }
 
 render();

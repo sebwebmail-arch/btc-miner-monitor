@@ -49,11 +49,17 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 
 /* ── DC Grid ── */
 .dc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; padding: 16px 20px; }
-.dc-cell { border-radius: 8px; padding: 12px 10px; text-align: center; border: 1px solid #eee; transition: transform .1s; }
-.dc-cell:hover { transform: translateY(-1px); }
+.dc-cell { border-radius: 8px; padding: 12px 10px; text-align: center; border: 1px solid #eee; transition: transform .1s, box-shadow .1s; cursor: pointer; position: relative; }
+.dc-cell:hover { transform: translateY(-2px); box-shadow: 0 3px 10px rgba(0,0,0,.08); }
 .dc-cell.ok       { background: #f0faf4; border-color: #a8ddb8; }
 .dc-cell.warn     { background: #fff8f0; border-color: #f5cba7; }
 .dc-cell.critical { background: #fdf0ef; border-color: #f5b7b1; }
+/* Sélection active */
+.dc-cell.dc-selected                  { box-shadow: 0 0 0 2.5px #1a1a2e !important; transform: translateY(-2px); }
+.dc-cell.dc-selected::after           { content: '✓'; position: absolute; top: 4px; right: 6px; font-size: 9px; font-weight: 800; color: #1a1a2e; }
+.dc-cell.ok.dc-selected               { background: #c8edd6; border-color: #27ae60; }
+.dc-cell.warn.dc-selected             { background: #fad9b0; border-color: #e67e22; }
+.dc-cell.critical.dc-selected         { background: #f9c0bb; border-color: #c0392b; }
 .dc-group { font-size: 9px; color: #bbb; font-weight: 700; margin-bottom: 2px; }
 .dc-name  { font-size: 11px; font-weight: 700; color: #444; margin-bottom: 6px; }
 .dc-status { font-size: 20px; font-weight: 800; }
@@ -61,6 +67,13 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .dc-cell.warn .dc-status { color: #e67e22; }
 .dc-cell.critical .dc-status { color: #c0392b; }
 .dc-sub { font-size: 10px; color: #aaa; margin-top: 3px; }
+/* Bandeau filtre DC actif */
+.dc-filter-bar { display: none; padding: 8px 20px; background: #f0f4ff; border-top: 1px solid #dde4ff; font-size: 11px; color: #3730a3; align-items: center; gap: 8px; }
+.dc-filter-bar.visible { display: flex; }
+.dc-filter-bar-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.dc-filter-tag { background: #1a1a2e; color: white; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; }
+.dc-filter-clear { margin-left: auto; color: #c0392b; cursor: pointer; font-weight: 600; white-space: nowrap; }
+.dc-filter-clear:hover { text-decoration: underline; }
 
 /* ── Filter bar ── */
 .filter-bar { padding: 10px 16px; border-bottom: 1px solid #f0f0f0; display: flex; gap: 8px; align-items: center; background: #fafafa; }
@@ -350,7 +363,8 @@ function buildDCGrid(issues, accountKey) {
     const cls = issueCount === 0 ? 'ok' : issueCount <= 3 ? 'warn' : 'critical';
     const statusText = issueCount === 0 ? '✓' : String(issueCount);
     const subText = issueCount === 0 ? 'all online' : `issue${issueCount > 1 ? 's' : ''}`;
-    return `<div class="dc-cell ${cls}">
+    const sel = _dcFilter.has(gid) ? 'dc-selected' : '';
+    return `<div class="dc-cell ${cls} ${sel}" data-group="${gid}" onclick="toggleDcFilter('${gid}')">
       <div class="dc-group">${gid}</div>
       <div class="dc-name">${gmeta.name}</div>
       <div class="dc-status">${statusText}</div>
@@ -373,6 +387,7 @@ function buildDatacenters(issues) {
     <div class="panel">
       <div class="tabs">${tabs}</div>
       ${contents}
+      <div class="dc-filter-bar" id="dc-filter-bar"></div>
     </div>
   </div>`;
 }
@@ -386,6 +401,51 @@ let _filterSearch = '';
 // Multi-select filters per column: Set of selected values, empty = all
 let _activeFilters = { account: new Set(), status: new Set(), group: new Set() };
 let _openDropdown = null;
+
+// ── Filtre datacenter global (cross-table, cross-account) ─────────────────────
+let _dcFilter = new Set(); // Set de group_ids (ex: 'E1', 'P1')
+
+function toggleDcFilter(groupId) {
+  if (_dcFilter.has(groupId)) _dcFilter.delete(groupId);
+  else _dcFilter.add(groupId);
+
+  // Met à jour le visuel de toutes les cellules DC avec ce groupId
+  document.querySelectorAll(`.dc-cell[data-group="${groupId}"]`).forEach(cell => {
+    cell.classList.toggle('dc-selected', _dcFilter.has(groupId));
+  });
+
+  // Bandeau d'indication filtre actif
+  updateDcFilterBar();
+
+  // Re-filtre les deux tables
+  applyFilters();
+  renderOnlineTable();
+}
+
+function clearDcFilter() {
+  _dcFilter.clear();
+  document.querySelectorAll('.dc-cell.dc-selected').forEach(c => c.classList.remove('dc-selected'));
+  updateDcFilterBar();
+  applyFilters();
+  renderOnlineTable();
+}
+
+function updateDcFilterBar() {
+  const bar = document.getElementById('dc-filter-bar');
+  if (!bar) return;
+  if (_dcFilter.size === 0) {
+    bar.classList.remove('visible');
+    return;
+  }
+  bar.classList.add('visible');
+  const tags = [..._dcFilter].map(g => `<span class="dc-filter-tag">${g}</span>`).join('');
+  bar.innerHTML = `<span style="font-weight:600">Filter active:</span>
+    <div class="dc-filter-bar-tags">${tags}</div>
+    <span class="dc-filter-clear" onclick="clearDcFilter()">✕ Clear datacenter filter</span>`;
+}
+
+window.toggleDcFilter = toggleDcFilter;
+window.clearDcFilter  = clearDcFilter;
 
 const STATUS_LABELS = {
   offline:     'Offline (< 24h)',
@@ -486,7 +546,7 @@ function resetFilters() {
   _filterSearch = '';
   const s = document.getElementById('issues-search');
   if (s) s.value = '';
-  applyFilters();
+  clearDcFilter();
 }
 
 // ── Sort + render ─────────────────────────────────────────────────────────────
@@ -508,6 +568,7 @@ function applyFilters() {
 
   let rows = Object.values(_issues).filter(w => {
     if (categoryOf(w) === 'dead_old') return false;
+    if (_dcFilter.size              && !_dcFilter.has(w.group_id)) return false;
     if (_activeFilters.account.size && !_activeFilters.account.has(w.account)) return false;
     if (_activeFilters.status.size  && !_activeFilters.status.has(categoryOf(w))) return false;
     if (_activeFilters.group.size   && !_activeFilters.group.has(w.group_id)) return false;
@@ -1080,7 +1141,7 @@ function resetOnlineFilters() {
   _onlineSearch = '';
   const s = document.getElementById('online-search');
   if (s) s.value = '';
-  renderOnlineTable();
+  clearDcFilter();
 }
 
 window.openOnlineDropdown  = openOnlineDropdown;
@@ -1171,6 +1232,7 @@ function renderOnlineTable() {
   if (rb) rb.style.display = hasFilters ? 'block' : 'none';
 
   let workers = all.filter(w => {
+    if (_dcFilter.size                 && !_dcFilter.has(w.groupId))                   return false;
     if (_onlineFilters.account.size    && !_onlineFilters.account.has(w.accountName)) return false;
     if (_onlineFilters.datacenter.size && !_onlineFilters.datacenter.has(w.groupId))  return false;
     if (_onlineFilters.status.size     && !_onlineFilters.status.has(w.statusKey))    return false;

@@ -1512,8 +1512,9 @@ function buildAccountHashrateChart(accountUser, rangeH) {
   const W = 860, H = 150, PL = 64, PR = 16, PT = 14, PB = 28;
   const cW = W - PL - PR, cH = H - PT - PB;
 
-  const maxHR = Math.max(...pts.map(p => p.hr), 1);
-  const maxTH = maxHR / 1e12;
+  const maxHR  = Math.max(...pts.map(p => p.hr), 1);
+  const maxTH  = maxHR / 1e12;
+  const gradId = `hrGrad${accountUser}`;   // ← déclaré avant fillElems
 
   // Axe X fixe = fenêtre demandée (maintenant - rangeH → maintenant)
   // Les points se positionnent à l'intérieur, comme f2pool
@@ -1568,7 +1569,6 @@ function buildAccountHashrateChart(accountUser, rangeH) {
   }
 
   const lastTH  = (pts[pts.length-1].hr / 1e12).toFixed(0);
-  const gradId  = `hrGrad${accountUser}`;
 
   // Stocke les données pour le tooltip hover
   _hrChartData[accountUser] = { pts, tAxisStart, tAxisSpan, maxHR };

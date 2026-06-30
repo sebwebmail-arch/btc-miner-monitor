@@ -1,0 +1,14 @@
+{
+  "name": "btc-miner-monitor",
+  "version": "1.0.0",
+  "description": "Bitcoin miner worker monitor — f2pool API + Resend alerts",
+  "main": "monitor.js",
+  "scripts": {
+    "start": "node monitor.js",
+    "test": "node monitor.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "UNLICENSED"
+}

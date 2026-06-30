@@ -1,0 +1,31 @@
+name: Bitcoin Miner Monitor
+
+on:
+  schedule:
+    # Chaque jour à 07:00 UTC (09:00 Paris heure d'été)
+    - cron: '0 7 * * *'
+  workflow_dispatch:
+    # Permet de lancer manuellement depuis GitHub Actions
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run monitor
+        working-directory: btc-miner-monitor
+        env:
+          F2POOL_TOKEN_CMINE: ${{ secrets.F2POOL_TOKEN_CMINE }}
+          F2POOL_TOKEN_EVERMINER: ${{ secrets.F2POOL_TOKEN_EVERMINER }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          ALERT_EMAIL: ${{ secrets.ALERT_EMAIL }}
+          ALERT_FROM: ${{ secrets.ALERT_FROM }}
+        run: node monitor.js

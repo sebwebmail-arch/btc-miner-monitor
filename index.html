@@ -395,7 +395,7 @@ function buildDatacenters(issues) {
 // ── Issues table — filtres style Excel + tri par colonne ─────────────────────
 
 let _issues = {};
-let _sortCol = 'age';
+let _sortCol = 'account';
 let _sortAsc = true;
 let _filterSearch = '';
 // Multi-select filters per column: Set of selected values, empty = all
@@ -585,7 +585,10 @@ function applyFilters() {
     else                           { va=ageHours(a.last_share);vb=ageHours(b.last_share); }
     if (va<vb) return _sortAsc?-1:1;
     if (va>vb) return _sortAsc?1:-1;
-    return 0;
+    // Tie-break : account → group → name
+    if (_sortCol!=='account' && a.account !== b.account) return a.account < b.account ? -1 : 1;
+    if (_sortCol!=='group'   && a.group_id !== b.group_id) return a.group_id < b.group_id ? -1 : 1;
+    return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
   });
 
   const wrap = document.getElementById('issues-table-wrap');

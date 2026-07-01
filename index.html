@@ -1692,6 +1692,11 @@ function buildAccountHashrateChart(accountUser, rangeH) {
       ${fillElems}
       ${dashElems}
       ${lineElems}
+      <!-- Live dot — pulsing ring + solid center -->
+      <circle cx="${px(pts.length-1).toFixed(1)}" cy="${py(pts.length-1).toFixed(1)}" r="3.5" fill="#3498db" opacity="0.25">
+        <animate attributeName="r"       values="3.5;11;3.5"   dur="2.8s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.25;0;0.25"  dur="2.8s" repeatCount="indefinite"/>
+      </circle>
       <circle cx="${px(pts.length-1).toFixed(1)}" cy="${py(pts.length-1).toFixed(1)}" r="3.5" fill="#3498db"/>
       <!-- Hover elements -->
       <line id="hrc-cross-${accountUser}" x1="0" y1="${PT}" x2="0" y2="${PT+cH}" stroke="#3498db" stroke-width="1" stroke-dasharray="4,3" opacity="0" pointer-events="none"/>

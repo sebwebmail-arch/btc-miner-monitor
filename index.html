@@ -14,8 +14,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 /* ── Topbar ── */
 .topbar { background: #1a1a2e; padding: 14px 28px; display: flex; align-items: center; gap: 12px; color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,.3); }
 .topbar img { width: 36px; height: 36px; }
-.topbar .title { font-size: 17px; font-weight: 700; }
-.topbar .subtitle { font-size: 11px; color: rgba(255,255,255,.45); margin-top: 1px; }
+.topbar .title { font-size: 17px; font-weight: 700; white-space: nowrap; }
+.topbar .subtitle { font-size: 11px; color: rgba(255,255,255,.45); margin-top: 1px; white-space: nowrap; }
 .topbar .spacer { flex: 1; }
 .topbar .updated { font-size: 11px; color: rgba(255,255,255,.4); text-align: right; }
 .topbar .updated span { color: rgba(255,255,255,.7); font-weight: 600; }
@@ -263,7 +263,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
     <div class="subtitle">Bitcoin Miner Fleet Monitor</div>
   </div>
   <div class="spacer"></div>
-  <div class="updated" id="topbar-updated">Loading…</div>
 </div>
 
 <div class="page">
@@ -383,7 +382,10 @@ function buildHealthCards(issues, snapshots) {
 
   return `
   <div>
-    <div class="section-label">Fleet health — all accounts</div>
+    <div class="section-label" style="display:flex;justify-content:space-between;align-items:baseline">
+      <span>Fleet health — all accounts</span>
+      <span id="fleet-last-update" style="font-size:10px;color:#bbb;font-weight:400;letter-spacing:0;text-transform:none"></span>
+    </div>
     <div class="health-row">
       <div class="health-card card-online">
         <div class="label">Online</div>
@@ -1567,18 +1569,7 @@ async function render() {
     const d = new Date(iso);
     return `${d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',timeZone:'UTC'})} at ${d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:'UTC'})} UTC`;
   };
-  const hrTs  = _hashrate?.last_updated || null;
   const monTs = data.last_updated || null;
-  let topbarHtml;
-  if (hrTs) {
-    const monPart = monTs ? ` · Daily check: ${fmtTs(monTs)}` : '';
-    topbarHtml = `Hashrate: <span>${fmtTs(hrTs)}</span><span style="color:rgba(255,255,255,.25);font-size:10px">${monPart}</span>`;
-  } else if (monTs) {
-    topbarHtml = `Last check: <span>${fmtTs(monTs)}</span>`;
-  } else {
-    topbarHtml = 'No data yet';
-  }
-  document.getElementById('topbar-updated').innerHTML = topbarHtml;
 
   // Render sections
   const app = document.getElementById('app');
@@ -1593,6 +1584,10 @@ async function render() {
   app.style.display = 'flex';
   app.style.flexDirection = 'column';
   app.style.gap = '20px';
+
+  // Last update under Fleet health
+  const lu = document.getElementById('fleet-last-update');
+  if (lu && monTs) lu.textContent = `Last update: ${fmtTs(monTs)}`;
 
   // Populate workers requiring attention (sections lifecycle)
   renderDeadTracker();

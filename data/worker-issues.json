@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-01T06:00:59.401Z",
+  "last_updated": "2026-07-01T06:30:53.155Z",
   "issues": {
     "cmine.r20333": {
       "account": "cmine",
@@ -8,11 +8,11 @@
       "group_id": "R1",
       "provider": "IZTM",
       "type": "volatile",
-      "current_avg_ths": 43,
-      "baseline_avg_ths": 45.2,
-      "drop_pct": 5,
-      "cv_pct": 92,
-      "zero_rate_pct": 17
+      "current_avg_ths": 47.6,
+      "baseline_avg_ths": 43.4,
+      "drop_pct": -10,
+      "cv_pct": 75,
+      "zero_rate_pct": 0
     }
   }
 }

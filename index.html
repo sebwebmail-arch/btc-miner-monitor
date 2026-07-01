@@ -493,8 +493,7 @@ function updateDcFilterBar() {
   }
   bar.classList.add('visible');
   const tags = [..._dcFilter].map(g => `<span class="dc-filter-tag">${g}</span>`).join('');
-  bar.innerHTML = `<span style="font-weight:600">Filter active:</span>
-    <div class="dc-filter-bar-tags">${tags}</div>
+  bar.innerHTML = `<div class="dc-filter-bar-tags">${tags}</div>
     <span class="dc-filter-clear" onclick="clearDcFilter()">✕ Clear datacenter filter</span>`;
 }
 

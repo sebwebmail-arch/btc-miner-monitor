@@ -290,8 +290,12 @@ body::after {
   .section-label { font-size: 9px; letter-spacing: 0.08em; }
   .section-note  { font-size: 10px; }
 
-  /* Dead tracker : cacher colonne Account sur mobile */
-  .dead-col-acct { display: none !important; }
+  /* Dead tracker : cacher colonne + filtre Account sur mobile */
+  .dead-col-acct     { display: none !important; }
+  .dead-filter-account { display: none !important; }
+
+  /* Search input : autoriser shrink pour que le count rentre */
+  .filter-search { min-width: 0; }
 
   /* Hide less critical columns on mobile */
   .mob-hide { display: none !important; }
@@ -626,7 +630,7 @@ function buildDeadTracker(issues) {
       <div class="filter-bar">
         <input class="filter-search" id="dead-search" type="text" placeholder="🔍  Search worker name…" oninput="onDeadSearch()">
         <div style="display:flex;gap:6px;flex-shrink:0">
-          <span class="th-filter-btn" id="dead-btn-account" onclick="event.stopPropagation();openDeadDD('account',this)">Account ▼<div class="col-dropdown" id="dead-dd-account"></div></span>
+          <span class="th-filter-btn dead-filter-account" id="dead-btn-account" onclick="event.stopPropagation();openDeadDD('account',this)">Account ▼<div class="col-dropdown" id="dead-dd-account"></div></span>
           <span class="th-filter-btn" id="dead-btn-datacenter" onclick="event.stopPropagation();openDeadDD('datacenter',this)">Datacenter ▼<div class="col-dropdown" id="dead-dd-datacenter"></div></span>
         </div>
         <div class="filter-count" id="dead-count"></div>

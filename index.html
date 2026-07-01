@@ -279,6 +279,8 @@ body::after {
   .issues-table .th-inner { padding: 7px 7px; }
   .online-table td { padding: 6px 7px; }
   .online-table .th-inner { padding: 7px 7px; }
+  /* NOW TH/s : cacher le suffixe " TH/s" pour gagner de la place */
+  .hr-unit { display: none; }
   /* Headers : réduire letter-spacing qui force les colonnes larges */
   .issues-table th, .online-table th { letter-spacing: 0.3px; font-size: 9px; }
   /* Pill plus compact */
@@ -1382,7 +1384,7 @@ function renderOnlineTable() {
       <td class="online-acct"><span class="account-label acct-long">${w.accountName}</span><span class="account-label acct-short" style="display:none">${w.accountUser}</span></td>
       <td class="td-dc"><span class="group-badge">${w.groupId}</span><span class="prov-name"> ${w.provider}</span></td>
       <td>${statusCell}</td>
-      <td class="hr-now">${nowTH} TH/s</td>
+      <td class="hr-now">${nowTH}<span class="hr-unit"> TH/s</span></td>
       <td class="hr-avg mob-hide">${avg3TH} TH/s</td>
       <td class="spark-td mob-hide">${spark}</td>
       <td class="mob-hide"><span class="action-tag" style="cursor:pointer" onclick="openWorkerModal('${w.key}')">${MONITOR_SVG}Monitor</span></td>

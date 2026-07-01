@@ -1727,7 +1727,10 @@ function buildHashrateSection() {
 
   return `
   <div>
-    <div class="section-label">Hashrate — by account</div>
+    <div class="section-label" style="display:flex;justify-content:space-between;align-items:baseline">
+      <span>Hashrate — by account</span>
+      <span style="font-size:10px;color:#bbb;font-weight:400;letter-spacing:0;text-transform:none">⏱ Real-time hashrate · updated every 30 min</span>
+    </div>
     <div class="panel">
       <div class="tabs">${tabs}</div>
       ${contents}

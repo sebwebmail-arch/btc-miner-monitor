@@ -66,6 +66,19 @@
 [data-theme="dark"] .filter-search,
 [data-theme="dark"] .col-dropdown-search { background: var(--bg-surface); }
 
+/* Anomaly row tints */
+.row-drop { background: #fffbfb; }
+.row-volt { background: #fffef5; }
+[data-theme="dark"] .row-drop { background: rgba(244,113,113,0.06); }
+[data-theme="dark"] .row-volt { background: rgba(212,160,23,0.07); }
+
+/* Modal range button active — dark mode */
+[data-theme="dark"] .range-btn.active {
+  background: var(--accent-orange-dim);
+  color: var(--accent-orange);
+  border-color: var(--accent-orange-border);
+}
+
 /* SVG chart tooltip override (presentation attrs < CSS specificity) */
 [data-theme="dark"] .hr-tip-bg   { fill: #242318; stroke: #3a3927; }
 [data-theme="dark"] .hr-tip-dot  { fill: #242318; }
@@ -1464,18 +1477,18 @@ function renderOnlineTable() {
     const avg3TH = (w.avg3h  / 1e12).toFixed(1);
     const spark  = miniSparkline(w.key, 12);
 
-    let statusCell, rowStyle = '';
+    let statusCell, rowClass = '';
     if (w.issue?.type === 'level_drop') {
       statusCell = `<span class="anomaly-badge badge-drop">${DROP_SVG}<span class="badge-label"> Drop ${w.issue.drop_pct}%</span></span>`;
-      rowStyle   = 'background:#fffbfb';
+      rowClass   = 'row-drop';
     } else if (w.issue?.type === 'volatile') {
       statusCell = `<span class="anomaly-badge badge-volt">${WAVE_SVG}<span class="badge-label"> Unstable</span></span>`;
-      rowStyle   = 'background:#fffef5';
+      rowClass   = 'row-volt';
     } else {
       statusCell = `<span style="color:#27ae60;font-size:12px;font-weight:600">✓</span>`;
     }
 
-    return `<tr style="${rowStyle}">
+    return `<tr class="${rowClass}">
       <td><span class="worker-name" style="cursor:pointer;text-decoration:underline dotted" onclick="openWorkerModal('${w.key}')">${w.workerName}</span></td>
       <td class="online-acct"><span class="account-label acct-long">${w.accountName}</span><span class="account-label acct-short" style="display:none">${w.accountUser}</span></td>
       <td class="td-dc"><span class="group-badge">${w.groupId}</span><span class="prov-name"> ${w.provider}</span></td>

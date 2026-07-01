@@ -443,7 +443,10 @@ function buildDatacenters(issues) {
 
   return `
   <div>
-    <div class="section-label">Datacenters at a glance</div>
+    <div class="section-label" style="display:flex;justify-content:space-between;align-items:baseline">
+      <span>Datacenters at a glance</span>
+      <span style="font-size:10px;color:#bbb;font-weight:400;letter-spacing:0;text-transform:none" title="Workers going offline after 05:00 UTC appear here but not in the attention table until next morning run">⏱ Real-time offline · updated every 30 min</span>
+    </div>
     <div class="panel">
       <div class="tabs">${tabs}</div>
       ${contents}
@@ -525,7 +528,7 @@ function buildIssuesTable(issues) {
     <div class="panel panel-table">
       <div class="panel-header">
         <div class="panel-title">Offline &amp; Dead (≤ 90 days)</div>
-        <div class="panel-note" style="color:#bbb" title="Workers going offline after 05:00 UTC appear in datacenter cards but will only show here from the next morning run">⏱ Daily snapshot — 05:00 UTC · DC cards reflect real-time offline (updated every 30 min)</div>
+        <div class="panel-note" style="color:#bbb" title="Workers going offline after 05:00 UTC will appear here from the next morning run">⏱ Daily snapshot — updated at 05:00 UTC</div>
       </div>
       <div class="filter-bar">
         <input class="filter-search" id="issues-search" type="text" placeholder="🔍  Search worker name…" oninput="applyFilters()">

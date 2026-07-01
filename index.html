@@ -305,8 +305,14 @@ function getGroupFromName(name) {
   return GROUPS_RULES.find(g => g.test(name)) || { id:'?', provider:'Unknown' };
 }
 
-// Icône "signal instable" — courbe oscillante SVG noire
-const WAVE_SVG = `<svg width="15" height="9" viewBox="0 0 15 9" style="display:inline-block;vertical-align:middle;margin-right:3px" fill="none"><path d="M0,6 L1.5,3 L3,7.5 L5,1 L6.5,7 L8,2 L9.5,7 L11,1.5 L12.5,6 L15,3" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+// Icône "signal instable" — courbe oscillante
+const WAVE_SVG = `<svg width="15" height="9" viewBox="0 0 15 9" style="display:inline-block;vertical-align:middle;margin-right:3px" fill="none"><path d="M0,6 L1.5,3 L3,7.5 L5,1 L6.5,7 L8,2 L9.5,7 L11,1.5 L12.5,6 L15,3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+// Icône "Monitor" — courbe de signal avec point actif
+const MONITOR_SVG = `<svg width="20" height="13" viewBox="0 0 20 13" style="display:inline-block;vertical-align:middle;margin-right:4px" fill="none"><line x1="1" y1="12" x2="1" y2="1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-opacity="0.45"/><line x1="1" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-opacity="0.45"/><path d="M1,10 L4,10 L6,4 L8,8 L10,2 L12,6 L14,3 L16,7 L18,5 L19,6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="19" cy="6" r="2" fill="currentColor"/></svg>`;
+
+// Icône "Follow up" — carnet à spirale avec crochet de validation
+const FOLLOWUP_SVG = `<svg width="13" height="16" viewBox="0 0 13 16" style="display:inline-block;vertical-align:middle;margin-right:4px" fill="none"><rect x="2.5" y="0.5" width="10" height="15" rx="2" stroke="currentColor" stroke-width="1.4"/><circle cx="2.5" cy="4" r="1.5" stroke="currentColor" stroke-width="1.2"/><circle cx="2.5" cy="8" r="1.5" stroke="currentColor" stroke-width="1.2"/><circle cx="2.5" cy="12" r="1.5" stroke="currentColor" stroke-width="1.2"/><line x1="5.5" y1="5" x2="11" y2="5" stroke="currentColor" stroke-width="0.9" stroke-opacity="0.4"/><line x1="5.5" y1="8" x2="11" y2="8" stroke="currentColor" stroke-width="0.9" stroke-opacity="0.4"/><path d="M5,13 L7,15.5 L12,10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
 const GROUPS_META = {
   'R1':   { name: 'IZTM' },
@@ -356,8 +362,8 @@ function pillLabel(cat, isoStr) {
   return `Dead ${age}`;
 }
 function actionLabel(cat) {
-  if (cat === 'offline')     return '👀 Monitor';
-  if (cat === 'dead_recent') return '📋 Follow up';
+  if (cat === 'offline')     return `${MONITOR_SVG}Monitor`;
+  if (cat === 'dead_recent') return `${FOLLOWUP_SVG}Follow up`;
   if (cat === 'dead_mid')    return '🔔 Escalate';
   return '📦 Archive';
 }
@@ -848,10 +854,10 @@ function openWorkerModal(key) {
     recoTitle = '✓ Active';
     recoText  = `Worker is online and mining${lastHRTH ? ` at ${lastHRTH} TH/s` : ''}. Hashrate tracked every 30 minutes.`;
   } else if (cat === 'offline') {
-    recoTitle = '👀 Monitor';
+    recoTitle = `${MONITOR_SVG}Monitor`;
     recoText  = 'Worker went offline recently. Wait for the next morning report — may recover on its own. If still offline tomorrow, contact the datacenter.';
   } else if (cat === 'dead_recent') {
-    recoTitle = '📋 Follow up';
+    recoTitle = `${FOLLOWUP_SVG}Follow up`;
     recoText  = `Worker has been dead for ${Math.floor(d)} day${Math.floor(d)>1?'s':''}. Contact ${w.provider} to investigate. Escalate if no response within 48h.`;
     recoCls   = 'reco-red';
   } else if (cat === 'dead_mid') {
@@ -1346,7 +1352,7 @@ function renderOnlineTable() {
       <td class="hr-now">${nowTH} TH/s</td>
       <td class="hr-avg mob-hide">${avg3TH} TH/s</td>
       <td class="spark-td mob-hide">${spark}</td>
-      <td class="mob-hide"><span class="action-tag" style="cursor:pointer" onclick="openWorkerModal('${w.key}')">📈 Monitor</span></td>
+      <td class="mob-hide"><span class="action-tag" style="cursor:pointer" onclick="openWorkerModal('${w.key}')">${MONITOR_SVG}Monitor</span></td>
     </tr>`;
   }).join('');
 

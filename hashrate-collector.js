@@ -15,6 +15,7 @@ const ACCOUNTS = [
   {
     name:           'Cyberian Mine',
     user:           'cmine',
+    readKey:        'dad5e8d0452ce3262084e3afef6003ec',
     token:          process.env.F2POOL_TOKEN_CMINE,
     alertEmail:     process.env.ALERT_EMAIL_CMINE    || process.env.ALERT_EMAIL || 'support@cyberianmine.de',
     telegramChatId: process.env.TELEGRAM_CHAT_ID_CMINE || process.env.TELEGRAM_CHAT_ID,
@@ -22,6 +23,7 @@ const ACCOUNTS = [
   {
     name:           'Everminer',
     user:           'everminer',
+    readKey:        'd87416827c22b5c9aadb86e10535c4e0',
     token:          process.env.F2POOL_TOKEN_EVERMINER,
     alertEmail:     process.env.ALERT_EMAIL_EVERMINER  || process.env.ALERT_EMAIL || 'support@cyberianmine.de',
     telegramChatId: process.env.TELEGRAM_CHAT_ID_EVERMINER || process.env.TELEGRAM_CHAT_ID,
@@ -75,6 +77,30 @@ const MIN_ACTIVE_TH    = 5e12; // baseline doit dépasser 5 TH/s pour être anal
 const WORKER_COOLDOWN_H = 8;   // pas de re-alerte sur le même worker avant 8h
 
 // ─── f2pool API ───────────────────────────────────────────────────────────────
+
+// Fetch hashrate chart data (Total + ATO) via the public f2pool web endpoint
+// URL discovered from browser network requests on the public mining-user page
+async function fetchATO(account) {
+  const url = `https://www.f2pool.com/mining-user/${account.readKey}?user_name=${account.user}&params=user_name%3D${account.user}&action=load_by_duration&duration=1`;
+  try {
+    const res = await fetch(url, {
+      headers: {
+        'Accept': 'application/json, text/javascript, */*',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Referer': `https://www.f2pool.com/mining-user/${account.readKey}?user_name=${account.user}`,
+        'User-Agent': 'Mozilla/5.0 (compatible; capone-watcher/1.0)',
+      },
+    });
+    if (!res.ok) { console.warn(`   ⚠️  ATO ${account.user}: HTTP ${res.status}`); return null; }
+    const data = await res.json();
+    // Log full response to discover structure (Total / ATO / Rejected fields)
+    console.log(`   [ATO response] ${account.user}: ${JSON.stringify(data).slice(0, 600)}`);
+    return data;
+  } catch (err) {
+    console.warn(`   ⚠️  ATO ${account.user}: ${err.message}`);
+    return null;
+  }
+}
 
 async function fetchWorkers(account) {
   const res = await fetch(F2POOL_API, {
@@ -583,7 +609,9 @@ async function main() {
   const alertState  = loadAlertState();
   const allWorkers  = {}; // { accountUser: [workers] }
 
-  // ── 1. Fetch tous les workers ─────────────────────────────────────────────
+  const atoData = {}; // { user: raw response from load_by_duration }
+
+  // ── 1. Fetch tous les workers + ATO ──────────────────────────────────────
   for (const account of ACCOUNTS) {
     if (!account.token) { console.warn(`⚠️  Token manquant pour ${account.name}`); continue; }
     console.log(`📡 Fetch — ${account.name} (${account.user})...`);
@@ -594,6 +622,8 @@ async function main() {
       console.error(`   ❌ Erreur: ${err.message}`);
       allWorkers[account.user] = [];
     }
+    // Fetch ATO via public web endpoint (no auth required, uses read key)
+    atoData[account.user] = await fetchATO(account);
   }
 
   // ── 2. Détection chutes par groupe (avant de sauvegarder les nouveaux points) ──

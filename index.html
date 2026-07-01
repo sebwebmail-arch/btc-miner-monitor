@@ -131,7 +131,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .dead-row:last-child td { border-bottom: none; }
 .dead-row .dw { font-family: monospace; font-size: 12px; font-weight: 600; white-space: nowrap; }
 .dead-row .dp { font-size: 11px; color: #aaa; }
-.dead-row .dd { font-size: 12px; font-weight: 700; text-align: right; white-space: nowrap; padding-right: 0 !important; }
+.dead-row .dd { font-size: 12px; font-weight: 700; white-space: nowrap; }
 .dead-row.red .dd { color: #c0392b; } .dead-row.orange .dd { color: #e67e22; } .dead-row.grey .dd { color: #bbb; }
 .dead-account { font-size: 11px; color: #999; }
 .dead-empty { font-size: 12px; color: #ccc; font-style: italic; padding: 8px 0; }
@@ -771,7 +771,7 @@ function buildDeadTracker(issues) {
           <th style="${thStyle}">Datacenter</th>
           <th style="${thStyle}">Account</th>
           <th class="mob-hide" style="${thStyle}">Host</th>
-          <th style="${thStyle};text-align:right;padding-right:0">Since</th>
+          <th style="${thStyle}">Since</th>
         </tr></thead>
         <tbody>${rows}</tbody>
       </table>

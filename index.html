@@ -198,6 +198,7 @@ body::after {
 .spark-td { line-height: 0; }
 
 /* ── Online workers table ── */
+.online-table-outer { padding: 0 20px; }
 .online-table { width: 100%; border-collapse: collapse; }
 .online-table th { font-size: 10px; color: var(--text-muted); font-weight: 600; letter-spacing: .8px; text-transform: uppercase; padding: 0; text-align: left; background: var(--bg-surface); border-bottom: 1px solid var(--border); white-space: nowrap; position: relative; }
 .online-table td { padding: 9px 16px; border-bottom: 1px solid var(--border); font-size: 12px; vertical-align: middle; color: var(--text-primary); }
@@ -281,6 +282,8 @@ body::after {
   .online-table .th-inner { padding: 7px 7px; }
   /* NOW TH/s : cacher le suffixe " TH/s" pour gagner de la place */
   .hr-unit { display: none; }
+  /* Online table : pas de padding inset sur mobile (gain de place) */
+  .online-table-outer { padding: 0; }
   /* Headers : réduire letter-spacing qui force les colonnes larges */
   .issues-table th, .online-table th { letter-spacing: 0.3px; font-size: 9px; }
   /* Pill plus compact */
@@ -1250,7 +1253,7 @@ function buildOnlineWorkers() {
         <div class="filter-count" id="online-filter-count"></div>
         <div class="filter-reset" id="online-reset-btn" onclick="resetOnlineFilters()" style="display:none">✕ Reset filters</div>
       </div>
-      <div style="overflow-x:auto" id="online-table-wrap">
+      <div class="online-table-outer" style="overflow-x:auto" id="online-table-wrap">
         <div style="padding:24px;text-align:center;color:var(--text-muted);font-size:12px">Loading…</div>
       </div>
     </div>
@@ -1401,7 +1404,7 @@ function renderOnlineTable() {
       <th class="online-acct"><div class="th-inner ${_onlineSortCol==='account'?'sorted':''}" onclick="sortOnline('account')">Account ${si('account')}</div>${filterBtn('account')}</th>
       <th><div class="th-inner ${_onlineSortCol==='datacenter'?'sorted':''}" onclick="sortOnline('datacenter')"><span class="mob-hide">Datacenter</span><span class="acct-short" style="display:none">DC</span> ${si('datacenter')}</div>${filterBtn('datacenter')}</th>
       <th><div class="th-inner">Status</div>${filterBtn('status')}</th>
-      <th><div class="th-inner ${_onlineSortCol==='hr'?'sorted':''}" onclick="sortOnline('hr')">Now TH/s ${si('hr')}</div></th>
+      <th><div class="th-inner ${_onlineSortCol==='hr'?'sorted':''}" onclick="sortOnline('hr')"><span class="mob-hide">Now </span>TH/s ${si('hr')}</div></th>
       <th class="mob-hide">Avg 3h</th>
       <th class="mob-hide">6h trend</th>
       <th class="mob-hide"></th>

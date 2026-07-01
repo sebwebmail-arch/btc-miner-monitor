@@ -762,6 +762,8 @@ let _workerIssues  = null; // worker-issues.json
 let _offlineStatus = null; // offline-status.json (real-time offline workers)
 let _workerHosts   = {};   // worker-hosts.json (IP par worker)
 let _deadIssues    = {};   // history.json current_issues (dead/offline workers)
+let _chartPts      = [];   // points du graphe modal courant (pour tooltip)
+let _chartGeo      = {};   // géométrie du graphe modal courant
 
 async function loadHashrateData() {
   try {
@@ -955,6 +957,10 @@ function renderHashrateChart(key, rangeH) {
     xLabels.push(`<text x="${x}" y="${PT+cH+14}" text-anchor="middle" font-size="9" fill="${hh===0?'#aaa':'#ccc'}" font-weight="${hh===0?'600':'400'}">${lbl}</text>`);
   }
 
+  // Stocker données pour le tooltip hover
+  _chartPts = pts;
+  _chartGeo = {PL, PR, PT, PB, W, H, cW, cH, tAxisStart, tAxisSpan, maxHR};
+
   return `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:${H}px;display:block;background:var(--bg-surface);border-radius:8px">
     <defs>
       <linearGradient id="hrGrad" x1="0" y1="0" x2="0" y2="1">
@@ -974,12 +980,78 @@ function renderHashrateChart(key, rangeH) {
     ${yLabels}
     <!-- X labels -->
     ${xLabels.join('')}
+    <!-- Tooltip (desktop hover) -->
+    <g id="modal-tt" visibility="hidden" pointer-events="none">
+      <line id="modal-tt-vline" x1="0" x2="0" y1="${PT}" y2="${PT+cH}"
+            stroke="#3498db" stroke-width="1" stroke-dasharray="4,3" opacity="0.65"/>
+      <circle id="modal-tt-dot" cx="0" cy="0" r="4"
+              fill="#3498db" stroke="white" stroke-width="1.5"/>
+      <rect id="modal-tt-bg" x="0" y="0" width="110" height="36" rx="5"
+            fill="rgba(26,26,20,0.88)"/>
+      <text id="modal-tt-hr" x="0" y="0" fill="white" font-size="11" font-weight="700"
+            font-family="'DM Mono',monospace"></text>
+      <text id="modal-tt-ts" x="0" y="0" fill="#b0ae9e" font-size="9"
+            font-family="'DM Sans',sans-serif"></text>
+    </g>
+    <!-- Hit area (souris) -->
+    <rect x="${PL}" y="${PT}" width="${cW}" height="${cH}" fill="transparent"
+          style="cursor:crosshair"
+          onmousemove="modalChartHover(event)"
+          onmouseleave="modalChartLeave()"/>
   </svg>`;
 }
 
 function closeModal() {
   document.getElementById('worker-modal').classList.remove('open');
 }
+
+// ── Tooltip hover sur le graphe hashrate (desktop uniquement) ─────────────────
+function modalChartHover(evt) {
+  if (window.matchMedia('(hover: none)').matches) return;
+  if (!_chartPts.length) return;
+  const {PL, PR, PT, cW, cH, W, tAxisStart, tAxisSpan, maxHR} = _chartGeo;
+  const svg = evt.currentTarget.closest('svg');
+  const svgRect = svg.getBoundingClientRect();
+  const scaleX = W / svgRect.width;
+  const mx = (evt.clientX - svgRect.left) * scaleX;
+  const tHover = tAxisStart + ((mx - PL) / cW) * tAxisSpan;
+  let closest = null, minDiff = Infinity;
+  for (const p of _chartPts) {
+    const diff = Math.abs(new Date(p.ts).getTime() - tHover);
+    if (diff < minDiff) { minDiff = diff; closest = p; }
+  }
+  if (!closest) return;
+  const cx = PL + (new Date(closest.ts).getTime() - tAxisStart) / tAxisSpan * cW;
+  const cy = PT + cH - (closest.hr / maxHR) * cH;
+  const thVal = (closest.hr / 1e12).toFixed(1) + ' TH/s';
+  const d = new Date(closest.ts);
+  const M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const tsStr = `${d.getUTCDate()} ${M[d.getUTCMonth()]} · ${String(d.getUTCHours()).padStart(2,'0')}:${String(d.getUTCMinutes()).padStart(2,'0')} UTC`;
+  const g = document.getElementById('modal-tt');
+  if (!g) return;
+  g.setAttribute('visibility', 'visible');
+  const vl = document.getElementById('modal-tt-vline');
+  vl.setAttribute('x1', cx.toFixed(1)); vl.setAttribute('x2', cx.toFixed(1));
+  const dot = document.getElementById('modal-tt-dot');
+  dot.setAttribute('cx', cx.toFixed(1)); dot.setAttribute('cy', cy.toFixed(1));
+  document.getElementById('modal-tt-hr').textContent = thVal;
+  document.getElementById('modal-tt-ts').textContent = tsStr;
+  const BW = 110, BH = 36;
+  const boxX = cx + 12 + BW > W - PR ? cx - BW - 12 : cx + 12;
+  const boxY = Math.max(PT + 2, Math.min(cy - BH / 2, PT + cH - BH - 2));
+  document.getElementById('modal-tt-bg').setAttribute('x', boxX.toFixed(1));
+  document.getElementById('modal-tt-bg').setAttribute('y', boxY.toFixed(1));
+  document.getElementById('modal-tt-hr').setAttribute('x', (boxX + 8).toFixed(1));
+  document.getElementById('modal-tt-hr').setAttribute('y', (boxY + 14).toFixed(1));
+  document.getElementById('modal-tt-ts').setAttribute('x', (boxX + 8).toFixed(1));
+  document.getElementById('modal-tt-ts').setAttribute('y', (boxY + 28).toFixed(1));
+}
+function modalChartLeave() {
+  const g = document.getElementById('modal-tt');
+  if (g) g.setAttribute('visibility', 'hidden');
+}
+window.modalChartHover = modalChartHover;
+window.modalChartLeave = modalChartLeave;
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 window.openWorkerModal = openWorkerModal;

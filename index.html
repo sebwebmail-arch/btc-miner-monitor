@@ -355,11 +355,8 @@ function pillClass(cat) {
   return { offline:'pill-offline', dead_recent:'pill-dead-recent', dead_mid:'pill-dead-mid', dead_old:'pill-dead-old' }[cat];
 }
 function pillLabel(cat, isoStr) {
-  const age = fmtAge(isoStr);
-  if (cat === 'offline')     return `Offline ${age}`;
-  if (cat === 'dead_recent') return `Dead ${age}`;
-  if (cat === 'dead_mid')    return `Dead ${age}`;
-  return `Dead ${age}`;
+  if (cat === 'offline') return `Offline ${fmtAge(isoStr)}`;
+  return `Dead ${fmtAge(isoStr)}`; // Dead 2h / Dead 1d / Dead 89d
 }
 function actionLabel(cat) {
   if (cat === 'offline')     return `${MONITOR_SVG}Monitor`;
@@ -483,7 +480,6 @@ function toggleDcFilter(groupId) {
   // Re-filtre les trois tables
   applyFilters();
   renderOnlineTable();
-  renderDeadTracker();
 }
 
 function clearDcFilter() {
@@ -492,7 +488,6 @@ function clearDcFilter() {
   updateDcFilterBar();
   applyFilters();
   renderOnlineTable();
-  renderDeadTracker();
 }
 
 function updateDcFilterBar() {
@@ -734,165 +729,6 @@ window.resetFilters = resetFilters;
 window.sortBy = sortBy;
 window.applyFilters = applyFilters;
 
-// ── Dead Tracker filters ──────────────────────────────────────────────────────
-let _deadFilters = { account: new Set(), datacenter: new Set() };
-let _deadSearch  = '';
-let _deadOpenDD  = null;
-
-function openDeadDD(col, el) {
-  if (_deadOpenDD === col) { closeDeadDDs(); return; }
-  closeDeadDDs();
-  const all = Object.values(_deadIssues).filter(w => categoryOf(w) !== 'dead_old');
-  const values = col === 'account'
-    ? [...new Set(all.map(w => w.account_name||w.account))].sort()
-    : [...new Set(all.map(w => w.group_id))].sort();
-  const active = _deadFilters[col];
-  const items = values.map(v => `
-    <label class="col-dropdown-item">
-      <input type="checkbox" onchange="deadFilterToggle('${col}','${v}',this.checked)" ${active.has(v)?'checked':''}>
-      ${v}
-    </label>`).join('');
-  const dd = document.getElementById('dead-dd-' + col);
-  if (!dd) return;
-  dd.innerHTML = `
-    <div class="col-dropdown-actions">
-      <span class="col-dropdown-action" onclick="deadFilterAll('${col}')">Select all</span>
-      <span class="col-dropdown-action" onclick="deadFilterAll('${col}')">Clear</span>
-    </div>
-    <div class="col-dropdown-sep"></div>${items}`;
-  dd.classList.add('open');
-  _deadOpenDD = col;
-}
-function closeDeadDDs() {
-  document.querySelectorAll('[id^="dead-dd-"]').forEach(d => d.classList.remove('open'));
-  _deadOpenDD = null;
-}
-function deadFilterToggle(col, val, checked) {
-  if (checked) _deadFilters[col].add(val);
-  else _deadFilters[col].delete(val);
-  renderDeadTracker();
-}
-function deadFilterAll(col) { _deadFilters[col].clear(); renderDeadTracker(); closeDeadDDs(); }
-function onDeadSearch() { _deadSearch = (document.getElementById('dead-search')?.value||'').toLowerCase(); renderDeadTracker(); }
-function resetDeadFilters() {
-  _deadFilters = { account: new Set(), datacenter: new Set() };
-  _deadSearch = ''; const s = document.getElementById('dead-search'); if (s) s.value = '';
-  clearDcFilter(); // resets global DC filter + re-renders all tables
-}
-window.openDeadDD = openDeadDD; window.closeDeadDDs = closeDeadDDs;
-window.deadFilterToggle = deadFilterToggle; window.deadFilterAll = deadFilterAll;
-window.onDeadSearch = onDeadSearch; window.resetDeadFilters = resetDeadFilters;
-
-function buildDeadTracker(issues) {
-  const hidden = Object.values(issues).filter(w => categoryOf(w) === 'dead_old').length;
-  return `
-  <div>
-    <div class="section-label" style="display:flex;justify-content:space-between;align-items:baseline">
-      <span>Dead workers — lifecycle tracking</span>
-      <span style="font-size:10px;color:#bbb;font-weight:400;letter-spacing:0;text-transform:none">⏱ Daily snapshot at 05:00 UTC</span>
-    </div>
-    <div class="panel panel-table">
-      <div class="panel-header">
-        <div class="panel-title">Lifecycle tracker</div>
-      </div>
-      <div class="filter-bar">
-        <input class="filter-search" id="dead-search" type="text" placeholder="🔍  Search worker name…" oninput="onDeadSearch()">
-        <div style="display:flex;gap:6px;flex-shrink:0">
-          <span class="th-filter-btn" id="dead-btn-account" onclick="event.stopPropagation();openDeadDD('account',this)">Account ▼<div class="col-dropdown" id="dead-dd-account"></div></span>
-          <span class="th-filter-btn" id="dead-btn-datacenter" onclick="event.stopPropagation();openDeadDD('datacenter',this)">Datacenter ▼<div class="col-dropdown" id="dead-dd-datacenter"></div></span>
-        </div>
-        <div class="filter-count" id="dead-count"></div>
-        <div class="filter-reset" id="dead-reset-btn" onclick="resetDeadFilters()" style="display:none">✕ Reset filters</div>
-      </div>
-      <div id="dead-tracker-wrap"></div>
-    </div>
-  </div>`;
-}
-
-function renderDeadTracker() {
-  const wrap = document.getElementById('dead-tracker-wrap');
-  if (!wrap) return;
-
-  const thStyle = 'text-align:left;font-size:10px;color:#bbb;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:5px 12px 5px 0;border-bottom:1px solid #f0f0f0';
-
-  const hasFilters = _dcFilter.size || _deadFilters.account.size || _deadFilters.datacenter.size || _deadSearch;
-
-  const applyF = (w) => {
-    if (_dcFilter.size && !_dcFilter.has(w.group_id)) return false;
-    if (_deadFilters.account.size && !_deadFilters.account.has(w.account_name||w.account)) return false;
-    if (_deadFilters.datacenter.size && !_deadFilters.datacenter.has(w.group_id)) return false;
-    if (_deadSearch && !w.name.toLowerCase().includes(_deadSearch)) return false;
-    return true;
-  };
-
-  // Update filter button active states
-  const aBtn = document.getElementById('dead-btn-account');
-  if (aBtn) aBtn.classList.toggle('active', _deadFilters.account.size > 0);
-  const dBtn = document.getElementById('dead-btn-datacenter');
-  if (dBtn) dBtn.classList.toggle('active', _deadFilters.datacenter.size > 0);
-
-  // Update count + reset
-  const nonArchived = Object.values(_deadIssues).filter(w => categoryOf(w) !== 'dead_old');
-  const filtered    = nonArchived.filter(applyF);
-  const cnt = document.getElementById('dead-count');
-  if (cnt) cnt.textContent = hasFilters ? `${filtered.length} / ${nonArchived.length} workers` : `${nonArchived.length} workers`;
-  const rb = document.getElementById('dead-reset-btn');
-  if (rb) rb.style.display = hasFilters ? 'block' : 'none';
-
-  const totalArchived = Object.values(_deadIssues).filter(w => categoryOf(w) === 'dead_old').length;
-
-  const cats = [
-    { key:'dead_recent', label:'1–7 days',  sub:'recent — monitor daily', dotCls:'dot-red',    rowCls:'red' },
-    { key:'dead_mid',    label:'8–90 days', sub:'contact provider',        dotCls:'dot-orange', rowCls:'orange' },
-  ];
-
-  const sections = cats.map(({ key, label, sub, dotCls, rowCls }) => {
-    const total   = Object.values(_deadIssues).filter(w => categoryOf(w) === key);
-    const workers = total.filter(applyF).sort((a,b) => {
-      const aA = (a.account_name||a.account||'').toLowerCase(), bA = (b.account_name||b.account||'').toLowerCase();
-      if (aA !== bA) return aA < bA ? -1 : 1;
-      return (a.group_id||'') < (b.group_id||'') ? -1 : (a.group_id||'') > (b.group_id||'') ? 1 : 0;
-    });
-    const countTxt = hasFilters
-      ? `${workers.length} / ${total.length} worker${total.length !== 1 ? 's' : ''}`
-      : total.length === 0 ? 'none' : `${total.length} worker${total.length > 1 ? 's' : ''}`;
-    const count = `<span style="color:#bbb;font-weight:400;letter-spacing:0;text-transform:none">${sub} · ${countTxt}</span>`;
-    if (workers.length === 0) {
-      const msg = total.length > 0 && hasFilters ? `<div style="padding:8px 0;font-size:12px;color:#ccc;font-style:italic">No workers match the current filters.</div>` : '';
-      return `<div class="dead-section"><div class="dead-section-title"><div class="dot ${dotCls}"></div>${label} ${count}</div>${msg}</div>`;
-    }
-    const rows = workers.map(w => `<tr class="dead-row ${rowCls}">
-      <td class="dw"><span class="worker-name" style="cursor:pointer;text-decoration:underline dotted" onclick="openWorkerModal('${w.account}.${w.name}')">${w.name}</span></td>
-      <td class="dead-account">${w.account_name||w.account}</td>
-      <td class="dp"><span class="group-badge">${w.group_id}</span> <span class="prov-name">${w.provider}</span></td>
-      <td class="mob-hide" style="font-size:11px;color:#bbb">${w.host||'—'}</td>
-      <td class="dd" style="text-align:left">${fmtAge(w.last_share)}</td>
-      <td class="mob-hide"><span class="action-tag" style="cursor:pointer" onclick="openWorkerModal('${w.account}.${w.name}')">${actionLabel(key)}</span></td>
-    </tr>`).join('');
-    return `<div class="dead-section">
-      <div class="dead-section-title"><div class="dot ${dotCls}"></div>${label} ${count}</div>
-      <table style="width:100%;border-collapse:collapse">
-        <thead><tr>
-          <th style="${thStyle}">Worker</th>
-          <th style="${thStyle}">Account</th>
-          <th style="${thStyle}">Datacenter</th>
-          <th class="mob-hide" style="${thStyle}">Host</th>
-          <th style="${thStyle}">Since</th>
-          <th class="mob-hide" style="${thStyle}">Action</th>
-        </tr></thead>
-        <tbody>${rows}</tbody>
-      </table>
-    </div>`;
-  }).join('');
-
-  const archiveNote = `<div class="dead-section">
-    <div class="dead-section-title"><div class="dot dot-grey"></div>&gt; 90 days <span style="color:#bbb;font-weight:400;letter-spacing:0;text-transform:none">likely gone</span></div>
-    <div class="arch-note">${totalArchived} worker${totalArchived !== 1 ? 's' : ''} archived — hidden from daily view</div>
-  </div>`;
-
-  wrap.innerHTML = sections + archiveNote;
-}
-window.renderDeadTracker = renderDeadTracker;
 
 // ── Two-column layout ─────────────────────────────────────────────────────────
 
@@ -1809,7 +1645,6 @@ async function render() {
     buildHashrateSection() +
     buildDatacenters(issues) +
     buildIssuesTable(issues) +
-    buildDeadTracker(issues) +
     buildOnlineWorkers();
 
   document.getElementById('loading').style.display = 'none';
@@ -1822,8 +1657,6 @@ async function render() {
 
   // Populate la table online workers (dérivée de hashrate.json)
   renderOnlineTable();
-  // Populate dead tracker (dynamique, filtre partagé avec DC cards)
-  renderDeadTracker();
 }
 
 render();

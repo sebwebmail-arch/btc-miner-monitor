@@ -757,48 +757,85 @@ function buildDeadTracker(issues) {
 
 function buildTrend(snapshots) {
   if (!snapshots || snapshots.length === 0) {
-    return `<div><div class="section-label">30-day trend</div><div class="panel" style="padding:24px;color:#ccc;text-align:center;font-size:13px">No historical data yet — chart will populate after the first runs.</div></div>`;
+    return `<div><div class="section-label">30-day trend — offline + dead (actionable)</div><div class="panel" style="padding:24px;color:#ccc;text-align:center;font-size:13px">No historical data yet — chart will populate after the first morning run.</div></div>`;
   }
 
   const last30 = snapshots.slice(-30);
-  const maxVal = Math.max(1, ...last30.map(s => (s.offline||0) + (s.dead_recent||0) + (s.dead_mid||0)));
+  const n      = last30.length;
 
-  const bars = last30.map((s, i) => {
-    const off = s.offline || 0;
-    const dead = (s.dead_recent||0) + (s.dead_mid||0);
-    const total = off + dead;
-    const h = 70;
-    const offH  = Math.round(off  / maxVal * h);
-    const deadH = Math.round(dead / maxVal * h);
-    const emptyH = h - offH - deadH;
+  // SVG dimensions
+  const W = 860, H = 160;
+  const PL = 36, PR = 10, PT = 10, PB = 28;
+  const cW = W - PL - PR, cH = H - PT - PB;
 
-    const date = new Date(s.ts);
-    const label = i % 5 === 0 ? `${date.getDate()}/${date.getMonth()+1}` : '';
+  // Y scale — round up to nearest 5
+  const rawMax  = Math.max(...last30.map(s => (s.offline||0) + (s.dead_recent||0) + (s.dead_mid||0)));
+  const niceMax = Math.max(5, Math.ceil(rawMax / 5) * 5);
 
-    return `<div class="bar-col">
-      <div class="bar-stack">
-        ${emptyH > 0 ? `<div class="bar-seg empty" style="height:${emptyH}px"></div>` : ''}
-        ${deadH > 0  ? `<div class="bar-seg dead"  style="height:${deadH}px"></div>` : ''}
-        ${offH > 0   ? `<div class="bar-seg offline" style="height:${offH}px"></div>` : ''}
-      </div>
-      <div class="bar-label">${label}</div>
-    </div>`;
+  const bW    = Math.max(4, Math.min(18, cW / Math.max(n, 7) - 3));
+  const bStep = cW / Math.max(n, 1);
+  const bx    = i  => PL + i * bStep + (bStep - bW) / 2;
+  const bh    = v  => v / niceMax * cH;
+  const by    = v  => PT + cH - bh(v);
+
+  // Y-axis gridlines + labels
+  const gridLines = [0, 0.25, 0.5, 0.75, 1].map(f => {
+    const v = Math.round(niceMax * f);
+    const y = (PT + cH - f * cH).toFixed(1);
+    return `<line x1="${PL}" y1="${y}" x2="${W - PR}" y2="${y}" stroke="#f0f0f0" stroke-width="1"/>
+            <text x="${PL - 5}" y="${y}" text-anchor="end" dominant-baseline="middle" font-size="9" fill="#ccc">${v}</text>`;
   }).join('');
+
+  // Bars
+  const bars = last30.map((s, i) => {
+    const off  = s.offline || 0;
+    const dead = (s.dead_recent||0) + (s.dead_mid||0);
+    const x    = bx(i).toFixed(1);
+    const w    = bW.toFixed(1);
+
+    if (off === 0 && dead === 0) {
+      // All-good day — tiny tick at baseline
+      return `<rect x="${x}" y="${(PT + cH - 2).toFixed(1)}" width="${w}" height="2" fill="#e8f5e9" rx="1"/>`;
+    }
+    const offY  = by(off + dead).toFixed(1);
+    const deadY = by(dead).toFixed(1);
+    return [
+      dead > 0 ? `<rect x="${x}" y="${deadY}" width="${w}" height="${Math.max(1, bh(dead)).toFixed(1)}" fill="#c0392b" rx="1 1 0 0"/>` : '',
+      off  > 0 ? `<rect x="${x}" y="${offY}"  width="${w}" height="${Math.max(1, bh(off)).toFixed(1)}"  fill="#e67e22" rx="${dead > 0 ? '0' : '1 1 0 0'}"/>` : '',
+    ].join('');
+  }).join('');
+
+  // X-axis date labels
+  const labelEvery = n <= 7 ? 1 : n <= 15 ? 2 : 5;
+  const xLabels = last30.map((s, i) => {
+    if (i % labelEvery !== 0 && i !== n - 1) return '';
+    const d = new Date(s.ts);
+    return `<text x="${(bx(i) + bW / 2).toFixed(1)}" y="${H - 6}" text-anchor="middle" font-size="9" fill="#bbb">${d.getDate()}/${d.getMonth()+1}</text>`;
+  }).join('');
+
+  const note = n < 5
+    ? `<div style="font-size:11px;color:#bbb;margin-top:8px;text-align:center">Accumulating data — chart fills up as daily checks run (${n}/30)</div>`
+    : `<div style="font-size:11px;color:#bbb;margin-top:8px;text-align:right">${n} daily checks · each bar = one morning run</div>`;
 
   return `
   <div>
     <div class="section-label">30-day trend — offline + dead (actionable)</div>
     <div class="panel">
-      <div class="trend-wrap">
-        <div class="trend-top">
-          <div class="trend-title">Daily worker issues</div>
-          <div class="trend-legend">
-            <div class="legend-item"><div class="legend-dot" style="background:#e67e22"></div>Offline</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#c0392b"></div>Dead (actionable)</div>
+      <div style="padding:20px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <div style="font-size:12px;font-weight:700;color:#555">Daily worker issues</div>
+          <div style="display:flex;gap:14px;font-size:11px;color:#999">
+            <span><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:#e67e22;margin-right:4px;vertical-align:middle"></span>Offline</span>
+            <span><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:#c0392b;margin-right:4px;vertical-align:middle"></span>Dead (actionable)</span>
           </div>
         </div>
-        <div class="bars-wrap">${bars}</div>
-        <div class="trend-bottom">Each bar = one daily check</div>
+        <svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
+          ${gridLines}
+          <line x1="${PL}" y1="${PT}" x2="${PL}" y2="${PT + cH}" stroke="#f0f0f0" stroke-width="1"/>
+          ${bars}
+          ${xLabels}
+        </svg>
+        ${note}
       </div>
     </div>
   </div>`;

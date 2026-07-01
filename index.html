@@ -1692,10 +1692,10 @@ function buildAccountHashrateChart(accountUser, rangeH) {
       ${fillElems}
       ${dashElems}
       ${lineElems}
-      <!-- Live dot — pulsing ring + solid center -->
-      <circle cx="${px(pts.length-1).toFixed(1)}" cy="${py(pts.length-1).toFixed(1)}" r="3.5" fill="#3498db" opacity="0.25">
-        <animate attributeName="r"       values="3.5;11;3.5"   dur="2.8s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.25;0;0.25"  dur="2.8s" repeatCount="indefinite"/>
+      <!-- Live dot — ripple outward only, then snap back -->
+      <circle cx="${px(pts.length-1).toFixed(1)}" cy="${py(pts.length-1).toFixed(1)}" r="3.5" fill="#3498db" opacity="0.3">
+        <animate attributeName="r"       values="3.5;13;13"  keyTimes="0;0.75;1" dur="2.4s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.3;0;0"    keyTimes="0;0.75;1" dur="2.4s" repeatCount="indefinite"/>
       </circle>
       <circle cx="${px(pts.length-1).toFixed(1)}" cy="${py(pts.length-1).toFixed(1)}" r="3.5" fill="#3498db"/>
       <!-- Hover elements -->

@@ -93,8 +93,13 @@ async function fetchATO(account) {
     });
     if (!res.ok) { console.warn(`   ⚠️  ATO ${account.user}: HTTP ${res.status}`); return null; }
     const data = await res.json();
-    // Log full response to discover structure (Total / ATO / Rejected fields)
-    console.log(`   [ATO response] ${account.user}: ${JSON.stringify(data).slice(0, 600)}`);
+    // Log keys + first 2 values of each array to discover structure
+    const summary = Object.fromEntries(
+      Object.entries(data.data || data).map(([k, v]) =>
+        [k, Array.isArray(v) ? `[${v.length} items] first2: ${JSON.stringify(v.slice(0,2))}` : v]
+      )
+    );
+    console.log(`   [ATO keys] ${account.user}: ${JSON.stringify(summary).slice(0, 1200)}`);
     return data;
   } catch (err) {
     console.warn(`   ⚠️  ATO ${account.user}: ${err.message}`);

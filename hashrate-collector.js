@@ -213,18 +213,11 @@ function detectWorkerAnomalies(hrData) {
 
     const dropPct = baselineAvg > 0 ? (baselineAvg - currentAvg) / baselineAvg : 0;
 
-    // Chute récente : dernier snapshot < 50% de la moyenne actuelle (drop en cours)
-    const latestHR     = snaps[snaps.length - 1].hr;
-    const latestDropPct = currentAvg > 0 ? (currentAvg - latestHR) / currentAvg : 0;
-
     // Worker complètement offline → déjà suivi ailleurs, on skip
     if (currentAvg < MIN_HR_TH) continue;
 
     let type = null;
     if (dropPct > LEVEL_DROP_THR && zeroRate < 0.5) {
-      type = 'level_drop';
-    } else if (latestDropPct > 0.50 && latestHR > MIN_HR_TH) {
-      // Dernier snapshot au moins 50% sous la moyenne 3h → chute récente
       type = 'level_drop';
     } else if (cv > CV_THR || zeroRate > ZERO_RATE_THR) {
       type = 'volatile';
@@ -253,7 +246,7 @@ function detectWorkerAnomalies(hrData) {
       type,
       current_avg_ths:  +(currentAvg  / 1e12).toFixed(1),
       baseline_avg_ths: +(baselineAvg / 1e12).toFixed(1),
-      drop_pct:         Math.round(Math.max(dropPct, latestDropPct) * 100),
+      drop_pct:         Math.round(dropPct * 100),
       cv_pct:           Math.round(cv * 100),
       zero_rate_pct:    Math.round(zeroRate * 100),
     };

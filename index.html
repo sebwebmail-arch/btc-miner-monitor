@@ -1617,12 +1617,15 @@ async function render() {
   const snapshots = data.snapshots || [];
   _deadIssues = issues; // expose aux fonctions de rendu (exclure de Online Workers)
 
-  // Topbar — affiche le timestamp hashrate.json (collecte 30min) en priorité
   const fmtTs = iso => {
     const d = new Date(iso);
     return `${d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',timeZone:'UTC'})} at ${d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:'UTC'})} UTC`;
   };
-  const monTs = data.last_updated || null;
+  // Priorité : offline-status (30min) > hashrate (30min) > history (daily 05:00)
+  const monTs = (_offlineStatus && _offlineStatus.last_updated)
+    || (_hashrate && _hashrate.last_updated)
+    || data.last_updated
+    || null;
 
   // Render sections
   const app = document.getElementById('app');

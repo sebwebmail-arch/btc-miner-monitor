@@ -524,11 +524,13 @@ function buildIssuesTable(issues) {
 
   return `
   <div>
-    <div class="section-label">Workers requiring attention</div>
+    <div class="section-label" style="display:flex;justify-content:space-between;align-items:baseline">
+      <span>Workers requiring attention</span>
+      <span style="font-size:10px;color:#bbb;font-weight:400;letter-spacing:0;text-transform:none" title="Workers going offline after 05:00 UTC will appear here from the next morning run">⏱ Daily snapshot — updated at 05:00 UTC</span>
+    </div>
     <div class="panel panel-table">
       <div class="panel-header">
         <div class="panel-title">Offline &amp; Dead (≤ 90 days)</div>
-        <div class="panel-note" style="color:#bbb" title="Workers going offline after 05:00 UTC will appear here from the next morning run">⏱ Daily snapshot — updated at 05:00 UTC</div>
       </div>
       <div class="filter-bar">
         <input class="filter-search" id="issues-search" type="text" placeholder="🔍  Search worker name…" oninput="applyFilters()">

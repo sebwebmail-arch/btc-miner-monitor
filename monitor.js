@@ -145,7 +145,7 @@ function buildEmail(offlineByAccount, workerIssues) {
       const groupRows = Object.entries(byGroup).map(([groupLabel, ws]) => {
         const workerRows = ws.map(w => `
           <tr>
-            <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;font-family:monospace;font-size:13px">${w.name}</td>
+            <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;font-family:'DM Mono',monospace;font-size:13px">${w.name}</td>
             <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;color:#666;font-size:13px">${w.lastSeen}</td>
             <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;color:#999;font-size:13px">${w.host}</td>
           </tr>`).join('');
@@ -158,10 +158,10 @@ function buildEmail(offlineByAccount, workerIssues) {
       }).join('');
 
       return `
-        <h3 style="margin:24px 0 8px;color:#333;font-size:16px">${accountName}</h3>
+        <h3 style="margin:24px 0 8px;color:#1a1a14;font-size:16px">${accountName}</h3>
         <table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:1px solid #ddd;border-radius:6px;overflow:hidden">
           <thead>
-            <tr style="background:#f5f5f5">
+            <tr style="background:#efede7">
               <th style="padding:8px 12px;text-align:left;font-size:12px;color:#666;font-weight:600">WORKER</th>
               <th style="padding:8px 12px;text-align:left;font-size:12px;color:#666;font-weight:600">LAST SHARE</th>
               <th style="padding:8px 12px;text-align:left;font-size:12px;color:#666;font-weight:600">HOST</th>
@@ -179,7 +179,7 @@ function buildEmail(offlineByAccount, workerIssues) {
         : `<span style="display:inline-block;padding:2px 7px;border-radius:4px;background:#fef9e7;color:#b7950b;font-size:11px;font-weight:700">⚠️ Unstable</span>`;
       return `
         <tr>
-          <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;font-family:monospace;font-size:13px">${w.worker}</td>
+          <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;font-family:'DM Mono',monospace;font-size:13px">${w.worker}</td>
           <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;font-size:12px;color:#666">${w.account_name} · ${w.provider} (${w.group_id})</td>
           <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0">${badge}</td>
           <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;font-size:12px;color:#333;font-weight:600">${w.current_avg_ths} TH/s</td>
@@ -188,11 +188,11 @@ function buildEmail(offlineByAccount, workerIssues) {
     }).join('');
 
     return `
-      <h3 style="margin:28px 0 8px;color:#333;font-size:16px">⚡ Hashrate anomalies — degraded or unstable workers</h3>
+      <h3 style="margin:28px 0 8px;color:#1a1a14;font-size:16px">⚡ Hashrate anomalies — degraded or unstable workers</h3>
       <p style="margin:0 0 10px;font-size:12px;color:#999">Based on last 3h avg vs 12h baseline · requires 9h+ of data to activate</p>
       <table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:1px solid #ddd;border-radius:6px;overflow:hidden">
         <thead>
-          <tr style="background:#f5f5f5">
+          <tr style="background:#efede7">
             <th style="padding:8px 12px;text-align:left;font-size:12px;color:#666;font-weight:600">WORKER</th>
             <th style="padding:8px 12px;text-align:left;font-size:12px;color:#666;font-weight:600">ACCOUNT · DATACENTER</th>
             <th style="padding:8px 12px;text-align:left;font-size:12px;color:#666;font-weight:600">ISSUE</th>
@@ -214,7 +214,7 @@ function buildEmail(offlineByAccount, workerIssues) {
   const html = `
 <!DOCTYPE html>
 <html>
-<body style="margin:0;padding:0;background:#f9f9f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+<body style="margin:0;padding:0;background:#f7f6f2;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif">
   <div style="max-width:680px;margin:32px auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.08)">
 
     <div style="background:${headerBg};padding:24px 32px">
@@ -227,7 +227,7 @@ function buildEmail(offlineByAccount, workerIssues) {
       ${offlineSection}
       ${anomalySection}
       <div style="margin-top:32px;border-top:1px solid #f0f0f0;padding-top:24px;text-align:center">
-        <a href="https://watcher.capone.market" style="display:inline-block;margin-bottom:16px;padding:8px 20px;background:#1a1a2e;color:#fff;text-decoration:none;border-radius:6px;font-size:13px;font-weight:600">Open dashboard →</a><br>
+        <a href="https://watcher.capone.market" style="display:inline-block;margin-bottom:16px;padding:8px 20px;background:#D97757;color:#000;text-decoration:none;border-radius:6px;font-size:13px;font-weight:600">Open dashboard →</a><br>
         <img src="https://capone.market/capone-fish-avatar-48-orange.svg" alt="capone" width="56" height="56" style="display:block;margin:0 auto 8px" />
         <p style="margin:4px 0 2px;color:#555;font-size:13px;font-weight:600">Report generated by capone watcher</p>
         <p style="margin:0;color:#999;font-size:11px">This email was sent automatically — please do not reply.</p>

@@ -47,8 +47,10 @@ jobs:
           git status
           git pull --rebase --autostash origin main
           git add data/hashrate.json
-          git add data/alert-state.json   2>/dev/null || true
-          git add data/worker-issues.json 2>/dev/null || true
+          git add data/alert-state.json      2>/dev/null || true
+          git add data/worker-issues.json    2>/dev/null || true
+          git add data/history.json          2>/dev/null || true
+          git add data/offline-status.json   2>/dev/null || true
           git status
           git diff --staged --quiet || git commit -m "data: hashrate $(date -u +'%Y-%m-%d %H:%M UTC')"
           git push && echo "push OK" || { echo "push FAILED: $?"; exit 128; }

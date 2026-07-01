@@ -38,6 +38,7 @@ const HASHRATE_PATH     = path.join(__dirname, 'data', 'hashrate.json');
 const ALERTSTATE_PATH   = path.join(__dirname, 'data', 'alert-state.json');
 const WORKERISSUES_PATH = path.join(__dirname, 'data', 'worker-issues.json');
 const HISTORY_PATH      = path.join(__dirname, 'data', 'history.json');
+const OFFLINESTATUS_PATH = path.join(__dirname, 'data', 'offline-status.json');
 
 // Email destinataire rapport matin (commun aux deux comptes)
 const MORNING_ALERT_TO = process.env.ALERT_EMAIL || 'seb.webmail@gmail.com';
@@ -704,6 +705,29 @@ async function main() {
     last_updated: now.toISOString(),
     issues: workerIssues,
   }, null, 2));
+
+  // ── 5b. Sauvegarde offline-status.json (statut temps réel des DCs) ────────
+  const offlineNow = {};
+  for (const account of ACCOUNTS) {
+    for (const w of allWorkers[account.user] || []) {
+      if ((w.hash_rate_info?.status ?? 0) !== 1) continue; // 1 = OFFLINE
+      const name  = w.hash_rate_info?.name || '?';
+      const group = getGroup(name);
+      if (group.id === 'No Group') continue;
+      offlineNow[`${account.user}.${name}`] = {
+        account:      account.user,
+        account_name: account.name,
+        name,
+        group_id:     group.id,
+        provider:     group.provider,
+      };
+    }
+  }
+  fs.writeFileSync(OFFLINESTATUS_PATH, JSON.stringify({
+    last_updated: now.toISOString(),
+    offline: offlineNow,
+  }, null, 2));
+  console.log(`   Offline temps réel: ${Object.keys(offlineNow).length} worker(s)`);
 
   // ── 6. Rapport matin (05:00 UTC) ──────────────────────────────────────────
   if (now.getUTCHours() === MORNING_HOUR_UTC) {

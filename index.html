@@ -305,6 +305,9 @@ function getGroupFromName(name) {
   return GROUPS_RULES.find(g => g.test(name)) || { id:'?', provider:'Unknown' };
 }
 
+// Icône "signal instable" — courbe oscillante SVG noire
+const WAVE_SVG = `<svg width="15" height="9" viewBox="0 0 15 9" style="display:inline-block;vertical-align:middle;margin-right:3px" fill="none"><path d="M0,6 L1.5,3 L3,7.5 L5,1 L6.5,7 L8,2 L9.5,7 L11,1.5 L12.5,6 L15,3" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
 const GROUPS_META = {
   'R1':   { name: 'IZTM' },
   'R3':   { name: 'Minto' },
@@ -404,14 +407,16 @@ function buildHealthCards(issues, snapshots) {
 }
 
 function buildDCGrid(issues, accountKey) {
-  const accountIssues = Object.values(issues).filter(w => w.account === accountKey);
+  // Real-time offline count from offline-status.json (updated every 30 min)
+  const offlineWorkers = _offlineStatus
+    ? Object.values(_offlineStatus.offline || {}).filter(w => w.account === accountKey)
+    : [];
 
   return Object.entries(GROUPS_META).map(([gid, gmeta]) => {
-    const groupIssues = accountIssues.filter(w => w.group_id === gid);
-    const issueCount = groupIssues.filter(w => categoryOf(w) !== 'dead_old').length;
-    const cls = issueCount === 0 ? 'ok' : issueCount <= 3 ? 'warn' : 'critical';
-    const statusText = issueCount === 0 ? '✓' : String(issueCount);
-    const subText = issueCount === 0 ? 'all online' : `issue${issueCount > 1 ? 's' : ''}`;
+    const offCount = offlineWorkers.filter(w => w.group_id === gid).length;
+    const cls = offCount === 0 ? 'ok' : offCount <= 3 ? 'warn' : 'critical';
+    const statusText = offCount === 0 ? '✓' : String(offCount);
+    const subText = offCount === 0 ? 'all online' : `offline`;
     const sel = _dcFilter.has(gid) ? 'dc-selected' : '';
     return `<div class="dc-cell ${cls} ${sel}" data-group="${gid}" onclick="toggleDcFilter('${gid}')">
       <div class="dc-group">${gid}</div>
@@ -794,6 +799,7 @@ function switchTab(el, targetId) {
 
 let _hashrate      = null; // hashrate.json
 let _workerIssues  = null; // worker-issues.json
+let _offlineStatus = null; // offline-status.json (real-time offline workers)
 
 async function loadHashrateData() {
   try {
@@ -1060,7 +1066,7 @@ function buildWorkerAnomalies() {
     const w   = issues[key];
     const cat = w.type === 'level_drop'
       ? `<span class="anomaly-badge badge-drop">📉 Drop ${w.drop_pct}%</span>`
-      : `<span class="anomaly-badge badge-volt">📊 Unstable CV ${w.cv_pct}%</span>`;
+      : `<span class="anomaly-badge badge-volt">${WAVE_SVG}Unstable CV ${w.cv_pct}%</span>`;
     const spark = miniSparkline(key, 12);
     return `<tr>
       <td><span class="worker-name" style="cursor:pointer;text-decoration:underline dotted" onclick="openWorkerModal('${key}')">${w.worker}</span></td>
@@ -1107,7 +1113,7 @@ let _onlineAllWorkers = []; // cache for dropdown value enumeration
 const ONLINE_STATUS_LABELS = {
   normal:     '✓ Normal',
   level_drop: '📉 Level drop',
-  volatile:   '📊 Unstable',
+  volatile:   '∿ Unstable',
 };
 
 function sortOnline(col) {
@@ -1326,7 +1332,7 @@ function renderOnlineTable() {
       statusCell = `<span class="anomaly-badge badge-drop">📉 Drop ${w.issue.drop_pct}%</span>`;
       rowStyle   = 'background:#fffbfb';
     } else if (w.issue?.type === 'volatile') {
-      statusCell = `<span class="anomaly-badge badge-volt">📊 Unstable</span>`;
+      statusCell = `<span class="anomaly-badge badge-volt">${WAVE_SVG}Unstable</span>`;
       rowStyle   = 'background:#fffef5';
     } else {
       statusCell = `<span style="color:#27ae60;font-size:12px;font-weight:600">✓</span>`;
@@ -1625,15 +1631,17 @@ function buildHashrateSection() {
 async function render() {
   let data;
   try {
-    const [histRes, hrRes, wiRes] = await Promise.all([
-      fetch('./data/history.json?t='      + Date.now()),
-      fetch('./data/hashrate.json?t='     + Date.now()).catch(() => null),
-      fetch('./data/worker-issues.json?t='+ Date.now()).catch(() => null),
+    const [histRes, hrRes, wiRes, osRes] = await Promise.all([
+      fetch('./data/history.json?t='        + Date.now()),
+      fetch('./data/hashrate.json?t='       + Date.now()).catch(() => null),
+      fetch('./data/worker-issues.json?t='  + Date.now()).catch(() => null),
+      fetch('./data/offline-status.json?t=' + Date.now()).catch(() => null),
     ]);
     if (!histRes.ok) throw new Error(`HTTP ${histRes.status}`);
     data = await histRes.json();
-    if (hrRes && hrRes.ok) _hashrate     = await hrRes.json();
-    if (wiRes && wiRes.ok) _workerIssues = await wiRes.json();
+    if (hrRes && hrRes.ok) _hashrate      = await hrRes.json();
+    if (wiRes && wiRes.ok) _workerIssues  = await wiRes.json();
+    if (osRes && osRes.ok) _offlineStatus = await osRes.json();
   } catch(e) {
     document.getElementById('loading').style.display = 'none';
     const err = document.getElementById('error-msg');

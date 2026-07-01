@@ -236,7 +236,7 @@ body::after {
 .modal-body { padding: 20px 24px; display: flex; flex-direction: column; gap: 16px; }
 .modal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .modal-field { display: flex; flex-direction: column; gap: 3px; }
-.modal-field .mf-label { font-size: 10px; color: var(--text-muted); font-weight: 600; letter-spacing: .8px; text-transform: uppercase; }
+.modal-field .mf-label, .mf-label { font-size: 10px; color: var(--text-muted); font-weight: 600; letter-spacing: .8px; text-transform: uppercase; }
 .modal-field .mf-value { font-size: 13px; color: var(--text-primary); font-weight: 600; }
 .modal-field .mf-value.mono { font-family: var(--mono); font-size: 12px; }
 .modal-status-bar { background: var(--bg-surface); border-radius: 8px; padding: 14px 16px; }
@@ -760,6 +760,7 @@ function switchTab(el, targetId) {
 let _hashrate      = null; // hashrate.json
 let _workerIssues  = null; // worker-issues.json
 let _offlineStatus = null; // offline-status.json (real-time offline workers)
+let _workerHosts   = {};   // worker-hosts.json (IP par worker)
 let _deadIssues    = {};   // history.json current_issues (dead/offline workers)
 
 async function loadHashrateData() {
@@ -849,7 +850,7 @@ function openWorkerModal(key) {
         <div class="modal-field"><div class="mf-label">Datacenter</div><div class="mf-value"><span class="group-badge">${w.group_id}</span> ${w.provider}</div></div>
       </div>
       <div class="modal-row">
-        <div class="modal-field"><div class="mf-label">Host / IP</div><div class="mf-value mono">${w.host || '—'}</div></div>
+        <div class="modal-field"><div class="mf-label">Host / IP</div><div class="mf-value mono">${w.host || _workerHosts[key] || '—'}</div></div>
         <div class="modal-field"><div class="mf-label">Last Share</div><div class="mf-value mono" style="font-size:11px">${lastShareFmt}</div></div>
       </div>
 
@@ -1606,17 +1607,19 @@ function buildHashrateSection() {
 async function render() {
   let data;
   try {
-    const [histRes, hrRes, wiRes, osRes] = await Promise.all([
+    const [histRes, hrRes, wiRes, osRes, whRes] = await Promise.all([
       fetch('./data/history.json?t='        + Date.now()),
       fetch('./data/hashrate.json?t='       + Date.now()).catch(() => null),
       fetch('./data/worker-issues.json?t='  + Date.now()).catch(() => null),
       fetch('./data/offline-status.json?t=' + Date.now()).catch(() => null),
+      fetch('./data/worker-hosts.json?t='   + Date.now()).catch(() => null),
     ]);
     if (!histRes.ok) throw new Error(`HTTP ${histRes.status}`);
     data = await histRes.json();
     if (hrRes && hrRes.ok) _hashrate      = await hrRes.json();
     if (wiRes && wiRes.ok) _workerIssues  = await wiRes.json();
     if (osRes && osRes.ok) _offlineStatus = await osRes.json();
+    if (whRes && whRes.ok) _workerHosts   = await whRes.json();
   } catch(e) {
     document.getElementById('loading').style.display = 'none';
     const err = document.getElementById('error-msg');

@@ -39,6 +39,7 @@ const ALERTSTATE_PATH   = path.join(__dirname, 'data', 'alert-state.json');
 const WORKERISSUES_PATH = path.join(__dirname, 'data', 'worker-issues.json');
 const HISTORY_PATH      = path.join(__dirname, 'data', 'history.json');
 const OFFLINESTATUS_PATH = path.join(__dirname, 'data', 'offline-status.json');
+const WORKERHOSTS_PATH   = path.join(__dirname, 'data', 'worker-hosts.json');
 
 // Email destinataire rapport matin (commun aux deux comptes)
 const MORNING_ALERT_TO = process.env.ALERT_EMAIL || 'seb.webmail@gmail.com';
@@ -694,6 +695,17 @@ async function main() {
       }
     }
   }
+
+  // ── 4b. Sauvegarde worker-hosts.json (IP de chaque worker actif) ─────────────
+  const workerHosts = {};
+  for (const account of ACCOUNTS) {
+    for (const w of allWorkers[account.user] || []) {
+      const name = w.hash_rate_info?.name || '?';
+      const key  = `${account.user}.${name}`;
+      if (w.host) workerHosts[key] = w.host;
+    }
+  }
+  fs.writeFileSync(WORKERHOSTS_PATH, JSON.stringify(workerHosts, null, 2));
 
   h.last_updated = now.toISOString();
   saveHashrate(h);

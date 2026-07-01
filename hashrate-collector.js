@@ -107,7 +107,10 @@ async function fetchWorkers(account) {
   });
   if (!res.ok) throw new Error(`f2pool API error for ${account.user}: ${res.status} ${await res.text()}`);
   const data = await res.json();
-  return data.workers || [];
+  // Log root-level fields (exclude workers array) to discover ATO fields
+  const rootFields = Object.fromEntries(Object.entries(data).filter(([k]) => k !== 'workers'));
+  console.log(`   [worker-list root] ${account.user}: ${JSON.stringify(rootFields).slice(0, 400)}`);
+  return { workers: data.workers || [], root: rootFields };
 }
 
 // ─── Storage ─────────────────────────────────────────────────────────────────
@@ -613,15 +616,18 @@ async function main() {
     if (!account.token) { console.warn(`⚠️  Token manquant pour ${account.name}`); continue; }
     console.log(`📡 Fetch — ${account.name} (${account.user})...`);
     try {
-      const workers = await fetchWorkers(account);
-      allWorkers[account.user] = workers;
-      console.log(`   ${workers.length} workers`);
+      const result = await fetchWorkers(account);
+      allWorkers[account.user] = result.workers;
+      console.log(`   ${result.workers.length} workers`);
+      // ATO depuis les champs root de la réponse worker/list
+      const r = result.root;
+      const total = r.h1_hash_rate ?? r.hash_rate ?? null;
+      const ato   = r.actual_hash_rate ?? r.actual_transfer_out ?? r.h1_actual_hash_rate ?? null;
+      accountStats[account.user] = (total !== null || ato !== null) ? { total, ato } : null;
     } catch (err) {
       console.error(`   ❌ Erreur: ${err.message}`);
       allWorkers[account.user] = [];
     }
-    // Fetch account-level totals (total + ATO) en parallèle
-    accountStats[account.user] = await fetchAccountHashrate(account);
   }
 
   // ── 2. Détection chutes par groupe (avant de sauvegarder les nouveaux points) ──

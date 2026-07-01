@@ -493,8 +493,7 @@ function updateDcFilterBar() {
   }
   bar.classList.add('visible');
   const tags = [..._dcFilter].map(g => `<span class="dc-filter-tag">${g}</span>`).join('');
-  bar.innerHTML = `<div class="dc-filter-bar-tags">${tags}</div>
-    <span class="dc-filter-clear" onclick="clearDcFilter()">✕ Clear datacenter filter</span>`;
+  bar.innerHTML = `<span class="dc-filter-clear" onclick="clearDcFilter()">✕ Clear datacenter filter</span>`;
 }
 
 window.toggleDcFilter = toggleDcFilter;

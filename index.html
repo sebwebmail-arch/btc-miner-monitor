@@ -806,6 +806,7 @@ function switchTab(el, targetId) {
 let _hashrate      = null; // hashrate.json
 let _workerIssues  = null; // worker-issues.json
 let _offlineStatus = null; // offline-status.json (real-time offline workers)
+let _deadIssues    = {};   // history.json current_issues (dead/offline workers)
 
 async function loadHashrateData() {
   try {
@@ -1244,6 +1245,8 @@ function renderOnlineTable() {
   const all = [];
   for (const [key, snaps] of Object.entries(_hashrate.workers)) {
     if (snaps.length < 1) continue;
+    // Exclure les workers déjà listés comme dead/offline dans history.json
+    if (_deadIssues[key]) continue;
     const last    = snaps[snaps.length - 1];
     const recent6 = snaps.slice(-6);
     const avg3h   = recent6.reduce((s, p) => s + p.hr, 0) / recent6.length;
@@ -1658,6 +1661,7 @@ async function render() {
 
   const issues = data.current_issues || {};
   const snapshots = data.snapshots || [];
+  _deadIssues = issues; // expose aux fonctions de rendu (exclure de Online Workers)
 
   // Topbar — affiche le timestamp hashrate.json (collecte 30min) en priorité
   const fmtTs = iso => {

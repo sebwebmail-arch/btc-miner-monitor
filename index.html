@@ -787,7 +787,10 @@ function buildDeadTracker(issues) {
   const hidden = Object.values(issues).filter(w => categoryOf(w) === 'dead_old').length;
   return `
   <div>
-    <div class="section-label">Dead workers — lifecycle tracking</div>
+    <div class="section-label" style="display:flex;justify-content:space-between;align-items:baseline">
+      <span>Dead workers — lifecycle tracking</span>
+      <span style="font-size:10px;color:#bbb;font-weight:400;letter-spacing:0;text-transform:none">⏱ Daily snapshot · updated at 05:00 UTC</span>
+    </div>
     <div class="panel panel-table">
       <div class="panel-header">
         <div class="panel-title">Lifecycle tracker</div>
@@ -1307,7 +1310,10 @@ window.resetOnlineFilters  = resetOnlineFilters;
 function buildOnlineWorkers() {
   return `
   <div>
-    <div class="section-label">Online workers</div>
+    <div class="section-label" style="display:flex;justify-content:space-between;align-items:baseline">
+      <span>Online workers</span>
+      <span style="font-size:10px;color:#bbb;font-weight:400;letter-spacing:0;text-transform:none">⏱ Real-time · updated every 30 min</span>
+    </div>
     <div class="panel panel-table">
       <div class="panel-header">
         <div class="panel-title">All active workers</div>

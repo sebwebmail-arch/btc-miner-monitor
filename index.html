@@ -377,6 +377,9 @@ function getGroupFromName(name) {
 // Icône "signal instable" — courbe oscillante
 const WAVE_SVG = `<svg width="15" height="9" viewBox="0 0 15 9" style="display:inline-block;vertical-align:middle;margin-right:3px" fill="none"><path d="M0,6 L1.5,3 L3,7.5 L5,1 L6.5,7 L8,2 L9.5,7 L11,1.5 L12.5,6 L15,3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
+// Icône "hashrate drop" — courbe déclinante avec crochet de chute
+const DROP_SVG = `<svg width="15" height="9" viewBox="0 0 15 9" style="display:inline-block;vertical-align:middle;margin-right:3px" fill="none"><path d="M0,0.5 L2.5,1 L5,2 L7,3.5 L9,5 L11,6 L13,7 L15,8.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M12.5,8.5 L15,8.5 L15,6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
 // Icône "Monitor" — loupe (surveillance active)
 const MONITOR_SVG = `<svg width="12" height="12" viewBox="0 0 12 12" style="display:inline-block;vertical-align:middle;margin-right:4px" fill="none"><circle cx="4.8" cy="4.8" r="3.5" stroke="currentColor" stroke-width="1.5"/><line x1="7.4" y1="7.4" x2="11" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`;
 
@@ -1104,7 +1107,7 @@ function buildWorkerAnomalies() {
   const rows = keys.map(key => {
     const w   = issues[key];
     const cat = w.type === 'level_drop'
-      ? `<span class="anomaly-badge badge-drop">📉 Drop ${w.drop_pct}%</span>`
+      ? `<span class="anomaly-badge badge-drop">${DROP_SVG}Drop ${w.drop_pct}%</span>`
       : `<span class="anomaly-badge badge-volt">${WAVE_SVG}Unstable CV ${w.cv_pct}%</span>`;
     const spark = miniSparkline(key, 12);
     return `<tr>
@@ -1373,7 +1376,7 @@ function renderOnlineTable() {
 
     let statusCell, rowStyle = '';
     if (w.issue?.type === 'level_drop') {
-      statusCell = `<span class="anomaly-badge badge-drop">📉 Drop ${w.issue.drop_pct}%</span>`;
+      statusCell = `<span class="anomaly-badge badge-drop">${DROP_SVG}Drop ${w.issue.drop_pct}%</span>`;
       rowStyle   = 'background:#fffbfb';
     } else if (w.issue?.type === 'volatile') {
       statusCell = `<span class="anomaly-badge badge-volt">${WAVE_SVG}Unstable</span>`;

@@ -46,6 +46,11 @@ const GROUPS = [
     provider: 'Terahash',
     test: (name) => /^18x/i.test(name),
   },
+  {
+    id: 'OM',
+    provider: 'Open Mine',
+    test: (name) => /^(omx|openfall)/i.test(name),
+  },
 ];
 
 function getGroup(workerName) {

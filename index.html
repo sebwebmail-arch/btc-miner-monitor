@@ -299,6 +299,7 @@ const GROUPS_RULES = [
   { id:'U3',    provider:'ValueHash (NY)', test: n => /^(c21|e21)/i.test(n) },
   { id:'P1',    provider:'Altos',          test: n => /^s21/i.test(n) },
   { id:'F1',    provider:'Terahash',       test: n => /^18x/i.test(n) },
+  { id:'OM',    provider:'Open Mine',      test: n => /^(omx|openfall)/i.test(n) },
 ];
 function getGroupFromName(name) {
   return GROUPS_RULES.find(g => g.test(name)) || { id:'?', provider:'Unknown' };
@@ -313,6 +314,7 @@ const GROUPS_META = {
   'U3':   { name: 'ValueHash' },
   'P1':   { name: 'Altos' },
   'F1':   { name: 'Terahash' },
+  'OM':   { name: 'Open Mine' },
 };
 
 // ── Helpers ──────────────────────────────────────────────────────────────────

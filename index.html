@@ -1647,7 +1647,7 @@ function buildAccountHashrateChart(accountUser, rangeH) {
     const y  = PT + cH * (1 - i/4);
     const lbl = v >= 10000 ? `${(v/1000).toFixed(0)}k` : v >= 1000 ? `${(v/1000).toFixed(1)}k` : v.toFixed(0);
     return `<line x1="${PL}" y1="${y.toFixed(1)}" x2="${PL+cW}" y2="${y.toFixed(1)}" stroke="${i===0?'#e8e8e8':'#f0f0f0'}" stroke-width="1" ${i>0&&i<4?'stroke-dasharray="4,3"':''}/>
-      <text x="${PL-6}" y="${(y+3.5).toFixed(1)}" text-anchor="end" font-size="10" fill="#bbb">${lbl}</text>`;
+      <text x="${PL-6}" y="${(y+3.5).toFixed(1)}" class="hr-yl" text-anchor="end" font-size="10" fill="#bbb">${lbl}</text>`;
   }).join('');
 
   // X axis : ticks aux heures rondes avec date façon f2pool
@@ -1666,7 +1666,7 @@ function buildAccountHashrateChart(accountUser, rangeH) {
     const x   = (PL + (t - tAxisStart) / tAxisSpan * cW).toFixed(1);
     xLabels.push(
       `<line x1="${x}" y1="${PT}" x2="${x}" y2="${PT+cH}" stroke="${hh===0?'#e8e8e8':'#f5f5f5'}" stroke-width="${hh===0?1.5:1}"/>`,
-      `<text x="${x}" y="${PT+cH+18}" text-anchor="middle" font-size="10" fill="${hh===0?'#aaa':'#bbb'}" font-weight="${hh===0?'600':'400'}">${lbl}</text>`
+      `<text x="${x}" y="${PT+cH+18}" class="hr-xl" text-anchor="middle" font-size="10" fill="${hh===0?'#aaa':'#bbb'}" font-weight="${hh===0?'600':'400'}">${lbl}</text>`
     );
   }
 
@@ -1686,6 +1686,7 @@ function buildAccountHashrateChart(accountUser, rangeH) {
           <stop offset="0%"   stop-color="#3498db" stop-opacity="0.28"/>
           <stop offset="100%" stop-color="#3498db" stop-opacity="0.03"/>
         </linearGradient>
+        <style>@media(max-width:480px){.hr-yl,.hr-xl{font-size:13px}}</style>
       </defs>
       ${yLabels}
       ${xLabels.join('')}

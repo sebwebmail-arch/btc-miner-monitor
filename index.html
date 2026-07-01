@@ -678,7 +678,6 @@ function renderDeadTracker() {
   if (rb) rb.style.display = hasFilters ? 'block' : 'none';
 
   const totalArchived = Object.values(_deadIssues).filter(w => categoryOf(w) === 'dead_old').length;
-  const thStyle = 'text-align:left;font-size:10px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;padding:5px 12px 5px 0;border-bottom:1px solid var(--border)';
 
   const cats = [
     { key:'offline',     label:'< 24 hours', sub:'just went offline · check now', dotColor:'#f1c40f' },
@@ -720,12 +719,12 @@ function renderDeadTracker() {
       <div class="dead-section-title">${dot}${label} ${count}</div>
       <table class="issues-table">
         <thead><tr>
-          <th style="${thStyle}">Worker</th>
-          <th class="dead-col-acct" style="${thStyle}">Account</th>
-          <th style="${thStyle}">Datacenter</th>
-          <th style="${thStyle}">Status</th>
-          <th class="mob-hide" style="${thStyle}">Last Share (UTC)</th>
-          <th class="mob-hide" style="${thStyle}"></th>
+          <th><div class="th-inner" style="cursor:default">Worker</div></th>
+          <th class="dead-col-acct"><div class="th-inner" style="cursor:default">Account</div></th>
+          <th><div class="th-inner" style="cursor:default">Datacenter</div></th>
+          <th><div class="th-inner" style="cursor:default">Status</div></th>
+          <th class="mob-hide"><div class="th-inner" style="cursor:default">Last Share (UTC)</div></th>
+          <th class="mob-hide"></th>
         </tr></thead>
         <tbody>${rows}</tbody>
       </table>
@@ -950,16 +949,16 @@ function renderHashrateChart(key, rangeH) {
   }).join('');
   const mLineElems = segs.map(idxs => {
     const l = idxs.map(i=>`${px(i).toFixed(1)},${py(i).toFixed(1)}`).join(' ');
-    return `<polyline points="${l}" fill="none" stroke="#16a34a" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+    return `<polyline points="${l}" fill="none" stroke="#3498db" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>`;
   }).join('');
   const mDashElems = gaps.map(g =>
-    `<line x1="${g.x1.toFixed(1)}" y1="${g.y1.toFixed(1)}" x2="${g.x2.toFixed(1)}" y2="${g.y1.toFixed(1)}" stroke="#16a34a" stroke-width="1.2" stroke-dasharray="5,4" opacity="0.4"/>`
+    `<line x1="${g.x1.toFixed(1)}" y1="${g.y1.toFixed(1)}" x2="${g.x2.toFixed(1)}" y2="${g.y1.toFixed(1)}" stroke="#3498db" stroke-width="1.2" stroke-dasharray="5,4" opacity="0.4"/>`
   ).join('');
 
   // Y axis labels (0, mid, max)
   const yLabels = [0, maxTH/2, maxTH].map((v,i) => {
     const y = PT + cH - (i * cH / 2);
-    return `<text x="${PL-4}" y="${y+4}" text-anchor="end" font-size="9" fill="#ccc" font-family="'DM Sans',sans-serif">${v.toFixed(0)}</text>`;
+    return `<text x="${PL-4}" y="${y+4}" text-anchor="end" font-size="9" fill="#ccc">${v.toFixed(0)}</text>`;
   }).join('');
 
   // X axis : ticks aux heures rondes avec date au changement de jour
@@ -973,7 +972,7 @@ function renderHashrateChart(key, rangeH) {
     const hh  = d.getUTCHours();
     const lbl = hh === 0 ? `${MONTHS_M[d.getUTCMonth()]} ${d.getUTCDate()}` : `${String(hh).padStart(2,'0')}:00`;
     const x   = (PL + (t - tAxisStart) / tAxisSpan * cW).toFixed(1);
-    xLabels.push(`<text x="${x}" y="${PT+cH+14}" text-anchor="middle" font-size="9" fill="${hh===0?'#aaa':'#ccc'}" font-weight="${hh===0?'600':'400'}" font-family="'DM Sans',sans-serif">${lbl}</text>`);
+    xLabels.push(`<text x="${x}" y="${PT+cH+14}" text-anchor="middle" font-size="9" fill="${hh===0?'#aaa':'#ccc'}" font-weight="${hh===0?'600':'400'}">${lbl}</text>`);
   }
 
   // Stocker données pour le tooltip hover
@@ -983,8 +982,8 @@ function renderHashrateChart(key, rangeH) {
   return `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:${H}px;display:block;background:var(--bg-surface);border-radius:8px">
     <defs>
       <linearGradient id="hrGrad" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#16a34a" stop-opacity="0.25"/>
-        <stop offset="100%" stop-color="#16a34a" stop-opacity="0.02"/>
+        <stop offset="0%" stop-color="#3498db" stop-opacity="0.25"/>
+        <stop offset="100%" stop-color="#3498db" stop-opacity="0.02"/>
       </linearGradient>
     </defs>
     <!-- Grid lines -->
@@ -1002,9 +1001,9 @@ function renderHashrateChart(key, rangeH) {
     <!-- Tooltip (desktop hover) -->
     <g id="modal-tt" visibility="hidden" pointer-events="none">
       <line id="modal-tt-vline" x1="0" x2="0" y1="${PT}" y2="${PT+cH}"
-            stroke="#16a34a" stroke-width="1" stroke-dasharray="4,3" opacity="0.65"/>
+            stroke="#3498db" stroke-width="1" stroke-dasharray="4,3" opacity="0.65"/>
       <circle id="modal-tt-dot" cx="0" cy="0" r="4"
-              fill="#16a34a" stroke="white" stroke-width="1.5"/>
+              fill="#3498db" stroke="white" stroke-width="1.5"/>
       <rect id="modal-tt-bg" x="0" y="0" width="110" height="36" rx="5"
             fill="rgba(26,26,20,0.88)"/>
       <text id="modal-tt-hr" x="0" y="0" fill="white" font-size="11" font-weight="700"
@@ -1415,12 +1414,12 @@ function renderOnlineTable() {
   wrap.innerHTML = `<table class="online-table">
     <thead><tr>
       <th><div class="th-inner ${_onlineSortCol==='name'?'sorted':''}" onclick="sortOnline('name')">Worker ${si('name')}</div></th>
-      <th class="online-acct"><div class="th-inner ${_onlineSortCol==='account'?'sorted':''}" onclick="sortOnline('account')">Account ${si('account')} ${filterBtn('account')}</div></th>
-      <th><div class="th-inner ${_onlineSortCol==='datacenter'?'sorted':''}" onclick="sortOnline('datacenter')"><span class="mob-hide">Datacenter</span><span class="acct-short" style="display:none">DC</span> ${si('datacenter')} ${filterBtn('datacenter')}</div></th>
-      <th><div class="th-inner">Status ${filterBtn('status')}</div></th>
-      <th><div class="th-inner ${_onlineSortCol==='hr'?'sorted':''}" onclick="sortOnline('hr')">NOW ${si('hr')}</div></th>
-      <th class="mob-hide"><div class="th-inner">Avg 3h</div></th>
-      <th class="mob-hide"><div class="th-inner">6h trend</div></th>
+      <th class="online-acct"><div class="th-inner ${_onlineSortCol==='account'?'sorted':''}" onclick="sortOnline('account')">Account ${si('account')}</div>${filterBtn('account')}</th>
+      <th><div class="th-inner ${_onlineSortCol==='datacenter'?'sorted':''}" onclick="sortOnline('datacenter')"><span class="mob-hide">Datacenter</span><span class="acct-short" style="display:none">DC</span> ${si('datacenter')}</div>${filterBtn('datacenter')}</th>
+      <th><div class="th-inner">Status</div>${filterBtn('status')}</th>
+      <th><div class="th-inner ${_onlineSortCol==='hr'?'sorted':''}" onclick="sortOnline('hr')"><span class="mob-hide">Now </span>TH/s ${si('hr')}</div></th>
+      <th class="mob-hide">Avg 3h</th>
+      <th class="mob-hide">6h trend</th>
       <th class="mob-hide"></th>
     </tr></thead>
     <tbody>${emptyRow || tbody}</tbody>
@@ -1557,29 +1556,20 @@ function buildAccountHashrateChart(accountUser, rangeH) {
   const W = 860, H = 150, PL = 64, PR = 16, PT = 14, PB = 28;
   const cW = W - PL - PR, cH = H - PT - PB;
 
-  // Actual Transfer Out — données compte (endpoint /v2/hash_rate)
-  const acctSnaps = _hashrate?.accounts?.[accountUser] || [];
-  const atoCutoff = Date.now() - rangeH * 3600000;
-  const atoPts = acctSnaps
-    .filter(p => p.ato != null && new Date(p.ts).getTime() >= atoCutoff)
-    .sort((a, b) => new Date(a.ts) - new Date(b.ts));
-  const hasATO = atoPts.length >= 2;
-
-  const maxHR  = Math.max(...pts.map(p => p.hr), hasATO ? Math.max(...atoPts.map(p => p.ato)) : 0, 1);
+  const maxHR  = Math.max(...pts.map(p => p.hr), 1);
   const maxTH  = maxHR / 1e12;
-  const gradId = `hrGrad${accountUser}`;
+  const gradId = `hrGrad${accountUser}`;   // ← déclaré avant fillElems
 
   // Axe X fixe = fenêtre demandée (maintenant - rangeH → maintenant)
+  // Les points se positionnent à l'intérieur, comme f2pool
   const tAxisEnd   = Date.now();
   const tAxisStart = tAxisEnd - rangeH * 3600000;
   const tAxisSpan  = rangeH * 3600000;
 
-  const px  = i => PL + (new Date(pts[i].ts).getTime() - tAxisStart) / tAxisSpan * cW;
-  const py  = i => PT + cH - (pts[i].hr / maxHR) * cH;
-  const pxA = i => PL + (new Date(atoPts[i].ts).getTime() - tAxisStart) / tAxisSpan * cW;
-  const pyA = i => PT + cH - (atoPts[i].ato / maxHR) * cH;
+  const px = i => PL + (new Date(pts[i].ts).getTime() - tAxisStart) / tAxisSpan * cW;
+  const py = i => PT + cH - (pts[i].hr / maxHR) * cH;
 
-  // Total line segments
+  // Segments continus + lacunes (runs manqués) → pointillés sur les lacunes
   const { segs, gaps } = buildChartSegments(pts, px, py);
   const fillElems = segs.map(idxs => {
     const f = `${px(idxs[0]).toFixed(1)},${PT+cH} ` + idxs.map(i=>`${px(i).toFixed(1)},${py(i).toFixed(1)}`).join(' ') + ` ${px(idxs[idxs.length-1]).toFixed(1)},${PT+cH}`;
@@ -1587,21 +1577,11 @@ function buildAccountHashrateChart(accountUser, rangeH) {
   }).join('');
   const lineElems = segs.map(idxs => {
     const l = idxs.map(i=>`${px(i).toFixed(1)},${py(i).toFixed(1)}`).join(' ');
-    return `<polyline points="${l}" fill="none" stroke="#16a34a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
+    return `<polyline points="${l}" fill="none" stroke="#3498db" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
   }).join('');
   const dashElems = gaps.map(g =>
-    `<line x1="${g.x1.toFixed(1)}" y1="${g.y1.toFixed(1)}" x2="${g.x2.toFixed(1)}" y2="${g.y1.toFixed(1)}" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="6,5" opacity="0.4"/>`
+    `<line x1="${g.x1.toFixed(1)}" y1="${g.y1.toFixed(1)}" x2="${g.x2.toFixed(1)}" y2="${g.y1.toFixed(1)}" stroke="#3498db" stroke-width="1.5" stroke-dasharray="6,5" opacity="0.4"/>`
   ).join('');
-
-  // ATO line (Actual Transfer Out)
-  let atoElems = '';
-  if (hasATO) {
-    const { segs: aSegs } = buildChartSegments(atoPts, pxA, pyA);
-    atoElems = aSegs.map(idxs => {
-      const l = idxs.map(i=>`${pxA(i).toFixed(1)},${pyA(i).toFixed(1)}`).join(' ');
-      return `<polyline points="${l}" fill="none" stroke="#4ade80" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" opacity="0.85"/>`;
-    }).join('');
-  }
 
   // Y axis — 4 ticks
   const yLabels = [0,1,2,3,4].map(i => {
@@ -1609,10 +1589,11 @@ function buildAccountHashrateChart(accountUser, rangeH) {
     const y  = PT + cH * (1 - i/4);
     const lbl = v >= 10000 ? `${(v/1000).toFixed(0)}k` : v >= 1000 ? `${(v/1000).toFixed(1)}k` : v.toFixed(0);
     return `<line x1="${PL}" y1="${y.toFixed(1)}" x2="${PL+cW}" y2="${y.toFixed(1)}" stroke="${i===0?'#e8e8e8':'#f0f0f0'}" stroke-width="1" ${i>0&&i<4?'stroke-dasharray="4,3"':''}/>
-      <text x="${PL-6}" y="${(y+3.5).toFixed(1)}" class="hr-yl" text-anchor="end" font-size="10" fill="#bbb" font-family="'DM Sans',sans-serif">${lbl}</text>`;
+      <text x="${PL-6}" y="${(y+3.5).toFixed(1)}" class="hr-yl" text-anchor="end" font-size="10" fill="#bbb">${lbl}</text>`;
   }).join('');
 
   // X axis : ticks aux heures rondes avec date façon f2pool
+  // → "Jun 30" quand l'heure est 00:00, "HH:00" sinon
   const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   const stepH  = rangeH <= 24 ? 6 : 12;
   const stepMs = stepH * 3600000;
@@ -1627,41 +1608,25 @@ function buildAccountHashrateChart(accountUser, rangeH) {
     const x   = (PL + (t - tAxisStart) / tAxisSpan * cW).toFixed(1);
     xLabels.push(
       `<line x1="${x}" y1="${PT}" x2="${x}" y2="${PT+cH}" stroke="${hh===0?'#e8e8e8':'#f5f5f5'}" stroke-width="${hh===0?1.5:1}"/>`,
-      `<text x="${x}" y="${PT+cH+18}" class="hr-xl" text-anchor="middle" font-size="10" fill="${hh===0?'#aaa':'#bbb'}" font-weight="${hh===0?'600':'400'}" font-family="'DM Sans',sans-serif">${lbl}</text>`
+      `<text x="${x}" y="${PT+cH+18}" class="hr-xl" text-anchor="middle" font-size="10" fill="${hh===0?'#aaa':'#bbb'}" font-weight="${hh===0?'600':'400'}">${lbl}</text>`
     );
   }
 
-  const lastTH    = (pts[pts.length-1].hr / 1e12).toFixed(0);
-  const lastAtoTH = hasATO ? (atoPts[atoPts.length-1].ato / 1e12).toFixed(0) : null;
+  const lastTH  = (pts[pts.length-1].hr / 1e12).toFixed(0);
 
   // Stocke les données pour le tooltip hover
   _hrChartData[accountUser] = { pts, tAxisStart, tAxisSpan, maxHR };
 
-  // Légende (visible uniquement si on a des données ATO)
-  const legend = hasATO ? `
-    <div style="display:flex;gap:14px;margin-bottom:4px">
-      <span style="font-size:11px;color:var(--text-muted);display:flex;align-items:center;gap:5px">
-        <span style="display:inline-block;width:20px;height:2px;background:#16a34a;border-radius:1px"></span>Total
-      </span>
-      <span style="font-size:11px;color:var(--text-muted);display:flex;align-items:center;gap:5px">
-        <span style="display:inline-block;width:20px;height:2px;background:#4ade80;border-radius:1px"></span>Actual Transfer Out
-      </span>
-    </div>` : '';
-
   return `<div>
-    <div style="display:flex;align-items:flex-end;justify-content:space-between;padding:0 4px 4px 0">
-      <div>${legend}</div>
-      <div>
-        <span style="font-size:26px;font-weight:800;color:var(--text-primary);line-height:1;font-family:var(--mono)">${lastTH}</span>
-        <span style="font-size:11px;color:#bbb;margin-left:4px">TH/s now</span>
-        ${lastAtoTH ? `<span style="font-size:12px;color:#4ade80;margin-left:10px;font-weight:600;font-family:var(--mono)">${lastAtoTH}</span><span style="font-size:10px;color:#bbb;margin-left:2px">ATO</span>` : ''}
-      </div>
+    <div style="text-align:right;padding:0 4px 4px 0">
+      <span style="font-size:26px;font-weight:800;color:var(--text-primary);line-height:1">${lastTH}</span>
+      <span style="font-size:11px;color:#bbb;margin-left:4px">TH/s now</span>
     </div>
     <svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
       <defs>
         <linearGradient id="${gradId}" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"   stop-color="#16a34a" stop-opacity="0.18"/>
-          <stop offset="100%" stop-color="#16a34a" stop-opacity="0.02"/>
+          <stop offset="0%"   stop-color="#3498db" stop-opacity="0.28"/>
+          <stop offset="100%" stop-color="#3498db" stop-opacity="0.03"/>
         </linearGradient>
         <style>@media(max-width:480px){.hr-yl,.hr-xl{font-size:13px}}</style>
       </defs>
@@ -1670,20 +1635,19 @@ function buildAccountHashrateChart(accountUser, rangeH) {
       ${fillElems}
       ${dashElems}
       ${lineElems}
-      ${atoElems}
       <!-- Live dot — ripple outward only, then snap back -->
-      <circle cx="${px(pts.length-1).toFixed(1)}" cy="${py(pts.length-1).toFixed(1)}" r="3.5" fill="#16a34a" opacity="0.3">
+      <circle cx="${px(pts.length-1).toFixed(1)}" cy="${py(pts.length-1).toFixed(1)}" r="3.5" fill="#3498db" opacity="0.3">
         <animate attributeName="r"       values="3.5;13;13"  keyTimes="0;0.75;1" dur="2.4s" repeatCount="indefinite"/>
         <animate attributeName="opacity" values="0.3;0;0"    keyTimes="0;0.75;1" dur="2.4s" repeatCount="indefinite"/>
       </circle>
-      <circle cx="${px(pts.length-1).toFixed(1)}" cy="${py(pts.length-1).toFixed(1)}" r="3.5" fill="#16a34a"/>
+      <circle cx="${px(pts.length-1).toFixed(1)}" cy="${py(pts.length-1).toFixed(1)}" r="3.5" fill="#3498db"/>
       <!-- Hover elements -->
-      <line id="hrc-cross-${accountUser}" x1="0" y1="${PT}" x2="0" y2="${PT+cH}" stroke="#16a34a" stroke-width="1" stroke-dasharray="4,3" opacity="0" pointer-events="none"/>
-      <circle id="hrc-dot-${accountUser}" cx="0" cy="0" r="4" fill="white" stroke="#16a34a" stroke-width="2" opacity="0" pointer-events="none"/>
+      <line id="hrc-cross-${accountUser}" x1="0" y1="${PT}" x2="0" y2="${PT+cH}" stroke="#3498db" stroke-width="1" stroke-dasharray="4,3" opacity="0" pointer-events="none"/>
+      <circle id="hrc-dot-${accountUser}" cx="0" cy="0" r="4" fill="white" stroke="#3498db" stroke-width="2" opacity="0" pointer-events="none"/>
       <g id="hrc-tip-${accountUser}" opacity="0" pointer-events="none">
         <rect id="hrc-tip-bg-${accountUser}" x="0" y="0" width="136" height="38" rx="5" fill="white" stroke="#e0e0e0" stroke-width="1" filter="drop-shadow(0 2px 6px rgba(0,0,0,.1))"/>
-        <text id="hrc-tip-time-${accountUser}" x="10" y="14" font-size="10" fill="#999" font-family="'DM Sans',sans-serif"></text>
-        <text id="hrc-tip-val-${accountUser}"  x="10" y="29" font-size="13" fill="#1a1a2e" font-weight="700" font-family="'DM Mono',monospace"></text>
+        <text id="hrc-tip-time-${accountUser}" x="10" y="14" font-size="10" fill="#999"></text>
+        <text id="hrc-tip-val-${accountUser}"  x="10" y="29" font-size="13" fill="#1a1a2e" font-weight="700"></text>
       </g>
       <!-- Zone de capture souris -->
       <rect x="${PL}" y="${PT}" width="${cW}" height="${cH}" fill="transparent" style="cursor:crosshair"

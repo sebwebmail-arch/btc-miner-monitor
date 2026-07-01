@@ -455,12 +455,6 @@ function buildDatacenters(issues) {
 // ── Issues table — filtres style Excel + tri par colonne ─────────────────────
 
 let _issues = {};
-let _sortCol = 'account';
-let _sortAsc = true;
-let _filterSearch = '';
-// Multi-select filters per column: Set of selected values, empty = all
-let _activeFilters = { account: new Set(), status: new Set(), group: new Set() };
-let _openDropdown = null;
 
 // ── Filtre datacenter global (cross-table, cross-account) ─────────────────────
 let _dcFilter = new Set(); // Set de group_ids (ex: 'E1', 'P1')
@@ -477,8 +471,8 @@ function toggleDcFilter(groupId) {
   // Bandeau d'indication filtre actif
   updateDcFilterBar();
 
-  // Re-filtre les trois tables
-  applyFilters();
+  // Re-filtre les tables
+  renderDeadTracker();
   renderOnlineTable();
 }
 
@@ -486,7 +480,7 @@ function clearDcFilter() {
   _dcFilter.clear();
   document.querySelectorAll('.dc-cell.dc-selected').forEach(c => c.classList.remove('dc-selected'));
   updateDcFilterBar();
-  applyFilters();
+  renderDeadTracker();
   renderOnlineTable();
 }
 
@@ -507,227 +501,178 @@ function updateDcFilterBar() {
 window.toggleDcFilter = toggleDcFilter;
 window.clearDcFilter  = clearDcFilter;
 
-const STATUS_LABELS = {
-  offline:     'Offline (< 24h)',
-  dead_recent: 'Dead 1–7 days',
-  dead_mid:    'Dead 8–90 days',
-};
+// ── Workers requiring attention — lifecycle sections ──────────────────────────
+let _deadFilters = { account: new Set(), datacenter: new Set() };
+let _deadSearch  = '';
+let _deadOpenDD  = null;
 
-function buildIssuesTable(issues) {
-  _issues = issues;
-  const hidden = Object.values(issues).filter(w => categoryOf(w) === 'dead_old').length;
+function openDeadDD(col, el) {
+  if (_deadOpenDD === col) { closeDeadDDs(); return; }
+  closeDeadDDs();
+  const all = Object.values(_deadIssues).filter(w => categoryOf(w) !== 'dead_old');
+  const values = col === 'account'
+    ? [...new Set(all.map(w => w.account_name||w.account))].sort()
+    : [...new Set(all.map(w => w.group_id))].sort();
+  const active = _deadFilters[col];
+  const items = values.map(v => `
+    <label class="col-dropdown-item">
+      <input type="checkbox" onchange="deadFilterToggle('${col}','${v}',this.checked)" ${active.has(v)?'checked':''}>
+      ${v}
+    </label>`).join('');
+  const dd = document.getElementById('dead-dd-' + col);
+  if (!dd) return;
+  dd.innerHTML = `
+    <div class="col-dropdown-actions">
+      <span class="col-dropdown-action" onclick="deadFilterAll('${col}')">Select all</span>
+      <span class="col-dropdown-action" onclick="deadFilterAll('${col}')">Clear</span>
+    </div>
+    <div class="col-dropdown-sep"></div>${items}`;
+  dd.classList.add('open');
+  _deadOpenDD = col;
+}
+function closeDeadDDs() {
+  document.querySelectorAll('[id^="dead-dd-"]').forEach(d => d.classList.remove('open'));
+  _deadOpenDD = null;
+}
+function deadFilterToggle(col, val, checked) {
+  if (checked) _deadFilters[col].add(val);
+  else _deadFilters[col].delete(val);
+  renderDeadTracker();
+}
+function deadFilterAll(col) { _deadFilters[col].clear(); renderDeadTracker(); closeDeadDDs(); }
+function onDeadSearch() { _deadSearch = (document.getElementById('dead-search')?.value||'').toLowerCase(); renderDeadTracker(); }
+function resetDeadFilters() {
+  _deadFilters = { account: new Set(), datacenter: new Set() };
+  _deadSearch = ''; const s = document.getElementById('dead-search'); if (s) s.value = '';
+  clearDcFilter();
+}
+window.openDeadDD = openDeadDD; window.closeDeadDDs = closeDeadDDs;
+window.deadFilterToggle = deadFilterToggle; window.deadFilterAll = deadFilterAll;
+window.onDeadSearch = onDeadSearch; window.resetDeadFilters = resetDeadFilters;
 
+function buildDeadTracker(issues) {
+  _issues = issues; // needed by openWorkerModal
   return `
   <div>
     <div class="section-label" style="display:flex;justify-content:space-between;align-items:baseline">
       <span>Workers requiring attention</span>
-      <span style="font-size:10px;color:#bbb;font-weight:400;letter-spacing:0;text-transform:none" title="Workers going offline after 05:00 UTC will appear here from the next morning run">⏱ Daily snapshot at 05:00 UTC</span>
+      <span style="font-size:10px;color:#bbb;font-weight:400;letter-spacing:0;text-transform:none">⏱ Daily snapshot at 05:00 UTC</span>
     </div>
     <div class="panel panel-table">
       <div class="panel-header">
         <div class="panel-title">Offline &amp; Dead (≤ 90 days)</div>
       </div>
       <div class="filter-bar">
-        <input class="filter-search" id="issues-search" type="text" placeholder="🔍  Search worker name…" oninput="applyFilters()">
-        <div class="filter-count" id="issues-count"></div>
-        <div class="filter-reset" id="filter-reset-btn" onclick="resetFilters()" style="display:none">✕ Reset filters</div>
+        <input class="filter-search" id="dead-search" type="text" placeholder="🔍  Search worker name…" oninput="onDeadSearch()">
+        <div style="display:flex;gap:6px;flex-shrink:0">
+          <span class="th-filter-btn" id="dead-btn-account" onclick="event.stopPropagation();openDeadDD('account',this)">Account ▼<div class="col-dropdown" id="dead-dd-account"></div></span>
+          <span class="th-filter-btn" id="dead-btn-datacenter" onclick="event.stopPropagation();openDeadDD('datacenter',this)">Datacenter ▼<div class="col-dropdown" id="dead-dd-datacenter"></div></span>
+        </div>
+        <div class="filter-count" id="dead-count"></div>
+        <div class="filter-reset" id="dead-reset-btn" onclick="resetDeadFilters()" style="display:none">✕ Reset filters</div>
       </div>
-      <div id="issues-table-wrap"></div>
+      <div id="dead-tracker-wrap"></div>
     </div>
   </div>`;
 }
 
-// ── Dropdown management ───────────────────────────────────────────────────────
-
-function openDropdown(col, btn) {
-  // Close existing
-  if (_openDropdown && _openDropdown !== col) closeAllDropdowns();
-
-  const existing = document.getElementById('dd-' + col);
-  if (existing && existing.classList.contains('open')) { closeAllDropdowns(); return; }
-
-  // Build dropdown values from current data
-  let values = [];
-  if (col === 'account') values = [...new Set(Object.values(_issues).filter(w=>categoryOf(w)!=='dead_old').map(w=>w.account))].sort();
-  if (col === 'status')  values = ['offline','dead_recent','dead_mid'];
-  if (col === 'group')   values = [...new Set(Object.values(_issues).filter(w=>categoryOf(w)!=='dead_old').map(w=>w.group_id))].sort();
-
-  const active = _activeFilters[col];
-  const acctNameMap = {};
-  Object.values(_issues).forEach(w => { acctNameMap[w.account] = w.account_name || w.account; });
-  const label = col === 'status' ? (v => STATUS_LABELS[v] || v) : col === 'account' ? (v => acctNameMap[v] || v) : (v => v);
-
-  const items = values.map(v => `
-    <label class="col-dropdown-item">
-      <input type="checkbox" onchange="toggleColFilter('${col}','${v}',this.checked)" ${active.has(v)?'checked':''}>
-      ${label(v)}
-    </label>`).join('');
-
-  const dd = document.getElementById('dd-' + col);
-  if (!dd) return;
-  dd.innerHTML = `
-    <div class="col-dropdown-actions">
-      <span class="col-dropdown-action" onclick="selectAllCol('${col}')">Select all</span>
-      <span class="col-dropdown-action" onclick="clearCol('${col}')">Clear</span>
-    </div>
-    <div class="col-dropdown-sep"></div>
-    ${items}`;
-  dd.classList.add('open');
-  _openDropdown = col;
-}
-
-function closeAllDropdowns() {
-  document.querySelectorAll('.col-dropdown').forEach(d => d.classList.remove('open'));
-  _openDropdown = null;
-}
-
-function toggleColFilter(col, val, checked) {
-  if (checked) _activeFilters[col].add(val);
-  else _activeFilters[col].delete(val);
-  applyFilters();
-}
-
-function selectAllCol(col) {
-  _activeFilters[col].clear();
-  applyFilters();
-  closeAllDropdowns();
-}
-
-function clearCol(col) {
-  let values = [];
-  if (col === 'account') values = [...new Set(Object.values(_issues).filter(w=>categoryOf(w)!=='dead_old').map(w=>w.account))];
-  if (col === 'status')  values = ['offline','dead_recent','dead_mid'];
-  if (col === 'group')   values = [...new Set(Object.values(_issues).filter(w=>categoryOf(w)!=='dead_old').map(w=>w.group_id))];
-  // "clear" = keep only unchecked = select none → show nothing? No, treat as "filter to nothing" = show nothing
-  // Better UX: "Clear" = remove filter (= show all)
-  _activeFilters[col].clear();
-  applyFilters();
-  closeAllDropdowns();
-}
-
-function resetFilters() {
-  _activeFilters = { account: new Set(), status: new Set(), group: new Set() };
-  _filterSearch = '';
-  const s = document.getElementById('issues-search');
-  if (s) s.value = '';
-  clearDcFilter();
-}
-
-// ── Sort + render ─────────────────────────────────────────────────────────────
-
-function sortBy(col) {
-  if (_sortCol === col) _sortAsc = !_sortAsc;
-  else { _sortCol = col; _sortAsc = true; }
-  applyFilters();
-}
-
-function applyFilters() {
-  _filterSearch = (document.getElementById('issues-search')?.value || '').toLowerCase();
-
-  const hasActiveFilters = _filterSearch ||
-    _activeFilters.account.size || _activeFilters.status.size || _activeFilters.group.size;
-
-  const rb = document.getElementById('filter-reset-btn');
-  if (rb) rb.style.display = hasActiveFilters ? 'block' : 'none';
-
-  let rows = Object.values(_issues).filter(w => {
-    if (categoryOf(w) === 'dead_old') return false;
-    if (_dcFilter.size              && !_dcFilter.has(w.group_id)) return false;
-    if (_activeFilters.account.size && !_activeFilters.account.has(w.account)) return false;
-    if (_activeFilters.status.size  && !_activeFilters.status.has(categoryOf(w))) return false;
-    if (_activeFilters.group.size   && !_activeFilters.group.has(w.group_id)) return false;
-    if (_filterSearch && !w.name.toLowerCase().includes(_filterSearch)) return false;
-    return true;
-  });
-
-  rows.sort((a, b) => {
-    let va, vb;
-    if      (_sortCol==='name')    { va=a.name;       vb=b.name; }
-    else if (_sortCol==='account') { va=a.account_name||a.account; vb=b.account_name||b.account; }
-    else if (_sortCol==='group')   { va=a.group_id;   vb=b.group_id; }
-    else if (_sortCol==='status')  { va=categoryOf(a);vb=categoryOf(b); }
-    else                           { va=ageHours(a.last_share);vb=ageHours(b.last_share); }
-    if (va<vb) return _sortAsc?-1:1;
-    if (va>vb) return _sortAsc?1:-1;
-    // Tie-break : account → group → name
-    if (_sortCol!=='account' && a.account !== b.account) return a.account < b.account ? -1 : 1;
-    if (_sortCol!=='group'   && a.group_id !== b.group_id) return a.group_id < b.group_id ? -1 : 1;
-    return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
-  });
-
-  const wrap = document.getElementById('issues-table-wrap');
+function renderDeadTracker() {
+  const wrap = document.getElementById('dead-tracker-wrap');
   if (!wrap) return;
 
-  const cnt = document.getElementById('issues-count');
-  const total = Object.values(_issues).filter(w=>categoryOf(w)!=='dead_old').length;
-  if (cnt) cnt.textContent = rows.length === total ? `${total} workers` : `${rows.length} / ${total} workers`;
+  const hasFilters = _dcFilter.size || _deadFilters.account.size || _deadFilters.datacenter.size || _deadSearch;
 
-  // Helper: filter button for column header
-  const filterBtn = (col) => {
-    const active = _activeFilters[col].size > 0;
-    return `<span class="th-filter-btn ${active?'active':''}" onclick="event.stopPropagation();openDropdown('${col}',this)" title="Filter">▼
-      <div class="col-dropdown" id="dd-${col}"></div>
-    </span>`;
+  const applyF = (w) => {
+    if (_dcFilter.size && !_dcFilter.has(w.group_id)) return false;
+    if (_deadFilters.account.size && !_deadFilters.account.has(w.account_name||w.account)) return false;
+    if (_deadFilters.datacenter.size && !_deadFilters.datacenter.has(w.group_id)) return false;
+    if (_deadSearch && !w.name.toLowerCase().includes(_deadSearch)) return false;
+    return true;
   };
 
-  const si = (col) => `<span class="sort-icon">${_sortCol===col?(_sortAsc?'↑':'↓'):'↕'}</span>`;
+  const aBtn = document.getElementById('dead-btn-account');
+  if (aBtn) aBtn.classList.toggle('active', _deadFilters.account.size > 0);
+  const dBtn = document.getElementById('dead-btn-datacenter');
+  if (dBtn) dBtn.classList.toggle('active', _deadFilters.datacenter.size > 0);
 
-  if (rows.length === 0) {
-    wrap.innerHTML = `
-      <table class="issues-table"><thead><tr>
-        <th><div class="th-inner ${_sortCol==='name'?'sorted':''}" onclick="sortBy('name')">Worker ${si('name')}</div></th>
-        <th><div class="th-inner ${_sortCol==='account'?'sorted':''}" onclick="sortBy('account')">Account ${si('account')}</div>${filterBtn('account')}</th>
-        <th><div class="th-inner ${_sortCol==='group'?'sorted':''}" onclick="sortBy('group')"><span class="mob-hide">Datacenter</span><span class="acct-short" style="display:none">DC</span> ${si('group')}</div>${filterBtn('group')}</th>
-        <th><div class="th-inner ${_sortCol==='status'?'sorted':''}" onclick="sortBy('status')">Status ${si('status')}</div>${filterBtn('status')}</th>
-        <th class="mob-hide"><div class="th-inner ${_sortCol==='age'?'sorted':''}" onclick="sortBy('age')">Last Share (UTC) ${si('age')}</div></th>
-        <th class="mob-hide"><div class="th-inner">Action</div></th>
-      </tr></thead></table>
-      <div class="no-results">No workers match the current filters.</div>`;
-    return;
-  }
+  const allWorkers = Object.values(_deadIssues).filter(w => categoryOf(w) !== 'dead_old');
+  const cnt = document.getElementById('dead-count');
+  if (cnt) cnt.textContent = hasFilters ? `${allWorkers.filter(applyF).length} / ${allWorkers.length} workers` : `${allWorkers.length} workers`;
+  const rb = document.getElementById('dead-reset-btn');
+  if (rb) rb.style.display = hasFilters ? 'block' : 'none';
 
-  const tbody = rows.map(w => {
-    const cat = categoryOf(w);
-    return `<tr>
-      <td><span class="worker-name" style="cursor:pointer;text-decoration:underline dotted" onclick="openWorkerModal('${w.account}.${w.name}')">${w.name}</span></td>
-      <td><span class="account-label acct-long">${w.account_name||w.account}</span><span class="account-label acct-short" style="display:none">${w.account_name||w.account}</span></td>
-      <td><span class="group-badge">${w.group_id}</span><span class="prov-name"> ${w.provider}</span></td>
-      <td><span class="age-pill ${pillClass(cat)}">${pillLabel(cat, w.last_share)}</span></td>
-      <td class="mob-hide" style="color:#aaa;font-size:11px">${w.last_share?new Date(w.last_share).toUTCString().replace(' GMT',''):'—'}</td>
-      <td class="mob-hide"><span class="action-tag" style="cursor:pointer" onclick="openWorkerModal('${w.account}.${w.name}')">${actionLabel(cat)}</span></td>
-    </tr>`;
+  const totalArchived = Object.values(_deadIssues).filter(w => categoryOf(w) === 'dead_old').length;
+  const thStyle = 'text-align:left;font-size:10px;color:#bbb;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:5px 12px 5px 0;border-bottom:1px solid #f0f0f0';
+
+  const cats = [
+    { key:'offline',     label:'Hours',    sub:'recent — monitor daily', dotColor:'#f1c40f' },
+    { key:'dead_recent', label:'1–7 days', sub:'recent — monitor daily', dotColor:'#e67e22' },
+    { key:'dead_mid',    label:'8–90 days',sub:'contact provider',       dotColor:'#e74c3c' },
+  ];
+
+  const sections = cats.map(({ key, label, sub, dotColor }) => {
+    const total   = Object.values(_deadIssues).filter(w => categoryOf(w) === key);
+    const workers = total.filter(applyF).sort((a,b) => {
+      const aA = (a.account_name||a.account||'').toLowerCase(), bA = (b.account_name||b.account||'').toLowerCase();
+      if (aA !== bA) return aA < bA ? -1 : 1;
+      return (a.group_id||'') < (b.group_id||'') ? -1 : (a.group_id||'') > (b.group_id||'') ? 1 : 0;
+    });
+    const countTxt = hasFilters
+      ? `${workers.length} / ${total.length} worker${total.length !== 1 ? 's' : ''}`
+      : total.length === 0 ? 'none' : `${total.length} worker${total.length > 1 ? 's' : ''}`;
+    const count = `<span style="color:#bbb;font-weight:400;letter-spacing:0;text-transform:none">${sub} · ${countTxt}</span>`;
+    const dot = `<div class="dot" style="background:${dotColor}"></div>`;
+
+    if (workers.length === 0) {
+      const msg = total.length > 0 && hasFilters ? `<div style="padding:8px 0;font-size:12px;color:#ccc;font-style:italic">No workers match the current filters.</div>` : '';
+      return `<div class="dead-section"><div class="dead-section-title">${dot}${label} ${count}</div>${msg}</div>`;
+    }
+
+    const rows = workers.map(w => {
+      const cat = categoryOf(w);
+      const lastShareFmt = w.last_share ? new Date(w.last_share).toUTCString().replace(' GMT','') : '—';
+      return `<tr>
+        <td><span class="worker-name" style="cursor:pointer;text-decoration:underline dotted" onclick="openWorkerModal('${w.account}.${w.name}')">${w.name}</span></td>
+        <td><span class="account-label">${w.account_name||w.account}</span></td>
+        <td><span class="group-badge">${w.group_id}</span><span class="prov-name"> ${w.provider}</span></td>
+        <td><span class="age-pill ${pillClass(cat)}">${pillLabel(cat, w.last_share)}</span></td>
+        <td class="mob-hide" style="color:#aaa;font-size:11px">${lastShareFmt}</td>
+        <td class="mob-hide"><span class="action-tag" style="cursor:pointer" onclick="openWorkerModal('${w.account}.${w.name}')">${actionLabel(cat)}</span></td>
+      </tr>`;
+    }).join('');
+
+    return `<div class="dead-section">
+      <div class="dead-section-title">${dot}${label} ${count}</div>
+      <table class="issues-table">
+        <thead><tr>
+          <th style="${thStyle}">Worker</th>
+          <th style="${thStyle}">Account</th>
+          <th style="${thStyle}">Datacenter</th>
+          <th style="${thStyle}">Status</th>
+          <th class="mob-hide" style="${thStyle}">Last Share (UTC)</th>
+          <th class="mob-hide" style="${thStyle}">Action</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
   }).join('');
 
-  wrap.innerHTML = `<table class="issues-table">
-    <thead><tr>
-      <th><div class="th-inner ${_sortCol==='name'?'sorted':''}" onclick="sortBy('name')">Worker ${si('name')}</div></th>
-      <th><div class="th-inner ${_sortCol==='account'?'sorted':''}" onclick="sortBy('account')">Account ${si('account')}</div>${filterBtn('account')}</th>
-      <th><div class="th-inner ${_sortCol==='group'?'sorted':''}" onclick="sortBy('group')"><span class="mob-hide">Datacenter</span><span class="acct-short" style="display:none">DC</span> ${si('group')}</div>${filterBtn('group')}</th>
-      <th><div class="th-inner ${_sortCol==='status'?'sorted':''}" onclick="sortBy('status')">Status ${si('status')}</div>${filterBtn('status')}</th>
-      <th class="mob-hide"><div class="th-inner ${_sortCol==='age'?'sorted':''}" onclick="sortBy('age')">Last Share (UTC) ${si('age')}</div></th>
-      <th class="mob-hide"><div class="th-inner">Action</div></th>
-    </tr></thead>
-    <tbody>${tbody}</tbody>
-  </table>`;
-}
+  const archiveNote = `<div class="dead-section">
+    <div class="dead-section-title"><div class="dot dot-grey"></div>&gt; 90 days <span style="color:#bbb;font-weight:400;letter-spacing:0;text-transform:none">likely gone</span></div>
+    <div class="arch-note">${totalArchived} worker${totalArchived !== 1 ? 's' : ''} archived — hidden from daily view</div>
+  </div>`;
 
-// Close dropdowns on outside click (covers both issues table and online table)
+  wrap.innerHTML = sections + archiveNote;
+}
+window.renderDeadTracker = renderDeadTracker;
+
+// Close dropdowns on outside click
 document.addEventListener('click', (e) => {
   if (!e.target.closest('.th-filter-btn') && !e.target.closest('.col-dropdown')) {
-    closeAllDropdowns();
     closeOnlineDropdowns();
     closeDeadDDs();
   }
 });
-
-// Expose
-window.openDropdown = openDropdown;
-window.toggleColFilter = toggleColFilter;
-window.selectAllCol = selectAllCol;
-window.clearCol = clearCol;
-window.resetFilters = resetFilters;
-window.sortBy = sortBy;
-window.applyFilters = applyFilters;
 
 
 // ── Two-column layout ─────────────────────────────────────────────────────────
@@ -1644,7 +1589,7 @@ async function render() {
     buildHealthCards(issues, snapshots) +
     buildHashrateSection() +
     buildDatacenters(issues) +
-    buildIssuesTable(issues) +
+    buildDeadTracker(issues) +
     buildOnlineWorkers();
 
   document.getElementById('loading').style.display = 'none';
@@ -1652,8 +1597,8 @@ async function render() {
   app.style.flexDirection = 'column';
   app.style.gap = '20px';
 
-  // Populate the issues table (filter + sort engine)
-  applyFilters();
+  // Populate workers requiring attention (sections lifecycle)
+  renderDeadTracker();
 
   // Populate la table online workers (dérivée de hashrate.json)
   renderOnlineTable();

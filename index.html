@@ -1719,18 +1719,40 @@ function buildAccountHashrateChart(accountUser, rangeH) {
 
   const lastTH  = (pts[pts.length-1].hr / 1e12).toFixed(0);
 
+  // ── Ligne ATO ─────────────────────────────────────────────────────────────
+  const acctSnaps = (_hashrate.accounts?.[accountUser] || [])
+    .filter(p => new Date(p.ts).getTime() >= cutoff)
+    .sort((a, b) => new Date(a.ts) - new Date(b.ts));
+  const hasATO = acctSnaps.length >= 2;
+  const pyATO  = p => PT + cH - (p.ato / maxHR) * cH;
+  const pxTs   = ts => PL + (new Date(ts).getTime() - tAxisStart) / tAxisSpan * cW;
+  const atoLine = hasATO
+    ? `<polyline points="${acctSnaps.map(p=>`${pxTs(p.ts).toFixed(1)},${pyATO(p).toFixed(1)}`).join(' ')}"
+         fill="none" stroke="#4ade80" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" opacity="0.85"/>`
+    : '';
+  const lastATO  = hasATO ? acctSnaps[acctSnaps.length-1].ato : null;
+  const lastATOTH = lastATO ? (lastATO / 1e12).toFixed(0) : null;
+
   // Stocke les données pour le tooltip hover
   _hrChartData[accountUser] = { pts, tAxisStart, tAxisSpan, maxHR };
 
+  // En-tête : Total + ATO si disponible
+  const headerRight = lastATOTH
+    ? `<span style="font-size:26px;font-weight:800;color:var(--text-primary);line-height:1">${lastTH}</span>
+       <span style="font-size:11px;color:#bbb;margin-left:4px">TH/s total</span>
+       <span style="font-size:13px;font-weight:700;color:#4ade80;margin-left:14px">${lastATOTH}</span>
+       <span style="font-size:11px;color:#4ade80;opacity:.7;margin-left:3px">TH/s ATO</span>`
+    : `<span style="font-size:26px;font-weight:800;color:var(--text-primary);line-height:1">${lastTH}</span>
+       <span style="font-size:11px;color:#bbb;margin-left:4px">TH/s now</span>`;
+
   return `<div>
-    <div style="text-align:right;padding:0 4px 4px 0">
-      <span style="font-size:26px;font-weight:800;color:var(--text-primary);line-height:1">${lastTH}</span>
-      <span style="font-size:11px;color:#bbb;margin-left:4px">TH/s now</span>
+    <div style="text-align:right;padding:0 4px 4px 0;display:flex;align-items:baseline;justify-content:flex-end;gap:0;flex-wrap:wrap">
+      ${headerRight}
     </div>
     <svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
       <defs>
         <linearGradient id="${gradId}" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"   stop-color="#16a34a" stop-opacity="0.28"/>
+          <stop offset="0%"   stop-color="#16a34a" stop-opacity="0.22"/>
           <stop offset="100%" stop-color="#16a34a" stop-opacity="0.03"/>
         </linearGradient>
         <style>@media(max-width:480px){.hr-yl,.hr-xl{font-size:13px}}</style>
@@ -1740,6 +1762,7 @@ function buildAccountHashrateChart(accountUser, rangeH) {
       ${fillElems}
       ${dashElems}
       ${lineElems}
+      ${atoLine}
       <!-- Live dot — ripple outward only, then snap back -->
       <circle cx="${px(pts.length-1).toFixed(1)}" cy="${py(pts.length-1).toFixed(1)}" r="3.5" fill="#16a34a" opacity="0.3">
         <animate attributeName="r"       values="3.5;13;13"  keyTimes="0;0.75;1" dur="2.4s" repeatCount="indefinite"/>

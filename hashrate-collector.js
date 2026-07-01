@@ -93,10 +93,14 @@ async function fetchATO(account) {
     });
     if (!res.ok) { console.warn(`   ⚠️  ATO ${account.user}: HTTP ${res.status}`); return null; }
     const data = await res.json();
-    // Log all top-level keys to discover ATO field name
-    const topKeys = Object.keys(data.data || data);
-    console.log(`   [ATO top-keys] ${account.user}: ${JSON.stringify(topKeys)}`);
-    return data;
+    // transfer_actually_hashrate = Actual Transfer Out (valeurs en TH/s)
+    const payload = data.data || data;
+    const atoVals = payload.transfer_actually_hashrate?.values || [];
+    if (atoVals.length === 0) { console.warn(`   ⚠️  ATO ${account.user}: aucune valeur`); return null; }
+    // Dernier point du bucket 30min courant (en TH/s → converti en H/s pour cohérence workers)
+    const lastATO = atoVals[atoVals.length - 1][1] * 1e12;
+    console.log(`   ATO ${account.user}: ${(lastATO / 1e12).toFixed(0)} TH/s`);
+    return lastATO;
   } catch (err) {
     console.warn(`   ⚠️  ATO ${account.user}: ${err.message}`);
     return null;
@@ -726,7 +730,18 @@ async function main() {
     }
   }
 
-  // ── 4b. Sauvegarde worker-hosts.json (IP de chaque worker actif) ─────────────
+  // ── 4b. Sauvegarde snapshots ATO par compte ──────────────────────────────
+  if (!h.accounts) h.accounts = {};
+  for (const account of ACCOUNTS) {
+    const ato = atoData[account.user];
+    if (ato == null) continue;
+    if (!h.accounts[account.user]) h.accounts[account.user] = [];
+    h.accounts[account.user].push({ ts: now.toISOString(), ato });
+    if (h.accounts[account.user].length > MAX_SNAPSHOTS)
+      h.accounts[account.user] = h.accounts[account.user].slice(-MAX_SNAPSHOTS);
+  }
+
+  // ── 4c. Sauvegarde worker-hosts.json (IP de chaque worker actif) ─────────────
   const workerHosts = {};
   for (const account of ACCOUNTS) {
     for (const w of allWorkers[account.user] || []) {

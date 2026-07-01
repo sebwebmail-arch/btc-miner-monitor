@@ -11,6 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
+<script>if(localStorage.getItem('capone-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');</script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -37,6 +38,60 @@
   --font:                 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --mono:                 'DM Mono', monospace;
 }
+
+/* ── Dark mode ────────────────────────────────────────────────────────────── */
+[data-theme="dark"] {
+  --bg-base:              #16150f;
+  --bg-surface:           #1d1c14;
+  --bg-card:              #242318;
+  --bg-card-hover:        #2b2a1e;
+  --bg-elevated:          #2d2c20;
+  --border:               rgba(255,255,255,0.07);
+  --border-md:            rgba(255,255,255,0.12);
+  --text-primary:         #eeecd8;
+  --text-secondary:       #9a9880;
+  --text-muted:           #56543e;
+  --accent-orange:        #e8896a;
+  --accent-orange-dim:    rgba(232,137,106,0.13);
+  --accent-orange-border: rgba(232,137,106,0.26);
+  --accent-green:         #22c55e;
+  --accent-red:           #f47171;
+  --accent-red-dim:       rgba(244,113,113,0.10);
+  --accent-yellow:        #d4a017;
+  --grid-color:           rgba(255,255,255,0.03);
+  --halo-color:           rgba(217,119,87,0.07);
+}
+
+/* ── Dark mode overrides (elements hard-coded outside CSS vars) ── */
+[data-theme="dark"] .filter-search,
+[data-theme="dark"] .col-dropdown-search { background: var(--bg-surface); }
+
+/* SVG chart tooltip override (presentation attrs < CSS specificity) */
+[data-theme="dark"] .hr-tip-bg   { fill: #242318; stroke: #3a3927; }
+[data-theme="dark"] .hr-tip-dot  { fill: #242318; }
+[data-theme="dark"] .hr-tip-time { fill: #56543e; }
+[data-theme="dark"] .hr-tip-val  { fill: #eeecd8; }
+
+/* ── Theme pill (Light / Dark / Auto) ───────────────────────────────────── */
+.theme-pill {
+  display: flex; flex-shrink: 0;
+  border: 1px solid var(--border-md); border-radius: 9px;
+  background: var(--bg-surface); overflow: hidden;
+}
+.theme-opt {
+  width: 32px; height: 32px; border: none; background: transparent;
+  color: var(--text-muted); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .15s, color .15s;
+  position: relative;
+}
+.theme-opt + .theme-opt { border-left: 1px solid var(--border); }
+.theme-opt.active {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  box-shadow: 0 1px 3px rgba(0,0,0,.10);
+}
+.theme-opt:hover:not(.active) { color: var(--text-secondary); }
 
 html, body { height: 100%; }
 body { font-family: var(--font); background: var(--bg-base); color: var(--text-primary); font-size: 14px; min-height: 100vh; }
@@ -336,6 +391,31 @@ body::after {
     <div class="subtitle">Bitcoin Miner Fleet Monitor</div>
   </div>
   <div class="spacer"></div>
+  <div class="theme-pill" role="group" aria-label="Color theme">
+    <!-- Light -->
+    <button class="theme-opt" id="topt-light" onclick="setTheme('light')" title="Light mode">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+        <circle cx="12" cy="12" r="4.5"/>
+        <line x1="12" y1="2" x2="12" y2="4.5"/><line x1="12" y1="19.5" x2="12" y2="22"/>
+        <line x1="2" y1="12" x2="4.5" y2="12"/><line x1="19.5" y1="12" x2="22" y2="12"/>
+        <line x1="4.93" y1="4.93" x2="6.64" y2="6.64"/><line x1="17.36" y1="17.36" x2="19.07" y2="19.07"/>
+        <line x1="4.93" y1="19.07" x2="6.64" y2="17.36"/><line x1="17.36" y1="6.64" x2="19.07" y2="4.93"/>
+      </svg>
+    </button>
+    <!-- Dark -->
+    <button class="theme-opt" id="topt-dark" onclick="setTheme('dark')" title="Dark mode">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+    <!-- Auto (heure) -->
+    <button class="theme-opt" id="topt-auto" onclick="setTheme('auto')" title="Auto (jour/nuit selon l'heure)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M12 7v5l3 3"/>
+      </svg>
+    </button>
+  </div>
 </div>
 
 <div class="page">
@@ -1643,11 +1723,11 @@ function buildAccountHashrateChart(accountUser, rangeH) {
       <circle cx="${px(pts.length-1).toFixed(1)}" cy="${py(pts.length-1).toFixed(1)}" r="3.5" fill="#16a34a"/>
       <!-- Hover elements -->
       <line id="hrc-cross-${accountUser}" x1="0" y1="${PT}" x2="0" y2="${PT+cH}" stroke="#16a34a" stroke-width="1" stroke-dasharray="4,3" opacity="0" pointer-events="none"/>
-      <circle id="hrc-dot-${accountUser}" cx="0" cy="0" r="4" fill="white" stroke="#16a34a" stroke-width="2" opacity="0" pointer-events="none"/>
+      <circle id="hrc-dot-${accountUser}" cx="0" cy="0" r="4" fill="white" class="hr-tip-dot" stroke="#16a34a" stroke-width="2" opacity="0" pointer-events="none"/>
       <g id="hrc-tip-${accountUser}" opacity="0" pointer-events="none">
-        <rect id="hrc-tip-bg-${accountUser}" x="0" y="0" width="136" height="38" rx="5" fill="white" stroke="#e0e0e0" stroke-width="1" filter="drop-shadow(0 2px 6px rgba(0,0,0,.1))"/>
-        <text id="hrc-tip-time-${accountUser}" x="10" y="14" font-size="10" fill="#999"></text>
-        <text id="hrc-tip-val-${accountUser}"  x="10" y="29" font-size="13" fill="#1a1a2e" font-weight="700"></text>
+        <rect id="hrc-tip-bg-${accountUser}" x="0" y="0" width="136" height="38" rx="5" fill="white" class="hr-tip-bg" stroke="#e0e0e0" stroke-width="1" filter="drop-shadow(0 2px 6px rgba(0,0,0,.1))"/>
+        <text id="hrc-tip-time-${accountUser}" x="10" y="14" font-size="10" fill="#999" class="hr-tip-time"></text>
+        <text id="hrc-tip-val-${accountUser}"  x="10" y="29" font-size="13" fill="#1a1a2e" font-weight="700" class="hr-tip-val"></text>
       </g>
       <!-- Zone de capture souris -->
       <rect x="${PL}" y="${PT}" width="${cW}" height="${cH}" fill="transparent" style="cursor:crosshair"
@@ -1758,6 +1838,57 @@ async function render() {
 }
 
 render();
+
+// ── Theme (Light / Dark / Auto-heure) ────────────────────────────────────────
+
+// Auto : dark entre 20h00 et 07h00, light le reste
+function autoIsDark() {
+  const h = new Date().getHours();
+  return h >= 20 || h < 7;
+}
+
+function applyThemeToDOM(mode) {
+  const dark = mode === 'dark' || (mode === 'auto' && autoIsDark());
+  if (dark) document.documentElement.setAttribute('data-theme', 'dark');
+  else      document.documentElement.removeAttribute('data-theme');
+}
+
+function updatePillUI(mode) {
+  ['light','dark','auto'].forEach(m => {
+    document.getElementById('topt-' + m)?.classList.toggle('active', m === mode);
+  });
+}
+
+function setTheme(mode) {
+  localStorage.setItem('capone-theme', mode);
+  applyThemeToDOM(mode);
+  updatePillUI(mode);
+  // Re-render les graphes hashrate pour que les couleurs SVG soient correctes
+  if (typeof renderHashrateSection === 'function') renderHashrateSection();
+}
+
+// Réévalue le mode auto quand la page redevient visible (ex: retour d'onglet)
+document.addEventListener('visibilitychange', () => {
+  const saved = localStorage.getItem('capone-theme') || 'light';
+  if (saved === 'auto') { applyThemeToDOM('auto'); }
+});
+
+// Init
+(function() {
+  const saved = localStorage.getItem('capone-theme') || 'light';
+  applyThemeToDOM(saved);
+  // UI pill init (DOM ready ici car on est en bas du script)
+  updatePillUI(saved);
+  // Refresh auto toutes les 5min
+  if (saved === 'auto') {
+    setInterval(() => {
+      const cur = localStorage.getItem('capone-theme') || 'light';
+      if (cur === 'auto') applyThemeToDOM('auto');
+    }, 5 * 60 * 1000);
+  }
+})();
+
+window.setTheme = setTheme;
 </script>
 </body>
 </html>

@@ -290,6 +290,9 @@ body::after {
   .section-label { font-size: 9px; letter-spacing: 0.08em; }
   .section-note  { font-size: 10px; }
 
+  /* Dead tracker : cacher colonne Account sur mobile */
+  .dead-col-acct { display: none !important; }
+
   /* Hide less critical columns on mobile */
   .mob-hide { display: none !important; }
 
@@ -690,7 +693,7 @@ function renderDeadTracker() {
       const lastShareFmt = w.last_share ? new Date(w.last_share).toUTCString().replace(' GMT','') : '—';
       return `<tr>
         <td><span class="worker-name" style="cursor:pointer;text-decoration:underline dotted" onclick="openWorkerModal('${w.account}.${w.name}')">${w.name}</span></td>
-        <td><span class="account-label">${w.account_name||w.account}</span></td>
+        <td class="dead-col-acct"><span class="account-label">${w.account_name||w.account}</span></td>
         <td><span class="group-badge">${w.group_id}</span><span class="prov-name"> ${w.provider}</span></td>
         <td><span class="age-pill ${pillClass(cat)}">${pillLabel(cat, w.last_share)}</span></td>
         <td class="mob-hide" style="color:#aaa;font-size:11px">${lastShareFmt}</td>
@@ -703,7 +706,7 @@ function renderDeadTracker() {
       <table class="issues-table">
         <thead><tr>
           <th style="${thStyle}">Worker</th>
-          <th style="${thStyle}">Account</th>
+          <th class="dead-col-acct" style="${thStyle}">Account</th>
           <th style="${thStyle}">Datacenter</th>
           <th style="${thStyle}">Status</th>
           <th class="mob-hide" style="${thStyle}">Last Share (UTC)</th>

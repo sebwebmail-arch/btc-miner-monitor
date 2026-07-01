@@ -75,7 +75,7 @@ body::after {
 
 /* ── Layout ── */
 .page { max-width: 1080px; margin: 0 auto; padding: 24px 20px; display: flex; flex-direction: column; gap: 20px; }
-.section-label { font-size: 9px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+.section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.10em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
 
 /* ── Health cards ── */
 .health-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
@@ -91,7 +91,7 @@ body::after {
 /* ── Panel ── */
 .panel { background: var(--bg-card); border-radius: 10px; border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,.04); overflow: hidden; }
 .panel-header { padding: 14px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
-.panel-title { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+.panel-title { font-size: 14px; font-weight: 600; color: var(--text-primary); }
 .panel-note { font-size: 11px; color: var(--text-muted); }
 
 /* ── Tabs ── */
@@ -437,7 +437,7 @@ function buildHealthCards(issues, snapshots) {
   <div>
     <div class="section-label" style="display:flex;justify-content:space-between;align-items:baseline">
       <span>Fleet health — all accounts</span>
-      <span id="fleet-last-update" style="font-size:10px;color:#bbb;font-weight:400;letter-spacing:0;text-transform:none"></span>
+      <span id="fleet-last-update" style="font-size:12px;color:#bbb;font-weight:400;letter-spacing:0;text-transform:none"></span>
     </div>
     <div class="health-row">
       <div class="health-card card-online">
@@ -497,7 +497,7 @@ function buildDatacenters(issues) {
   <div>
     <div class="section-label" style="display:flex;justify-content:space-between;align-items:baseline">
       <span>Datacenters at a glance</span>
-      <span style="font-size:10px;color:#bbb;font-weight:400;letter-spacing:0;text-transform:none" title="Workers going offline after 05:00 UTC appear here but not in the attention table until next morning run">⏱ Real-time · updated every 30 min</span>
+      <span style="font-size:12px;color:#bbb;font-weight:400;letter-spacing:0;text-transform:none" title="Workers going offline after 05:00 UTC appear here but not in the attention table until next morning run">⏱ Real-time · updated every 30 min</span>
     </div>
     <div class="panel">
       <div class="tabs">${tabs}</div>
@@ -609,7 +609,7 @@ function buildDeadTracker(issues) {
   <div>
     <div class="section-label" style="display:flex;justify-content:space-between;align-items:baseline">
       <span>Workers requiring attention</span>
-      <span style="font-size:10px;color:#bbb;font-weight:400;letter-spacing:0;text-transform:none">⏱ Daily snapshot at 05:00 UTC</span>
+      <span style="font-size:12px;color:#bbb;font-weight:400;letter-spacing:0;text-transform:none">⏱ Daily snapshot at 05:00 UTC</span>
     </div>
     <div class="panel panel-table">
       <div class="panel-header">
@@ -1151,7 +1151,7 @@ function buildOnlineWorkers() {
   <div>
     <div class="section-label" style="display:flex;justify-content:space-between;align-items:baseline">
       <span>Online workers</span>
-      <span style="font-size:10px;color:#bbb;font-weight:400;letter-spacing:0;text-transform:none">⏱ Real-time · updated every 30 min</span>
+      <span style="font-size:12px;color:#bbb;font-weight:400;letter-spacing:0;text-transform:none">⏱ Real-time · updated every 30 min</span>
     </div>
     <div class="panel panel-table">
       <div class="panel-header">
@@ -1580,7 +1580,7 @@ function buildHashrateSection() {
   <div>
     <div class="section-label" style="display:flex;justify-content:space-between;align-items:baseline">
       <span>Hashrate — by account</span>
-      <span style="font-size:10px;color:#bbb;font-weight:400;letter-spacing:0;text-transform:none">⏱ Real-time · updated every 30 min</span>
+      <span style="font-size:12px;color:#bbb;font-weight:400;letter-spacing:0;text-transform:none">⏱ Real-time · updated every 30 min</span>
     </div>
     <div class="panel">
       <div class="tabs">${tabs}</div>

@@ -282,6 +282,9 @@ body::after {
   .online-table .th-inner { padding: 7px 7px; }
   /* NOW TH/s : cacher le suffixe " TH/s" pour gagner de la place */
   .hr-unit { display: none; }
+  /* STATUS mobile : icône seule, pas de texte */
+  .badge-label { display: none; }
+  .anomaly-badge { padding: 3px 5px; }
   /* Online table : pas de padding inset sur mobile (gain de place) */
   .online-table-outer { padding: 0; }
   /* Headers : réduire letter-spacing qui force les colonnes larges */
@@ -843,6 +846,14 @@ function openWorkerModal(key) {
     ? `<span class="age-pill" style="background:rgba(22,163,74,0.10);color:var(--accent-green)">● Online${lastHRTH ? ' · ' + lastHRTH + ' TH/s' : ''}</span>`
     : `<span class="age-pill ${pillClass(cat)}">${pillLabel(cat, w.last_share)}</span>`;
 
+  // Badge anomalie (drop / instable) à afficher dans la modale
+  const modalIssue = _workerIssues?.issues?.[key];
+  const anomalyBadge = modalIssue?.type === 'level_drop'
+    ? `<span class="anomaly-badge badge-drop">${DROP_SVG}Drop ${modalIssue.drop_pct}%</span>`
+    : modalIssue?.type === 'volatile'
+      ? `<span class="anomaly-badge badge-volt">${WAVE_SVG}Unstable</span>`
+      : '';
+
   const f2poolKey = w.account === 'cmine' ? 'dad5e8d0452ce3262084e3afef6003ec' : 'd87416827c22b5c9aadb86e10535c4e0';
   const f2poolUrl = `https://www.f2pool.com/mining-user/${f2poolKey}?user_name=${w.account}`;
 
@@ -850,7 +861,7 @@ function openWorkerModal(key) {
     <div class="modal-head">
       <div>
         <div class="modal-worker">${w.name}</div>
-        <div style="margin-top:4px">${statusPill}</div>
+        <div style="margin-top:4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">${statusPill}${anomalyBadge}</div>
       </div>
       <div class="modal-close" onclick="closeModal()">✕</div>
     </div>
@@ -1376,10 +1387,10 @@ function renderOnlineTable() {
 
     let statusCell, rowStyle = '';
     if (w.issue?.type === 'level_drop') {
-      statusCell = `<span class="anomaly-badge badge-drop">${DROP_SVG}Drop ${w.issue.drop_pct}%</span>`;
+      statusCell = `<span class="anomaly-badge badge-drop">${DROP_SVG}<span class="badge-label"> Drop ${w.issue.drop_pct}%</span></span>`;
       rowStyle   = 'background:#fffbfb';
     } else if (w.issue?.type === 'volatile') {
-      statusCell = `<span class="anomaly-badge badge-volt">${WAVE_SVG}Unstable</span>`;
+      statusCell = `<span class="anomaly-badge badge-volt">${WAVE_SVG}<span class="badge-label"> Unstable</span></span>`;
       rowStyle   = 'background:#fffef5';
     } else {
       statusCell = `<span style="color:#27ae60;font-size:12px;font-weight:600">✓</span>`;

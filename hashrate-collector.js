@@ -272,7 +272,7 @@ async function sendWorkerAlert(account, issue, now) {
   }
 
   const tgText = [
-    `${emoji} <b>${typeLabel} — Capone Watcher</b>`,
+    `${emoji} <b>${typeLabel} — capone Watcher</b>`,
     ``,
     `🔧 <b>${issue.worker}</b> — ${account.name}`,
     `📍 ${issue.provider} (${issue.group_id})`,
@@ -300,7 +300,7 @@ async function sendHashrateAlert(account, groupId, provider, currentHR, refHR, d
 
   // ── Telegram ──
   const tgText = [
-    `⚠️ <b>Hashrate Alert — Capone Watcher</b>`,
+    `⚠️ <b>Hashrate Alert — capone Watcher</b>`,
     ``,
     `📍 <b>${provider} (${groupId})</b> — ${account.name}`,
     `📉 Hashrate dropped <b>${dropLabel}</b>`,
@@ -350,7 +350,7 @@ async function sendHashrateAlert(account, groupId, provider, currentHR, refHR, d
     </table>
     <p style="font-size:13px;color:#666">Check the dashboard for worker details: <a href="https://watcher.capone.market" style="color:#3498db">watcher.capone.market</a></p>
     <div style="margin-top:32px;border-top:1px solid #f0f0f0;padding-top:20px;text-align:center">
-      <img src="https://capone.market/capone-fish-avatar-48-orange.svg" alt="Capone" width="56" height="56" style="display:block;margin:0 auto 8px"/>
+      <img src="https://capone.market/capone-fish-avatar-48-orange.svg" alt="capone" width="56" height="56" style="display:block;margin:0 auto 8px"/>
       <p style="margin:0;color:#999;font-size:11px">This email was sent automatically — please do not reply.</p>
     </div>
   </div>
@@ -552,8 +552,8 @@ function buildMorningEmail(offlineByAccount, workerIssues, now) {
     ${allGoodSection}${offlineSection}${anomalySection}
     <div style="margin-top:32px;border-top:1px solid #f0f0f0;padding-top:24px;text-align:center">
       <a href="https://watcher.capone.market" style="display:inline-block;margin-bottom:16px;padding:8px 20px;background:#1a1a2e;color:#fff;text-decoration:none;border-radius:6px;font-size:13px;font-weight:600">Open dashboard →</a><br>
-      <img src="https://capone.market/capone-fish-avatar-48-orange.svg" alt="Capone" width="56" height="56" style="display:block;margin:0 auto 8px"/>
-      <p style="margin:4px 0 2px;color:#555;font-size:13px;font-weight:600">Morning report — Capone Watcher</p>
+      <img src="https://capone.market/capone-fish-avatar-48-orange.svg" alt="capone" width="56" height="56" style="display:block;margin:0 auto 8px"/>
+      <p style="margin:4px 0 2px;color:#555;font-size:13px;font-weight:600">Morning report — capone Watcher</p>
       <p style="margin:0;color:#999;font-size:11px">This email was sent automatically — please do not reply.</p>
     </div>
   </div>

@@ -707,10 +707,11 @@ async function main() {
   }, null, 2));
 
   // ── 5b. Sauvegarde offline-status.json (statut temps réel des DCs) ────────
+  // Critère : last_share_at > OFFLINE_MINUTES (même logique que le rapport matin)
   const offlineNow = {};
   for (const account of ACCOUNTS) {
     for (const w of allWorkers[account.user] || []) {
-      if ((w.hash_rate_info?.status ?? 0) !== 1) continue; // 1 = OFFLINE
+      if (!isWorkerOffline(w)) continue;
       const name  = w.hash_rate_info?.name || '?';
       const group = getGroup(name);
       if (group.id === 'No Group') continue;

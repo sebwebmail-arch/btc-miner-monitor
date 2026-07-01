@@ -36,6 +36,10 @@ const F2POOL_API        = 'https://api.f2pool.com/v2/hash_rate/worker/list';
 const HASHRATE_PATH     = path.join(__dirname, 'data', 'hashrate.json');
 const ALERTSTATE_PATH   = path.join(__dirname, 'data', 'alert-state.json');
 const WORKERISSUES_PATH = path.join(__dirname, 'data', 'worker-issues.json');
+const HISTORY_PATH      = path.join(__dirname, 'data', 'history.json');
+
+// Email destinataire rapport matin (commun aux deux comptes)
+const MORNING_ALERT_TO = process.env.ALERT_EMAIL || 'seb.webmail@gmail.com';
 
 const MAX_SNAPSHOTS   = 145;  // 72h × 2 + 1 points (3 jours glissants)
 const REF_SNAPSHOTS   = 3;    // 3 derniers snapshots = référence 1h30
@@ -45,6 +49,13 @@ const COOLDOWN_H      = 4;    // pas de double alerte sur le même groupe avant 
 // Groupes exclus des alertes temps-réel (hashrate drop + anomalie worker)
 // E1 = BitCluster : hashrate yoyo quotidien normal, pas une anomalie
 const ALERT_EXCLUDED_GROUPS = ['E1'];
+
+// ─── Rapport matin ────────────────────────────────────────────────────────────
+const MORNING_HOUR_UTC   = 5;   // 05:00 UTC = 07:00 Paris (CEST)
+const MORNING_COOLDOWN_H = 20;  // anti-doublon
+const OFFLINE_MINUTES    = 60;  // worker offline si pas de share depuis > 60 min
+const DEAD_THRESHOLD_H   = 24;  // seuil "dead" f2pool
+const MAX_HISTORY_SNAPS  = 35;  // ~30 jours
 
 // ─── Anomalie par worker (hashrate dégradé / instable) ───────────────────────
 const CURRENT_WINDOW   = 6;    // 6 derniers snapshots = 3h "actuel"
@@ -337,6 +348,217 @@ async function sendHashrateAlert(account, groupId, provider, currentHR, refHR, d
   await sendEmail(account.alertEmail, subject, html);
 }
 
+// ─── Rapport matin — offline detection + history ──────────────────────────────
+
+function isWorkerOffline(w) {
+  const lastShare = w.last_share_at || 0;
+  return (Date.now() / 1000 - lastShare) / 60 > OFFLINE_MINUTES;
+}
+
+function classifyWorker(w) {
+  const ageH = (Date.now() / 1000 - (w.last_share_at || 0)) / 3600;
+  if (ageH < DEAD_THRESHOLD_H) return 'offline';
+  const ageD = ageH / 24;
+  if (ageD <= 7)  return 'dead_recent';
+  if (ageD <= 90) return 'dead_mid';
+  return 'dead_old';
+}
+
+function findOfflineWorkers(workers, accountUser) {
+  return workers
+    .filter(isWorkerOffline)
+    .map(w => {
+      const name  = w.hash_rate_info?.name || '?';
+      const group = getGroup(name);
+      if (group.id === 'No Group') return null;
+      const lastShare  = w.last_share_at || 0;
+      const minutesAgo = Math.round((Date.now() / 1000 - lastShare) / 60);
+      return {
+        account:   accountUser,
+        name,
+        groupId:   group.id,
+        provider:  group.provider,
+        lastSeen:  lastShare
+          ? `${new Date(lastShare * 1000).toISOString().replace('T', ' ').slice(0, 19)} UTC (${minutesAgo}m ago)`
+          : 'never',
+        minutesAgo,
+        host: w.host || '?',
+      };
+    })
+    .filter(Boolean);
+}
+
+function loadHistory() {
+  try { return JSON.parse(fs.readFileSync(HISTORY_PATH, 'utf8')); }
+  catch { return { last_updated: null, snapshots: [], current_issues: {} }; }
+}
+
+function saveHistory(h) {
+  fs.mkdirSync(path.dirname(HISTORY_PATH), { recursive: true });
+  fs.writeFileSync(HISTORY_PATH, JSON.stringify(h, null, 2));
+}
+
+function updateHistory(h, now, allResults) {
+  const issues = {};
+  for (const { accountName, accountUser, allWorkers } of allResults) {
+    for (const w of allWorkers) {
+      const ageMin = (Date.now() / 1000 - (w.last_share_at || 0)) / 60;
+      if (ageMin <= OFFLINE_MINUTES) continue;
+      const name  = w.hash_rate_info?.name || '?';
+      const group = getGroup(name);
+      if (group.id === 'No Group') continue;
+      const key = `${accountUser}.${name}`;
+      issues[key] = {
+        account: accountUser, account_name: accountName,
+        name, group_id: group.id, provider: group.provider,
+        host: w.host || '?',
+        last_share: w.last_share_at ? new Date(w.last_share_at * 1000).toISOString() : null,
+        category: classifyWorker(w),
+      };
+    }
+  }
+
+  const counts = { offline: 0, dead_recent: 0, dead_mid: 0, dead_old: 0 };
+  for (const w of Object.values(issues)) counts[w.category]++;
+
+  const by_account = {};
+  for (const { accountName, accountUser, totalWorkers } of allResults) {
+    const ai = Object.values(issues).filter(w => w.account === accountUser);
+    by_account[accountUser] = {
+      name: accountName, total: totalWorkers,
+      online:  totalWorkers - ai.length,
+      offline: ai.filter(w => w.category === 'offline').length,
+      dead:    ai.filter(w => w.category !== 'offline').length,
+    };
+  }
+
+  h.snapshots.push({ ts: now.toISOString(), by_account, ...counts });
+  if (h.snapshots.length > MAX_HISTORY_SNAPS) h.snapshots = h.snapshots.slice(-MAX_HISTORY_SNAPS);
+  h.last_updated    = now.toISOString();
+  h.current_issues  = issues;
+  return h;
+}
+
+function buildMorningEmail(offlineByAccount, workerIssues, now) {
+  const date      = now.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+  const timeUTC   = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' });
+  const timeParis = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' });
+  const tzLabel   = new Intl.DateTimeFormat('en', { timeZoneName: 'short', timeZone: 'Europe/Paris' })
+    .formatToParts(now).find(p => p.type === 'timeZoneName')?.value || 'CET';
+
+  const totalOffline    = offlineByAccount.reduce((s, a) => s + a.workers.length, 0);
+  const anomalyList     = Object.values(workerIssues);
+  const totalAnomalies  = anomalyList.length;
+  const allGood         = totalOffline === 0 && totalAnomalies === 0;
+
+  // ── Section workers offline ──
+  const offlineSection = offlineByAccount
+    .filter(a => a.workers.length > 0)
+    .map(({ accountName, workers }) => {
+      const byGroup = {};
+      for (const w of workers) {
+        const key = `${w.groupId} — ${w.provider}`;
+        if (!byGroup[key]) byGroup[key] = [];
+        byGroup[key].push(w);
+      }
+      const groupRows = Object.entries(byGroup).map(([label, ws]) => {
+        const wRows = ws.map(w => `
+          <tr>
+            <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;font-family:monospace;font-size:13px">${w.name}</td>
+            <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;color:#666;font-size:13px">${w.lastSeen}</td>
+            <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;color:#999;font-size:13px">${w.host}</td>
+          </tr>`).join('');
+        return `
+          <tr><td colspan="3" style="padding:8px 12px;background:#fff3cd;font-weight:600;font-size:13px;color:#856404">
+            ${label} — ${ws.length} worker${ws.length > 1 ? 's' : ''} offline
+          </td></tr>${wRows}`;
+      }).join('');
+      return `
+        <h3 style="margin:24px 0 8px;color:#333;font-size:16px">${accountName}</h3>
+        <table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:1px solid #ddd;border-radius:6px;overflow:hidden">
+          <thead><tr style="background:#f5f5f5">
+            <th style="padding:8px 12px;text-align:left;font-size:12px;color:#666;font-weight:600">WORKER</th>
+            <th style="padding:8px 12px;text-align:left;font-size:12px;color:#666;font-weight:600">LAST SHARE</th>
+            <th style="padding:8px 12px;text-align:left;font-size:12px;color:#666;font-weight:600">HOST</th>
+          </tr></thead>
+          <tbody>${groupRows}</tbody>
+        </table>`;
+    }).join('');
+
+  // ── Section anomalies hashrate ──
+  const anomalySection = totalAnomalies === 0 ? '' : (() => {
+    const rows = anomalyList.map(w => {
+      const badge = w.type === 'level_drop'
+        ? `<span style="padding:2px 7px;border-radius:4px;background:#fdecea;color:#c0392b;font-size:11px;font-weight:700">📉 Drop ${w.drop_pct}%</span>`
+        : `<span style="padding:2px 7px;border-radius:4px;background:#fef9e7;color:#b7950b;font-size:11px;font-weight:700">📊 Unstable</span>`;
+      return `
+        <tr>
+          <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;font-family:monospace;font-size:13px">${w.worker}</td>
+          <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;font-size:12px;color:#666">${w.account_name} · ${w.provider} (${w.group_id})</td>
+          <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0">${badge}</td>
+          <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;font-size:12px;font-weight:600">${w.current_avg_ths} TH/s</td>
+          <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;font-size:12px;color:#aaa">${w.baseline_avg_ths} TH/s</td>
+        </tr>`;
+    }).join('');
+    return `
+      <h3 style="margin:28px 0 8px;color:#333;font-size:16px">⚡ Hashrate warnings — degraded or unstable workers</h3>
+      <p style="margin:0 0 10px;font-size:12px;color:#999">Based on last 3h avg vs 12h baseline</p>
+      <table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:1px solid #ddd;border-radius:6px;overflow:hidden">
+        <thead><tr style="background:#f5f5f5">
+          <th style="padding:8px 12px;text-align:left;font-size:12px;color:#666;font-weight:600">WORKER</th>
+          <th style="padding:8px 12px;text-align:left;font-size:12px;color:#666;font-weight:600">ACCOUNT · DATACENTER</th>
+          <th style="padding:8px 12px;text-align:left;font-size:12px;color:#666;font-weight:600">ISSUE</th>
+          <th style="padding:8px 12px;text-align:left;font-size:12px;color:#666;font-weight:600">NOW (3H AVG)</th>
+          <th style="padding:8px 12px;text-align:left;font-size:12px;color:#666;font-weight:600">BASELINE (12H)</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  })();
+
+  // ── En-tête ──
+  const headerBg    = allGood ? '#27ae60' : totalOffline > 0 ? '#c0392b' : '#e67e22';
+  const headerTitle = allGood
+    ? '✅ All workers online — no issues'
+    : [
+        totalOffline    > 0 ? `⚠️ ${totalOffline} worker${totalOffline > 1 ? 's' : ''} offline` : '',
+        totalAnomalies  > 0 ? `⚡ ${totalAnomalies} warning${totalAnomalies > 1 ? 's' : ''}` : '',
+      ].filter(Boolean).join(' · ');
+
+  const allGoodSection = allGood
+    ? `<p style="font-size:14px;color:#27ae60;font-weight:600;margin:0 0 16px">✅ All workers are online and reporting normally.</p>`
+    : '';
+
+  const html = `
+<!DOCTYPE html><html><body style="margin:0;padding:0;background:#f9f9f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+<div style="max-width:680px;margin:32px auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.08)">
+  <div style="background:${headerBg};padding:24px 32px">
+    <h1 style="margin:0;color:#fff;font-size:20px">${headerTitle}</h1>
+    <p style="margin:4px 0 0;color:rgba(255,255,255,.85);font-size:14px">${date}</p>
+    <p style="margin:2px 0 0;color:rgba(255,255,255,.7);font-size:13px">${timeUTC} UTC — ${timeParis} ${tzLabel}</p>
+  </div>
+  <div style="padding:24px 32px">
+    ${allGoodSection}${offlineSection}${anomalySection}
+    <div style="margin-top:32px;border-top:1px solid #f0f0f0;padding-top:24px;text-align:center">
+      <a href="https://watcher.capone.market" style="display:inline-block;margin-bottom:16px;padding:8px 20px;background:#1a1a2e;color:#fff;text-decoration:none;border-radius:6px;font-size:13px;font-weight:600">Open dashboard →</a><br>
+      <img src="https://capone.market/capone-fish-avatar-48-orange.svg" alt="Capone" width="56" height="56" style="display:block;margin:0 auto 8px"/>
+      <p style="margin:4px 0 2px;color:#555;font-size:13px;font-weight:600">Morning report — Capone Watcher</p>
+      <p style="margin:0;color:#999;font-size:11px">This email was sent automatically — please do not reply.</p>
+    </div>
+  </div>
+</div>
+</body></html>`;
+
+  const subjectParts = [
+    totalOffline   > 0 ? `${totalOffline} offline`                       : '',
+    totalAnomalies > 0 ? `${totalAnomalies} warning${totalAnomalies > 1 ? 's' : ''}` : '',
+  ].filter(Boolean);
+  const subject = subjectParts.length > 0
+    ? `[Morning Report] ${subjectParts.join(' · ')} — ${date}`
+    : `[Morning Report] ✅ All online — ${date}`;
+
+  return { html, subject };
+}
+
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
 async function main() {
@@ -472,7 +694,48 @@ async function main() {
     issues: workerIssues,
   }, null, 2));
 
-  console.log(`\n✅ Sauvegardé — ${Object.keys(h.workers).length} workers | ${alertsToSend.length} alerte(s) groupe | ${workerAlertsToSend.length} alerte(s) worker\n`);
+  // ── 6. Rapport matin (05:00 UTC) ──────────────────────────────────────────
+  if (now.getUTCHours() === MORNING_HOUR_UTC) {
+    const morningKey = 'morning_report';
+    const lastMorning = alertState[morningKey];
+    const morningOk   = !lastMorning || (now - new Date(lastMorning)) > MORNING_COOLDOWN_H * 3600000;
+
+    if (morningOk) {
+      console.log('\n🌅 Rapport matin...');
+
+      // Offline workers (tous comptes)
+      const offlineByAccount = ACCOUNTS.map(account => ({
+        accountName: account.name,
+        accountUser: account.user,
+        workers: findOfflineWorkers(allWorkers[account.user] || [], account.user),
+      }));
+
+      // History
+      const historyResults = ACCOUNTS.map(account => ({
+        accountName:  account.name,
+        accountUser:  account.user,
+        totalWorkers: (allWorkers[account.user] || []).length,
+        allWorkers:   allWorkers[account.user] || [],
+      }));
+      const hist = loadHistory();
+      saveHistory(updateHistory(hist, now, historyResults));
+      console.log(`   History: ${hist.snapshots.length + 1} snapshots`);
+
+      // Email
+      try {
+        const { subject, html } = buildMorningEmail(offlineByAccount, workerIssues, now);
+        await sendEmail(MORNING_ALERT_TO, subject, html);
+        alertState[morningKey] = now.toISOString();
+        console.log(`   ✉️  Rapport envoyé → ${MORNING_ALERT_TO}`);
+      } catch (err) {
+        console.error(`   ❌ Rapport matin non envoyé: ${err.message}`);
+      }
+    } else {
+      console.log('\n🌅 Rapport matin: déjà envoyé aujourd\'hui (cooldown)');
+    }
+  }
+
+  console.log(`\n✅ Sauvegardé — ${Object.keys(h.workers).length} workers | ${alertsToSend.length} alerte(s) groupe\n`);
 }
 
 main().catch(err => { console.error('Fatal:', err); process.exit(1); });

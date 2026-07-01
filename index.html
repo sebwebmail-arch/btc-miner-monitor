@@ -512,7 +512,7 @@ function openDeadDD(col, el) {
   const all = Object.values(_deadIssues).filter(w => categoryOf(w) !== 'dead_old');
   const values = col === 'account'
     ? [...new Set(all.map(w => w.account_name||w.account))].sort()
-    : [...new Set(all.map(w => w.group_id))].sort();
+    : Object.keys(GROUPS_META).sort();
   const active = _deadFilters[col];
   const items = values.map(v => `
     <label class="col-dropdown-item">

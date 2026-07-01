@@ -85,7 +85,7 @@ async function fetchAccountHashrate(account) {
       headers: { 'Content-Type': 'application/json', 'F2P-API-SECRET': account.token },
       body: JSON.stringify({ mining_user_name: account.user, currency: 'bitcoin' }),
     });
-    if (!res.ok) { console.warn(`   ⚠️  Account stats ${account.user}: HTTP ${res.status}`); return null; }
+    if (!res.ok) { const errBody = await res.text(); console.warn(`   ⚠️  Account stats ${account.user}: HTTP ${res.status} — ${errBody.slice(0,200)}`); return null; }
     const data = await res.json();
     // Log raw response once to discover field names
     console.log(`   [acct stats] ${account.user}: ${JSON.stringify(data).slice(0, 300)}`);

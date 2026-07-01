@@ -79,6 +79,18 @@
   border-color: var(--accent-orange-border);
 }
 
+/* Modal recommendation box — dark mode */
+[data-theme="dark"] .modal-reco {
+  color: var(--accent-orange);
+  background: var(--accent-orange-dim);
+  border-color: var(--accent-orange-border);
+}
+[data-theme="dark"] .modal-reco.reco-red {
+  color: var(--accent-red);
+  background: var(--accent-red-dim);
+  border-color: rgba(244,113,113,0.22);
+}
+
 /* SVG chart tooltip override (presentation attrs < CSS specificity) */
 [data-theme="dark"] .hr-tip-bg   { fill: #242318; stroke: #3a3927; }
 [data-theme="dark"] .hr-tip-dot  { fill: #242318; }

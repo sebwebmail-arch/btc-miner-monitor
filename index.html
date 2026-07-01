@@ -200,7 +200,8 @@ body::after {
 /* ── Online workers table ── */
 .online-table { width: 100%; border-collapse: collapse; }
 .online-table th { font-size: 10px; color: var(--text-muted); font-weight: 600; letter-spacing: .8px; text-transform: uppercase; padding: 0; text-align: left; background: var(--bg-surface); border-bottom: 1px solid var(--border); white-space: nowrap; position: relative; }
-.online-table td { padding: 7px 14px; border-bottom: 1px solid var(--border); font-size: 12px; vertical-align: middle; color: var(--text-primary); }
+.online-table td { padding: 9px 16px; border-bottom: 1px solid var(--border); font-size: 12px; vertical-align: middle; color: var(--text-primary); }
+.online-table td.td-dc { white-space: nowrap; }
 .online-table tr:last-child td { border-bottom: none; }
 .online-table tr:hover td { background: var(--bg-surface); }
 .hr-now { font-weight: 700; color: var(--text-primary); font-size: 12px; }
@@ -276,7 +277,7 @@ body::after {
   /* Reduce table cell padding */
   .issues-table td { padding: 6px 7px; }
   .issues-table .th-inner { padding: 7px 7px; }
-  .online-table td { padding: 5px 7px; }
+  .online-table td { padding: 6px 7px; }
   .online-table .th-inner { padding: 7px 7px; }
   /* Headers : réduire letter-spacing qui force les colonnes larges */
   .issues-table th, .online-table th { letter-spacing: 0.3px; font-size: 9px; }
@@ -1306,7 +1307,7 @@ function renderOnlineTable() {
     return `<tr style="${rowStyle}">
       <td><span class="worker-name" style="cursor:pointer;text-decoration:underline dotted" onclick="openWorkerModal('${w.key}')">${w.workerName}</span></td>
       <td class="online-acct"><span class="account-label acct-long">${w.accountName}</span><span class="account-label acct-short" style="display:none">${w.accountUser}</span></td>
-      <td><span class="group-badge">${w.groupId}</span><span class="prov-name"> ${w.provider}</span></td>
+      <td class="td-dc"><span class="group-badge">${w.groupId}</span><span class="prov-name"> ${w.provider}</span></td>
       <td>${statusCell}</td>
       <td class="hr-now">${nowTH} TH/s</td>
       <td class="hr-avg mob-hide">${avg3TH} TH/s</td>

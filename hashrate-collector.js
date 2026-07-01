@@ -34,7 +34,6 @@ const TELEGRAM_TOKEN        = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_PARAGUAY = process.env.TELEGRAM_CHAT_ID_PARAGUAY;
 
 const F2POOL_API        = 'https://api.f2pool.com/v2/hash_rate/worker/list';
-const F2POOL_ACCT_API   = 'https://api.f2pool.com/v2/hash_rate';
 const HASHRATE_PATH     = path.join(__dirname, 'data', 'hashrate.json');
 const ALERTSTATE_PATH   = path.join(__dirname, 'data', 'alert-state.json');
 const WORKERISSUES_PATH = path.join(__dirname, 'data', 'worker-issues.json');
@@ -77,28 +76,6 @@ const WORKER_COOLDOWN_H = 8;   // pas de re-alerte sur le même worker avant 8h
 
 // ─── f2pool API ───────────────────────────────────────────────────────────────
 
-// Fetch account-level totals (total hashrate + actual transfer out)
-async function fetchAccountHashrate(account) {
-  try {
-    const res = await fetch(F2POOL_ACCT_API, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'F2P-API-SECRET': account.token },
-      body: JSON.stringify({ mining_user_name: account.user, currency: 'bitcoin' }),
-    });
-    if (!res.ok) { const errBody = await res.text(); console.warn(`   ⚠️  Account stats ${account.user}: HTTP ${res.status} — ${errBody.slice(0,200)}`); return null; }
-    const data = await res.json();
-    // Log raw response once to discover field names
-    console.log(`   [acct stats] ${account.user}: ${JSON.stringify(data).slice(0, 300)}`);
-    // f2pool may use h1_hash_rate or hash_rate for total; actual_hash_rate or actual_transfer_out for ATO
-    const total = data.h1_hash_rate ?? data.hash_rate ?? null;
-    const ato   = data.actual_hash_rate ?? data.actual_transfer_out ?? null;
-    return { total, ato };
-  } catch (err) {
-    console.warn(`   ⚠️  Account stats ${account.user}: ${err.message}`);
-    return null;
-  }
-}
-
 async function fetchWorkers(account) {
   const res = await fetch(F2POOL_API, {
     method: 'POST',
@@ -107,10 +84,12 @@ async function fetchWorkers(account) {
   });
   if (!res.ok) throw new Error(`f2pool API error for ${account.user}: ${res.status} ${await res.text()}`);
   const data = await res.json();
-  // Log root-level fields (exclude workers array) to discover ATO fields
-  const rootFields = Object.fromEntries(Object.entries(data).filter(([k]) => k !== 'workers'));
-  console.log(`   [worker-list root] ${account.user}: ${JSON.stringify(rootFields).slice(0, 400)}`);
-  return { workers: data.workers || [], root: rootFields };
+  const workers = data.workers || [];
+  // Log first worker's full hash_rate_info to discover available fields (incl. possible ATO fields)
+  if (workers.length > 0) {
+    console.log(`   [worker[0] hash_rate_info] ${account.user}: ${JSON.stringify(workers[0].hash_rate_info).slice(0, 500)}`);
+  }
+  return workers;
 }
 
 // ─── Storage ─────────────────────────────────────────────────────────────────
@@ -616,14 +595,19 @@ async function main() {
     if (!account.token) { console.warn(`⚠️  Token manquant pour ${account.name}`); continue; }
     console.log(`📡 Fetch — ${account.name} (${account.user})...`);
     try {
-      const result = await fetchWorkers(account);
-      allWorkers[account.user] = result.workers;
-      console.log(`   ${result.workers.length} workers`);
-      // ATO depuis les champs root de la réponse worker/list
-      const r = result.root;
-      const total = r.h1_hash_rate ?? r.hash_rate ?? null;
-      const ato   = r.actual_hash_rate ?? r.actual_transfer_out ?? r.h1_actual_hash_rate ?? null;
-      accountStats[account.user] = (total !== null || ato !== null) ? { total, ato } : null;
+      const workers = await fetchWorkers(account);
+      allWorkers[account.user] = workers;
+      console.log(`   ${workers.length} workers`);
+      // Total = somme h1_hash_rate de tous les workers (pas de root fields disponibles avec ce token)
+      // ATO : on cherche le champ dans hash_rate_info du premier worker (log ci-dessus pour découverte)
+      const total = workers.reduce((s, w) => s + (w.hash_rate_info?.h1_hash_rate ?? w.hash_rate_info?.hash_rate ?? 0), 0);
+      // Tente de sommer actual_hash_rate par worker si disponible
+      const atoSum = workers.reduce((s, w) => {
+        const v = w.hash_rate_info?.actual_hash_rate ?? w.hash_rate_info?.h1_actual_hash_rate ?? null;
+        return v !== null ? s + v : s;
+      }, 0);
+      const ato = atoSum > 0 ? atoSum : null;
+      accountStats[account.user] = total > 0 ? { total, ato } : null;
     } catch (err) {
       console.error(`   ❌ Erreur: ${err.message}`);
       allWorkers[account.user] = [];

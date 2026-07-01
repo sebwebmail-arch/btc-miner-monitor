@@ -34,6 +34,7 @@ const TELEGRAM_TOKEN        = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_PARAGUAY = process.env.TELEGRAM_CHAT_ID_PARAGUAY;
 
 const F2POOL_API        = 'https://api.f2pool.com/v2/hash_rate/worker/list';
+const F2POOL_ACCT_API   = 'https://api.f2pool.com/v2/hash_rate';
 const HASHRATE_PATH     = path.join(__dirname, 'data', 'hashrate.json');
 const ALERTSTATE_PATH   = path.join(__dirname, 'data', 'alert-state.json');
 const WORKERISSUES_PATH = path.join(__dirname, 'data', 'worker-issues.json');
@@ -75,6 +76,28 @@ const MIN_ACTIVE_TH    = 5e12; // baseline doit dépasser 5 TH/s pour être anal
 const WORKER_COOLDOWN_H = 8;   // pas de re-alerte sur le même worker avant 8h
 
 // ─── f2pool API ───────────────────────────────────────────────────────────────
+
+// Fetch account-level totals (total hashrate + actual transfer out)
+async function fetchAccountHashrate(account) {
+  try {
+    const res = await fetch(F2POOL_ACCT_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'F2P-API-SECRET': account.token },
+      body: JSON.stringify({ mining_user_name: account.user, currency: 'bitcoin' }),
+    });
+    if (!res.ok) { console.warn(`   ⚠️  Account stats ${account.user}: HTTP ${res.status}`); return null; }
+    const data = await res.json();
+    // Log raw response once to discover field names
+    console.log(`   [acct stats] ${account.user}: ${JSON.stringify(data).slice(0, 300)}`);
+    // f2pool may use h1_hash_rate or hash_rate for total; actual_hash_rate or actual_transfer_out for ATO
+    const total = data.h1_hash_rate ?? data.hash_rate ?? null;
+    const ato   = data.actual_hash_rate ?? data.actual_transfer_out ?? null;
+    return { total, ato };
+  } catch (err) {
+    console.warn(`   ⚠️  Account stats ${account.user}: ${err.message}`);
+    return null;
+  }
+}
 
 async function fetchWorkers(account) {
   const res = await fetch(F2POOL_API, {
@@ -583,7 +606,9 @@ async function main() {
   const alertState  = loadAlertState();
   const allWorkers  = {}; // { accountUser: [workers] }
 
-  // ── 1. Fetch tous les workers ──────────────────────────────────────────────
+  const accountStats = {}; // { user: { total, ato } }
+
+  // ── 1. Fetch tous les workers + stats compte ──────────────────────────────
   for (const account of ACCOUNTS) {
     if (!account.token) { console.warn(`⚠️  Token manquant pour ${account.name}`); continue; }
     console.log(`📡 Fetch — ${account.name} (${account.user})...`);
@@ -595,6 +620,8 @@ async function main() {
       console.error(`   ❌ Erreur: ${err.message}`);
       allWorkers[account.user] = [];
     }
+    // Fetch account-level totals (total + ATO) en parallèle
+    accountStats[account.user] = await fetchAccountHashrate(account);
   }
 
   // ── 2. Détection chutes par groupe (avant de sauvegarder les nouveaux points) ──
@@ -696,7 +723,19 @@ async function main() {
     }
   }
 
-  // ── 4b. Sauvegarde worker-hosts.json (IP de chaque worker actif) ─────────────
+  // ── 4b. Sauvegarde snapshots compte (total + ATO) ────────────────────────────
+  if (!h.accounts) h.accounts = {};
+  for (const account of ACCOUNTS) {
+    const stats = accountStats[account.user];
+    if (!stats) continue;
+    if (!h.accounts[account.user]) h.accounts[account.user] = [];
+    h.accounts[account.user].push({ ts: now.toISOString(), total: stats.total, ato: stats.ato });
+    if (h.accounts[account.user].length > MAX_SNAPSHOTS) {
+      h.accounts[account.user] = h.accounts[account.user].slice(-MAX_SNAPSHOTS);
+    }
+  }
+
+  // ── 4c. Sauvegarde worker-hosts.json (IP de chaque worker actif) ─────────────
   const workerHosts = {};
   for (const account of ACCOUNTS) {
     for (const w of allWorkers[account.user] || []) {

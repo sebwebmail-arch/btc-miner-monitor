@@ -607,7 +607,7 @@ function renderDeadTracker() {
   const cats = [
     { key:'offline',     label:'Hours',    sub:'recent — monitor daily', dotColor:'#f1c40f' },
     { key:'dead_recent', label:'1–7 days', sub:'recent — monitor daily', dotColor:'#e67e22' },
-    { key:'dead_mid',    label:'8–90 days',sub:'contact provider',       dotColor:'#e74c3c' },
+    { key:'dead_mid',    label:'8–90 days',sub:'late — contact provider', dotColor:'#e74c3c' },
   ];
 
   const sections = cats.map(({ key, label, sub, dotColor }) => {
@@ -650,16 +650,16 @@ function renderDeadTracker() {
           <th style="${thStyle}">Datacenter</th>
           <th style="${thStyle}">Status</th>
           <th class="mob-hide" style="${thStyle}">Last Share (UTC)</th>
-          <th class="mob-hide" style="${thStyle}">Action</th>
+          <th class="mob-hide" style="${thStyle}"></th>
         </tr></thead>
         <tbody>${rows}</tbody>
       </table>
     </div>`;
   }).join('');
 
+  const archivedCountTxt = totalArchived === 0 ? 'none' : `${totalArchived} worker${totalArchived !== 1 ? 's' : ''}`;
   const archiveNote = `<div class="dead-section">
-    <div class="dead-section-title"><div class="dot dot-grey"></div>&gt; 90 days <span style="color:#bbb;font-weight:400;letter-spacing:0;text-transform:none">likely gone</span></div>
-    <div class="arch-note">${totalArchived} worker${totalArchived !== 1 ? 's' : ''} archived — hidden from daily view</div>
+    <div class="dead-section-title"><div class="dot dot-grey"></div>&gt; 90 days <span style="color:#bbb;font-weight:400;letter-spacing:0;text-transform:none">likely gone · ${archivedCountTxt}</span></div>
   </div>`;
 
   wrap.innerHTML = sections + archiveNote;

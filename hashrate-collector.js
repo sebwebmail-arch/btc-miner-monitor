@@ -84,12 +84,7 @@ async function fetchWorkers(account) {
   });
   if (!res.ok) throw new Error(`f2pool API error for ${account.user}: ${res.status} ${await res.text()}`);
   const data = await res.json();
-  const workers = data.workers || [];
-  // Log first worker's full hash_rate_info to discover available fields (incl. possible ATO fields)
-  if (workers.length > 0) {
-    console.log(`   [worker[0] hash_rate_info] ${account.user}: ${JSON.stringify(workers[0].hash_rate_info).slice(0, 500)}`);
-  }
-  return workers;
+  return data.workers || [];
 }
 
 // ─── Storage ─────────────────────────────────────────────────────────────────
@@ -588,26 +583,13 @@ async function main() {
   const alertState  = loadAlertState();
   const allWorkers  = {}; // { accountUser: [workers] }
 
-  const accountStats = {}; // { user: { total, ato } }
-
-  // ── 1. Fetch tous les workers + stats compte ──────────────────────────────
+  // ── 1. Fetch tous les workers ─────────────────────────────────────────────
   for (const account of ACCOUNTS) {
     if (!account.token) { console.warn(`⚠️  Token manquant pour ${account.name}`); continue; }
     console.log(`📡 Fetch — ${account.name} (${account.user})...`);
     try {
-      const workers = await fetchWorkers(account);
-      allWorkers[account.user] = workers;
-      console.log(`   ${workers.length} workers`);
-      // Total = somme h1_hash_rate de tous les workers (pas de root fields disponibles avec ce token)
-      // ATO : on cherche le champ dans hash_rate_info du premier worker (log ci-dessus pour découverte)
-      const total = workers.reduce((s, w) => s + (w.hash_rate_info?.h1_hash_rate ?? w.hash_rate_info?.hash_rate ?? 0), 0);
-      // Tente de sommer actual_hash_rate par worker si disponible
-      const atoSum = workers.reduce((s, w) => {
-        const v = w.hash_rate_info?.actual_hash_rate ?? w.hash_rate_info?.h1_actual_hash_rate ?? null;
-        return v !== null ? s + v : s;
-      }, 0);
-      const ato = atoSum > 0 ? atoSum : null;
-      accountStats[account.user] = total > 0 ? { total, ato } : null;
+      allWorkers[account.user] = await fetchWorkers(account);
+      console.log(`   ${allWorkers[account.user].length} workers`);
     } catch (err) {
       console.error(`   ❌ Erreur: ${err.message}`);
       allWorkers[account.user] = [];
@@ -713,19 +695,7 @@ async function main() {
     }
   }
 
-  // ── 4b. Sauvegarde snapshots compte (total + ATO) ────────────────────────────
-  if (!h.accounts) h.accounts = {};
-  for (const account of ACCOUNTS) {
-    const stats = accountStats[account.user];
-    if (!stats) continue;
-    if (!h.accounts[account.user]) h.accounts[account.user] = [];
-    h.accounts[account.user].push({ ts: now.toISOString(), total: stats.total, ato: stats.ato });
-    if (h.accounts[account.user].length > MAX_SNAPSHOTS) {
-      h.accounts[account.user] = h.accounts[account.user].slice(-MAX_SNAPSHOTS);
-    }
-  }
-
-  // ── 4c. Sauvegarde worker-hosts.json (IP de chaque worker actif) ─────────────
+  // ── 4b. Sauvegarde worker-hosts.json (IP de chaque worker actif) ─────────────
   const workerHosts = {};
   for (const account of ACCOUNTS) {
     for (const w of allWorkers[account.user] || []) {

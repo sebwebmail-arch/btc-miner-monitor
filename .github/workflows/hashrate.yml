@@ -30,10 +30,11 @@ jobs:
           ALERT_EMAIL_CMINE: ${{ secrets.ALERT_EMAIL_CMINE }}
           ALERT_EMAIL_EVERMINER: ${{ secrets.ALERT_EMAIL_EVERMINER }}
           ALERT_EMAIL: ${{ secrets.ALERT_EMAIL }}
-          # Telegram — bot commun, chat_id par compte
+          # Telegram — bot commun, chat_id par compte + groupe Paraguay
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID_CMINE: ${{ secrets.TELEGRAM_CHAT_ID_CMINE }}
           TELEGRAM_CHAT_ID_EVERMINER: ${{ secrets.TELEGRAM_CHAT_ID_EVERMINER }}
+          TELEGRAM_CHAT_ID_PARAGUAY: ${{ secrets.TELEGRAM_CHAT_ID_PARAGUAY }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: node hashrate-collector.js
 

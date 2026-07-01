@@ -538,7 +538,9 @@ function openDropdown(col, btn) {
   if (col === 'group')   values = [...new Set(Object.values(_issues).filter(w=>categoryOf(w)!=='dead_old').map(w=>w.group_id))].sort();
 
   const active = _activeFilters[col];
-  const label = col === 'status' ? (v => STATUS_LABELS[v] || v) : (v => v);
+  const acctNameMap = {};
+  Object.values(_issues).forEach(w => { acctNameMap[w.account] = w.account_name || w.account; });
+  const label = col === 'status' ? (v => STATUS_LABELS[v] || v) : col === 'account' ? (v => acctNameMap[v] || v) : (v => v);
 
   const items = values.map(v => `
     <label class="col-dropdown-item">
@@ -626,7 +628,7 @@ function applyFilters() {
   rows.sort((a, b) => {
     let va, vb;
     if      (_sortCol==='name')    { va=a.name;       vb=b.name; }
-    else if (_sortCol==='account') { va=a.account;    vb=b.account; }
+    else if (_sortCol==='account') { va=a.account_name||a.account; vb=b.account_name||b.account; }
     else if (_sortCol==='group')   { va=a.group_id;   vb=b.group_id; }
     else if (_sortCol==='status')  { va=categoryOf(a);vb=categoryOf(b); }
     else                           { va=ageHours(a.last_share);vb=ageHours(b.last_share); }
@@ -673,7 +675,7 @@ function applyFilters() {
     const cat = categoryOf(w);
     return `<tr>
       <td><span class="worker-name" style="cursor:pointer;text-decoration:underline dotted" onclick="openWorkerModal('${w.account}.${w.name}')">${w.name}</span></td>
-      <td><span class="account-label acct-long">${w.account}</span><span class="account-label acct-short" style="display:none">${w.account}</span></td>
+      <td><span class="account-label acct-long">${w.account_name||w.account}</span><span class="account-label acct-short" style="display:none">${w.account_name||w.account}</span></td>
       <td><span class="group-badge">${w.group_id}</span><span class="prov-name"> ${w.provider}</span></td>
       <td><span class="age-pill ${pillClass(cat)}">${pillLabel(cat, w.last_share)}</span></td>
       <td class="mob-hide" style="color:#aaa;font-size:11px">${w.last_share?new Date(w.last_share).toUTCString().replace(' GMT',''):'—'}</td>
@@ -733,7 +735,7 @@ function buildDeadTracker(issues) {
         <div class="dead-row ${rowCls}">
           <span class="dw">${w.name}</span>
           <span class="dp">${w.provider} ${w.group_id}</span>
-          <span class="dead-account">${w.account}</span>
+          <span class="dead-account">${w.account_name||w.account}</span>
           <span class="dd">${fmtAge(w.last_share)}</span>
         </div>`).join('');
     }

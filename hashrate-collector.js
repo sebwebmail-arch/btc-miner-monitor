@@ -28,9 +28,10 @@ const ACCOUNTS = [
   },
 ];
 
-const RESEND_API_KEY = process.env.RESEND_API_KEY;
-const ALERT_FROM     = process.env.ALERT_FROM || 'noreply@capone.market';
-const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+const RESEND_API_KEY        = process.env.RESEND_API_KEY;
+const ALERT_FROM            = process.env.ALERT_FROM || 'noreply@capone.market';
+const TELEGRAM_TOKEN        = process.env.TELEGRAM_BOT_TOKEN;
+const TELEGRAM_CHAT_PARAGUAY = process.env.TELEGRAM_CHAT_ID_PARAGUAY;
 
 const F2POOL_API        = 'https://api.f2pool.com/v2/hash_rate/worker/list';
 const HASHRATE_PATH     = path.join(__dirname, 'data', 'hashrate.json');
@@ -49,6 +50,9 @@ const COOLDOWN_H      = 4;    // pas de double alerte sur le même groupe avant 
 // Groupes exclus des alertes temps-réel (hashrate drop + anomalie worker)
 // E1 = BitCluster : hashrate yoyo quotidien normal, pas une anomalie
 const ALERT_EXCLUDED_GROUPS = ['E1'];
+
+// Groupes Paraguay — alertes dupliquées vers TELEGRAM_CHAT_ID_PARAGUAY
+const PARAGUAY_GROUPS = ['P1'];
 
 // ─── Rapport matin ────────────────────────────────────────────────────────────
 const MORNING_HOUR_UTC   = 5;   // 05:00 UTC = 07:00 Paris (CEST)
@@ -307,7 +311,14 @@ async function sendHashrateAlert(account, groupId, provider, currentHR, refHR, d
     `📊 https://watcher.capone.market`,
   ].join('\n');
 
+  // Groupe compte (Cyberian Mine ou Everminer)
   await sendTelegram(account.telegramChatId, tgText);
+
+  // Groupe Paraguay — si le datacenter concerné est au Paraguay
+  if (PARAGUAY_GROUPS.includes(groupId) && TELEGRAM_CHAT_PARAGUAY && TELEGRAM_CHAT_PARAGUAY !== account.telegramChatId) {
+    await sendTelegram(TELEGRAM_CHAT_PARAGUAY, tgText);
+    console.log(`   📲 Alerte → groupe Paraguay (${groupId})`);
+  }
 
   // ── Email ──
   const subject = `[ALERT] Hashrate drop ${dropLabel} — ${provider} (${groupId}) — ${account.name}`;

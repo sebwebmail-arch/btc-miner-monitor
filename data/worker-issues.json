@@ -1,31 +1,18 @@
 {
-  "last_updated": "2026-07-01T18:30:52.026Z",
+  "last_updated": "2026-07-01T18:59:37.521Z",
   "issues": {
-    "cmine.c21xp031": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "c21xp031",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)",
-      "type": "volatile",
-      "current_avg_ths": 117.2,
-      "baseline_avg_ths": 7.3,
-      "drop_pct": -1502,
-      "cv_pct": 62,
-      "zero_rate_pct": 17
-    },
     "cmine.c21xp009": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
       "worker": "c21xp009",
       "group_id": "U3",
       "provider": "ValueHash (NY)",
-      "type": "level_drop",
-      "current_avg_ths": 115.7,
-      "baseline_avg_ths": 211.5,
-      "drop_pct": 45,
-      "cv_pct": 79,
-      "zero_rate_pct": 33
+      "type": "volatile",
+      "current_avg_ths": 81.3,
+      "baseline_avg_ths": 211.4,
+      "drop_pct": 62,
+      "cv_pct": 110,
+      "zero_rate_pct": 50
     },
     "everminer.e21xp009": {
       "account": "everminer",
@@ -34,24 +21,24 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)",
       "type": "volatile",
-      "current_avg_ths": 115.9,
-      "baseline_avg_ths": 37.9,
-      "drop_pct": -206,
-      "cv_pct": 83,
-      "zero_rate_pct": 33
+      "current_avg_ths": 78,
+      "baseline_avg_ths": 47.4,
+      "drop_pct": -65,
+      "cv_pct": 115,
+      "zero_rate_pct": 50
     },
-    "everminer.e21xp012": {
+    "everminer.e21xp017": {
       "account": "everminer",
       "account_name": "Everminer",
-      "worker": "e21xp012",
+      "worker": "e21xp017",
       "group_id": "U3",
       "provider": "ValueHash (NY)",
-      "type": "volatile",
-      "current_avg_ths": 82.5,
-      "baseline_avg_ths": 6.3,
-      "drop_pct": -1210,
-      "cv_pct": 68,
-      "zero_rate_pct": 17
+      "type": "level_drop",
+      "current_avg_ths": 157.3,
+      "baseline_avg_ths": 270.2,
+      "drop_pct": 42,
+      "cv_pct": 27,
+      "zero_rate_pct": 0
     }
   }
 }

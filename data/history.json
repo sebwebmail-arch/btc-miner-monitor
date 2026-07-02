@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-02T05:01:00.075Z",
+  "last_updated": "2026-07-02T05:30:48.719Z",
   "snapshots": [
     {
       "ts": "2026-06-30T11:49:33.334Z",
@@ -26,6 +26,29 @@
     },
     {
       "ts": "2026-07-02T05:01:00.075Z",
+      "by_account": {
+        "cmine": {
+          "name": "Cyberian Mine",
+          "total": 404,
+          "online": 403,
+          "offline": 1,
+          "dead": 0
+        },
+        "everminer": {
+          "name": "Everminer",
+          "total": 70,
+          "online": 70,
+          "offline": 0,
+          "dead": 0
+        }
+      },
+      "offline": 1,
+      "dead_recent": 0,
+      "dead_mid": 0,
+      "dead_old": 0
+    },
+    {
+      "ts": "2026-07-02T05:30:48.719Z",
       "by_account": {
         "cmine": {
           "name": "Cyberian Mine",

@@ -54,10 +54,10 @@ git pull --rebase --autostash origin main && git push
 | `ALERT_EMAIL` | `support@cyberianmine.de` (fallback) |
 | `ALERT_EMAIL_CMINE` | `support@cyberianmine.de` |
 | `ALERT_EMAIL_EVERMINER` | `support@cyberianmine.de` |
-| `TELEGRAM_BOT_TOKEN` | `8631394959:AAEKKObqAtE01ClQztCNJotFnX9GxdU6jno` |
-| `TELEGRAM_CHAT_ID` | `-4857292784` (fallback) |
-| `TELEGRAM_CHAT_ID_CMINE` | `-4857292784` (same for now — separate later) |
-| `TELEGRAM_CHAT_ID_EVERMINER` | `-4857292784` (same for now — separate later) |
+| `TELEGRAM_BOT_TOKEN` | *(in GitHub Secrets)* |
+| `TELEGRAM_CHAT_ID` | *(in GitHub Secrets)* (fallback) |
+| `TELEGRAM_CHAT_ID_CMINE` | *(in GitHub Secrets)* |
+| `TELEGRAM_CHAT_ID_EVERMINER` | *(in GitHub Secrets)* |
 
 ## f2pool API
 

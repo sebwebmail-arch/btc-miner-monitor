@@ -118,10 +118,10 @@
   <h2>3 — Performance SLA — per Datacenter (proportional ATO)</h2>
   <div class="section-note">
     <strong>Principle:</strong> each DC is expected to deliver its proportional share of the ATO commitment.<br>
-    <code>DC_share = avg_hr_dc_online / avg_total_hr_at_same_online_snapshots</code> (computed only when DC is online — avoids downtime deflating its fair share)<br>
-    <code>DC_nominal = ATO × DC_share</code><br>
+    <code>DC_share = avg_hr_dc_online / avg_total_hr_at_same_online_snapshots</code> (computed only when DC is online)<br>
+    <code>nominal_at_ts = total_hr_ts × DC_share</code> — the DC's expected contribution at each snapshot, relative to the account total (not ATO)<br>
     <strong>Three metrics:</strong><br>
-    — <strong>Throughput</strong> (when online): <code>avg(min(100%, hr_dc / DC_nominal))</code> for online snapshots only. Quality of delivery when up.<br>
+    — <strong>Throughput</strong> (when online): <code>avg(min(100%, hr_dc_ts / nominal_at_ts))</code> — per-snapshot ratio, then averaged. Measures if the DC consistently delivers its proportional share of the account total.<br>
     — <strong>Combined</strong>: Continuity × Throughput = overall delivery including downtime.<br>
     — <strong>Breach responsibility</strong>: during snapshots where total_hr &lt; ATO (client impact), was this DC underperforming its nominal? 0% = DC never contributed to client breaches. 100% = DC was always underperforming during breaches.
   </div>
@@ -131,7 +131,7 @@
         <th>Datacenter</th>
         <th>Account</th>
         <th>DC share</th>
-        <th>Nominal expected</th>
+        <th>Nominal (avg share × total)</th>
         <th>Avg HR (when online)</th>
         <th>Throughput (when up)</th>
         <th>Combined SLA</th>
@@ -374,15 +374,18 @@ async function main() {
       const avgDCOnline = sumDCOnline / nDCOnline;
       const avgTotalAtDCOnline = sumTotalAtDCOnline / nDCOnline;
       const dcShare = avgTotalAtDCOnline > 0 ? avgDCOnline / avgTotalAtDCOnline : 0;
-      const dcNominal = avgATO * dcShare;
+      const dcNominal = avgTotalAtDCOnline * dcShare; // expected contribution = avg_total × share (not ATO-based)
 
-      // Throughput: min(100%, hr_dc / nominal) for online snapshots only
+      // Throughput: at each online snapshot, did the DC deliver its proportional share
+      // of the ACCOUNT TOTAL (not ATO — that's for breach only)?
+      // nominal_at_ts = total_hr_ts × dc_share
+      // perf_at_ts    = min(1, hr_dc_ts / nominal_at_ts)
       let sumThroughput = 0, nThroughput = 0;
       for (const [ts, hrDC] of dcByTs) {
         if (hrDC <= 0) continue;
-        const a = nearestATO(atoSorted, new Date(ts).getTime());
-        if (!a) continue;
-        sumThroughput += Math.min(1, hrDC / (a.ato * dcShare));
+        const totalAtTs = totalByTs.get(ts) || 0;
+        if (totalAtTs <= 0) continue;
+        sumThroughput += Math.min(1, hrDC / (totalAtTs * dcShare));
         nThroughput++;
       }
       if (!nThroughput) continue;

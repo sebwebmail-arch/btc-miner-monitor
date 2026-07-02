@@ -34,6 +34,7 @@ const RESEND_API_KEY        = process.env.RESEND_API_KEY;
 const ALERT_FROM            = process.env.ALERT_FROM || 'noreply@capone.market';
 const TELEGRAM_TOKEN        = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_PARAGUAY = process.env.TELEGRAM_CHAT_ID_PARAGUAY;
+const TELEGRAM_CHAT_MINTO   = process.env.TELEGRAM_CHAT_ID_MINTO;
 
 const F2POOL_API        = 'https://api.f2pool.com/v2/hash_rate/worker/list';
 const HASHRATE_PATH     = path.join(__dirname, 'data', 'hashrate.json');
@@ -59,6 +60,9 @@ const ALERT_EXCLUDED_GROUPS = ['E1'];
 
 // Groupes Paraguay — alertes dupliquées vers TELEGRAM_CHAT_ID_PARAGUAY
 const PARAGUAY_GROUPS = ['P1'];
+
+// Groupes Minto — alertes dupliquées vers TELEGRAM_CHAT_ID_MINTO
+const MINTO_GROUPS = ['R3'];
 
 // ─── Rapport matin ────────────────────────────────────────────────────────────
 const MORNING_HOUR_UTC   = 5;   // 05:00 UTC = 07:00 Paris (CEST)
@@ -353,6 +357,12 @@ async function sendHashrateAlert(account, groupId, provider, currentHR, refHR, d
   if (PARAGUAY_GROUPS.includes(groupId) && TELEGRAM_CHAT_PARAGUAY && TELEGRAM_CHAT_PARAGUAY !== account.telegramChatId) {
     await sendTelegram(TELEGRAM_CHAT_PARAGUAY, tgText);
     console.log(`   📲 Alerte → groupe Paraguay (${groupId})`);
+  }
+
+  // Groupe Minto — si le datacenter concerné est Minto
+  if (MINTO_GROUPS.includes(groupId) && TELEGRAM_CHAT_MINTO && TELEGRAM_CHAT_MINTO !== account.telegramChatId) {
+    await sendTelegram(TELEGRAM_CHAT_MINTO, tgText);
+    console.log(`   📲 Alerte → groupe Minto (${groupId})`);
   }
 
   // ── Email ──

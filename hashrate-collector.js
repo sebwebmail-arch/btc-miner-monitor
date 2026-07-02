@@ -341,7 +341,7 @@ async function sendHashrateAlert(account, groupId, provider, currentHR, refHR, d
     `⚠️ <b>Hashrate Alert — capone watcher</b>`,
     ``,
     `📍 <b>${provider} (${groupId})</b> — ${account.name}`,
-    `📉 Hashrate dropped <b>${dropLabel}</b>`,
+    `📉 Provider hashrate dropped by <b>${dropLabel}</b>`,
     ``,
     `Before (avg 1h30): <b>${fmtTH(refHR)}</b>`,
     `Now:               <b>${fmtTH(currentHR)}</b>`,

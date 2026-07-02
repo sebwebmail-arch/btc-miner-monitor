@@ -1,4 +1,18 @@
 {
-  "last_updated": "2026-07-02T09:01:03.446Z",
-  "issues": {}
+  "last_updated": "2026-07-02T09:30:52.457Z",
+  "issues": {
+    "cmine.r00420": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "worker": "r00420",
+      "group_id": "R1",
+      "provider": "IZTM",
+      "type": "level_drop",
+      "current_avg_ths": 108,
+      "baseline_avg_ths": 195.4,
+      "drop_pct": 45,
+      "cv_pct": 76,
+      "zero_rate_pct": 33
+    }
+  }
 }

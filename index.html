@@ -840,8 +840,8 @@ function renderDeadTracker() {
     const rows = workers.map(w => {
       const cat = categoryOf(w);
       const lastShareFmt = w.last_share ? new Date(w.last_share).toUTCString().replace(' GMT','') : '—';
-      return `<tr>
-        <td><span class="worker-name" style="cursor:pointer;text-decoration:underline dotted" onclick="openWorkerModal('${w.account}.${w.name}')">${w.name}</span></td>
+      return `<tr onclick="openWorkerModal('${w.account}.${w.name}')" style="cursor:pointer">
+        <td><span class="worker-name">${w.name}</span></td>
         <td class="dead-col-acct"><span class="account-label">${w.account_name||w.account}</span></td>
         <td><span class="group-badge">${w.group_id}</span><span class="prov-name"> ${w.provider}</span></td>
         <td><span class="age-pill ${pillClass(cat)}">${pillLabel(cat, w.last_share)}</span></td>
@@ -1255,8 +1255,8 @@ function buildWorkerAnomalies() {
       ? `<span class="anomaly-badge badge-drop">${DROP_SVG}Drop ${w.drop_pct}%</span>`
       : `<span class="anomaly-badge badge-volt">${WAVE_SVG}Unstable CV ${w.cv_pct}%</span>`;
     const spark = miniSparkline(key, 12);
-    return `<tr>
-      <td><span class="worker-name" style="cursor:pointer;text-decoration:underline dotted" onclick="openWorkerModal('${key}')">${w.worker}</span></td>
+    return `<tr onclick="openWorkerModal('${key}')" style="cursor:pointer">
+      <td><span class="worker-name">${w.worker}</span></td>
       <td><span class="account-label">${w.account_name}</span></td>
       <td><span class="group-badge">${w.group_id}</span> ${w.provider}</td>
       <td>${cat}</td>
@@ -1530,8 +1530,8 @@ function renderOnlineTable() {
       statusCell = `<span style="color:#27ae60;font-size:12px;font-weight:600">✓</span>`;
     }
 
-    return `<tr class="${rowClass}">
-      <td><span class="worker-name" style="cursor:pointer;text-decoration:underline dotted" onclick="openWorkerModal('${w.key}')">${w.workerName}</span></td>
+    return `<tr class="${rowClass}" onclick="openWorkerModal('${w.key}')" style="cursor:pointer">
+      <td><span class="worker-name">${w.workerName}</span></td>
       <td class="online-acct"><span class="account-label acct-long">${w.accountName}</span><span class="account-label acct-short" style="display:none">${w.accountUser}</span></td>
       <td class="td-dc"><span class="group-badge">${w.groupId}</span><span class="prov-name"> ${w.provider}</span></td>
       <td>${statusCell}</td>
@@ -1788,8 +1788,8 @@ function buildAccountHashrateChart(accountUser, rangeH) {
   const headerRight = lastATOTH
     ? `<div style="line-height:1.4">
          <div style="display:flex;align-items:baseline;gap:4px;justify-content:flex-end">
-           <span style="font-size:26px;font-weight:800;color:#4ade80;line-height:1">${lastTH}</span>
-           <span style="font-size:11px;color:#16a34a">TH/s total</span>
+           <span style="font-size:26px;font-weight:800;color:#16a34a;line-height:1">${lastTH}</span>
+           <span style="font-size:11px;color:#4ade80">TH/s total</span>
          </div>
          <div style="display:flex;align-items:baseline;gap:4px;justify-content:flex-end;margin-top:1px">
            <span style="font-size:15px;font-weight:700;color:#f97316">${lastATOTH}</span>

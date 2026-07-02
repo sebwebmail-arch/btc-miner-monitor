@@ -72,6 +72,9 @@
 [data-theme="dark"] .row-drop { background: rgba(244,113,113,0.06); }
 [data-theme="dark"] .row-volt { background: rgba(212,160,23,0.07); }
 
+/* Modal chart axis labels — plus sombres sur mobile */
+@media(max-width:640px){.m-yl,.m-xl{fill:#888}}
+
 /* Modal range button active — dark mode */
 [data-theme="dark"] .range-btn.active {
   background: var(--accent-orange-dim);
@@ -1063,7 +1066,7 @@ function renderHashrateChart(key, rangeH) {
   // Y axis labels (0, mid, max)
   const yLabels = [0, maxTH/2, maxTH].map((v,i) => {
     const y = PT + cH - (i * cH / 2);
-    return `<text x="${PL-4}" y="${y+4}" text-anchor="end" font-size="9" fill="#ccc">${v.toFixed(0)}</text>`;
+    return `<text x="${PL-4}" y="${y+4}" class="m-yl" text-anchor="end" font-size="9" fill="#ccc">${v.toFixed(0)}</text>`;
   }).join('');
 
   // X axis : ticks aux heures rondes avec date au changement de jour
@@ -1077,7 +1080,7 @@ function renderHashrateChart(key, rangeH) {
     const hh  = d.getUTCHours();
     const lbl = hh === 0 ? `${MONTHS_M[d.getUTCMonth()]} ${d.getUTCDate()}` : `${String(hh).padStart(2,'0')}:00`;
     const x   = (PL + (t - tAxisStart) / tAxisSpan * cW).toFixed(1);
-    xLabels.push(`<text x="${x}" y="${PT+cH+14}" text-anchor="middle" font-size="9" fill="${hh===0?'#aaa':'#ccc'}" font-weight="${hh===0?'600':'400'}">${lbl}</text>`);
+    xLabels.push(`<text x="${x}" y="${PT+cH+14}" class="m-xl" text-anchor="middle" font-size="9" fill="${hh===0?'#aaa':'#ccc'}" font-weight="${hh===0?'600':'400'}">${lbl}</text>`);
   }
 
   // Stocker données pour le tooltip hover

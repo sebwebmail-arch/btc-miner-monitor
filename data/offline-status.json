@@ -1,45 +1,10 @@
 {
-  "last_updated": "2026-07-02T18:01:01.491Z",
+  "last_updated": "2026-07-02T18:30:51.850Z",
   "offline": {
-    "cmine.r00420": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "r00420",
-      "group_id": "R1",
-      "provider": "IZTM"
-    },
     "cmine.ngsbfmabdjiaj02": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
       "name": "ngsbfmabdjiaj02",
-      "group_id": "U1+U2",
-      "provider": "Dataprana"
-    },
-    "cmine.c21xp030": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "c21xp030",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)"
-    },
-    "cmine.ynahfkabdajba01": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "ynahfkabdajba01",
-      "group_id": "U1+U2",
-      "provider": "Dataprana"
-    },
-    "cmine.c21xp009": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "c21xp009",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)"
-    },
-    "cmine.ynahfkabdajbh02": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "ynahfkabdajbh02",
       "group_id": "U1+U2",
       "provider": "Dataprana"
     },
@@ -50,10 +15,31 @@
       "group_id": "U1+U2",
       "provider": "Dataprana"
     },
+    "cmine.ynahfkabdajbh02": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "ynahfkabdajbh02",
+      "group_id": "U1+U2",
+      "provider": "Dataprana"
+    },
+    "cmine.r00420": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "r00420",
+      "group_id": "R1",
+      "provider": "IZTM"
+    },
     "cmine.ynahfkabdajbh01": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
       "name": "ynahfkabdajbh01",
+      "group_id": "U1+U2",
+      "provider": "Dataprana"
+    },
+    "cmine.ynahfkabdajba01": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "ynahfkabdajba01",
       "group_id": "U1+U2",
       "provider": "Dataprana"
     },
@@ -64,17 +50,17 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)"
     },
-    "everminer.piemfmabdajcj01": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "piemfmabdajcj01",
-      "group_id": "U1+U2",
-      "provider": "Dataprana"
+    "cmine.c21xp009": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "c21xp009",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)"
     },
-    "everminer.e21xp009": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "e21xp009",
+    "cmine.c21xp030": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "c21xp030",
       "group_id": "U3",
       "provider": "ValueHash (NY)"
     },
@@ -89,6 +75,20 @@
       "account": "everminer",
       "account_name": "Everminer",
       "name": "ynahfkabdajbh02",
+      "group_id": "U1+U2",
+      "provider": "Dataprana"
+    },
+    "everminer.e21xp009": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "e21xp009",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)"
+    },
+    "everminer.piemfmabdajcj01": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "piemfmabdajcj01",
       "group_id": "U1+U2",
       "provider": "Dataprana"
     },

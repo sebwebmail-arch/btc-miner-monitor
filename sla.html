@@ -319,9 +319,11 @@ body::after {
   .sla-legend { padding: 8px 14px; gap: 10px; }
   /* Hide secondary columns on mobile */
   .col-sm-hide { display: none; }
-  /* Remove min-width, fixed layout so SLA columns align across tables */
+  /* Fixed layout with explicit % widths → aligns SLA column across all 3 tables */
   .sla-table { min-width: 0; table-layout: fixed; width: 100%; }
-  .sla-col   { width: 86px; }
+  .sla-table th:first-child,
+  .sla-table td:first-child { width: 62%; }
+  .sla-col { width: 38%; }
   .table-wrap { overflow-x: hidden; }
   /* Nav button: icon only on very small screens */
   .nav-label { display: none; }

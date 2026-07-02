@@ -761,18 +761,18 @@ async function main() {
       const cont    = uptimeRows.find(r => r.id === gd.id && r.account === acctName);
       const combined = cont?.uptime != null ? Math.min(100, cont.uptime / 100 * throughput) : null;
 
-      // Breach responsibility — part du DC dans le shortfall total (continu, pas binaire)
-      // dc_responsibility = dc_shortfall / shortfall_total, moyenné sur les snapshots de breach
+      // Breach responsibility — fraction de l'ATO total non livrée par ce DC, pendant les breaches
+      // Normalisé par ATO (pas par shortfall) → naturellement borné par dc_share
+      // BitCluster (1.1% share) offline → max 1.1%. Grand DC (30%) offline → max 30%.
       let breachN = 0, sumBreachResp = 0;
       for (const [ts, totalHr] of totalByTs) {
         const a = nearestATO(atoSorted, new Date(ts).getTime());
         if (!a || totalHr >= a.ato) continue; // pas de breach
         breachN++;
-        const shortfallTotal = a.ato - totalHr;
-        const dcNominal  = a.ato * dcShare;            // ce que le DC aurait dû fournir
-        const hrDC       = dcByTs.get(ts) || 0;
-        const dcShortfall = Math.max(0, dcNominal - hrDC); // manque côté DC
-        sumBreachResp += shortfallTotal > 0 ? Math.min(1, dcShortfall / shortfallTotal) : 0;
+        const dcNominal   = a.ato * dcShare;                  // ce que le DC aurait dû fournir
+        const hrDC        = dcByTs.get(ts) || 0;
+        const dcShortfall = Math.max(0, dcNominal - hrDC);    // manque côté DC
+        sumBreachResp    += dcShortfall / a.ato;              // en fraction de l'ATO total
       }
       const breachPct = breachN > 0 ? sumBreachResp / breachN * 100 : 0;
 

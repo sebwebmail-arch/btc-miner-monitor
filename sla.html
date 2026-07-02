@@ -490,6 +490,10 @@ document.addEventListener('visibilitychange', () => {
 })();
 window.setTheme = setTheme;
 
+// ── Account display names ────────────────────────────────────────────────────
+const ACCT_NAMES = { cmine: 'Cyberian Mine', everminer: 'Everminer' };
+const fmtAcct = a => ACCT_NAMES[a] || a;
+
 // ── Groups ───────────────────────────────────────────────────────────────────
 const GROUPS = [
   { id: 'R1', provider: 'IZTM',       regex: /^r/i },
@@ -606,7 +610,7 @@ async function main() {
   document.getElementById('uptime-body').innerHTML = uptimeRows.length
     ? uptimeRows.map(r => `<tr>
         <td><span class="dc-badge">${r.id}</span>${r.provider}</td>
-        <td class="mono">${r.account}</td>
+        <td>${fmtAcct(r.account)}</td>
         <td>${r.total}${r.excluded ? ` <span class="muted">(+${r.excluded} excl.)</span>` : ''}</td>
         <td class="mono col-sm-hide">${r.n}</td>
         <td class="mono col-sm-hide">${fmtPct(r.avgRatio)} online</td>
@@ -639,7 +643,7 @@ async function main() {
 
   document.getElementById('acct-body').innerHTML = acctRows.length
     ? acctRows.map(r => `<tr>
-        <td class="mono">${r.acctName}</td>
+        <td>${fmtAcct(r.acctName)}</td>
         <td class="mono">${fmtTH(r.avgATO)}</td>
         <td class="mono">${fmtTH(r.avgHR)}</td>
         <td class="mono col-sm-hide">${r.n}</td>
@@ -723,7 +727,7 @@ async function main() {
   document.getElementById('perf-body').innerHTML = perfRows.length
     ? perfRows.map(r => `<tr>
         <td><span class="dc-badge">${r.id}</span>${r.provider}</td>
-        <td class="mono">${r.account}</td>
+        <td>${fmtAcct(r.account)}</td>
         <td class="mono col-sm-hide">${fmtPct(r.dcShare)}</td>
         <td class="mono col-sm-hide">${fmtTH(r.dcNominal)}</td>
         <td class="mono col-sm-hide">${fmtTH(r.avgDC)}</td>

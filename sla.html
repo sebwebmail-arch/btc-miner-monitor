@@ -127,6 +127,7 @@ body::after {
 
 /* ── Page layout ─────────────────────────────────────────────────────────── */
 .page { max-width: 1080px; margin: 0 auto; padding: 24px 20px; display: flex; flex-direction: column; gap: 44px; }
+#app  { flex-direction: column; gap: 44px; }
 
 .section-label {
   font-size: 11px; font-weight: 600; letter-spacing: 0.10em;
@@ -820,7 +821,7 @@ async function main() {
   `;
 
   document.getElementById('loading').style.display = 'none';
-  document.getElementById('app').style.display     = 'block';
+  document.getElementById('app').style.display     = 'flex';
 }
 
 main().catch(err => {

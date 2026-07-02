@@ -61,7 +61,8 @@
   <!-- ── 1. Continuity SLA ── -->
   <h2>1 — Continuity SLA — per Datacenter</h2>
   <div class="section-note">
-    <strong>Formula:</strong> for each 30-min snapshot, compute <code>r = workers_online / workers_total</code>, then apply a <strong>quadratic score: score(r) = r²</strong>.<br>
+    <strong>Formula:</strong> for each 30-min snapshot, compute <code>r = workers_online / workers_active</code>, then apply a <strong>quadratic score: score(r) = r²</strong>.<br>
+    <strong>workers_active</strong> = workers whose last snapshot is within 7 days of the analysis window end. Workers dead &gt; 7 days are excluded from the denominator — their absence is not the datacenter's fault.<br>
     Continuity SLA = average of all snapshot scores × 100.<br>
     This penalises large outages heavily while being forgiving for small offline fractions:<br>
     <span style="display:inline-flex;gap:14px;flex-wrap:wrap;margin-top:4px">
@@ -117,11 +118,12 @@
   <h2>3 — Performance SLA — per Datacenter (proportional ATO)</h2>
   <div class="section-note">
     <strong>Principle:</strong> each DC is expected to deliver its proportional share of the ATO commitment.<br>
-    <code>DC_nominal = ATO × (avg_hr_dc / avg_hr_total_account)</code><br>
-    <strong>Two separate metrics to avoid confusion:</strong><br>
-    — <strong>Throughput</strong> (when online): <code>avg(min(100%, hr_dc / DC_nominal))</code> <em>for snapshots where hr_dc &gt; 0 only</em>. Measures delivery quality when the DC is up.<br>
-    — <strong>Combined</strong>: Continuity SLA × Throughput = overall delivery including downtime.<br>
-    <em>If Combined &gt; 100% it means this DC compensates for others — capped at 100%.</em>
+    <code>DC_share = avg_hr_dc_online / avg_total_hr_at_same_online_snapshots</code> (computed only when DC is online — avoids downtime deflating its fair share)<br>
+    <code>DC_nominal = ATO × DC_share</code><br>
+    <strong>Three metrics:</strong><br>
+    — <strong>Throughput</strong> (when online): <code>avg(min(100%, hr_dc / DC_nominal))</code> for online snapshots only. Quality of delivery when up.<br>
+    — <strong>Combined</strong>: Continuity × Throughput = overall delivery including downtime.<br>
+    — <strong>Breach responsibility</strong>: during snapshots where total_hr &lt; ATO (client impact), was this DC underperforming its nominal? 0% = DC never contributed to client breaches. 100% = DC was always underperforming during breaches.
   </div>
   <table>
     <thead>
@@ -133,6 +135,7 @@
         <th>Avg HR (when online)</th>
         <th>Throughput (when up)</th>
         <th>Combined SLA</th>
+        <th>Breach responsibility ↓</th>
       </tr>
     </thead>
     <tbody id="perf-body"></tbody>
@@ -176,6 +179,11 @@ function slaClass(pct) {
 function slaPill(pct) {
   if (pct == null || isNaN(pct)) return `<span class="sla-pill sla-grey">—</span>`;
   return `<span class="sla-pill ${slaClass(pct)}">${fmtPct(pct)}</span>`;
+}
+// Breach responsibility: lower = better (inverted colour scale)
+function breachPill(pct, breachCount) {
+  const cls = pct === 0 ? 'sla-green' : pct < 25 ? 'sla-orange' : 'sla-red';
+  return `<span class="sla-pill ${cls}" title="${breachCount} breach snapshot(s)">${fmtPct(pct)}</span>`;
 }
 
 // Find nearest ATO snapshot to a timestamp (returns null if gap > 75min)
@@ -224,12 +232,25 @@ async function main() {
   // ══════════════════════════════════════════════════════════════════════════
   const uptimeRows = [];
 
-  for (const [, gd] of Object.entries(groupData)) {
-    const totalWorkers = Object.keys(gd.workers).length;
+  const DEAD_7D_MS = 7 * 86400000;
 
-    // Build per-timestamp online worker count
-    const tsOnline = new Map(); // ts → count of workers with hr > 0
-    for (const [, snaps] of Object.entries(gd.workers)) {
+  for (const [, gd] of Object.entries(groupData)) {
+    // Exclude workers dead > 7 days: last snapshot older than 7d before window end
+    const activeWorkers = new Set();
+    for (const [wk, snaps] of Object.entries(gd.workers)) {
+      if (!snaps.length) continue;
+      const lastTs = Math.max(...snaps.map(s => new Date(s.ts).getTime()));
+      if (tsMax - lastTs <= DEAD_7D_MS) activeWorkers.add(wk);
+    }
+    const effectiveTotal = activeWorkers.size;
+    if (!effectiveTotal) continue;
+
+    const deadExcluded = Object.keys(gd.workers).length - effectiveTotal;
+
+    // Per-timestamp: count active workers online (hr > 0)
+    const tsOnline = new Map();
+    for (const [wk, snaps] of Object.entries(gd.workers)) {
+      if (!activeWorkers.has(wk)) continue; // skip dead > 7d
       for (const s of snaps) {
         if (!tsOnline.has(s.ts)) tsOnline.set(s.ts, 0);
         if (s.hr > 0) tsOnline.set(s.ts, tsOnline.get(s.ts) + 1);
@@ -239,18 +260,18 @@ async function main() {
     const snapshots = tsOnline.size;
     if (!snapshots) continue;
 
-    // r = online/total per snapshot; score(r) = r² (quadratic — penalises big outages more)
+    // score(r) = r² — quadratic penalty
     const scores = [...tsOnline.values()].map(online => {
-      const r = online / totalWorkers;
+      const r = online / effectiveTotal;
       return r * r;
     });
 
     const avgScore = scores.reduce((s, v) => s + v, 0) / scores.length * 100;
-    const avgRatio = [...tsOnline.values()].reduce((s, v) => s + v / totalWorkers, 0) / snapshots * 100;
+    const avgRatio = [...tsOnline.values()].reduce((s, v) => s + v / effectiveTotal, 0) / snapshots * 100;
 
     uptimeRows.push({
       id: gd.id, provider: gd.provider, account: gd.account,
-      totalWorkers, snapshots, avgRatio, uptime: avgScore,
+      totalWorkers: effectiveTotal, deadExcluded, snapshots, avgRatio, uptime: avgScore,
     });
   }
 
@@ -260,7 +281,7 @@ async function main() {
     <tr>
       <td><span class="dc-badge">${r.id}</span>${r.provider}</td>
       <td class="mono">${r.account}</td>
-      <td>${r.totalWorkers}</td>
+      <td>${r.totalWorkers}${r.deadExcluded ? ` <span class="muted">(+${r.deadExcluded} excl.)</span>` : ''}</td>
       <td class="mono">${r.snapshots}</td>
       <td class="mono">${fmtPct(r.avgRatio)} online avg</td>
       <td>${slaPill(r.uptime)}</td>
@@ -341,33 +362,50 @@ async function main() {
         for (const s of snaps) dcByTs.set(s.ts, (dcByTs.get(s.ts) || 0) + s.hr);
       }
 
-      const allDC = [...dcByTs.values()];
-      const avgDC = allDC.reduce((s, v) => s + v, 0) / allDC.length;
-      const dcShare = avgDC / avgTotal; // fraction of account total
-      const dcNominal = avgATO * dcShare; // expected DC contribution for ATO
-
-      // Throughput: only count snapshots where DC is online (hr > 0)
-      let sumThroughput = 0, nOnline = 0;
+      // DC_share: computed only on online snapshots (avoids downtime deflating the share)
+      let sumDCOnline = 0, sumTotalAtDCOnline = 0, nDCOnline = 0;
       for (const [ts, hrDC] of dcByTs) {
-        if (hrDC === 0) continue; // offline → not counted here (captured in continuity)
+        if (hrDC <= 0) continue;
+        sumDCOnline += hrDC;
+        sumTotalAtDCOnline += (totalByTs.get(ts) || 0);
+        nDCOnline++;
+      }
+      if (!nDCOnline) continue;
+      const avgDCOnline = sumDCOnline / nDCOnline;
+      const avgTotalAtDCOnline = sumTotalAtDCOnline / nDCOnline;
+      const dcShare = avgTotalAtDCOnline > 0 ? avgDCOnline / avgTotalAtDCOnline : 0;
+      const dcNominal = avgATO * dcShare;
+
+      // Throughput: min(100%, hr_dc / nominal) for online snapshots only
+      let sumThroughput = 0, nThroughput = 0;
+      for (const [ts, hrDC] of dcByTs) {
+        if (hrDC <= 0) continue;
         const a = nearestATO(atoSorted, new Date(ts).getTime());
         if (!a) continue;
-        const nominalAtTs = a.ato * dcShare;
-        sumThroughput += Math.min(1, hrDC / nominalAtTs);
-        nOnline++;
+        sumThroughput += Math.min(1, hrDC / (a.ato * dcShare));
+        nThroughput++;
       }
-
-      if (!nOnline) continue;
-      const throughput = sumThroughput / nOnline * 100;
+      if (!nThroughput) continue;
+      const throughput = sumThroughput / nThroughput * 100;
 
       // Combined = continuity × throughput
       const continuity = uptimeRows.find(r => r.id === gd.id && r.account === acctName);
       const uptime = continuity?.uptime ?? null;
       const combined = uptime != null ? Math.min(100, uptime / 100 * throughput) : null;
 
-      // Avg HR when online (for display)
-      const onlineVals = allDC.filter(v => v > 0);
-      const avgDCOnline = onlineVals.length ? onlineVals.reduce((s, v) => s + v, 0) / onlineVals.length : 0;
+      // ATO breach responsibility:
+      // During snapshots where total_hr < ATO (client breach), was this DC below its nominal?
+      let breachCount = 0, dcResponsibleCount = 0;
+      for (const [ts, totalHr] of totalByTs) {
+        const a = nearestATO(atoSorted, new Date(ts).getTime());
+        if (!a || totalHr >= a.ato) continue; // no breach
+        breachCount++;
+        const hrDC = dcByTs.get(ts) || 0;
+        if (hrDC < a.ato * dcShare) dcResponsibleCount++; // DC below its nominal during breach
+      }
+      // breachResp = % of breach moments where this DC was underperforming
+      // Lower is better (0% = DC never contributed to client impact)
+      const breachResp = breachCount > 0 ? dcResponsibleCount / breachCount * 100 : 0;
 
       perfRows.push({
         id: gd.id, provider: gd.provider, account: acctName,
@@ -376,6 +414,8 @@ async function main() {
         avgDCOnline,
         throughput,
         combined,
+        breachResp,
+        breachCount,
       });
     }
   }
@@ -392,6 +432,10 @@ async function main() {
           <td class="mono">${fmtTH(r.avgDCOnline)}</td>
           <td>${slaPill(r.throughput)}</td>
           <td>${slaPill(r.combined)}</td>
+          <td>${r.breachCount === 0
+            ? `<span class="sla-pill sla-green">No breach</span>`
+            : breachPill(r.breachResp, r.breachCount)
+          }</td>
         </tr>
       `).join('')
     : '<tr><td colspan="7" style="color:#bbb;padding:20px;text-align:center">No ATO data available</td></tr>';

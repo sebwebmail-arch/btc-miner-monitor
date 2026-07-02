@@ -1597,24 +1597,40 @@ function hrChartHover(event, accountUser) {
   const MONTHS_S = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   const timeStr = `${MONTHS_S[dt.getUTCMonth()]} ${dt.getUTCDate()}, ${String(dt.getUTCHours()).padStart(2,'0')}:${String(dt.getUTCMinutes()).padStart(2,'0')}`;
 
+  // ATO le plus proche du timestamp survolé
+  const atoSnaps = d.atoSnaps || [];
+  let nearestATO = null;
+  if (atoSnaps.length) {
+    let minADist = Infinity;
+    for (const a of atoSnaps) {
+      const dist = Math.abs(new Date(a.ts).getTime() - new Date(nearest.ts).getTime());
+      if (dist < minADist) { minADist = dist; nearestATO = a; }
+    }
+    if (minADist > 3600000) nearestATO = null; // >1h d'écart → on n'affiche pas
+  }
+
   const cross = document.getElementById(`hrc-cross-${accountUser}`);
   const dot   = document.getElementById(`hrc-dot-${accountUser}`);
   const tip   = document.getElementById(`hrc-tip-${accountUser}`);
   const tipTime = document.getElementById(`hrc-tip-time-${accountUser}`);
   const tipVal  = document.getElementById(`hrc-tip-val-${accountUser}`);
+  const tipAto  = document.getElementById(`hrc-tip-ato-${accountUser}`);
 
   if (cross) { cross.setAttribute('x1', xPos); cross.setAttribute('x2', xPos); cross.setAttribute('opacity','1'); }
   if (dot)   { dot.setAttribute('cx', xPos); dot.setAttribute('cy', yPos); dot.setAttribute('opacity','1'); }
 
   if (tip && tipTime && tipVal) {
-    const TW = 136, TH = 38;
+    const TH = nearestATO ? 54 : 38;
+    const TW = 150;
     const tipX = (xPos + TW + 12 > W - PR) ? xPos - TW - 10 : xPos + 10;
     const tipY = PT + 4;
     tip.setAttribute('transform', `translate(${tipX.toFixed(1)},${tipY})`);
     tip.setAttribute('opacity','1');
-    document.getElementById(`hrc-tip-bg-${accountUser}`).setAttribute('width', TW);
+    const bg = document.getElementById(`hrc-tip-bg-${accountUser}`);
+    if (bg) { bg.setAttribute('width', TW); bg.setAttribute('height', TH); }
     tipTime.textContent = timeStr;
     tipVal.textContent  = `${thVal} TH/s`;
+    if (tipAto) tipAto.textContent = nearestATO ? `${(nearestATO.ato / 1e12).toFixed(0)} TH/s ATO` : '';
   }
 }
 
@@ -1736,8 +1752,8 @@ function buildAccountHashrateChart(accountUser, rangeH) {
   const lastATO  = hasATO ? acctSnaps[acctSnaps.length-1].ato : null;
   const lastATOTH = lastATO ? (lastATO / 1e12).toFixed(0) : null;
 
-  // Stocke les données pour le tooltip hover
-  _hrChartData[accountUser] = { pts, tAxisStart, tAxisSpan, maxHR };
+  // Stocke les données pour le tooltip hover (+ snapshots ATO pour affichage)
+  _hrChartData[accountUser] = { pts, tAxisStart, tAxisSpan, maxHR, atoSnaps: acctSnaps };
 
   // En-tête : Total + ATO si disponible (ATO en dessous sur ligne séparée)
   const headerRight = lastATOTH
@@ -1784,9 +1800,10 @@ function buildAccountHashrateChart(accountUser, rangeH) {
       <line id="hrc-cross-${accountUser}" x1="0" y1="${PT}" x2="0" y2="${PT+cH}" stroke="#16a34a" stroke-width="1" stroke-dasharray="4,3" opacity="0" pointer-events="none"/>
       <circle id="hrc-dot-${accountUser}" cx="0" cy="0" r="4" fill="white" class="hr-tip-dot" stroke="#16a34a" stroke-width="2" opacity="0" pointer-events="none"/>
       <g id="hrc-tip-${accountUser}" opacity="0" pointer-events="none">
-        <rect id="hrc-tip-bg-${accountUser}" x="0" y="0" width="136" height="38" rx="5" fill="white" class="hr-tip-bg" stroke="#e0e0e0" stroke-width="1" filter="drop-shadow(0 2px 6px rgba(0,0,0,.1))"/>
+        <rect id="hrc-tip-bg-${accountUser}" x="0" y="0" width="150" height="${hasATO ? 54 : 38}" rx="5" fill="white" class="hr-tip-bg" stroke="#e0e0e0" stroke-width="1" filter="drop-shadow(0 2px 6px rgba(0,0,0,.1))"/>
         <text id="hrc-tip-time-${accountUser}" x="10" y="14" font-size="10" fill="#999" class="hr-tip-time"></text>
         <text id="hrc-tip-val-${accountUser}"  x="10" y="29" font-size="13" fill="#1a1a2e" font-weight="700" class="hr-tip-val"></text>
+        <text id="hrc-tip-ato-${accountUser}"  x="10" y="45" font-size="11" fill="#f97316" font-weight="700" class="hr-tip-ato"></text>
       </g>
       <!-- Zone de capture souris -->
       <rect x="${PL}" y="${PT}" width="${cW}" height="${cH}" fill="transparent" style="cursor:crosshair"

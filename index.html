@@ -1629,7 +1629,7 @@ function hrChartHover(event, accountUser) {
     const bg = document.getElementById(`hrc-tip-bg-${accountUser}`);
     if (bg) { bg.setAttribute('width', TW); bg.setAttribute('height', TH); }
     tipTime.textContent = timeStr;
-    tipVal.innerHTML  = `<tspan fill="#16a34a" font-weight="700" font-size="13">${thVal}</tspan><tspan fill="#4ade80" font-weight="400" font-size="10"> TH/s</tspan>`;
+    tipVal.innerHTML  = `<tspan fill="#4ade80" font-weight="700" font-size="13">${thVal}</tspan><tspan fill="#16a34a" font-weight="400" font-size="10"> TH/s</tspan>`;
     if (tipAto) tipAto.innerHTML = nearestATO
       ? `<tspan fill="#f97316" font-weight="700" font-size="12">${(nearestATO.ato / 1e12).toFixed(0)}</tspan><tspan fill="#fb923c" font-weight="400" font-size="9"> TH/s ATO</tspan>`
       : '';
@@ -1761,8 +1761,8 @@ function buildAccountHashrateChart(accountUser, rangeH) {
   const headerRight = lastATOTH
     ? `<div style="line-height:1.4">
          <div style="display:flex;align-items:baseline;gap:4px;justify-content:flex-end">
-           <span style="font-size:26px;font-weight:800;color:#16a34a;line-height:1">${lastTH}</span>
-           <span style="font-size:11px;color:#4ade80">TH/s total</span>
+           <span style="font-size:26px;font-weight:800;color:#4ade80;line-height:1">${lastTH}</span>
+           <span style="font-size:11px;color:#16a34a">TH/s total</span>
          </div>
          <div style="display:flex;align-items:baseline;gap:4px;justify-content:flex-end;margin-top:1px">
            <span style="font-size:15px;font-weight:700;color:#f97316">${lastATOTH}</span>

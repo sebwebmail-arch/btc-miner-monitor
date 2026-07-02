@@ -319,8 +319,9 @@ body::after {
   .sla-legend { padding: 8px 14px; gap: 10px; }
   /* Hide secondary columns on mobile */
   .col-sm-hide { display: none; }
-  /* Remove min-width so table fits in viewport */
-  .sla-table { min-width: 0; }
+  /* Remove min-width, fixed layout so SLA columns align across tables */
+  .sla-table { min-width: 0; table-layout: fixed; width: 100%; }
+  .sla-col   { width: 86px; }
   .table-wrap { overflow-x: hidden; }
   /* Nav button: icon only on very small screens */
   .nav-label { display: none; }
@@ -423,7 +424,7 @@ body::after {
                 <th class="col-sm-hide">Active workers</th>
                 <th class="col-sm-hide">Snapshots</th>
                 <th class="col-sm-hide">Avg online</th>
-                <th>Continuity</th>
+                <th class="sla-col">Continuity</th>
                 <th class="spark-cell col-sm-hide">7d</th>
                 <th class="spark-cell col-sm-hide">30d</th>
               </tr>
@@ -467,7 +468,7 @@ body::after {
                 <th class="col-sm-hide">Avg ATO</th>
                 <th class="col-sm-hide">Avg total HR</th>
                 <th class="col-sm-hide">Matched snapshots</th>
-                <th>Performance</th>
+                <th class="sla-col">Performance</th>
                 <th class="spark-cell col-sm-hide">7d</th>
                 <th class="spark-cell col-sm-hide">30d</th>
               </tr>
@@ -511,7 +512,7 @@ body::after {
                 <th class="col-sm-hide" style="width:72px">Expected</th>
                 <th class="col-sm-hide">Avg HR (when up)</th>
                 <th class="col-sm-hide">Throughput</th>
-                <th>Combined</th>
+                <th class="sla-col">Combined</th>
                 <th class="col-sm-hide">Breach ↓</th>
                 <th class="spark-cell col-sm-hide">7d</th>
                 <th class="spark-cell col-sm-hide">30d</th>

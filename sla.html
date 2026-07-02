@@ -582,6 +582,7 @@ window.setTheme = setTheme;
 // ── Modal ────────────────────────────────────────────────────────────────────
 const _details = {};
 function showDetail(key) {
+  if (window.innerWidth > 640) return; // desktop: all info visible in table
   const d = _details[key];
   if (!d) return;
   document.getElementById('modal-title').innerHTML = d.title;

@@ -121,6 +121,24 @@
 }
 .theme-opt:hover:not(.active) { color: var(--text-secondary); }
 
+/* ── Nav button (SLA / Dashboard) ───────────────────────────────────────── */
+.nav-btn {
+  display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0;
+  border: 1px solid var(--border-md); border-radius: 9px;
+  background: var(--bg-surface); padding: 0 12px; height: 32px;
+  color: var(--text-secondary); cursor: pointer; text-decoration: none;
+  font-size: 11px; font-weight: 600; white-space: nowrap;
+  transition: background .15s, color .15s, box-shadow .15s;
+}
+.nav-btn:hover {
+  background: var(--bg-card); color: var(--text-primary);
+  box-shadow: 0 1px 3px rgba(0,0,0,.10);
+}
+@media(max-width: 480px) {
+  .nav-label { display: none; }
+  .nav-btn   { padding: 0 9px; }
+}
+
 html, body { height: 100%; }
 body { font-family: var(--font); background: var(--bg-base); color: var(--text-primary); font-size: 14px; min-height: 100vh; }
 
@@ -444,6 +462,15 @@ body::after {
       </svg>
     </button>
   </div>
+  <!-- SLA Statistics -->
+  <a href="sla.html" class="nav-btn" title="SLA Statistics">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="18" y1="20" x2="18" y2="10"/>
+      <line x1="12" y1="20" x2="12" y2="4"/>
+      <line x1="6"  y1="20" x2="6"  y2="14"/>
+    </svg>
+    <span class="nav-label">SLA</span>
+  </a>
 </div>
 
 <div class="page">

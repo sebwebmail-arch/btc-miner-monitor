@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SLA Statistics — capone watcher</title>
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="https://capone.market/capone-fish-avatar-48-orange.svg">
+<link rel="apple-touch-icon" href="https://capone.market/capone-fish-avatar-48-orange.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
+<script>if(localStorage.getItem('capone-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');</script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── CSS vars ─────────────────────────────────────────────────────────────── */
+:root {
+  --bg-base:              #f7f6f2;
+  --bg-surface:           #efede7;
+  --bg-card:              #ffffff;
+  --bg-card-hover:        #f5f4f0;
+  --bg-elevated:          #eceae4;
+  --border:               rgba(0,0,0,0.08);
+  --border-md:            rgba(0,0,0,0.14);
+  --text-primary:         #1a1a14;
+  --text-secondary:       #6b6b5a;
+  --text-muted:           #b0ae9e;
+  --accent-orange:        #D97757;
+  --accent-orange-dim:    rgba(217,119,87,0.10);
+  --accent-orange-border: rgba(217,119,87,0.28);
+  --accent-green:         #16a34a;
+  --accent-red:           #c0392b;
+  --accent-red-dim:       rgba(192,57,43,0.09);
+  --grid-color:           rgba(0,0,0,0.045);
+  --halo-color:           rgba(217,119,87,0.07);
+  --font:                 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --mono:                 'DM Mono', monospace;
+}
+[data-theme="dark"] {
+  --bg-base:              #16150f;
+  --bg-surface:           #1d1c14;
+  --bg-card:              #242318;
+  --bg-card-hover:        #2b2a1e;
+  --bg-elevated:          #2d2c20;
+  --border:               rgba(255,255,255,0.07);
+  --border-md:            rgba(255,255,255,0.12);
+  --text-primary:         #eeecd8;
+  --text-secondary:       #9a9880;
+  --text-muted:           #56543e;
+  --accent-orange:        #e8896a;
+  --accent-orange-dim:    rgba(232,137,106,0.13);
+  --accent-orange-border: rgba(232,137,106,0.26);
+  --accent-green:         #22c55e;
+  --accent-red:           #f47171;
+  --accent-red-dim:       rgba(244,113,113,0.10);
+  --grid-color:           rgba(255,255,255,0.03);
+  --halo-color:           rgba(217,119,87,0.07);
+}
+
+/* ── Grid + halo background ──────────────────────────────────────────────── */
+html, body { height: 100%; }
+body {
+  font-family: var(--font); background: var(--bg-base); color: var(--text-primary);
+  font-size: 14px; min-height: 100vh;
+}
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+body::after {
+  content: ''; position: fixed; pointer-events: none; z-index: 0;
+  width: 520px; height: 360px; top: -120px; right: 40px;
+  background: radial-gradient(ellipse, var(--halo-color) 0%, transparent 70%);
+  filter: blur(60px);
+}
+.topbar, .page { position: relative; z-index: 1; }
+
+/* ── Theme pill ──────────────────────────────────────────────────────────── */
+.theme-pill {
+  display: flex; flex-shrink: 0;
+  border: 1px solid var(--border-md); border-radius: 9px;
+  background: var(--bg-surface); overflow: hidden;
+}
+.theme-opt {
+  width: 32px; height: 32px; border: none; background: transparent;
+  color: var(--text-muted); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .15s, color .15s;
+}
+.theme-opt + .theme-opt { border-left: 1px solid var(--border); }
+.theme-opt.active {
+  background: var(--bg-card); color: var(--text-primary);
+  box-shadow: 0 1px 3px rgba(0,0,0,.10);
+}
+.theme-opt:hover:not(.active) { color: var(--text-secondary); }
+
+/* ── Nav button ──────────────────────────────────────────────────────────── */
+.nav-btn {
+  display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0;
+  border: 1px solid var(--border-md); border-radius: 9px;
+  background: var(--bg-surface); padding: 0 12px; height: 32px;
+  color: var(--text-secondary); cursor: pointer; text-decoration: none;
+  font-size: 11px; font-weight: 600; white-space: nowrap;
+  transition: background .15s, color .15s, box-shadow .15s;
+}
+.nav-btn:hover {
+  background: var(--bg-card); color: var(--text-primary);
+  box-shadow: 0 1px 3px rgba(0,0,0,.10);
+}
+
+/* ── Topbar ──────────────────────────────────────────────────────────────── */
+.topbar {
+  background: var(--bg-base); border-bottom: 1px solid var(--border);
+  padding: 0 24px; height: 52px;
+  display: flex; align-items: center; gap: 12px;
+  position: sticky; top: 0; z-index: 100;
+}
+.topbar img { width: 32px; height: 32px; }
+.topbar .title   { font-size: 16px; font-weight: 600; white-space: nowrap; letter-spacing: -0.3px; color: var(--text-primary); }
+.topbar .subtitle{ font-size: 11px; color: var(--text-muted); margin-top: 1px; white-space: nowrap; }
+.topbar .spacer  { flex: 1; }
+
+/* ── Page layout ─────────────────────────────────────────────────────────── */
+.page { max-width: 1080px; margin: 0 auto; padding: 24px 20px; display: flex; flex-direction: column; gap: 20px; }
+
+.section-label {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.10em;
+  text-transform: uppercase; color: var(--text-secondary); margin-bottom: 8px;
+}
+.section-note { font-size: 12px; color: var(--text-muted); font-weight: 400; letter-spacing: 0; text-transform: none; }
+
+/* ── Panel ───────────────────────────────────────────────────────────────── */
+.panel {
+  background: var(--bg-card); border-radius: 10px;
+  border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,.04);
+  overflow: hidden;
+}
+
+/* ── SLA pills ───────────────────────────────────────────────────────────── */
+.sla-pill { display: inline-block; padding: 2px 9px; border-radius: 100px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+.sla-green  { background: #f0fdf4; color: #15803d; }
+.sla-orange { background: #fff7ed; color: #c2410c; }
+.sla-red    { background: #fef2f2; color: #b91c1c; }
+.sla-grey   { background: #f5f5f5; color: #999; }
+[data-theme="dark"] .sla-green  { background: rgba(22,163,74,.15);   color: #4ade80; }
+[data-theme="dark"] .sla-orange { background: rgba(194,65,12,.15);   color: #fb923c; }
+[data-theme="dark"] .sla-red    { background: rgba(185,28,28,.15);   color: #f87171; }
+[data-theme="dark"] .sla-grey   { background: rgba(120,120,120,.12); color: var(--text-muted); }
+
+/* ── DC badge ────────────────────────────────────────────────────────────── */
+.dc-badge {
+  display: inline-block; padding: 2px 7px; border-radius: 4px;
+  background: var(--bg-surface); color: var(--text-secondary);
+  font-size: 11px; font-weight: 700; margin-right: 6px;
+  border: 1px solid var(--border-md); font-family: var(--mono);
+}
+
+/* ── Formula box (collapsible) ───────────────────────────────────────────── */
+.formula-box { border-bottom: 1px solid var(--border); }
+.formula-box summary {
+  padding: 10px 20px;
+  font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--text-muted); cursor: pointer;
+  list-style: none; display: flex; align-items: center; gap: 6px; user-select: none;
+}
+.formula-box summary::-webkit-details-marker { display: none; }
+.formula-box summary::before { content: '▸'; font-size: 9px; transition: transform .2s; display: inline-block; }
+.formula-box[open] summary::before { transform: rotate(90deg); }
+.formula-body {
+  padding: 12px 20px 16px; border-top: 1px solid var(--border);
+  font-size: 12px; color: var(--text-secondary); line-height: 1.8;
+  background: var(--bg-surface);
+}
+.formula-body strong { color: var(--text-primary); }
+.formula-body code {
+  background: var(--bg-elevated); padding: 1px 5px; border-radius: 3px;
+  font-size: 11px; font-family: var(--mono); color: var(--text-primary);
+}
+.scale-row { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 6px; }
+.scale-row span { font-size: 11px; }
+
+/* ── SLA table ───────────────────────────────────────────────────────────── */
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.sla-table { width: 100%; border-collapse: collapse; min-width: 400px; }
+.sla-table thead { background: var(--bg-surface); }
+.sla-table th {
+  padding: 9px 14px; text-align: left;
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+  color: var(--text-muted); border-bottom: 1px solid var(--border); white-space: nowrap;
+}
+.sla-table td {
+  padding: 10px 14px; border-bottom: 1px solid var(--border);
+  font-size: 13px; vertical-align: middle; color: var(--text-primary);
+}
+.sla-table tr:last-child td { border-bottom: none; }
+.sla-table tbody tr:hover td { background: var(--bg-surface); }
+.sla-table .mono   { font-family: var(--mono); font-size: 12px; color: var(--text-secondary); }
+.sla-table .muted  { color: var(--text-muted); font-size: 11px; }
+
+/* ── SLA legend ──────────────────────────────────────────────────────────── */
+.sla-legend {
+  display: flex; gap: 16px; flex-wrap: wrap;
+  padding: 10px 20px; border-top: 1px solid var(--border);
+  font-size: 11px; color: var(--text-muted);
+}
+.sla-legend span { display: flex; align-items: center; gap: 5px; }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+
+/* ── Banners ─────────────────────────────────────────────────────────────── */
+.banner { padding: 12px 16px; border-radius: 10px; font-size: 13px; line-height: 1.6; border: 1px solid; }
+.banner.warn { background: #fef9e7; border-color: #f0d060; color: #7d4e00; }
+.banner.info { background: #eef6ff; border-color: #bfdbfe; color: #1e40af; }
+.banner.ok   { background: #f0fdf4; border-color: #86efac; color: #166534; }
+[data-theme="dark"] .banner.warn { background: rgba(240,208,96,.08);  border-color: rgba(240,208,96,.25); color: #d4a017; }
+[data-theme="dark"] .banner.info { background: rgba(59,130,246,.08);  border-color: rgba(59,130,246,.25); color: #93c5fd; }
+[data-theme="dark"] .banner.ok   { background: rgba(22,163,74,.08);   border-color: rgba(22,163,74,.25);  color: #4ade80; }
+.banner strong { font-weight: 700; }
+.banner code  { background: rgba(0,0,0,.06); padding: 1px 5px; border-radius: 3px; font-size: 11px; font-family: var(--mono); }
+[data-theme="dark"] .banner code { background: rgba(255,255,255,.08); }
+
+/* ── Expand note ─────────────────────────────────────────────────────────── */
+.expand-box {
+  font-size: 12px; color: var(--text-secondary); line-height: 1.8;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 16px 20px;
+}
+.expand-box strong { color: var(--text-primary); }
+.expand-box code {
+  background: var(--bg-surface); padding: 1px 5px; border-radius: 3px;
+  font-size: 11px; font-family: var(--mono);
+}
+
+/* ── Loading ─────────────────────────────────────────────────────────────── */
+#loading {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 16px; padding: 80px 20px; color: var(--text-muted); font-size: 14px;
+}
+@keyframes pulse { 0%,100%{opacity:.3} 50%{opacity:.7} }
+
+/* ── Mobile ──────────────────────────────────────────────────────────────── */
+@media(max-width: 640px) {
+  .topbar { padding: 0 16px; gap: 8px; }
+  .topbar .subtitle { display: none; }
+  .page { padding: 16px 12px; gap: 16px; }
+  .section-label { font-size: 9px; letter-spacing: .08em; }
+  .section-note  { font-size: 10px; }
+  .sla-table th  { padding: 7px 10px; font-size: 9px; letter-spacing: .03em; }
+  .sla-table td  { padding: 8px 10px; font-size: 12px; }
+  .formula-body  { font-size: 11px; padding: 10px 14px 14px; }
+  .formula-box summary { padding: 9px 14px; }
+  .sla-legend { padding: 8px 14px; gap: 10px; }
+  /* Hide secondary columns on mobile */
+  .col-sm-hide { display: none; }
+  /* Nav button: icon only on very small screens */
+  .nav-label { display: none; }
+  .nav-btn   { padding: 0 9px; }
+  .banner    { font-size: 12px; }
+  .expand-box { font-size: 11px; }
+}
+@media(max-width: 400px) {
+  .topbar img   { width: 26px; height: 26px; }
+  .topbar .title { font-size: 14px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Topbar ──────────────────────────────────────────────────────────────── -->
+<div class="topbar">
+  <img src="https://capone.market/capone-fish-avatar-48-orange.svg" alt="capone">
+  <div>
+    <div class="title">capone watcher</div>
+    <div class="subtitle">SLA Statistics</div>
+  </div>
+  <div class="spacer"></div>
+  <!-- Theme pill — identique au dashboard -->
+  <div class="theme-pill" role="group" aria-label="Color theme">
+    <button class="theme-opt" id="topt-light" onclick="setTheme('light')" title="Light mode">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+        <circle cx="12" cy="12" r="4.5"/>
+        <line x1="12" y1="2" x2="12" y2="4.5"/><line x1="12" y1="19.5" x2="12" y2="22"/>
+        <line x1="2" y1="12" x2="4.5" y2="12"/><line x1="19.5" y1="12" x2="22" y2="12"/>
+        <line x1="4.93" y1="4.93" x2="6.64" y2="6.64"/><line x1="17.36" y1="17.36" x2="19.07" y2="19.07"/>
+        <line x1="4.93" y1="19.07" x2="6.64" y2="17.36"/><line x1="17.36" y1="6.64" x2="19.07" y2="4.93"/>
+      </svg>
+    </button>
+    <button class="theme-opt" id="topt-dark" onclick="setTheme('dark')" title="Dark mode">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+    <button class="theme-opt" id="topt-auto" onclick="setTheme('auto')" title="Auto (jour/nuit)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/>
+      </svg>
+    </button>
+  </div>
+  <!-- Back to dashboard -->
+  <a href="index.html" class="nav-btn" title="Back to Dashboard">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"/>
+    </svg>
+    <span class="nav-label">Dashboard</span>
+  </a>
+</div>
+
+<!-- ── Page ───────────────────────────────────────────────────────────────── -->
+<div class="page">
+
+  <!-- Loading -->
+  <div id="loading">
+    <img src="https://capone.market/capone-fish-avatar-48-orange.svg" width="40" style="animation:pulse 1.5s ease-in-out infinite">
+    <span>Computing SLA metrics…</span>
+  </div>
+
+  <div id="app" style="display:none">
+
+    <!-- Data coverage banner -->
+    <div id="coverage-banner"></div>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         1. CONTINUITY SLA
+         ══════════════════════════════════════════════════════════════════════ -->
+    <div>
+      <div class="section-label" style="display:flex;justify-content:space-between;align-items:baseline">
+        <span>Continuity SLA — by Datacenter</span>
+        <span class="section-note" id="ts-1">⏱ Every 30 min</span>
+      </div>
+      <div class="panel">
+        <details class="formula-box">
+          <summary>How it's calculated</summary>
+          <div class="formula-body">
+            At each 30-min snapshot: <code>r = workers_online / workers_active</code> — score = <strong>r²</strong> (quadratic penalty).<br>
+            <strong>workers_active</strong> excludes workers whose last snapshot is &gt;7 days before the window end — stale machines don't count against the DC.<br>
+            Continuity SLA = average of all snapshot scores × 100. Large outages are penalised heavily; small fractions are lenient:
+            <div class="scale-row">
+              <span>99% → <strong>98.0%</strong></span>
+              <span>95% → <strong>90.3%</strong></span>
+              <span>90% → <strong>81.0%</strong></span>
+              <span>80% → <strong>64.0%</strong></span>
+              <span>70% → <strong>49.0%</strong></span>
+              <span>50% → <strong>25.0%</strong></span>
+            </div>
+          </div>
+        </details>
+        <div class="table-wrap">
+          <table class="sla-table">
+            <thead>
+              <tr>
+                <th>Datacenter</th>
+                <th>Account</th>
+                <th>Active workers</th>
+                <th class="col-sm-hide">Snapshots</th>
+                <th class="col-sm-hide">Avg online</th>
+                <th>Continuity SLA</th>
+              </tr>
+            </thead>
+            <tbody id="uptime-body">
+              <tr><td colspan="6" style="padding:24px;text-align:center;color:var(--text-muted)">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="sla-legend">
+          <span><span class="legend-dot" style="background:#15803d"></span>≥ 95%</span>
+          <span><span class="legend-dot" style="background:#c2410c"></span>90 – 95%</span>
+          <span><span class="legend-dot" style="background:#b91c1c"></span>&lt; 90%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         2. ACCOUNT PERFORMANCE — ATO
+         ══════════════════════════════════════════════════════════════════════ -->
+    <div>
+      <div class="section-label" style="display:flex;justify-content:space-between;align-items:baseline">
+        <span>Account Performance — ATO</span>
+        <span class="section-note" id="ts-2">⏱ Every 30 min</span>
+      </div>
+      <div class="panel">
+        <details class="formula-box">
+          <summary>How it's calculated</summary>
+          <div class="formula-body">
+            <strong>ATO</strong> (Actual Transfer Out) = hashrate cmine commits to deliver to clients. If total HR ≥ ATO, clients receive 100%.<br>
+            At each snapshot: <code>snapshot_SLA = min(1, total_hr / ATO)</code><br>
+            <code>period_SLA = average(snapshot_SLAs) × 100</code><br>
+            This combines availability and throughput — snapshots where HR = 0 score 0%.
+          </div>
+        </details>
+        <div class="table-wrap">
+          <table class="sla-table">
+            <thead>
+              <tr>
+                <th>Account</th>
+                <th>Avg ATO</th>
+                <th>Avg total HR</th>
+                <th class="col-sm-hide">Matched snapshots</th>
+                <th>Performance SLA</th>
+              </tr>
+            </thead>
+            <tbody id="acct-body">
+              <tr><td colspan="5" style="padding:24px;text-align:center;color:var(--text-muted)">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         3. DC PERFORMANCE — THROUGHPUT & BREACH
+         ══════════════════════════════════════════════════════════════════════ -->
+    <div>
+      <div class="section-label" style="display:flex;justify-content:space-between;align-items:baseline">
+        <span>DC Performance — Throughput &amp; Breach Responsibility</span>
+        <span class="section-note" id="ts-3">⏱ Every 30 min</span>
+      </div>
+      <div class="panel">
+        <details class="formula-box">
+          <summary>How it's calculated</summary>
+          <div class="formula-body">
+            <strong>DC share</strong>: <code>avg_hr_dc / avg_total_hr</code> computed only on online snapshots — avoids downtime deflating the share.<br>
+            <strong>Nominal at ts</strong>: <code>total_hr_ts × DC_share</code> — expected DC contribution relative to account total (not ATO).<br>
+            <strong>Throughput</strong> (when online): <code>avg(min(1, hr_dc_ts / nominal_at_ts))</code> — does the DC consistently deliver its proportional share?<br>
+            <strong>Combined SLA</strong>: Continuity × Throughput — overall delivery including downtime.<br>
+            <strong>Breach responsibility</strong>: during snapshots where <code>total_hr &lt; ATO</code> (client impact), was this DC below its nominal? <strong>Lower = better.</strong> 0% = DC never contributed to client shortfalls.
+          </div>
+        </details>
+        <div class="table-wrap">
+          <table class="sla-table">
+            <thead>
+              <tr>
+                <th>Datacenter</th>
+                <th>Account</th>
+                <th class="col-sm-hide">DC share</th>
+                <th class="col-sm-hide">Nominal (expected)</th>
+                <th class="col-sm-hide">Avg HR (when up)</th>
+                <th>Throughput</th>
+                <th>Combined SLA</th>
+                <th>Breach resp. ↓</th>
+              </tr>
+            </thead>
+            <tbody id="perf-body">
+              <tr><td colspan="8" style="padding:24px;text-align:center;color:var(--text-muted)">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="sla-legend">
+          <span><span class="legend-dot" style="background:#15803d"></span>Breach 0% — DC never caused client shortfall</span>
+          <span><span class="legend-dot" style="background:#c2410c"></span>Higher % — more responsible during breaches</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Expand note -->
+    <div id="expand-note" class="expand-box"></div>
+
+  </div><!-- /#app -->
+</div><!-- /.page -->
+
+<script>
+// ── Theme ────────────────────────────────────────────────────────────────────
+function autoIsDark() { const h = new Date().getHours(); return h >= 20 || h < 7; }
+function applyThemeToDOM(mode) {
+  const dark = mode === 'dark' || (mode === 'auto' && autoIsDark());
+  if (dark) document.documentElement.setAttribute('data-theme', 'dark');
+  else      document.documentElement.removeAttribute('data-theme');
+}
+function updatePillUI(mode) {
+  ['light','dark','auto'].forEach(m =>
+    document.getElementById('topt-' + m)?.classList.toggle('active', m === mode));
+}
+function setTheme(mode) {
+  localStorage.setItem('capone-theme', mode);
+  applyThemeToDOM(mode); updatePillUI(mode);
+}
+document.addEventListener('visibilitychange', () => {
+  const s = localStorage.getItem('capone-theme') || 'light';
+  if (s === 'auto') applyThemeToDOM('auto');
+});
+(function() {
+  const s = localStorage.getItem('capone-theme') || 'light';
+  applyThemeToDOM(s); updatePillUI(s);
+  if (s === 'auto') setInterval(() => {
+    if ((localStorage.getItem('capone-theme')||'light') === 'auto') applyThemeToDOM('auto');
+  }, 5 * 60 * 1000);
+})();
+window.setTheme = setTheme;
+
+// ── Groups ───────────────────────────────────────────────────────────────────
+const GROUPS = [
+  { id: 'R1', provider: 'IZTM',       regex: /^r/i },
+  { id: 'R3', provider: 'Minto',      regex: /^k2lx/i },
+  { id: 'E1', provider: 'BitCluster', regex: /^\d+$/ },
+  { id: 'E2', provider: 'AmityAge',   regex: /^aa/i },
+  { id: 'U1', provider: 'Dataprana',  regex: /^(ngs|yna|pie|olt|dga)/i },
+  { id: 'U3', provider: 'ValueHash',  regex: /^(c21|e21)/i },
+  { id: 'P1', provider: 'Altos',      regex: /^s21/i },
+  { id: 'F1', provider: 'Terahash',   regex: /^18x/i },
+];
+function classifyWorker(name) {
+  for (const g of GROUPS) if (g.regex.test(name)) return g;
+  return null;
+}
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+const fmtTH  = v => (v == null || isNaN(v)) ? '—'
+  : v >= 1e15 ? `${(v/1e15).toFixed(2)} PH/s` : `${(v/1e12).toFixed(0)} TH/s`;
+const fmtPct = v => (v == null || isNaN(v)) ? '—' : `${v.toFixed(1)}%`;
+
+function slaClass(p) {
+  if (p == null || isNaN(p)) return 'sla-grey';
+  return p >= 95 ? 'sla-green' : p >= 90 ? 'sla-orange' : 'sla-red';
+}
+function slaPill(p) {
+  return p == null || isNaN(p)
+    ? `<span class="sla-pill sla-grey">—</span>`
+    : `<span class="sla-pill ${slaClass(p)}">${fmtPct(p)}</span>`;
+}
+function breachPill(p, n) {
+  const cls = p === 0 ? 'sla-green' : p < 25 ? 'sla-orange' : 'sla-red';
+  return `<span class="sla-pill ${cls}" title="${n} breach snapshot(s)">${fmtPct(p)}</span>`;
+}
+function nearestATO(sorted, tMs) {
+  if (!sorted.length) return null;
+  let best = sorted[0], bd = Math.abs(new Date(sorted[0].ts).getTime() - tMs);
+  for (const a of sorted) {
+    const d = Math.abs(new Date(a.ts).getTime() - tMs);
+    if (d < bd) { bd = d; best = a; }
+  }
+  return bd <= 75 * 60000 ? best : null;
+}
+
+// ── Main ─────────────────────────────────────────────────────────────────────
+async function main() {
+  const hr = await fetch('https://watcher.capone.market/data/hashrate.json').then(r => r.json());
+
+  // ── Timestamps ─────────────────────────────────────────────────────────
+  let allTs = [];
+  for (const snaps of Object.values(hr.workers || {}))
+    for (const s of snaps) allTs.push(new Date(s.ts).getTime());
+  const tsMin = Math.min(...allTs), tsMax = Math.max(...allTs);
+  const daysCovered = (tsMax - tsMin) / 864e5;
+
+  const lastStr = new Date(tsMax).toLocaleString('en-GB', {
+    timeZone: 'Europe/Paris', day: 'numeric', month: 'short',
+    hour: '2-digit', minute: '2-digit'
+  }) + ' Paris';
+  ['ts-1','ts-2','ts-3'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = `⏱ Every 30 min · Last: ${lastStr}`;
+  });
+
+  // ── Build group data ────────────────────────────────────────────────────
+  const groupData = {};
+  for (const [wkey, snaps] of Object.entries(hr.workers || {})) {
+    const dot   = wkey.indexOf('.');
+    const acct  = wkey.slice(0, dot);
+    const wname = wkey.slice(dot + 1);
+    const g     = classifyWorker(wname);
+    if (!g) continue;
+    const gkey = `${acct}::${g.id}`;
+    if (!groupData[gkey]) groupData[gkey] = { ...g, account: acct, workers: {} };
+    groupData[gkey].workers[wkey] = snaps;
+  }
+
+  // ════════════════════════════════════════════════════════════════════════
+  // 1. CONTINUITY SLA
+  // ════════════════════════════════════════════════════════════════════════
+  const DEAD_7D = 7 * 86400000;
+  const uptimeRows = [];
+
+  for (const [, gd] of Object.entries(groupData)) {
+    const active = new Set();
+    for (const [wk, snaps] of Object.entries(gd.workers)) {
+      if (!snaps.length) continue;
+      const last = Math.max(...snaps.map(s => new Date(s.ts).getTime()));
+      if (tsMax - last <= DEAD_7D) active.add(wk);
+    }
+    const total = active.size;
+    if (!total) continue;
+    const excluded = Object.keys(gd.workers).length - total;
+
+    const tsOnline = new Map();
+    for (const [wk, snaps] of Object.entries(gd.workers)) {
+      if (!active.has(wk)) continue;
+      for (const s of snaps) {
+        if (!tsOnline.has(s.ts)) tsOnline.set(s.ts, 0);
+        if (s.hr > 0) tsOnline.set(s.ts, tsOnline.get(s.ts) + 1);
+      }
+    }
+    const n = tsOnline.size;
+    if (!n) continue;
+
+    const scores = [...tsOnline.values()].map(o => { const r = o / total; return r * r; });
+    const avgScore = scores.reduce((s, v) => s + v, 0) / scores.length * 100;
+    const avgRatio = [...tsOnline.values()].reduce((s, v) => s + v / total, 0) / n * 100;
+
+    uptimeRows.push({ id: gd.id, provider: gd.provider, account: gd.account, total, excluded, n, avgRatio, uptime: avgScore });
+  }
+
+  uptimeRows.sort((a, b) => (b.uptime ?? -1) - (a.uptime ?? -1));
+  document.getElementById('uptime-body').innerHTML = uptimeRows.length
+    ? uptimeRows.map(r => `<tr>
+        <td><span class="dc-badge">${r.id}</span>${r.provider}</td>
+        <td class="mono">${r.account}</td>
+        <td>${r.total}${r.excluded ? ` <span class="muted">(+${r.excluded} excl.)</span>` : ''}</td>
+        <td class="mono col-sm-hide">${r.n}</td>
+        <td class="mono col-sm-hide">${fmtPct(r.avgRatio)} online</td>
+        <td>${slaPill(r.uptime)}</td>
+      </tr>`).join('')
+    : '<tr><td colspan="6" style="padding:24px;text-align:center;color:var(--text-muted)">No data available</td></tr>';
+
+  // ════════════════════════════════════════════════════════════════════════
+  // 2. ACCOUNT PERFORMANCE SLA (ATO)
+  // ════════════════════════════════════════════════════════════════════════
+  const acctRows = [];
+  for (const [acctName, atoSnaps] of Object.entries(hr.accounts || {})) {
+    if (!atoSnaps?.length) continue;
+    const atoSorted = [...atoSnaps].sort((a, b) => new Date(a.ts) - new Date(b.ts));
+    const totalByTs = new Map();
+    for (const [wkey, snaps] of Object.entries(hr.workers || {})) {
+      if (!wkey.startsWith(acctName + '.')) continue;
+      for (const s of snaps) totalByTs.set(s.ts, (totalByTs.get(s.ts) || 0) + s.hr);
+    }
+    let sumSLA = 0, n = 0, sumATO = 0, sumHR = 0;
+    for (const [ts, totalHr] of totalByTs) {
+      const a = nearestATO(atoSorted, new Date(ts).getTime());
+      if (!a) continue;
+      sumSLA += Math.min(1, totalHr / a.ato);
+      sumATO += a.ato; sumHR += totalHr; n++;
+    }
+    if (!n) continue;
+    acctRows.push({ acctName, avgATO: sumATO/n, avgHR: sumHR/n, n, sla: sumSLA/n*100 });
+  }
+
+  document.getElementById('acct-body').innerHTML = acctRows.length
+    ? acctRows.map(r => `<tr>
+        <td class="mono">${r.acctName}</td>
+        <td class="mono">${fmtTH(r.avgATO)}</td>
+        <td class="mono">${fmtTH(r.avgHR)}</td>
+        <td class="mono col-sm-hide">${r.n}</td>
+        <td>${slaPill(r.sla)}</td>
+      </tr>`).join('')
+    : '<tr><td colspan="5" style="padding:24px;text-align:center;color:var(--text-muted)">No ATO data available yet</td></tr>';
+
+  // ════════════════════════════════════════════════════════════════════════
+  // 3. DC PERFORMANCE (Throughput & Breach)
+  // ════════════════════════════════════════════════════════════════════════
+  const perfRows = [];
+  const accounts = [...new Set(Object.values(groupData).map(g => g.account))];
+
+  for (const acctName of accounts) {
+    const atoSnaps = hr.accounts?.[acctName];
+    if (!atoSnaps?.length) continue;
+    const atoSorted = [...atoSnaps].sort((a, b) => new Date(a.ts) - new Date(b.ts));
+
+    const totalByTs = new Map();
+    for (const [wkey, snaps] of Object.entries(hr.workers || {})) {
+      if (!wkey.startsWith(acctName + '.')) continue;
+      for (const s of snaps) totalByTs.set(s.ts, (totalByTs.get(s.ts) || 0) + s.hr);
+    }
+
+    for (const [, gd] of Object.entries(groupData)) {
+      if (gd.account !== acctName) continue;
+
+      const dcByTs = new Map();
+      for (const [, snaps] of Object.entries(gd.workers))
+        for (const s of snaps) dcByTs.set(s.ts, (dcByTs.get(s.ts) || 0) + s.hr);
+
+      // DC_share — online snapshots only (avoids downtime deflating the share)
+      let sumDC = 0, sumTotAtDC = 0, nDC = 0;
+      for (const [ts, hrDC] of dcByTs) {
+        if (hrDC <= 0) continue;
+        sumDC    += hrDC;
+        sumTotAtDC += (totalByTs.get(ts) || 0);
+        nDC++;
+      }
+      if (!nDC) continue;
+      const avgDC        = sumDC / nDC;
+      const avgTotAtDC   = sumTotAtDC / nDC;
+      const dcShare      = avgTotAtDC > 0 ? avgDC / avgTotAtDC : 0;
+      const dcNominal    = avgTotAtDC * dcShare;
+
+      // Throughput — nominal = total_hr_ts × dc_share (not ATO)
+      let sumTp = 0, nTp = 0;
+      for (const [ts, hrDC] of dcByTs) {
+        if (hrDC <= 0) continue;
+        const tot = totalByTs.get(ts) || 0;
+        if (tot <= 0) continue;
+        sumTp += Math.min(1, hrDC / (tot * dcShare));
+        nTp++;
+      }
+      if (!nTp) continue;
+      const throughput = sumTp / nTp * 100;
+
+      // Combined = continuity × throughput
+      const cont    = uptimeRows.find(r => r.id === gd.id && r.account === acctName);
+      const combined = cont?.uptime != null ? Math.min(100, cont.uptime / 100 * throughput) : null;
+
+      // Breach responsibility — ATO-based
+      let breachN = 0, dcResp = 0;
+      for (const [ts, totalHr] of totalByTs) {
+        const a = nearestATO(atoSorted, new Date(ts).getTime());
+        if (!a || totalHr >= a.ato) continue;
+        breachN++;
+        if ((dcByTs.get(ts) || 0) < a.ato * dcShare) dcResp++;
+      }
+      const breachPct = breachN > 0 ? dcResp / breachN * 100 : 0;
+
+      perfRows.push({
+        id: gd.id, provider: gd.provider, account: acctName,
+        dcShare: dcShare * 100, dcNominal, avgDC,
+        throughput, combined, breachPct, breachN,
+      });
+    }
+  }
+
+  perfRows.sort((a, b) => (b.combined ?? -1) - (a.combined ?? -1));
+  document.getElementById('perf-body').innerHTML = perfRows.length
+    ? perfRows.map(r => `<tr>
+        <td><span class="dc-badge">${r.id}</span>${r.provider}</td>
+        <td class="mono">${r.account}</td>
+        <td class="mono col-sm-hide">${fmtPct(r.dcShare)}</td>
+        <td class="mono col-sm-hide">${fmtTH(r.dcNominal)}</td>
+        <td class="mono col-sm-hide">${fmtTH(r.avgDC)}</td>
+        <td>${slaPill(r.throughput)}</td>
+        <td>${slaPill(r.combined)}</td>
+        <td>${r.breachN === 0
+          ? `<span class="sla-pill sla-green">No breach</span>`
+          : breachPill(r.breachPct, r.breachN)}</td>
+      </tr>`).join('')
+    : '<tr><td colspan="8" style="padding:24px;text-align:center;color:var(--text-muted)">No ATO data available</td></tr>';
+
+  // ── Coverage banner ─────────────────────────────────────────────────────
+  const needed7d  = 7  * 48 + 1;
+  const needed30d = 30 * 48 + 1;
+  const from = new Date(tsMin).toLocaleDateString('en-GB', { month: 'short', day: 'numeric' });
+  const to   = new Date(tsMax).toLocaleDateString('en-GB', { month: 'short', day: 'numeric' });
+  const coverEl = document.getElementById('coverage-banner');
+
+  if (daysCovered < 7) {
+    coverEl.innerHTML = `<div class="banner warn">⚠️ <strong>Data window: ${daysCovered.toFixed(1)} days</strong> (${from} → ${to}).
+      SLA scores are based on limited data — see the note below on how to expand the window.</div>`;
+  } else if (daysCovered < 30) {
+    coverEl.innerHTML = `<div class="banner warn">⚠️ <strong>Data window: ${daysCovered.toFixed(1)} days</strong> (${from} → ${to}).
+      7-day SLA available. 30-day SLA requires increasing <code>MAX_SNAPSHOTS</code>.</div>`;
+  } else {
+    coverEl.innerHTML = `<div class="banner ok">✓ <strong>Data window: ${daysCovered.toFixed(1)} days</strong> (${from} → ${to}). 7-day and 30-day SLA windows available.</div>`;
+  }
+
+  document.getElementById('expand-note').innerHTML = `
+    <strong>Expanding the data window</strong><br>
+    Edit <code>MAX_SNAPSHOTS</code> in <code>hashrate-collector.js</code> (currently 145 = 3 days):<br><br>
+    &bull; 7-day SLA &rarr; <code>MAX_SNAPSHOTS = ${needed7d}</code> (~450 KB)<br>
+    &bull; 30-day SLA &rarr; <code>MAX_SNAPSHOTS = ${needed30d}</code> (~2 MB — manageable)<br><br>
+    <strong>Recommended alternative</strong>: write a daily aggregate to <code>data/sla-daily.json</code>
+    during the 05:00 UTC run — keeps <code>hashrate.json</code> lean and enables 30-day SLAs.
+  `;
+
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('app').style.display     = 'block';
+}
+
+main().catch(err => {
+  document.getElementById('loading').innerHTML =
+    `<span style="color:var(--accent-red)">Error: ${err.message}</span>`;
+  console.error(err);
+});
+</script>
+</body>
+</html>

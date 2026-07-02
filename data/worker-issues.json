@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-02T09:30:52.457Z",
+  "last_updated": "2026-07-02T10:01:01.738Z",
   "issues": {
     "cmine.r00420": {
       "account": "cmine",
@@ -7,12 +7,12 @@
       "worker": "r00420",
       "group_id": "R1",
       "provider": "IZTM",
-      "type": "level_drop",
-      "current_avg_ths": 108,
-      "baseline_avg_ths": 195.4,
-      "drop_pct": 45,
-      "cv_pct": 76,
-      "zero_rate_pct": 33
+      "type": "volatile",
+      "current_avg_ths": 74.2,
+      "baseline_avg_ths": 196.1,
+      "drop_pct": 62,
+      "cv_pct": 105,
+      "zero_rate_pct": 50
     }
   }
 }

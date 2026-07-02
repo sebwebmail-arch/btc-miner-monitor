@@ -225,8 +225,12 @@ body::after {
 
 /* ── Sparkline ───────────────────────────────────────────────────────────── */
 .spark-cell { width: 108px; padding: 4px 14px; }
-.spark-line  { stroke: var(--accent-orange); }
-.spark-area  { fill: var(--accent-orange); opacity: .08; }
+.spark-green  { stroke: #16a34a; } .spark-area-green  { fill: #16a34a; opacity:.10; }
+.spark-orange { stroke: #c2410c; } .spark-area-orange { fill: #c2410c; opacity:.08; }
+.spark-red    { stroke: #b91c1c; } .spark-area-red    { fill: #b91c1c; opacity:.08; }
+[data-theme="dark"] .spark-green  { stroke: #4ade80; } [data-theme="dark"] .spark-area-green  { fill: #4ade80; }
+[data-theme="dark"] .spark-orange { stroke: #fb923c; } [data-theme="dark"] .spark-area-orange { fill: #fb923c; }
+[data-theme="dark"] .spark-red    { stroke: #f87171; } [data-theme="dark"] .spark-area-red    { fill: #f87171; }
 
 /* ── Expand note ─────────────────────────────────────────────────────────── */
 .expand-box {
@@ -537,10 +541,11 @@ function breachPill(p, n) {
   return `<span class="sla-pill ${cls}" title="${n} breach snapshot(s)">${fmtPct(p)}</span>`;
 }
 // ── Sparkline builder ────────────────────────────────────────────────────────
-function buildSparkline(vals) {
+function buildSparkline(vals, slaScore) {
   if (!vals || vals.length < 2) return '<td class="spark-cell"></td>';
+  const cls = (slaScore == null || slaScore >= 95) ? 'green'
+            : slaScore >= 90 ? 'orange' : 'red';
   const W = 90, H = 28, px = 3, py = 3;
-  // Subsample if dense
   const MAX = 72;
   const data = vals.length > MAX
     ? vals.filter((_, i) => i % Math.ceil(vals.length / MAX) === 0)
@@ -552,15 +557,14 @@ function buildSparkline(vals) {
     return `${x},${y}`;
   });
   const ptsStr = pts.join(' ');
-  // Area fill path
   const firstX = pts[0].split(',')[0];
   const lastX  = pts[n-1].split(',')[0];
   const bottom = H - py;
   const areaD  = `M${pts[0]} ${pts.slice(1).join(' ')} L${lastX},${bottom} L${firstX},${bottom} Z`;
   return `<td class="spark-cell">
     <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="display:block;overflow:visible">
-      <path d="${areaD}" class="spark-area"/>
-      <polyline points="${ptsStr}" fill="none" class="spark-line" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="${areaD}" class="spark-area-${cls}"/>
+      <polyline points="${ptsStr}" fill="none" class="spark-${cls}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </td>`;
 }
@@ -655,7 +659,7 @@ async function main() {
         <td class="mono col-sm-hide">${r.n}</td>
         <td class="mono col-sm-hide">${fmtPct(r.avgRatio)} online</td>
         <td>${slaPill(r.uptime)}</td>
-        ${buildSparkline(r.sparkVals)}
+        ${buildSparkline(r.sparkVals, r.uptime)}
       </tr>`).join('')
     : '<tr><td colspan="7" style="padding:24px;text-align:center;color:var(--text-muted)">No data available</td></tr>';
 
@@ -691,7 +695,7 @@ async function main() {
         <td class="mono">${fmtTH(r.avgHR)}</td>
         <td class="mono col-sm-hide">${r.n}</td>
         <td>${slaPill(r.sla)}</td>
-        ${buildSparkline(r.sparkVals)}
+        ${buildSparkline(r.sparkVals, r.sla)}
       </tr>`).join('')
     : '<tr><td colspan="6" style="padding:24px;text-align:center;color:var(--text-muted)">No ATO data available yet</td></tr>';
 
@@ -785,7 +789,7 @@ async function main() {
         <td>${r.breachN === 0
           ? `<span class="sla-pill sla-green">No breach</span>`
           : breachPill(r.breachPct, r.breachN)}</td>
-        ${buildSparkline(r.sparkVals)}
+        ${buildSparkline(r.sparkVals, r.combined)}
       </tr>`).join('')
     : '<tr><td colspan="9" style="padding:24px;text-align:center;color:var(--text-muted)">No ATO data available</td></tr>';
 

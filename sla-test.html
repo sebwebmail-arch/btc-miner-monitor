@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,18 +9,22 @@
   body { font-family: 'DM Sans', -apple-system, sans-serif; background: #f7f6f2; color: #1a1a2e; padding: 32px 24px; font-size: 14px; }
   h1 { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
   .subtitle { color: #888; font-size: 13px; margin-bottom: 32px; }
-  h2 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #888; margin: 32px 0 12px; }
+  h2 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #888; margin: 36px 0 6px; }
+  .section-note { font-size: 12px; color: #888; margin-bottom: 12px; line-height: 1.7; background: #fff; border-left: 3px solid #e0e0e0; padding: 10px 14px; border-radius: 0 6px 6px 0; }
+  .section-note strong { color: #555; }
+  .section-note code { background: #f0f0ee; padding: 1px 5px; border-radius: 3px; font-size: 11px; font-family: monospace; }
 
-  .banner { padding: 12px 16px; border-radius: 8px; font-size: 13px; margin-bottom: 24px; }
+  .banner { padding: 12px 16px; border-radius: 8px; font-size: 13px; margin-bottom: 20px; line-height: 1.6; }
   .banner.warn  { background: #fef9e7; border: 1px solid #f0d060; color: #7d4e00; }
   .banner.info  { background: #eef6ff; border: 1px solid #bfdbfe; color: #1e40af; }
   .banner.ok    { background: #f0fdf4; border: 1px solid #86efac; color: #166534; }
   .banner strong { font-weight: 700; }
+  .banner code  { background: rgba(0,0,0,.06); padding: 1px 5px; border-radius: 3px; font-size: 11px; font-family: monospace; }
 
-  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.07); margin-bottom: 8px; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.07); margin-bottom: 6px; }
   thead { background: #f9f8f5; }
-  th { padding: 10px 14px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: #999; border-bottom: 1px solid #eee; }
-  td { padding: 10px 14px; border-bottom: 1px solid #f5f5f5; font-size: 13px; }
+  th { padding: 9px 14px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: #999; border-bottom: 1px solid #eee; }
+  td { padding: 9px 14px; border-bottom: 1px solid #f5f5f5; font-size: 13px; vertical-align: middle; }
   tr:last-child td { border-bottom: none; }
 
   .sla-pill { display: inline-block; padding: 2px 9px; border-radius: 100px; font-size: 12px; font-weight: 700; }
@@ -30,43 +34,54 @@
   .sla-grey   { background: #f5f5f5; color: #999; }
 
   .dc-badge { display: inline-block; padding: 2px 7px; border-radius: 4px; background: #f0f0ee; color: #555; font-size: 11px; font-weight: 700; margin-right: 6px; }
-  .mono { font-family: 'DM Mono', monospace; }
+  .mono { font-family: 'DM Mono', monospace; font-size: 12px; }
+  .muted { color: #aaa; font-size: 12px; }
 
-  .note { font-size: 12px; color: #aaa; margin-top: 4px; }
-  .section-note { font-size: 12px; color: #aaa; margin-bottom: 12px; line-height: 1.6; }
+  .combined-cell { display: flex; flex-direction: column; gap: 2px; }
+  .combined-main { font-weight: 700; font-size: 13px; }
+  .combined-sub  { font-size: 11px; color: #aaa; }
 
-  .legend { display: flex; gap: 16px; margin-top: 8px; font-size: 12px; color: #888; }
+  .legend { display: flex; gap: 16px; margin-top: 6px; font-size: 12px; color: #888; }
   .legend span { display: flex; align-items: center; gap: 5px; }
   .legend-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
 
-  #loading { padding: 40px; text-align: center; color: #bbb; }
+  #loading { padding: 60px; text-align: center; color: #bbb; font-size: 15px; }
 </style>
 </head>
 <body>
 
 <h1>SLA Test Page</h1>
-<p class="subtitle">Capone Watcher — Calculs SLA expérimentaux · <span id="computed-at"></span></p>
+<p class="subtitle">Capone Watcher — Experimental SLA metrics · <span id="computed-at"></span></p>
 
-<div id="loading">Chargement des données…</div>
+<div id="loading">Loading data…</div>
 <div id="app" style="display:none">
 
   <div id="coverage-banner"></div>
 
-  <!-- ── Continuité de service ── -->
-  <h2>Continuité de service — par Datacenter</h2>
-  <p class="section-note">
-    Pour chaque groupe, à chaque snapshot (toutes les 30 min) : <strong>workers online / workers total du groupe</strong>.<br>
-    SLA = moyenne de ce ratio sur la période. Cible habituelle : ≥ 95% mensuel.
-  </p>
+  <!-- ── 1. Continuity SLA ── -->
+  <h2>1 — Continuity SLA — per Datacenter</h2>
+  <div class="section-note">
+    <strong>Formula:</strong> for each 30-min snapshot, compute <code>r = workers_online / workers_total</code>, then apply a <strong>quadratic score: score(r) = r²</strong>.<br>
+    Continuity SLA = average of all snapshot scores × 100.<br>
+    This penalises large outages heavily while being forgiving for small offline fractions:<br>
+    <span style="display:inline-flex;gap:14px;flex-wrap:wrap;margin-top:4px">
+      <span>99% online → <strong>98.0%</strong></span>
+      <span>95% online → <strong>90.3%</strong></span>
+      <span>90% online → <strong>81.0%</strong></span>
+      <span>80% online → <strong>64.0%</strong> ← threshold</span>
+      <span>70% online → <strong>49.0%</strong></span>
+      <span>50% online → <strong>25.0%</strong></span>
+    </span>
+  </div>
   <table>
     <thead>
       <tr>
         <th>Datacenter</th>
-        <th>Compte</th>
+        <th>Account</th>
         <th>Workers</th>
         <th>Snapshots</th>
-        <th>Uptime moyen</th>
-        <th>SLA Continuité</th>
+        <th>Avg online ratio</th>
+        <th>Continuity SLA (r²)</th>
       </tr>
     </thead>
     <tbody id="uptime-body"></tbody>
@@ -77,318 +92,334 @@
     <span><span class="legend-dot" style="background:#b91c1c"></span>&lt; 90%</span>
   </div>
 
-  <!-- ── Performance compte (ATO) ── -->
-  <h2>Niveau de service — Compte global (formule ATO)</h2>
-  <p class="section-note">
-    Pour chaque snapshot où l'ATO est connu : <strong>SLA = min(100%, total_hr / ATO)</strong>.<br>
-    Si total_hr ≥ ATO → 100% (clients reçoivent tout). Sinon ratio proportionnel.
-  </p>
+  <!-- ── 2. Performance SLA (account, ATO) ── -->
+  <h2>2 — Performance SLA — Account level (ATO formula)</h2>
+  <div class="section-note">
+    <strong>Formula (your existing formula, applied per snapshot):</strong><br>
+    <code>snapshot_SLA = min(100%, total_hr / ATO)</code> — if total HR ≥ ATO, clients get 100%. Otherwise proportional.<br>
+    <code>period_SLA = average of all snapshot SLAs</code><br>
+    <strong>Note:</strong> this includes downtime (snapshots where HR = 0 score 0%), so it combines availability and throughput in one number.
+  </div>
   <table>
     <thead>
       <tr>
-        <th>Compte</th>
-        <th>ATO moyen</th>
-        <th>Total HR moyen</th>
-        <th>Snapshots ATO</th>
-        <th>SLA Niveau de service</th>
+        <th>Account</th>
+        <th>Avg ATO</th>
+        <th>Avg total HR</th>
+        <th>Matched snapshots</th>
+        <th>Performance SLA</th>
       </tr>
     </thead>
     <tbody id="acct-body"></tbody>
   </table>
 
-  <!-- ── Performance par DC ── -->
-  <h2>Niveau de service — Par Datacenter (contribution proportionnelle à l'ATO)</h2>
-  <p class="section-note">
-    Principe : chaque DC doit délivrer sa part proportionnelle de l'ATO.<br>
-    <strong>DC_nominal = ATO × (avg_hr_dc / avg_hr_total_compte)</strong> → part attendue du DC.<br>
-    <strong>DC_SLA = min(100%, hr_dc / DC_nominal)</strong> à chaque snapshot, puis moyenne.<br>
-    <em>Note : si le DC dépasse sa contribution nominale, ça compense les autres → 100% au niveau DC mais possiblement aussi au niveau compte.</em>
-  </p>
+  <!-- ── 3. Performance SLA (per DC) ── -->
+  <h2>3 — Performance SLA — per Datacenter (proportional ATO)</h2>
+  <div class="section-note">
+    <strong>Principle:</strong> each DC is expected to deliver its proportional share of the ATO commitment.<br>
+    <code>DC_nominal = ATO × (avg_hr_dc / avg_hr_total_account)</code><br>
+    <strong>Two separate metrics to avoid confusion:</strong><br>
+    — <strong>Throughput</strong> (when online): <code>avg(min(100%, hr_dc / DC_nominal))</code> <em>for snapshots where hr_dc &gt; 0 only</em>. Measures delivery quality when the DC is up.<br>
+    — <strong>Combined</strong>: Continuity SLA × Throughput = overall delivery including downtime.<br>
+    <em>If Combined &gt; 100% it means this DC compensates for others — capped at 100%.</em>
+  </div>
   <table>
     <thead>
       <tr>
         <th>Datacenter</th>
-        <th>Compte</th>
-        <th>Part historique</th>
-        <th>HR nominal attendu</th>
-        <th>HR moyen réel</th>
-        <th>SLA Performance</th>
+        <th>Account</th>
+        <th>DC share</th>
+        <th>Nominal expected</th>
+        <th>Avg HR (when online)</th>
+        <th>Throughput (when up)</th>
+        <th>Combined SLA</th>
       </tr>
     </thead>
     <tbody id="perf-body"></tbody>
   </table>
 
-  <div id="expand-note" class="banner info" style="margin-top:24px"></div>
+  <div id="expand-note" class="banner info" style="margin-top:28px"></div>
 
 </div>
 
 <script>
-// ── Groupes (groups.js) ────────────────────────────────────────────────────
+// ── Groups ─────────────────────────────────────────────────────────────────
 const GROUPS = [
-  { id: 'R1', provider: 'IZTM',        account: 'cmine',    regex: /^r/i },
-  { id: 'R3', provider: 'Minto',       account: 'cmine',    regex: /^k2lx/i },
-  { id: 'E1', provider: 'BitCluster',  account: 'cmine',    regex: /^\d+$/ },
-  { id: 'E2', provider: 'AmityAge',    account: 'cmine',    regex: /^aa/i },
-  { id: 'U1', provider: 'Dataprana',   account: 'cmine',    regex: /^(ngs|yna|pie|olt|dga)/i },
-  { id: 'U3', provider: 'ValueHash',   account: 'cmine',    regex: /^(c21|e21)/i },
-  { id: 'P1', provider: 'Altos',       account: 'cmine',    regex: /^s21/i },
-  { id: 'F1', provider: 'Terahash',    account: 'cmine',    regex: /^18x/i },
+  { id: 'R1', provider: 'IZTM',       regex: /^r/i },
+  { id: 'R3', provider: 'Minto',      regex: /^k2lx/i },
+  { id: 'E1', provider: 'BitCluster', regex: /^\d+$/ },
+  { id: 'E2', provider: 'AmityAge',   regex: /^aa/i },
+  { id: 'U1', provider: 'Dataprana',  regex: /^(ngs|yna|pie|olt|dga)/i },
+  { id: 'U3', provider: 'ValueHash',  regex: /^(c21|e21)/i },
+  { id: 'P1', provider: 'Altos',      regex: /^s21/i },
+  { id: 'F1', provider: 'Terahash',   regex: /^18x/i },
 ];
 
-function classifyWorker(workerName) {
-  for (const g of GROUPS) {
-    if (g.regex.test(workerName)) return g;
-  }
+function classifyWorker(name) {
+  for (const g of GROUPS) if (g.regex.test(name)) return g;
   return null;
 }
 
-// ── Helpers ───────────────────────────────────────────────────────────────
-const fmtTH = v => v >= 1e15 ? `${(v/1e15).toFixed(1)} PH/s` : `${(v/1e12).toFixed(0)} TH/s`;
-const fmtPct = v => `${v.toFixed(1)}%`;
+// ── Helpers ────────────────────────────────────────────────────────────────
+const fmtTH = v => {
+  if (v == null || isNaN(v)) return '—';
+  return v >= 1e15 ? `${(v/1e15).toFixed(2)} PH/s` : `${(v/1e12).toFixed(0)} TH/s`;
+};
+const fmtPct = v => (v == null || isNaN(v)) ? '—' : `${v.toFixed(1)}%`;
 
 function slaClass(pct) {
-  if (pct === null) return 'sla-grey';
+  if (pct == null || isNaN(pct)) return 'sla-grey';
   if (pct >= 95) return 'sla-green';
   if (pct >= 90) return 'sla-orange';
   return 'sla-red';
 }
 function slaPill(pct) {
-  if (pct === null) return `<span class="sla-pill sla-grey">—</span>`;
+  if (pct == null || isNaN(pct)) return `<span class="sla-pill sla-grey">—</span>`;
   return `<span class="sla-pill ${slaClass(pct)}">${fmtPct(pct)}</span>`;
 }
 
-// ── Main ──────────────────────────────────────────────────────────────────
+// Find nearest ATO snapshot to a timestamp (returns null if gap > 75min)
+function nearestATO(atoSorted, tMs) {
+  if (!atoSorted.length) return null;
+  let best = atoSorted[0], bestDist = Math.abs(new Date(atoSorted[0].ts).getTime() - tMs);
+  for (const a of atoSorted) {
+    const d = Math.abs(new Date(a.ts).getTime() - tMs);
+    if (d < bestDist) { bestDist = d; best = a; }
+  }
+  return bestDist <= 75 * 60000 ? best : null; // 75min tolerance (2 run cycles)
+}
+
+// ── Main ───────────────────────────────────────────────────────────────────
 async function main() {
-  document.getElementById('computed-at').textContent = new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' }) + ' Paris';
+  document.getElementById('computed-at').textContent =
+    new Date().toLocaleString('en-GB', { timeZone: 'Europe/Paris', dateStyle: 'medium', timeStyle: 'short' }) + ' Paris';
 
   const BASE = 'https://watcher.capone.market/data';
-  const [hr, hist] = await Promise.all([
+  const [hr] = await Promise.all([
     fetch(`${BASE}/hashrate.json`).then(r => r.json()),
-    fetch(`${BASE}/history.json`).then(r => r.json()).catch(() => ({})),
   ]);
 
-  // ── Portée temporelle ────────────────────────────────────────────────────
+  // ── Data coverage ───────────────────────────────────────────────────────
   let allTs = [];
-  Object.values(hr.workers || {}).forEach(snaps => snaps.forEach(s => allTs.push(new Date(s.ts).getTime())));
-  const tsMin = Math.min(...allTs);
-  const tsMax = Math.max(...allTs);
+  for (const snaps of Object.values(hr.workers || {}))
+    for (const s of snaps) allTs.push(new Date(s.ts).getTime());
+  const tsMin = Math.min(...allTs), tsMax = Math.max(...allTs);
   const daysCovered = (tsMax - tsMin) / 864e5;
 
-  // ── Organise les workers par groupe ──────────────────────────────────────
-  // groupKey → { id, provider, account, workers: { workerKey: [{ts, hr}] } }
+  // ── Build group data (keyed by "account::groupId") ─────────────────────
   const groupData = {};
-
   for (const [wkey, snaps] of Object.entries(hr.workers || {})) {
-    const parts  = wkey.split('.');
-    const acct   = parts[0];
-    const wname  = parts.slice(1).join('.');
-    const g      = classifyWorker(wname);
+    const dot   = wkey.indexOf('.');
+    const acct  = wkey.slice(0, dot);
+    const wname = wkey.slice(dot + 1);
+    const g     = classifyWorker(wname);
     if (!g) continue;
-
     const gkey = `${acct}::${g.id}`;
     if (!groupData[gkey]) groupData[gkey] = { ...g, account: acct, workers: {} };
     groupData[gkey].workers[wkey] = snaps;
   }
 
-  // ── SLA Continuité ────────────────────────────────────────────────────────
-  // Pour chaque groupe : timeline des snapshots, ratio workers online / total
+  // ══════════════════════════════════════════════════════════════════════════
+  // 1. CONTINUITY SLA
+  // ══════════════════════════════════════════════════════════════════════════
   const uptimeRows = [];
 
-  for (const [gkey, gd] of Object.entries(groupData)) {
-    const workerKeys = Object.keys(gd.workers);
-    const totalWorkers = workerKeys.length;
+  for (const [, gd] of Object.entries(groupData)) {
+    const totalWorkers = Object.keys(gd.workers).length;
 
-    // Timestamps uniques dans ce groupe
-    const tsSet = new Map(); // ts → Map<workerKey, hr>
-    for (const [wk, snaps] of Object.entries(gd.workers)) {
+    // Build per-timestamp online worker count
+    const tsOnline = new Map(); // ts → count of workers with hr > 0
+    for (const [, snaps] of Object.entries(gd.workers)) {
       for (const s of snaps) {
-        const t = s.ts;
-        if (!tsSet.has(t)) tsSet.set(t, new Map());
-        tsSet.get(t).set(wk, s.hr);
+        if (!tsOnline.has(s.ts)) tsOnline.set(s.ts, 0);
+        if (s.hr > 0) tsOnline.set(s.ts, tsOnline.get(s.ts) + 1);
       }
     }
 
-    const snapshots = [...tsSet.entries()].sort((a, b) => new Date(a[0]) - new Date(b[0]));
-    const ratios = snapshots.map(([, wmap]) => {
-      const online = [...wmap.values()].filter(h => h > 0).length;
-      return online / totalWorkers;
+    const snapshots = tsOnline.size;
+    if (!snapshots) continue;
+
+    // r = online/total per snapshot; score(r) = r² (quadratic — penalises big outages more)
+    const scores = [...tsOnline.values()].map(online => {
+      const r = online / totalWorkers;
+      return r * r;
     });
 
-    const avgUptime = ratios.reduce((s, r) => s + r, 0) / ratios.length * 100;
-    const pctSnapsWith1Online = ratios.filter(r => r > 0).length / ratios.length * 100;
+    const avgScore = scores.reduce((s, v) => s + v, 0) / scores.length * 100;
+    const avgRatio = [...tsOnline.values()].reduce((s, v) => s + v / totalWorkers, 0) / snapshots * 100;
 
     uptimeRows.push({
-      gkey, id: gd.id, provider: gd.provider, account: gd.account,
-      totalWorkers, snapshots: snapshots.length,
-      avgUptime, pctSnapsWith1Online,
+      id: gd.id, provider: gd.provider, account: gd.account,
+      totalWorkers, snapshots, avgRatio, uptime: avgScore,
     });
   }
 
-  uptimeRows.sort((a, b) => b.avgUptime - a.avgUptime);
+  uptimeRows.sort((a, b) => (b.uptime ?? -1) - (a.uptime ?? -1));
 
-  const uptimeBody = document.getElementById('uptime-body');
-  uptimeBody.innerHTML = uptimeRows.map(r => `
+  document.getElementById('uptime-body').innerHTML = uptimeRows.map(r => `
     <tr>
-      <td><span class="dc-badge">${r.id}</span> ${r.provider}</td>
+      <td><span class="dc-badge">${r.id}</span>${r.provider}</td>
       <td class="mono">${r.account}</td>
-      <td>${r.totalWorkers} workers</td>
+      <td>${r.totalWorkers}</td>
       <td class="mono">${r.snapshots}</td>
-      <td class="mono">${fmtPct(r.avgUptime)} <span class="note">(ratio moyen workers online)</span></td>
-      <td>${slaPill(r.avgUptime)}</td>
+      <td class="mono">${fmtPct(r.avgRatio)} online avg</td>
+      <td>${slaPill(r.uptime)}</td>
     </tr>
   `).join('');
 
-  // ── SLA Performance — Compte (ATO) ───────────────────────────────────────
-  const acctBody = document.getElementById('acct-body');
+  // ══════════════════════════════════════════════════════════════════════════
+  // 2. ACCOUNT PERFORMANCE SLA (ATO formula)
+  // ══════════════════════════════════════════════════════════════════════════
   const acctRows = [];
 
   for (const [acctName, atoSnaps] of Object.entries(hr.accounts || {})) {
-    if (!atoSnaps.length) continue;
-
-    // Total HR par timestamp pour ce compte
-    const totalByTs = new Map();
-    for (const [wkey, snaps] of Object.entries(hr.workers || {})) {
-      if (!wkey.startsWith(acctName + '.')) continue;
-      for (const s of snaps) {
-        totalByTs.set(s.ts, (totalByTs.get(s.ts) || 0) + s.hr);
-      }
-    }
-
-    // Associe ATO le plus proche à chaque total HR
+    if (!atoSnaps?.length) continue;
     const atoSorted = [...atoSnaps].sort((a, b) => new Date(a.ts) - new Date(b.ts));
-    const slaValues = [];
-    let avgATO = 0, avgTotal = 0, n = 0;
 
-    for (const [ts, totalHr] of totalByTs) {
-      const t = new Date(ts).getTime();
-      // ATO le plus proche (±30min)
-      const nearest = atoSorted.reduce((best, a) => {
-        const d = Math.abs(new Date(a.ts).getTime() - t);
-        return d < Math.abs(new Date(best.ts).getTime() - t) ? a : best;
-      });
-      const diff = Math.abs(new Date(nearest.ts).getTime() - t);
-      if (diff > 3600000) continue; // >1h d'écart → on ignore
-      const ato = nearest.ato;
-      const sla = Math.min(1, totalHr / ato);
-      slaValues.push(sla);
-      avgATO   += ato;
-      avgTotal += totalHr;
-      n++;
-    }
-
-    if (n === 0) continue;
-    const acctSLA = slaValues.reduce((s, v) => s + v, 0) / slaValues.length * 100;
-    acctRows.push({
-      acctName,
-      avgATO: avgATO / n,
-      avgTotal: avgTotal / n,
-      snapshots: n,
-      sla: acctSLA,
-    });
-  }
-
-  acctBody.innerHTML = acctRows.map(r => `
-    <tr>
-      <td class="mono">${r.acctName}</td>
-      <td class="mono">${fmtTH(r.avgATO)}</td>
-      <td class="mono">${fmtTH(r.avgTotal)}</td>
-      <td class="mono">${r.snapshots}</td>
-      <td>${slaPill(r.sla)}</td>
-    </tr>
-  `).join('') || '<tr><td colspan="5" style="color:#bbb;text-align:center">Pas de données ATO disponibles</td></tr>';
-
-  // ── SLA Performance — Par DC (contribution proportionnelle ATO) ───────────
-  const perfBody = document.getElementById('perf-body');
-  const perfRows = [];
-
-  for (const acctName of [...new Set(Object.values(groupData).map(g => g.account))]) {
-    // Total HR par timestamp pour ce compte
+    // Total HR per timestamp for this account
     const totalByTs = new Map();
     for (const [wkey, snaps] of Object.entries(hr.workers || {})) {
       if (!wkey.startsWith(acctName + '.')) continue;
       for (const s of snaps) totalByTs.set(s.ts, (totalByTs.get(s.ts) || 0) + s.hr);
     }
 
-    const avgTotal = [...totalByTs.values()].reduce((s, v) => s + v, 0) / totalByTs.size;
+    let sumSLA = 0, n = 0, sumATO = 0, sumHR = 0;
+    for (const [ts, totalHr] of totalByTs) {
+      const a = nearestATO(atoSorted, new Date(ts).getTime());
+      if (!a) continue;
+      sumSLA += Math.min(1, totalHr / a.ato);
+      sumATO += a.ato; sumHR += totalHr; n++;
+    }
+    if (!n) continue;
 
-    // ATO moyen pour ce compte
-    const atoSnaps = hr.accounts?.[acctName] || [];
-    if (!atoSnaps.length) continue;
-    const avgATO = atoSnaps.reduce((s, a) => s + a.ato, 0) / atoSnaps.length;
+    acctRows.push({
+      acctName,
+      avgATO: sumATO / n, avgHR: sumHR / n,
+      snapshots: n, sla: sumSLA / n * 100,
+    });
+  }
+
+  document.getElementById('acct-body').innerHTML = acctRows.length
+    ? acctRows.map(r => `
+        <tr>
+          <td class="mono">${r.acctName}</td>
+          <td class="mono">${fmtTH(r.avgATO)}</td>
+          <td class="mono">${fmtTH(r.avgHR)}</td>
+          <td class="mono">${r.snapshots}</td>
+          <td>${slaPill(r.sla)}</td>
+        </tr>
+      `).join('')
+    : '<tr><td colspan="5" style="color:#bbb;padding:20px;text-align:center">No ATO data available yet</td></tr>';
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // 3. DC PERFORMANCE SLA (proportional ATO)
+  // ══════════════════════════════════════════════════════════════════════════
+  const perfRows = [];
+  const accounts = [...new Set(Object.values(groupData).map(g => g.account))];
+
+  for (const acctName of accounts) {
+    const atoSnaps = hr.accounts?.[acctName];
+    if (!atoSnaps?.length) continue;
     const atoSorted = [...atoSnaps].sort((a, b) => new Date(a.ts) - new Date(b.ts));
+    const avgATO = atoSnaps.reduce((s, a) => s + a.ato, 0) / atoSnaps.length;
 
-    for (const [gkey, gd] of Object.entries(groupData)) {
+    // Account total HR per timestamp
+    const totalByTs = new Map();
+    for (const [wkey, snaps] of Object.entries(hr.workers || {})) {
+      if (!wkey.startsWith(acctName + '.')) continue;
+      for (const s of snaps) totalByTs.set(s.ts, (totalByTs.get(s.ts) || 0) + s.hr);
+    }
+    const allTotals = [...totalByTs.values()];
+    const avgTotal = allTotals.reduce((s, v) => s + v, 0) / allTotals.length;
+
+    for (const [, gd] of Object.entries(groupData)) {
       if (gd.account !== acctName) continue;
 
-      // HR moyen de ce groupe par timestamp
+      // DC total HR per timestamp
       const dcByTs = new Map();
-      for (const [wk, snaps] of Object.entries(gd.workers)) {
+      for (const [, snaps] of Object.entries(gd.workers)) {
         for (const s of snaps) dcByTs.set(s.ts, (dcByTs.get(s.ts) || 0) + s.hr);
       }
 
-      const avgDC = [...dcByTs.values()].reduce((s, v) => s + v, 0) / dcByTs.size;
-      const dcShare = avgDC / avgTotal;
-      const dcNominal = avgATO * dcShare;
+      const allDC = [...dcByTs.values()];
+      const avgDC = allDC.reduce((s, v) => s + v, 0) / allDC.length;
+      const dcShare = avgDC / avgTotal; // fraction of account total
+      const dcNominal = avgATO * dcShare; // expected DC contribution for ATO
 
-      // SLA par snapshot
-      const slaValues = [];
+      // Throughput: only count snapshots where DC is online (hr > 0)
+      let sumThroughput = 0, nOnline = 0;
       for (const [ts, hrDC] of dcByTs) {
-        const t = new Date(ts).getTime();
-        const nearest = atoSorted.reduce((best, a) => {
-          const d = Math.abs(new Date(a.ts).getTime() - t);
-          return d < Math.abs(new Date(best.ts).getTime() - t) ? a : best;
-        });
-        if (Math.abs(new Date(nearest.ts).getTime() - t) > 3600000) continue;
-        const nominalAtTs = nearest.ato * dcShare;
-        slaValues.push(Math.min(1, hrDC / nominalAtTs));
+        if (hrDC === 0) continue; // offline → not counted here (captured in continuity)
+        const a = nearestATO(atoSorted, new Date(ts).getTime());
+        if (!a) continue;
+        const nominalAtTs = a.ato * dcShare;
+        sumThroughput += Math.min(1, hrDC / nominalAtTs);
+        nOnline++;
       }
 
-      if (!slaValues.length) continue;
-      const dcSLA = slaValues.reduce((s, v) => s + v, 0) / slaValues.length * 100;
+      if (!nOnline) continue;
+      const throughput = sumThroughput / nOnline * 100;
+
+      // Combined = continuity × throughput
+      const continuity = uptimeRows.find(r => r.id === gd.id && r.account === acctName);
+      const uptime = continuity?.uptime ?? null;
+      const combined = uptime != null ? Math.min(100, uptime / 100 * throughput) : null;
+
+      // Avg HR when online (for display)
+      const onlineVals = allDC.filter(v => v > 0);
+      const avgDCOnline = onlineVals.length ? onlineVals.reduce((s, v) => s + v, 0) / onlineVals.length : 0;
 
       perfRows.push({
         id: gd.id, provider: gd.provider, account: acctName,
         dcShare: dcShare * 100,
         dcNominal,
-        avgDC,
-        dcSLA,
+        avgDCOnline,
+        throughput,
+        combined,
       });
     }
   }
 
-  perfRows.sort((a, b) => b.dcSLA - a.dcSLA);
+  perfRows.sort((a, b) => (b.combined ?? -1) - (a.combined ?? -1));
 
-  perfBody.innerHTML = perfRows.map(r => `
-    <tr>
-      <td><span class="dc-badge">${r.id}</span> ${r.provider}</td>
-      <td class="mono">${r.account}</td>
-      <td class="mono">${fmtPct(r.dcShare)} du total</td>
-      <td class="mono">${fmtTH(r.dcNominal)}</td>
-      <td class="mono">${fmtTH(r.avgDC)}</td>
-      <td>${slaPill(r.dcSLA)}</td>
-    </tr>
-  `).join('') || '<tr><td colspan="6" style="color:#bbb;text-align:center">Pas de données ATO disponibles</td></tr>';
+  document.getElementById('perf-body').innerHTML = perfRows.length
+    ? perfRows.map(r => `
+        <tr>
+          <td><span class="dc-badge">${r.id}</span>${r.provider}</td>
+          <td class="mono">${r.account}</td>
+          <td class="mono">${fmtPct(r.dcShare)}</td>
+          <td class="mono">${fmtTH(r.dcNominal)}</td>
+          <td class="mono">${fmtTH(r.avgDCOnline)}</td>
+          <td>${slaPill(r.throughput)}</td>
+          <td>${slaPill(r.combined)}</td>
+        </tr>
+      `).join('')
+    : '<tr><td colspan="7" style="color:#bbb;padding:20px;text-align:center">No ATO data available</td></tr>';
 
-  // ── Bannières ─────────────────────────────────────────────────────────────
-  const coverageEl = document.getElementById('coverage-banner');
-  const coverageTxt = `Données disponibles : <strong>${daysCovered.toFixed(1)} jours</strong> (${new Date(tsMin).toLocaleDateString('fr-FR')} → ${new Date(tsMax).toLocaleDateString('fr-FR')})`;
+  // ── Coverage banner ─────────────────────────────────────────────────────
+  const needed7d  = 7  * 48 + 1;
+  const needed30d = 30 * 48 + 1;
+  const from = new Date(tsMin).toLocaleDateString('en-GB', { month: 'short', day: 'numeric' });
+  const to   = new Date(tsMax).toLocaleDateString('en-GB', { month: 'short', day: 'numeric' });
+  const coverEl = document.getElementById('coverage-banner');
 
   if (daysCovered < 7) {
-    coverageEl.innerHTML = `<div class="banner warn">⚠️ ${coverageTxt}. Pour des SLA 7j et 30j, il faut augmenter <code>MAX_SNAPSHOTS</code> dans <code>hashrate-collector.js</code> — voir note en bas de page.</div>`;
+    coverEl.innerHTML = `<div class="banner warn">⚠️ <strong>Data coverage: ${daysCovered.toFixed(1)} days</strong> (${from} → ${to}).
+      For 7-day and 30-day SLA windows, <code>MAX_SNAPSHOTS</code> in <code>hashrate-collector.js</code> must be increased — see note below.</div>`;
   } else if (daysCovered < 30) {
-    coverageEl.innerHTML = `<div class="banner warn">⚠️ ${coverageTxt}. SLA 7j disponible, mais le 30j nécessite d'augmenter <code>MAX_SNAPSHOTS</code>.</div>`;
+    coverEl.innerHTML = `<div class="banner warn">⚠️ <strong>Data coverage: ${daysCovered.toFixed(1)} days</strong> (${from} → ${to}).
+      7-day SLA available. 30-day SLA requires increasing <code>MAX_SNAPSHOTS</code>.</div>`;
   } else {
-    coverageEl.innerHTML = `<div class="banner ok">✓ ${coverageTxt}. SLA 7j et 30j calculables.</div>`;
+    coverEl.innerHTML = `<div class="banner ok">✓ <strong>Data coverage: ${daysCovered.toFixed(1)} days</strong> (${from} → ${to}). 7-day and 30-day SLA windows available.</div>`;
   }
 
-  const needed7d  = 7  * 48 + 1;  // 337 snapshots
-  const needed30d = 30 * 48 + 1;  // 1441 snapshots
   document.getElementById('expand-note').innerHTML = `
-    <strong>Pour passer à des fenêtres plus longues :</strong><br>
-    Dans <code>hashrate-collector.js</code>, modifier <code>MAX_SNAPSHOTS</code> :<br><br>
-    &bull; SLA 7 jours → <code>MAX_SNAPSHOTS = ${needed7d}</code> (fichier ~3× plus grand)<br>
-    &bull; SLA 30 jours → <code>MAX_SNAPSHOTS = ${needed30d}</code> (fichier ~10× plus grand — attention à la taille)<br><br>
-    Alternative recommandée pour 30j : écrire un agrégat quotidien dans un fichier séparé <code>data/sla-daily.json</code> pendant le run de 05:00 UTC.
+    <strong>Expanding the data window:</strong><br>
+    Edit <code>MAX_SNAPSHOTS</code> in <code>hashrate-collector.js</code> (currently 145 = 3 days):<br><br>
+    &bull; 7-day SLA → <code>MAX_SNAPSHOTS = ${needed7d}</code> (~3× larger file, ~450 KB)<br>
+    &bull; 30-day SLA → <code>MAX_SNAPSHOTS = ${needed30d}</code> (~10× larger, ~2 MB — manageable)<br><br>
+    <strong>Recommended alternative for 30-day SLA</strong>: write a daily aggregate to a separate <code>data/sla-daily.json</code>
+    during the 05:00 UTC run (one row per day per group). Keeps <code>hashrate.json</code> lean.
   `;
 
   document.getElementById('loading').style.display = 'none';
@@ -396,7 +427,8 @@ async function main() {
 }
 
 main().catch(err => {
-  document.getElementById('loading').textContent = 'Erreur : ' + err.message;
+  document.getElementById('loading').innerHTML = `<span style="color:#c0392b">Error: ${err.message}</span>`;
+  console.error(err);
 });
 </script>
 </body>

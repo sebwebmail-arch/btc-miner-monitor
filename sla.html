@@ -233,6 +233,52 @@ body::after {
 [data-theme="dark"] .spark-orange { stroke: #fb923c; } [data-theme="dark"] .spark-area-orange { fill: #fb923c; }
 [data-theme="dark"] .spark-red    { stroke: #f87171; } [data-theme="dark"] .spark-area-red    { fill: #f87171; }
 
+/* ── Modal slide-up (mobile detail) ─────────────────────────────────────── */
+.modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 400;
+  background: rgba(0,0,0,.42); backdrop-filter: blur(2px);
+  align-items: flex-end;
+}
+.modal-overlay.open { display: flex; }
+.modal-panel {
+  width: 100%; max-height: 78vh; overflow-y: auto;
+  background: var(--bg-card); border-radius: 16px 16px 0 0;
+  box-shadow: 0 -4px 32px rgba(0,0,0,.18);
+  padding-bottom: env(safe-area-inset-bottom, 12px);
+  animation: slideUp .22s ease;
+}
+@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+.modal-handle {
+  width: 36px; height: 4px; background: var(--border-md);
+  border-radius: 2px; margin: 10px auto 0; cursor: pointer;
+}
+.modal-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px 10px; border-bottom: 1px solid var(--border);
+}
+.modal-head-title { font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.modal-close {
+  width: 26px; height: 26px; border: none; background: var(--bg-surface);
+  border-radius: 50%; cursor: pointer; color: var(--text-secondary);
+  display: flex; align-items: center; justify-content: center; font-size: 12px;
+  flex-shrink: 0;
+}
+.modal-body { padding: 8px 20px 20px; }
+.modal-kv {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+  gap: 16px;
+}
+.modal-kv:last-child { border-bottom: none; }
+.modal-kv-label { font-size: 12px; color: var(--text-muted); font-weight: 500; flex-shrink: 0; }
+.modal-kv-value { font-size: 13px; font-weight: 600; text-align: right; }
+
+/* Rows clickable on mobile */
+@media(max-width: 640px) {
+  .sla-table tbody tr { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .sla-table tbody tr:active td { background: var(--bg-elevated); }
+}
+
 /* ── Expand note ─────────────────────────────────────────────────────────── */
 .expand-box {
   font-size: 12px; color: var(--text-secondary); line-height: 1.8;
@@ -363,8 +409,8 @@ body::after {
             <thead>
               <tr>
                 <th>Datacenter</th>
-                <th>Account</th>
-                <th>Active workers</th>
+                <th class="col-sm-hide">Account</th>
+                <th class="col-sm-hide">Active workers</th>
                 <th class="col-sm-hide">Snapshots</th>
                 <th class="col-sm-hide">Avg online</th>
                 <th>Continuity</th>
@@ -408,8 +454,8 @@ body::after {
             <thead>
               <tr>
                 <th>Account</th>
-                <th>Avg ATO</th>
-                <th>Avg total HR</th>
+                <th class="col-sm-hide">Avg ATO</th>
+                <th class="col-sm-hide">Avg total HR</th>
                 <th class="col-sm-hide">Matched snapshots</th>
                 <th>Performance</th>
                 <th class="spark-cell">7d</th>
@@ -450,11 +496,11 @@ body::after {
             <thead>
               <tr>
                 <th>Datacenter</th>
-                <th>Account</th>
+                <th class="col-sm-hide">Account</th>
                 <th class="col-sm-hide">DC share</th>
                 <th class="col-sm-hide">Nominal (expected)</th>
                 <th class="col-sm-hide">Avg HR (when up)</th>
-                <th>Throughput</th>
+                <th class="col-sm-hide">Throughput</th>
                 <th>Combined</th>
                 <th>Breach resp. ↓</th>
                 <th class="spark-cell">7d</th>
@@ -478,6 +524,18 @@ body::after {
 
   </div><!-- /#app -->
 </div><!-- /.page -->
+
+<!-- ── Row detail modal ───────────────────────────────────────────────────────── -->
+<div id="row-modal" class="modal-overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal-panel" onclick="event.stopPropagation()">
+    <div class="modal-handle" onclick="closeModal()"></div>
+    <div class="modal-head">
+      <div class="modal-head-title" id="modal-title"></div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
 
 <script>
 // ── Theme ────────────────────────────────────────────────────────────────────
@@ -507,6 +565,25 @@ document.addEventListener('visibilitychange', () => {
   }, 5 * 60 * 1000);
 })();
 window.setTheme = setTheme;
+
+// ── Modal ────────────────────────────────────────────────────────────────────
+const _details = {};
+function showDetail(key) {
+  const d = _details[key];
+  if (!d) return;
+  document.getElementById('modal-title').innerHTML = d.title;
+  document.getElementById('modal-body').innerHTML = d.rows
+    .map(({label, value}) =>
+      `<div class="modal-kv"><span class="modal-kv-label">${label}</span><span class="modal-kv-value">${value}</span></div>`)
+    .join('');
+  document.getElementById('row-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('row-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
 // ── Account display names ────────────────────────────────────────────────────
 const ACCT_NAMES = { cmine: 'Cyberian Mine', everminer: 'Everminer' };
@@ -548,8 +625,10 @@ function breachPill(p, n) {
 }
 // ── Sparkline builder ────────────────────────────────────────────────────────
 // W: SVG width in px (90 = 7d dense, 56 = 30d daily)
-function buildSparkline(vals, slaScore, W = 90) {
-  if (!vals || vals.length < 2) return '<td class="spark-cell"></td>';
+// cellExtra: extra CSS classes for the <td> (e.g. 'col-sm-hide')
+function buildSparkline(vals, slaScore, W = 90, cellExtra = '') {
+  const cellCls = cellExtra ? `spark-cell ${cellExtra}` : 'spark-cell';
+  if (!vals || vals.length < 2) return `<td class="${cellCls}"></td>`;
   const cls = (slaScore == null || slaScore >= 95) ? 'green'
             : slaScore >= 90 ? 'orange' : 'red';
   const H = 28, px = 3, py = 3;
@@ -568,7 +647,7 @@ function buildSparkline(vals, slaScore, W = 90) {
   const lastX  = pts[n-1].split(',')[0];
   const bottom = H - py;
   const areaD  = `M${pts[0]} ${pts.slice(1).join(' ')} L${lastX},${bottom} L${firstX},${bottom} Z`;
-  return `<td class="spark-cell">
+  return `<td class="${cellCls}">
     <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="display:block;overflow:visible">
       <path d="${areaD}" class="spark-area-${cls}"/>
       <polyline points="${ptsStr}" fill="none" class="spark-${cls}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -671,15 +750,26 @@ async function main() {
     ? uptimeRows.map(r => {
         const gkey30 = `${r.account}::${r.id}`;
         const vals30 = days30.map(d => d.continuity?.[gkey30]).filter(v => v != null);
-        return `<tr>
+        const dk = `u_${r.id}_${r.account}`;
+        _details[dk] = {
+          title: `<span class="dc-badge">${r.id}</span>${r.provider} — ${fmtAcct(r.account)}`,
+          rows: [
+            { label: 'Continuity SLA',  value: slaPill(r.uptime) },
+            { label: 'Avg online',       value: fmtPct(r.avgRatio) },
+            { label: 'Active workers',   value: `${r.total}${r.excluded ? ` (+${r.excluded} excl.)` : ''}` },
+            { label: 'Snapshots (7d)',   value: `${r.n}` },
+            ...(vals30.length >= 2 ? [{ label: 'Daily points (30d)', value: `${vals30.length} days` }] : []),
+          ],
+        };
+        return `<tr onclick="showDetail('${dk}')">
           <td><span class="dc-badge">${r.id}</span>${r.provider}</td>
-          <td>${fmtAcct(r.account)}</td>
-          <td>${r.total}${r.excluded ? ` <span class="muted">(+${r.excluded} excl.)</span>` : ''}</td>
+          <td class="col-sm-hide">${fmtAcct(r.account)}</td>
+          <td class="col-sm-hide">${r.total}${r.excluded ? ` <span class="muted">(+${r.excluded} excl.)</span>` : ''}</td>
           <td class="mono col-sm-hide">${r.n}</td>
           <td class="mono col-sm-hide">${fmtPct(r.avgRatio)} online</td>
           <td>${slaPill(r.uptime)}</td>
           ${buildSparkline(r.sparkVals, r.uptime)}
-          ${buildSparkline(vals30, r.uptime, 56)}
+          ${buildSparkline(vals30, r.uptime, 56, 'col-sm-hide')}
         </tr>`;
       }).join('')
     : '<tr><td colspan="8" style="padding:24px;text-align:center;color:var(--text-muted)">No data available</td></tr>';
@@ -712,14 +802,25 @@ async function main() {
   document.getElementById('acct-body').innerHTML = acctRows.length
     ? acctRows.map(r => {
         const vals30 = days30.map(d => d.account_perf?.[r.acctName]).filter(v => v != null);
-        return `<tr>
+        const dk = `a_${r.acctName}`;
+        _details[dk] = {
+          title: fmtAcct(r.acctName),
+          rows: [
+            { label: 'Performance SLA', value: slaPill(r.sla) },
+            { label: 'Avg ATO',         value: fmtTH(r.avgATO) },
+            { label: 'Avg total HR',    value: fmtTH(r.avgHR) },
+            { label: 'Snapshots',       value: `${r.n}` },
+            ...(vals30.length >= 2 ? [{ label: 'Daily points (30d)', value: `${vals30.length} days` }] : []),
+          ],
+        };
+        return `<tr onclick="showDetail('${dk}')">
           <td>${fmtAcct(r.acctName)}</td>
-          <td class="mono">${fmtTH(r.avgATO)}</td>
-          <td class="mono">${fmtTH(r.avgHR)}</td>
+          <td class="mono col-sm-hide">${fmtTH(r.avgATO)}</td>
+          <td class="mono col-sm-hide">${fmtTH(r.avgHR)}</td>
           <td class="mono col-sm-hide">${r.n}</td>
           <td>${slaPill(r.sla)}</td>
           ${buildSparkline(r.sparkVals, r.sla)}
-          ${buildSparkline(vals30, r.sla, 56)}
+          ${buildSparkline(vals30, r.sla, 56, 'col-sm-hide')}
         </tr>`;
       }).join('')
     : '<tr><td colspan="7" style="padding:24px;text-align:center;color:var(--text-muted)">No ATO data available yet</td></tr>';
@@ -811,19 +912,34 @@ async function main() {
     ? perfRows.map(r => {
         const gkey30 = `${r.account}::${r.id}`;
         const vals30 = days30.map(d => d.dc_combined?.[gkey30]).filter(v => v != null);
-        return `<tr>
+        const breachVal = r.breachN === 0
+          ? `<span class="sla-pill sla-green">No breach</span>`
+          : breachPill(r.breachPct, r.breachN);
+        const dk = `p_${r.id}_${r.account}`;
+        _details[dk] = {
+          title: `<span class="dc-badge">${r.id}</span>${r.provider} — ${fmtAcct(r.account)}`,
+          rows: [
+            { label: 'Throughput',      value: slaPill(r.throughput) },
+            { label: 'Combined SLA',    value: slaPill(r.combined) },
+            { label: 'Breach resp.',    value: breachVal },
+            { label: 'DC share',        value: fmtPct(r.dcShare) },
+            { label: 'Nominal (exp.)',  value: fmtTH(r.dcNominal) },
+            { label: 'Avg HR (up)',     value: fmtTH(r.avgDC) },
+            { label: 'Breach snapshots', value: `${r.breachN}` },
+            ...(vals30.length >= 2 ? [{ label: 'Daily points (30d)', value: `${vals30.length} days` }] : []),
+          ],
+        };
+        return `<tr onclick="showDetail('${dk}')">
           <td><span class="dc-badge">${r.id}</span>${r.provider}</td>
-          <td>${fmtAcct(r.account)}</td>
+          <td class="col-sm-hide">${fmtAcct(r.account)}</td>
           <td class="mono col-sm-hide">${fmtPct(r.dcShare)}</td>
           <td class="mono col-sm-hide">${fmtTH(r.dcNominal)}</td>
           <td class="mono col-sm-hide">${fmtTH(r.avgDC)}</td>
-          <td>${slaPill(r.throughput)}</td>
+          <td class="col-sm-hide">${slaPill(r.throughput)}</td>
           <td>${slaPill(r.combined)}</td>
-          <td>${r.breachN === 0
-            ? `<span class="sla-pill sla-green">No breach</span>`
-            : breachPill(r.breachPct, r.breachN)}</td>
+          <td>${breachVal}</td>
           ${buildSparkline(r.sparkVals, r.combined)}
-          ${buildSparkline(vals30, r.combined, 56)}
+          ${buildSparkline(vals30, r.combined, 56, 'col-sm-hide')}
         </tr>`;
       }).join('')
     : '<tr><td colspan="10" style="padding:24px;text-align:center;color:var(--text-muted)">No ATO data available</td></tr>';

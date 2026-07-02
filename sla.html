@@ -438,7 +438,9 @@ body::after {
             <strong>Nominal at ts</strong>: <code>total_hr_ts × DC_share</code> — expected DC contribution relative to account total (not ATO).<br>
             <strong>Throughput</strong> (when online): <code>avg(min(1, hr_dc_ts / nominal_at_ts))</code> — does the DC consistently deliver its proportional share?<br>
             <strong>Combined SLA</strong>: Continuity × Throughput — overall delivery including downtime.<br>
-            <strong>Breach responsibility</strong>: during snapshots where <code>total_hr &lt; ATO</code> (client impact), was this DC below its nominal? <strong>Lower = better.</strong> 0% = DC never contributed to client shortfalls.
+            <strong>Breach responsibility</strong>: during snapshots where <code>total_hr &lt; ATO</code> (client impact), what fraction of the shortfall was caused by this DC?<br>
+            <code>dc_responsibility = max(0, ATO×dc_share − hr_dc) / (ATO − total_hr)</code>, averaged over all breach snapshots.<br>
+            <strong>Lower = better.</strong> 0% = DC was not responsible. 30% = DC explains 30% of the client shortfall. 100% = DC was the sole cause.
           </div>
         </details>
         <div class="table-wrap">
@@ -759,15 +761,20 @@ async function main() {
       const cont    = uptimeRows.find(r => r.id === gd.id && r.account === acctName);
       const combined = cont?.uptime != null ? Math.min(100, cont.uptime / 100 * throughput) : null;
 
-      // Breach responsibility — ATO-based
-      let breachN = 0, dcResp = 0;
+      // Breach responsibility — part du DC dans le shortfall total (continu, pas binaire)
+      // dc_responsibility = dc_shortfall / shortfall_total, moyenné sur les snapshots de breach
+      let breachN = 0, sumBreachResp = 0;
       for (const [ts, totalHr] of totalByTs) {
         const a = nearestATO(atoSorted, new Date(ts).getTime());
-        if (!a || totalHr >= a.ato) continue;
+        if (!a || totalHr >= a.ato) continue; // pas de breach
         breachN++;
-        if ((dcByTs.get(ts) || 0) < a.ato * dcShare) dcResp++;
+        const shortfallTotal = a.ato - totalHr;
+        const dcNominal  = a.ato * dcShare;            // ce que le DC aurait dû fournir
+        const hrDC       = dcByTs.get(ts) || 0;
+        const dcShortfall = Math.max(0, dcNominal - hrDC); // manque côté DC
+        sumBreachResp += shortfallTotal > 0 ? Math.min(1, dcShortfall / shortfallTotal) : 0;
       }
-      const breachPct = breachN > 0 ? dcResp / breachN * 100 : 0;
+      const breachPct = breachN > 0 ? sumBreachResp / breachN * 100 : 0;
 
       perfRows.push({
         id: gd.id, provider: gd.provider, account: acctName,

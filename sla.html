@@ -592,8 +592,8 @@ function showDetail(key) {
     const svg7   = vals7?.length  >= 2 ? sparkSVG(vals7,  score, 140, 38) : `<div class="modal-spark-empty">No data</div>`;
     const svg30  = vals30?.length >= 2 ? sparkSVG(vals30, score, 140, 38) : `<div class="modal-spark-empty">—</div>`;
     body += `<div class="modal-sparks">
-      <div class="modal-spark-cell"><span class="modal-spark-label">7d trend</span>${svg7}</div>
-      <div class="modal-spark-cell"><span class="modal-spark-label">30d trend</span>${svg30}</div>
+      <div class="modal-spark-cell"><span class="modal-spark-label">7D</span>${svg7}</div>
+      <div class="modal-spark-cell"><span class="modal-spark-label">30D</span>${svg30}</div>
     </div>`;
   }
   document.getElementById('modal-body').innerHTML = body;

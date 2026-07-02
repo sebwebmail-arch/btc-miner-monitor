@@ -46,7 +46,7 @@ const WORKERHOSTS_PATH   = path.join(__dirname, 'data', 'worker-hosts.json');
 // Email destinataire rapport matin (commun aux deux comptes)
 const MORNING_ALERT_TO = process.env.ALERT_EMAIL || 'seb.webmail@gmail.com';
 
-const MAX_SNAPSHOTS   = 145;  // 72h × 2 + 1 points (3 jours glissants)
+const MAX_SNAPSHOTS   = 337;  // 7 jours × 48 snapshots/jour + 1 (fenêtre 7j glissants)
 const REF_SNAPSHOTS   = 3;    // 3 derniers snapshots = référence 1h30
 const DROP_THRESHOLD  = 0.30; // alerte si chute > 30% (groupe)
 const COOLDOWN_H      = 4;    // pas de double alerte sur le même groupe avant 4h

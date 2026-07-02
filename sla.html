@@ -126,7 +126,7 @@ body::after {
 .topbar .spacer  { flex: 1; }
 
 /* ── Page layout ─────────────────────────────────────────────────────────── */
-.page { max-width: 1080px; margin: 0 auto; padding: 24px 20px; display: flex; flex-direction: column; gap: 36px; }
+.page { max-width: 1080px; margin: 0 auto; padding: 24px 20px; display: flex; flex-direction: column; gap: 44px; }
 
 .section-label {
   font-size: 11px; font-weight: 600; letter-spacing: 0.10em;
@@ -222,6 +222,11 @@ body::after {
 .banner strong { font-weight: 700; }
 .banner code  { background: rgba(0,0,0,.06); padding: 1px 5px; border-radius: 3px; font-size: 11px; font-family: var(--mono); }
 [data-theme="dark"] .banner code { background: rgba(255,255,255,.08); }
+
+/* ── Sparkline ───────────────────────────────────────────────────────────── */
+.spark-cell { width: 108px; padding: 4px 14px; }
+.spark-line  { stroke: var(--accent-orange); }
+.spark-area  { fill: var(--accent-orange); opacity: .08; }
 
 /* ── Expand note ─────────────────────────────────────────────────────────── */
 .expand-box {
@@ -358,6 +363,7 @@ body::after {
                 <th class="col-sm-hide">Snapshots</th>
                 <th class="col-sm-hide">Avg online</th>
                 <th>Continuity SLA</th>
+                <th class="spark-cell">Monitor</th>
               </tr>
             </thead>
             <tbody id="uptime-body">
@@ -400,6 +406,7 @@ body::after {
                 <th>Avg total HR</th>
                 <th class="col-sm-hide">Matched snapshots</th>
                 <th>Performance SLA</th>
+                <th class="spark-cell">Monitor</th>
               </tr>
             </thead>
             <tbody id="acct-body">
@@ -441,6 +448,7 @@ body::after {
                 <th>Throughput</th>
                 <th>Combined SLA</th>
                 <th>Breach resp. ↓</th>
+                <th class="spark-cell">Monitor</th>
               </tr>
             </thead>
             <tbody id="perf-body">
@@ -528,6 +536,35 @@ function breachPill(p, n) {
   const cls = p === 0 ? 'sla-green' : p < 25 ? 'sla-orange' : 'sla-red';
   return `<span class="sla-pill ${cls}" title="${n} breach snapshot(s)">${fmtPct(p)}</span>`;
 }
+// ── Sparkline builder ────────────────────────────────────────────────────────
+function buildSparkline(vals) {
+  if (!vals || vals.length < 2) return '<td class="spark-cell"></td>';
+  const W = 90, H = 28, px = 3, py = 3;
+  // Subsample if dense
+  const MAX = 72;
+  const data = vals.length > MAX
+    ? vals.filter((_, i) => i % Math.ceil(vals.length / MAX) === 0)
+    : vals;
+  const n = data.length;
+  const pts = data.map((v, i) => {
+    const x = (px + (i / (n - 1)) * (W - 2*px)).toFixed(1);
+    const y = (H - py - v * (H - 2*py)).toFixed(1);
+    return `${x},${y}`;
+  });
+  const ptsStr = pts.join(' ');
+  // Area fill path
+  const firstX = pts[0].split(',')[0];
+  const lastX  = pts[n-1].split(',')[0];
+  const bottom = H - py;
+  const areaD  = `M${pts[0]} ${pts.slice(1).join(' ')} L${lastX},${bottom} L${firstX},${bottom} Z`;
+  return `<td class="spark-cell">
+    <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="display:block;overflow:visible">
+      <path d="${areaD}" class="spark-area"/>
+      <polyline points="${ptsStr}" fill="none" class="spark-line" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </td>`;
+}
+
 function nearestATO(sorted, tMs) {
   if (!sorted.length) return null;
   let best = sorted[0], bd = Math.abs(new Date(sorted[0].ts).getTime() - tMs);
@@ -599,11 +636,14 @@ async function main() {
     const n = tsOnline.size;
     if (!n) continue;
 
-    const scores = [...tsOnline.values()].map(o => { const r = o / total; return r * r; });
-    const avgScore = scores.reduce((s, v) => s + v, 0) / scores.length * 100;
+    // Scores triés par timestamp pour la sparkline
+    const sortedScores = [...tsOnline.entries()]
+      .sort((a, b) => new Date(a[0]) - new Date(b[0]))
+      .map(([, o]) => { const r = o / total; return r * r; });
+    const avgScore = sortedScores.reduce((s, v) => s + v, 0) / sortedScores.length * 100;
     const avgRatio = [...tsOnline.values()].reduce((s, v) => s + v / total, 0) / n * 100;
 
-    uptimeRows.push({ id: gd.id, provider: gd.provider, account: gd.account, total, excluded, n, avgRatio, uptime: avgScore });
+    uptimeRows.push({ id: gd.id, provider: gd.provider, account: gd.account, total, excluded, n, avgRatio, uptime: avgScore, sparkVals: sortedScores });
   }
 
   uptimeRows.sort((a, b) => (b.uptime ?? -1) - (a.uptime ?? -1));
@@ -615,8 +655,9 @@ async function main() {
         <td class="mono col-sm-hide">${r.n}</td>
         <td class="mono col-sm-hide">${fmtPct(r.avgRatio)} online</td>
         <td>${slaPill(r.uptime)}</td>
+        ${buildSparkline(r.sparkVals)}
       </tr>`).join('')
-    : '<tr><td colspan="6" style="padding:24px;text-align:center;color:var(--text-muted)">No data available</td></tr>';
+    : '<tr><td colspan="7" style="padding:24px;text-align:center;color:var(--text-muted)">No data available</td></tr>';
 
   // ════════════════════════════════════════════════════════════════════════
   // 2. ACCOUNT PERFORMANCE SLA (ATO)
@@ -631,14 +672,16 @@ async function main() {
       for (const s of snaps) totalByTs.set(s.ts, (totalByTs.get(s.ts) || 0) + s.hr);
     }
     let sumSLA = 0, n = 0, sumATO = 0, sumHR = 0;
-    for (const [ts, totalHr] of totalByTs) {
+    const acctSparkVals = [];
+    for (const [ts, totalHr] of [...totalByTs.entries()].sort((a, b) => new Date(a[0]) - new Date(b[0]))) {
       const a = nearestATO(atoSorted, new Date(ts).getTime());
       if (!a) continue;
-      sumSLA += Math.min(1, totalHr / a.ato);
-      sumATO += a.ato; sumHR += totalHr; n++;
+      const v = Math.min(1, totalHr / a.ato);
+      acctSparkVals.push(v);
+      sumSLA += v; sumATO += a.ato; sumHR += totalHr; n++;
     }
     if (!n) continue;
-    acctRows.push({ acctName, avgATO: sumATO/n, avgHR: sumHR/n, n, sla: sumSLA/n*100 });
+    acctRows.push({ acctName, avgATO: sumATO/n, avgHR: sumHR/n, n, sla: sumSLA/n*100, sparkVals: acctSparkVals });
   }
 
   document.getElementById('acct-body').innerHTML = acctRows.length
@@ -648,8 +691,9 @@ async function main() {
         <td class="mono">${fmtTH(r.avgHR)}</td>
         <td class="mono col-sm-hide">${r.n}</td>
         <td>${slaPill(r.sla)}</td>
+        ${buildSparkline(r.sparkVals)}
       </tr>`).join('')
-    : '<tr><td colspan="5" style="padding:24px;text-align:center;color:var(--text-muted)">No ATO data available yet</td></tr>';
+    : '<tr><td colspan="6" style="padding:24px;text-align:center;color:var(--text-muted)">No ATO data available yet</td></tr>';
 
   // ════════════════════════════════════════════════════════════════════════
   // 3. DC PERFORMANCE (Throughput & Breach)
@@ -690,13 +734,18 @@ async function main() {
       const dcNominal    = avgTotAtDC * dcShare;
 
       // Throughput — nominal = total_hr_ts × dc_share (not ATO)
+      // sparkVals: per snapshot ratio (0 when offline)
       let sumTp = 0, nTp = 0;
-      for (const [ts, hrDC] of dcByTs) {
-        if (hrDC <= 0) continue;
-        const tot = totalByTs.get(ts) || 0;
-        if (tot <= 0) continue;
-        sumTp += Math.min(1, hrDC / (tot * dcShare));
-        nTp++;
+      const dcSparkVals = [];
+      const dcAllTs = [...new Set([...dcByTs.keys(), ...totalByTs.keys()])].sort((a, b) => new Date(a) - new Date(b));
+      for (const ts of dcAllTs) {
+        const hrDC = dcByTs.get(ts) || 0;
+        const tot  = totalByTs.get(ts) || 0;
+        if (hrDC <= 0) { dcSparkVals.push(0); continue; }
+        if (tot <= 0)  { dcSparkVals.push(0); continue; }
+        const v = Math.min(1, hrDC / (tot * dcShare));
+        dcSparkVals.push(v);
+        sumTp += v; nTp++;
       }
       if (!nTp) continue;
       const throughput = sumTp / nTp * 100;
@@ -718,7 +767,7 @@ async function main() {
       perfRows.push({
         id: gd.id, provider: gd.provider, account: acctName,
         dcShare: dcShare * 100, dcNominal, avgDC,
-        throughput, combined, breachPct, breachN,
+        throughput, combined, breachPct, breachN, sparkVals: dcSparkVals,
       });
     }
   }
@@ -736,8 +785,9 @@ async function main() {
         <td>${r.breachN === 0
           ? `<span class="sla-pill sla-green">No breach</span>`
           : breachPill(r.breachPct, r.breachN)}</td>
+        ${buildSparkline(r.sparkVals)}
       </tr>`).join('')
-    : '<tr><td colspan="8" style="padding:24px;text-align:center;color:var(--text-muted)">No ATO data available</td></tr>';
+    : '<tr><td colspan="9" style="padding:24px;text-align:center;color:var(--text-muted)">No ATO data available</td></tr>';
 
   // ── Coverage banner ─────────────────────────────────────────────────────
   const needed7d  = 7  * 48 + 1;

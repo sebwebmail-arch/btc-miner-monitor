@@ -226,6 +226,8 @@ body::after {
 
 /* ── Sparkline ───────────────────────────────────────────────────────────── */
 .spark-cell { width: 108px; padding: 4px 14px; }
+/* Colonne 30d masquée tant que sla-daily.json n'a pas ≥2 points */
+.spark-30d-empty { display: none !important; }
 .spark-green  { stroke: #16a34a; } .spark-area-green  { fill: #16a34a; opacity:.10; }
 .spark-orange { stroke: #e67e22; } .spark-area-orange { fill: #e67e22; opacity:.08; }
 .spark-red    { stroke: #b91c1c; } .spark-area-red    { fill: #b91c1c; opacity:.08; }
@@ -502,7 +504,7 @@ body::after {
                 <th class="col-sm-hide">Avg HR (when up)</th>
                 <th class="col-sm-hide">Throughput</th>
                 <th>Combined</th>
-                <th>Breach resp. ↓</th>
+                <th>Breach ↓</th>
                 <th class="spark-cell">7d</th>
                 <th class="spark-cell col-sm-hide">30d</th>
               </tr>
@@ -778,8 +780,8 @@ async function main() {
           ],
         };
         return `<tr onclick="showDetail('${dk}')">
-          <td><span class="dc-badge">${r.id}</span>${r.provider}</td>
-          <td class="col-sm-hide">${fmtAcct(r.account)}</td>
+          <td style="white-space:nowrap"><span class="dc-badge">${r.id}</span>${r.provider}</td>
+          <td class="col-sm-hide" style="white-space:nowrap">${fmtAcct(r.account)}</td>
           <td class="col-sm-hide">${r.total}${r.excluded ? ` <span class="muted">(+${r.excluded} excl.)</span>` : ''}</td>
           <td class="mono col-sm-hide">${r.n}</td>
           <td class="mono col-sm-hide">${fmtPct(r.avgRatio)} online</td>
@@ -993,6 +995,12 @@ async function main() {
     <b>Monitor 30d</b> — drawn from <code>sla-daily.json</code> (one daily aggregate per day, written at 05:00 UTC).
     The 30d curve fills up progressively — one new point each morning.${days30.length > 0 ? ` Currently <b>${days30.length} day${days30.length > 1 ? 's' : ''}</b> available.` : ' No daily data yet — first point will appear tomorrow at 05:00 UTC.'}
   `;
+
+  // Colonne 30d : visible uniquement quand on a ≥30 jours d'historique
+  // Avant ça, elle est vide et déborde — on la masque entièrement
+  document.querySelectorAll('.spark-30d-th').forEach(el => {
+    if (!HAS_30D) el.classList.add('spark-30d-empty');
+  });
 
   document.getElementById('loading').style.display = 'none';
   document.getElementById('app').style.display     = 'flex';

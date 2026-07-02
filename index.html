@@ -1631,7 +1631,7 @@ function hrChartHover(event, accountUser) {
     tipTime.textContent = timeStr;
     tipVal.innerHTML  = `<tspan fill="#16a34a" font-weight="700" font-size="13">${thVal}</tspan><tspan fill="#4ade80" font-weight="400" font-size="10"> TH/s</tspan>`;
     if (tipAto) tipAto.innerHTML = nearestATO
-      ? `<tspan fill="#f97316" font-weight="700">${(nearestATO.ato / 1e12).toFixed(0)}</tspan><tspan fill="#fb923c" font-weight="400"> TH/s ATO</tspan>`
+      ? `<tspan fill="#f97316" font-weight="700" font-size="12">${(nearestATO.ato / 1e12).toFixed(0)}</tspan><tspan fill="#fb923c" font-weight="400" font-size="9"> TH/s ATO</tspan>`
       : '';
   }
 }

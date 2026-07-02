@@ -846,7 +846,6 @@ function renderDeadTracker() {
         <td><span class="group-badge">${w.group_id}</span><span class="prov-name"> ${w.provider}</span></td>
         <td><span class="age-pill ${pillClass(cat)}">${pillLabel(cat, w.last_share)}</span></td>
         <td class="mob-hide" style="color:#aaa;font-size:11px">${lastShareFmt}</td>
-        <td class="mob-hide"><span class="action-tag" style="cursor:pointer" onclick="openWorkerModal('${w.account}.${w.name}')">${actionLabel(cat)}</span></td>
       </tr>`;
     }).join('');
 
@@ -859,7 +858,6 @@ function renderDeadTracker() {
           <th><div class="th-inner" style="cursor:default">Datacenter</div></th>
           <th><div class="th-inner" style="cursor:default">Status</div></th>
           <th class="mob-hide"><div class="th-inner" style="cursor:default">Last Share (UTC)</div></th>
-          <th class="mob-hide"></th>
         </tr></thead>
         <tbody>${rows}</tbody>
       </table>
@@ -1538,7 +1536,6 @@ function renderOnlineTable() {
       <td class="hr-now">${nowTH}<span class="hr-unit"> TH/s</span></td>
       <td class="hr-avg mob-hide">${avg3TH} TH/s</td>
       <td class="spark-td mob-hide">${spark}</td>
-      <td class="mob-hide"><span class="action-tag" style="cursor:pointer" onclick="openWorkerModal('${w.key}')">${MONITOR_SVG}Monitor</span></td>
     </tr>`;
   }).join('');
 
@@ -1555,7 +1552,6 @@ function renderOnlineTable() {
       <th><div class="th-inner ${_onlineSortCol==='hr'?'sorted':''}" onclick="sortOnline('hr')"><span class="mob-hide">Now </span>TH/s ${si('hr')}</div></th>
       <th class="mob-hide">Avg 3h</th>
       <th class="mob-hide">6h trend</th>
-      <th class="mob-hide"></th>
     </tr></thead>
     <tbody>${emptyRow || tbody}</tbody>
   </table>`;

@@ -694,8 +694,8 @@ function nearestATO(sorted, tMs) {
 // ── Main ─────────────────────────────────────────────────────────────────────
 async function main() {
   const [hr, dailyRaw] = await Promise.all([
-    fetch('https://watcher.capone.market/data/hashrate.json').then(r => r.json()),
-    fetch('https://watcher.capone.market/data/sla-daily.json').then(r => r.json()).catch(() => ({ days: [] })),
+    fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/hashrate.json').then(r => r.json()),
+    fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/sla-daily.json').then(r => r.json()).catch(() => ({ days: [] })),
   ]);
 
   // 30 derniers jours triés par date (du plus ancien au plus récent)

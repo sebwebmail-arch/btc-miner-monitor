@@ -912,7 +912,7 @@ let _chartGeo      = {};   // géométrie du graphe modal courant
 
 async function loadHashrateData() {
   try {
-    const res = await fetch('./data/hashrate.json?t=' + Date.now());
+    const res = await fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/hashrate.json?t=' + Date.now());
     if (!res.ok) return;
     _hashrate = await res.json();
   } catch { /* hashrate.json pas encore dispo */ }
@@ -1880,11 +1880,11 @@ async function render() {
   let data;
   try {
     const [histRes, hrRes, wiRes, osRes, whRes] = await Promise.all([
-      fetch('./data/history.json?t='        + Date.now()),
-      fetch('./data/hashrate.json?t='       + Date.now()).catch(() => null),
-      fetch('./data/worker-issues.json?t='  + Date.now()).catch(() => null),
-      fetch('./data/offline-status.json?t=' + Date.now()).catch(() => null),
-      fetch('./data/worker-hosts.json?t='   + Date.now()).catch(() => null),
+      fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/history.json?t='        + Date.now()),
+      fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/hashrate.json?t='       + Date.now()).catch(() => null),
+      fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/worker-issues.json?t='  + Date.now()).catch(() => null),
+      fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/offline-status.json?t=' + Date.now()).catch(() => null),
+      fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/worker-hosts.json?t='   + Date.now()).catch(() => null),
     ]);
     if (!histRes.ok) throw new Error(`HTTP ${histRes.status}`);
     data = await histRes.json();

@@ -42,6 +42,8 @@ const WORKERISSUES_PATH = path.join(__dirname, 'data', 'worker-issues.json');
 const HISTORY_PATH      = path.join(__dirname, 'data', 'history.json');
 const OFFLINESTATUS_PATH = path.join(__dirname, 'data', 'offline-status.json');
 const WORKERHOSTS_PATH   = path.join(__dirname, 'data', 'worker-hosts.json');
+const SLA_DAILY_PATH     = path.join(__dirname, 'data', 'sla-daily.json');
+const MAX_DAILY_ENTRIES  = 31; // 30 jours glissants + 1 marge
 
 // Email destinataire rapport matin (commun aux deux comptes)
 const MORNING_ALERT_TO = process.env.ALERT_EMAIL || 'seb.webmail@gmail.com';
@@ -605,6 +607,180 @@ function buildMorningEmail(offlineByAccount, workerIssues, now) {
   return { html, subject };
 }
 
+// ─── SLA Daily aggregate ──────────────────────────────────────────────────────
+// Écrit une ligne par jour dans data/sla-daily.json (appelé au run 05:00 UTC).
+// Agrège les métriques SLA du jour UTC précédent depuis hashrate.json.
+
+function loadSLADaily() {
+  try { return JSON.parse(fs.readFileSync(SLA_DAILY_PATH, 'utf8')); }
+  catch { return { days: [] }; }
+}
+
+function saveSLADaily(d) {
+  fs.mkdirSync(path.dirname(SLA_DAILY_PATH), { recursive: true });
+  fs.writeFileSync(SLA_DAILY_PATH, JSON.stringify(d));
+}
+
+function writeDailySLA(hrData, now) {
+  // Jour UTC précédent (ex: si on est 05:00 le 3, on calcule le 2)
+  const yesterday = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - 1));
+  const dateStr   = yesterday.toISOString().slice(0, 10); // "YYYY-MM-DD"
+
+  const daily = loadSLADaily();
+  if (daily.days.some(d => d.date === dateStr)) {
+    console.log(`📊 SLA daily: déjà présent pour ${dateStr}`);
+    return;
+  }
+
+  const dayStart = yesterday.getTime();
+  const dayEnd   = dayStart + 86400000; // exclusif
+  const nowMs    = now.getTime();
+
+  // Filtre les snapshots du jour J-1
+  const dayWorkers = {};
+  for (const [wkey, snaps] of Object.entries(hrData.workers || {})) {
+    const filtered = snaps.filter(s => {
+      const t = new Date(s.ts).getTime();
+      return t >= dayStart && t < dayEnd;
+    });
+    if (filtered.length) dayWorkers[wkey] = filtered;
+  }
+
+  const dayAccounts = {};
+  for (const [aname, aSnaps] of Object.entries(hrData.accounts || {})) {
+    const filtered = aSnaps.filter(s => {
+      const t = new Date(s.ts).getTime();
+      return t >= dayStart && t < dayEnd;
+    });
+    if (filtered.length) dayAccounts[aname] = filtered;
+  }
+
+  if (Object.keys(dayWorkers).length === 0) {
+    console.log(`📊 SLA daily: aucun snapshot pour ${dateStr}, ignoré`);
+    return;
+  }
+
+  // Structure groupée (même logique que sla.html)
+  const groupData = {};
+  for (const [wkey, snaps] of Object.entries(dayWorkers)) {
+    const dot   = wkey.indexOf('.');
+    const acct  = wkey.slice(0, dot);
+    const wname = wkey.slice(dot + 1);
+    const g     = getGroup(wname);
+    if (!g || g.id === 'No Group') continue;
+    const gkey  = `${acct}::${g.id}`;
+    if (!groupData[gkey]) groupData[gkey] = { id: g.id, provider: g.provider, account: acct, workers: {} };
+    groupData[gkey].workers[wkey] = snaps;
+  }
+
+  const DEAD_7D = 7 * 86400000;
+
+  // ── 1. Continuity SLA (r² moyen par groupe) ────────────────────────────────
+  const continuity = {};
+  for (const [gkey, gd] of Object.entries(groupData)) {
+    const active = new Set();
+    for (const [wk] of Object.entries(gd.workers)) {
+      // Utilise l'historique complet pour détecter les workers inactifs >7j
+      const allSnaps = hrData.workers[wk] || gd.workers[wk];
+      if (!allSnaps.length) continue;
+      const lastTs = Math.max(...allSnaps.map(s => new Date(s.ts).getTime()));
+      if (nowMs - lastTs <= DEAD_7D) active.add(wk);
+    }
+    const total = active.size;
+    if (!total) continue;
+
+    const tsOnline = new Map();
+    for (const [wk, snaps] of Object.entries(gd.workers)) {
+      if (!active.has(wk)) continue;
+      for (const s of snaps) {
+        if (!tsOnline.has(s.ts)) tsOnline.set(s.ts, 0);
+        if (s.hr > 0) tsOnline.set(s.ts, tsOnline.get(s.ts) + 1);
+      }
+    }
+    if (!tsOnline.size) continue;
+
+    const scores = [...tsOnline.values()].map(o => { const r = o / total; return r * r; });
+    continuity[gkey] = scores.reduce((s, v) => s + v, 0) / scores.length;
+  }
+
+  // ── 2. Account Performance SLA (ATO) ──────────────────────────────────────
+  const account_perf = {};
+  for (const [acctName, atoSnaps] of Object.entries(dayAccounts)) {
+    const totalByTs = new Map();
+    for (const [wkey, snaps] of Object.entries(dayWorkers)) {
+      if (!wkey.startsWith(acctName + '.')) continue;
+      for (const s of snaps) totalByTs.set(s.ts, (totalByTs.get(s.ts) || 0) + s.hr);
+    }
+    const atoSorted = [...atoSnaps].sort((a, b) => new Date(a.ts) - new Date(b.ts));
+    let sumSLA = 0, n = 0;
+    for (const [ts, totalHr] of totalByTs) {
+      const tMs = new Date(ts).getTime();
+      let best = null, bd = Infinity;
+      for (const a of atoSorted) {
+        const d = Math.abs(new Date(a.ts).getTime() - tMs);
+        if (d < bd) { bd = d; best = a; }
+      }
+      if (!best || bd > 75 * 60000) continue;
+      sumSLA += Math.min(1, totalHr / best.ato); n++;
+    }
+    if (n) account_perf[acctName] = sumSLA / n;
+  }
+
+  // ── 3. DC Combined SLA (continuity × throughput) ──────────────────────────
+  const dc_combined = {};
+  const acctNames = [...new Set(Object.values(groupData).map(g => g.account))];
+
+  for (const acctName of acctNames) {
+    const atoSnaps = dayAccounts[acctName];
+    if (!atoSnaps?.length) continue;
+
+    const totalByTs = new Map();
+    for (const [wkey, snaps] of Object.entries(dayWorkers)) {
+      if (!wkey.startsWith(acctName + '.')) continue;
+      for (const s of snaps) totalByTs.set(s.ts, (totalByTs.get(s.ts) || 0) + s.hr);
+    }
+
+    for (const [gkey, gd] of Object.entries(groupData)) {
+      if (gd.account !== acctName) continue;
+
+      const dcByTs = new Map();
+      for (const [, snaps] of Object.entries(gd.workers))
+        for (const s of snaps) dcByTs.set(s.ts, (dcByTs.get(s.ts) || 0) + s.hr);
+
+      // DC share — snapshots online seulement
+      let sumDC = 0, sumTot = 0, nDC = 0;
+      for (const [ts, hrDC] of dcByTs) {
+        if (hrDC <= 0) continue;
+        sumDC += hrDC; sumTot += (totalByTs.get(ts) || 0); nDC++;
+      }
+      if (!nDC || !sumTot) continue;
+      const dcShare = (sumDC / nDC) / (sumTot / nDC);
+
+      // Throughput
+      const allTs = [...new Set([...dcByTs.keys(), ...totalByTs.keys()])];
+      let sumTp = 0, nTp = 0;
+      for (const ts of allTs) {
+        const hrDC = dcByTs.get(ts) || 0;
+        const tot  = totalByTs.get(ts) || 0;
+        if (hrDC <= 0 || tot <= 0) continue;
+        sumTp += Math.min(1, hrDC / (tot * dcShare)); nTp++;
+      }
+      if (!nTp) continue;
+      const throughput = sumTp / nTp;
+
+      // Combined = continuity × throughput
+      const cont = continuity[gkey] ?? 1;
+      dc_combined[gkey] = Math.min(1, cont * throughput);
+    }
+  }
+
+  daily.days.push({ date: dateStr, continuity, account_perf, dc_combined });
+  if (daily.days.length > MAX_DAILY_ENTRIES) daily.days = daily.days.slice(-MAX_DAILY_ENTRIES);
+  daily.last_updated = now.toISOString();
+  saveSLADaily(daily);
+  console.log(`📊 SLA daily: ${dateStr} écrit — ${Object.keys(continuity).length} groupes, ${Object.keys(account_perf).length} comptes`);
+}
+
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
 async function main() {
@@ -815,6 +991,9 @@ async function main() {
       const hist = loadHistory();
       saveHistory(updateHistory(hist, now, historyResults));
       console.log(`   History: ${hist.snapshots.length + 1} snapshots`);
+
+      // SLA daily aggregate (données du jour J-1)
+      writeDailySLA(h, now);
 
       // Email
       try {

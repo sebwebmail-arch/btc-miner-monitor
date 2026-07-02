@@ -133,7 +133,7 @@ body::after {
   font-size: 11px; font-weight: 600; letter-spacing: 0.10em;
   text-transform: uppercase; color: var(--text-secondary); margin-bottom: 8px;
 }
-.section-note { font-size: 12px; color: var(--text-secondary); font-weight: 400; letter-spacing: 0; text-transform: none; }
+.section-note { font-size: 12px; color: var(--text-muted); font-weight: 400; letter-spacing: 0; text-transform: none; }
 
 /* ── Panel ───────────────────────────────────────────────────────────────── */
 .panel {
@@ -368,11 +368,12 @@ body::after {
                 <th class="col-sm-hide">Snapshots</th>
                 <th class="col-sm-hide">Avg online</th>
                 <th>Continuity</th>
-                <th class="spark-cell">Monitor</th>
+                <th class="spark-cell">7d</th>
+                <th class="spark-cell col-sm-hide">30d</th>
               </tr>
             </thead>
             <tbody id="uptime-body">
-              <tr><td colspan="6" style="padding:24px;text-align:center;color:var(--text-muted)">Loading…</td></tr>
+              <tr><td colspan="8" style="padding:24px;text-align:center;color:var(--text-muted)">Loading…</td></tr>
             </tbody>
           </table>
         </div>
@@ -411,11 +412,12 @@ body::after {
                 <th>Avg total HR</th>
                 <th class="col-sm-hide">Matched snapshots</th>
                 <th>Performance</th>
-                <th class="spark-cell">Monitor</th>
+                <th class="spark-cell">7d</th>
+                <th class="spark-cell col-sm-hide">30d</th>
               </tr>
             </thead>
             <tbody id="acct-body">
-              <tr><td colspan="5" style="padding:24px;text-align:center;color:var(--text-muted)">Loading…</td></tr>
+              <tr><td colspan="7" style="padding:24px;text-align:center;color:var(--text-muted)">Loading…</td></tr>
             </tbody>
           </table>
         </div>
@@ -455,11 +457,12 @@ body::after {
                 <th>Throughput</th>
                 <th>Combined</th>
                 <th>Breach resp. ↓</th>
-                <th class="spark-cell">Monitor</th>
+                <th class="spark-cell">7d</th>
+                <th class="spark-cell col-sm-hide">30d</th>
               </tr>
             </thead>
             <tbody id="perf-body">
-              <tr><td colspan="8" style="padding:24px;text-align:center;color:var(--text-muted)">Loading…</td></tr>
+              <tr><td colspan="10" style="padding:24px;text-align:center;color:var(--text-muted)">Loading…</td></tr>
             </tbody>
           </table>
         </div>
@@ -544,11 +547,12 @@ function breachPill(p, n) {
   return `<span class="sla-pill ${cls}" title="${n} breach snapshot(s)">${fmtPct(p)}</span>`;
 }
 // ── Sparkline builder ────────────────────────────────────────────────────────
-function buildSparkline(vals, slaScore) {
+// W: SVG width in px (90 = 7d dense, 56 = 30d daily)
+function buildSparkline(vals, slaScore, W = 90) {
   if (!vals || vals.length < 2) return '<td class="spark-cell"></td>';
   const cls = (slaScore == null || slaScore >= 95) ? 'green'
             : slaScore >= 90 ? 'orange' : 'red';
-  const W = 90, H = 28, px = 3, py = 3;
+  const H = 28, px = 3, py = 3;
   const MAX = 72;
   const data = vals.length > MAX
     ? vals.filter((_, i) => i % Math.ceil(vals.length / MAX) === 0)
@@ -584,7 +588,16 @@ function nearestATO(sorted, tMs) {
 
 // ── Main ─────────────────────────────────────────────────────────────────────
 async function main() {
-  const hr = await fetch('https://watcher.capone.market/data/hashrate.json').then(r => r.json());
+  const [hr, dailyRaw] = await Promise.all([
+    fetch('https://watcher.capone.market/data/hashrate.json').then(r => r.json()),
+    fetch('https://watcher.capone.market/data/sla-daily.json').then(r => r.json()).catch(() => ({ days: [] })),
+  ]);
+
+  // 30 derniers jours triés par date (du plus ancien au plus récent)
+  const days30 = (dailyRaw.days || [])
+    .slice()
+    .sort((a, b) => a.date.localeCompare(b.date))
+    .slice(-30);
 
   // ── Timestamps ─────────────────────────────────────────────────────────
   let allTs = [];
@@ -655,16 +668,21 @@ async function main() {
 
   uptimeRows.sort((a, b) => (b.uptime ?? -1) - (a.uptime ?? -1));
   document.getElementById('uptime-body').innerHTML = uptimeRows.length
-    ? uptimeRows.map(r => `<tr>
-        <td><span class="dc-badge">${r.id}</span>${r.provider}</td>
-        <td>${fmtAcct(r.account)}</td>
-        <td>${r.total}${r.excluded ? ` <span class="muted">(+${r.excluded} excl.)</span>` : ''}</td>
-        <td class="mono col-sm-hide">${r.n}</td>
-        <td class="mono col-sm-hide">${fmtPct(r.avgRatio)} online</td>
-        <td>${slaPill(r.uptime)}</td>
-        ${buildSparkline(r.sparkVals, r.uptime)}
-      </tr>`).join('')
-    : '<tr><td colspan="7" style="padding:24px;text-align:center;color:var(--text-muted)">No data available</td></tr>';
+    ? uptimeRows.map(r => {
+        const gkey30 = `${r.account}::${r.id}`;
+        const vals30 = days30.map(d => d.continuity?.[gkey30]).filter(v => v != null);
+        return `<tr>
+          <td><span class="dc-badge">${r.id}</span>${r.provider}</td>
+          <td>${fmtAcct(r.account)}</td>
+          <td>${r.total}${r.excluded ? ` <span class="muted">(+${r.excluded} excl.)</span>` : ''}</td>
+          <td class="mono col-sm-hide">${r.n}</td>
+          <td class="mono col-sm-hide">${fmtPct(r.avgRatio)} online</td>
+          <td>${slaPill(r.uptime)}</td>
+          ${buildSparkline(r.sparkVals, r.uptime)}
+          ${buildSparkline(vals30, r.uptime, 56)}
+        </tr>`;
+      }).join('')
+    : '<tr><td colspan="8" style="padding:24px;text-align:center;color:var(--text-muted)">No data available</td></tr>';
 
   // ════════════════════════════════════════════════════════════════════════
   // 2. ACCOUNT PERFORMANCE SLA (ATO)
@@ -692,15 +710,19 @@ async function main() {
   }
 
   document.getElementById('acct-body').innerHTML = acctRows.length
-    ? acctRows.map(r => `<tr>
-        <td>${fmtAcct(r.acctName)}</td>
-        <td class="mono">${fmtTH(r.avgATO)}</td>
-        <td class="mono">${fmtTH(r.avgHR)}</td>
-        <td class="mono col-sm-hide">${r.n}</td>
-        <td>${slaPill(r.sla)}</td>
-        ${buildSparkline(r.sparkVals, r.sla)}
-      </tr>`).join('')
-    : '<tr><td colspan="6" style="padding:24px;text-align:center;color:var(--text-muted)">No ATO data available yet</td></tr>';
+    ? acctRows.map(r => {
+        const vals30 = days30.map(d => d.account_perf?.[r.acctName]).filter(v => v != null);
+        return `<tr>
+          <td>${fmtAcct(r.acctName)}</td>
+          <td class="mono">${fmtTH(r.avgATO)}</td>
+          <td class="mono">${fmtTH(r.avgHR)}</td>
+          <td class="mono col-sm-hide">${r.n}</td>
+          <td>${slaPill(r.sla)}</td>
+          ${buildSparkline(r.sparkVals, r.sla)}
+          ${buildSparkline(vals30, r.sla, 56)}
+        </tr>`;
+      }).join('')
+    : '<tr><td colspan="7" style="padding:24px;text-align:center;color:var(--text-muted)">No ATO data available yet</td></tr>';
 
   // ════════════════════════════════════════════════════════════════════════
   // 3. DC PERFORMANCE (Throughput & Breach)
@@ -786,20 +808,25 @@ async function main() {
 
   perfRows.sort((a, b) => (b.combined ?? -1) - (a.combined ?? -1));
   document.getElementById('perf-body').innerHTML = perfRows.length
-    ? perfRows.map(r => `<tr>
-        <td><span class="dc-badge">${r.id}</span>${r.provider}</td>
-        <td>${fmtAcct(r.account)}</td>
-        <td class="mono col-sm-hide">${fmtPct(r.dcShare)}</td>
-        <td class="mono col-sm-hide">${fmtTH(r.dcNominal)}</td>
-        <td class="mono col-sm-hide">${fmtTH(r.avgDC)}</td>
-        <td>${slaPill(r.throughput)}</td>
-        <td>${slaPill(r.combined)}</td>
-        <td>${r.breachN === 0
-          ? `<span class="sla-pill sla-green">No breach</span>`
-          : breachPill(r.breachPct, r.breachN)}</td>
-        ${buildSparkline(r.sparkVals, r.combined)}
-      </tr>`).join('')
-    : '<tr><td colspan="9" style="padding:24px;text-align:center;color:var(--text-muted)">No ATO data available</td></tr>';
+    ? perfRows.map(r => {
+        const gkey30 = `${r.account}::${r.id}`;
+        const vals30 = days30.map(d => d.dc_combined?.[gkey30]).filter(v => v != null);
+        return `<tr>
+          <td><span class="dc-badge">${r.id}</span>${r.provider}</td>
+          <td>${fmtAcct(r.account)}</td>
+          <td class="mono col-sm-hide">${fmtPct(r.dcShare)}</td>
+          <td class="mono col-sm-hide">${fmtTH(r.dcNominal)}</td>
+          <td class="mono col-sm-hide">${fmtTH(r.avgDC)}</td>
+          <td>${slaPill(r.throughput)}</td>
+          <td>${slaPill(r.combined)}</td>
+          <td>${r.breachN === 0
+            ? `<span class="sla-pill sla-green">No breach</span>`
+            : breachPill(r.breachPct, r.breachN)}</td>
+          ${buildSparkline(r.sparkVals, r.combined)}
+          ${buildSparkline(vals30, r.combined, 56)}
+        </tr>`;
+      }).join('')
+    : '<tr><td colspan="10" style="padding:24px;text-align:center;color:var(--text-muted)">No ATO data available</td></tr>';
 
   // ── Coverage banner ─────────────────────────────────────────────────────
   const needed7d  = 7  * 48 + 1;
@@ -819,12 +846,10 @@ async function main() {
   }
 
   document.getElementById('expand-note').innerHTML = `
-    <strong>Expanding the data window</strong><br>
-    Edit <code>MAX_SNAPSHOTS</code> in <code>hashrate-collector.js</code> (currently 337 = 7 days):<br><br>
-    &bull; 7-day SLA &rarr; <code>MAX_SNAPSHOTS = ${needed7d}</code> (~450 KB)<br>
-    &bull; 30-day SLA &rarr; <code>MAX_SNAPSHOTS = ${needed30d}</code> (~2 MB — manageable)<br><br>
-    <strong>Recommended alternative</strong>: write a daily aggregate to <code>data/sla-daily.json</code>
-    during the 05:00 UTC run — keeps <code>hashrate.json</code> lean and enables 30-day SLAs.
+    <strong>Data windows</strong><br>
+    <b>Monitor 7d</b> — drawn from <code>hashrate.json</code> (30-min snapshots, rolling 7-day window).<br>
+    <b>Monitor 30d</b> — drawn from <code>sla-daily.json</code> (one daily aggregate per day, written at 05:00 UTC).
+    The 30d curve fills up progressively — one new point each morning.${days30.length > 0 ? ` Currently <b>${days30.length} day${days30.length > 1 ? 's' : ''}</b> available.` : ' No daily data yet — first point will appear tomorrow at 05:00 UTC.'}
   `;
 
   document.getElementById('loading').style.display = 'none';

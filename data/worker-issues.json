@@ -1,19 +1,6 @@
 {
-  "last_updated": "2026-07-02T05:30:48.719Z",
+  "last_updated": "2026-07-02T06:01:03.104Z",
   "issues": {
-    "cmine.c21xp001": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "c21xp001",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)",
-      "type": "volatile",
-      "current_avg_ths": 180.2,
-      "baseline_avg_ths": 149.4,
-      "drop_pct": -21,
-      "cv_pct": 59,
-      "zero_rate_pct": 0
-    },
     "cmine.c21xp009": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
@@ -22,8 +9,8 @@
       "provider": "ValueHash (NY)",
       "type": "volatile",
       "current_avg_ths": 5.5,
-      "baseline_avg_ths": 37.1,
-      "drop_pct": 85,
+      "baseline_avg_ths": 28.9,
+      "drop_pct": 81,
       "cv_pct": 141,
       "zero_rate_pct": 67
     }

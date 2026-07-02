@@ -60,7 +60,7 @@
 }
 
 /* ── Grid + halo background ──────────────────────────────────────────────── */
-html, body { height: 100%; }
+html, body { height: 100%; overflow-x: hidden; }
 body {
   font-family: var(--font); background: var(--bg-base); color: var(--text-primary); overflow-x: hidden;
   font-size: 14px; min-height: 100vh;
@@ -319,6 +319,9 @@ body::after {
   .sla-legend { padding: 8px 14px; gap: 10px; }
   /* Hide secondary columns on mobile */
   .col-sm-hide { display: none; }
+  /* Remove min-width so table fits in viewport */
+  .sla-table { min-width: 0; }
+  .table-wrap { overflow-x: hidden; }
   /* Nav button: icon only on very small screens */
   .nav-label { display: none; }
   .nav-btn   { padding: 0 9px; }

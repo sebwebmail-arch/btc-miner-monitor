@@ -132,7 +132,7 @@ body::after {
   font-size: 11px; font-weight: 600; letter-spacing: 0.10em;
   text-transform: uppercase; color: var(--text-secondary); margin-bottom: 8px;
 }
-.section-note { font-size: 12px; color: var(--text-muted); font-weight: 400; letter-spacing: 0; text-transform: none; }
+.section-note { font-size: 12px; color: var(--text-secondary); font-weight: 400; letter-spacing: 0; text-transform: none; }
 
 /* ── Panel ───────────────────────────────────────────────────────────────── */
 .panel {
@@ -549,10 +549,10 @@ async function main() {
   const tsMin = Math.min(...allTs), tsMax = Math.max(...allTs);
   const daysCovered = (tsMax - tsMin) / 864e5;
 
-  const lastStr = new Date(tsMax).toLocaleString('en-GB', {
-    timeZone: 'Europe/Paris', day: 'numeric', month: 'short',
-    hour: '2-digit', minute: '2-digit'
-  }) + ' Paris';
+  const lastDate = new Date(tsMax);
+  const lastDay  = lastDate.toLocaleDateString('en-GB', { timeZone: 'UTC', day: 'numeric', month: 'short' });
+  const lastTime = lastDate.toLocaleTimeString('en-GB', { timeZone: 'UTC', hour: '2-digit', minute: '2-digit' });
+  const lastStr  = `${lastDay} at ${lastTime} UTC`;
   ['ts-1','ts-2','ts-3'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.textContent = `⏱ Every 30 min · Last: ${lastStr}`;

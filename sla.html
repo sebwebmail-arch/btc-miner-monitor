@@ -678,6 +678,16 @@ async function main() {
     .sort((a, b) => a.date.localeCompare(b.date))
     .slice(-30);
 
+  // Mode SLA : contractuel 30j si on a ≥ 30 agrégats daily, sinon 7j glissants
+  const HAS_30D = days30.length >= 30;
+
+  // Calcule le SLA 30j depuis les agrégats daily (valeurs 0-1 → retourne 0-100)
+  // On accepte jusqu'à 2 jours manquants (≥ 28 points) pour éviter de bloquer sur gaps
+  function sla30dAvg(keyFn) {
+    const vals = days30.map(keyFn).filter(v => v != null);
+    return vals.length >= 28 ? vals.reduce((s, v) => s + v, 0) / vals.length * 100 : null;
+  }
+
   // ── Timestamps ─────────────────────────────────────────────────────────
   let allTs = [];
   for (const snaps of Object.values(hr.workers || {}))
@@ -689,9 +699,12 @@ async function main() {
   const lastDay  = lastDate.toLocaleDateString('en-GB', { timeZone: 'UTC', day: 'numeric', month: 'short' });
   const lastTime = lastDate.toLocaleTimeString('en-GB', { timeZone: 'UTC', hour: '2-digit', minute: '2-digit' });
   const lastStr  = `${lastDay} at ${lastTime} UTC`;
+  const windowLabel = HAS_30D
+    ? `📅 30-day rolling · Last daily: ${lastStr}`
+    : `⏱ Every 30 min · Last: ${lastStr}${days30.length > 0 ? ` · ${days30.length}/30 days` : ''}`;
   ['ts-1','ts-2','ts-3'].forEach(id => {
     const el = document.getElementById(id);
-    if (el) el.textContent = `⏱ Every 30 min · Last: ${lastStr}`;
+    if (el) el.textContent = windowLabel;
   });
 
   // ── Build group data ────────────────────────────────────────────────────
@@ -750,15 +763,18 @@ async function main() {
     ? uptimeRows.map(r => {
         const gkey30 = `${r.account}::${r.id}`;
         const vals30 = days30.map(d => d.continuity?.[gkey30]).filter(v => v != null);
+        const sla30  = HAS_30D ? sla30dAvg(d => d.continuity?.[gkey30]) : null;
+        const slaDisp = sla30 ?? r.uptime; // 30j si dispo, sinon 7j
         const dk = `u_${r.id}_${r.account}`;
         _details[dk] = {
           title: `<span class="dc-badge">${r.id}</span>${r.provider} — ${fmtAcct(r.account)}`,
           rows: [
-            { label: 'Continuity SLA',  value: slaPill(r.uptime) },
-            { label: 'Avg online',       value: fmtPct(r.avgRatio) },
-            { label: 'Active workers',   value: `${r.total}${r.excluded ? ` (+${r.excluded} excl.)` : ''}` },
-            { label: 'Snapshots (7d)',   value: `${r.n}` },
-            ...(vals30.length >= 2 ? [{ label: 'Daily points (30d)', value: `${vals30.length} days` }] : []),
+            { label: HAS_30D ? 'Continuity SLA (30d)' : 'Continuity SLA (7d)', value: slaPill(slaDisp) },
+            ...(HAS_30D && r.uptime != null ? [{ label: 'Trend 7d', value: slaPill(r.uptime) }] : []),
+            { label: 'Avg online',     value: fmtPct(r.avgRatio) },
+            { label: 'Active workers', value: `${r.total}${r.excluded ? ` (+${r.excluded} excl.)` : ''}` },
+            { label: 'Snapshots (7d)', value: `${r.n}` },
+            { label: 'Daily data',     value: `${vals30.length} / 30 days` },
           ],
         };
         return `<tr onclick="showDetail('${dk}')">
@@ -767,9 +783,9 @@ async function main() {
           <td class="col-sm-hide">${r.total}${r.excluded ? ` <span class="muted">(+${r.excluded} excl.)</span>` : ''}</td>
           <td class="mono col-sm-hide">${r.n}</td>
           <td class="mono col-sm-hide">${fmtPct(r.avgRatio)} online</td>
-          <td>${slaPill(r.uptime)}</td>
-          ${buildSparkline(r.sparkVals, r.uptime)}
-          ${buildSparkline(vals30, r.uptime, 56, 'col-sm-hide')}
+          <td>${slaPill(slaDisp)}</td>
+          ${buildSparkline(r.sparkVals, slaDisp)}
+          ${buildSparkline(vals30, slaDisp, 56, 'col-sm-hide')}
         </tr>`;
       }).join('')
     : '<tr><td colspan="8" style="padding:24px;text-align:center;color:var(--text-muted)">No data available</td></tr>';
@@ -802,15 +818,18 @@ async function main() {
   document.getElementById('acct-body').innerHTML = acctRows.length
     ? acctRows.map(r => {
         const vals30 = days30.map(d => d.account_perf?.[r.acctName]).filter(v => v != null);
+        const sla30  = HAS_30D ? sla30dAvg(d => d.account_perf?.[r.acctName]) : null;
+        const slaDisp = sla30 ?? r.sla;
         const dk = `a_${r.acctName}`;
         _details[dk] = {
           title: fmtAcct(r.acctName),
           rows: [
-            { label: 'Performance SLA', value: slaPill(r.sla) },
-            { label: 'Avg ATO',         value: fmtTH(r.avgATO) },
-            { label: 'Avg total HR',    value: fmtTH(r.avgHR) },
-            { label: 'Snapshots',       value: `${r.n}` },
-            ...(vals30.length >= 2 ? [{ label: 'Daily points (30d)', value: `${vals30.length} days` }] : []),
+            { label: HAS_30D ? 'Performance SLA (30d)' : 'Performance SLA (7d)', value: slaPill(slaDisp) },
+            ...(HAS_30D && r.sla != null ? [{ label: 'Trend 7d', value: slaPill(r.sla) }] : []),
+            { label: 'Avg ATO',      value: fmtTH(r.avgATO) },
+            { label: 'Avg total HR', value: fmtTH(r.avgHR) },
+            { label: 'Snapshots',    value: `${r.n}` },
+            { label: 'Daily data',   value: `${vals30.length} / 30 days` },
           ],
         };
         return `<tr onclick="showDetail('${dk}')">
@@ -818,9 +837,9 @@ async function main() {
           <td class="mono col-sm-hide">${fmtTH(r.avgATO)}</td>
           <td class="mono col-sm-hide">${fmtTH(r.avgHR)}</td>
           <td class="mono col-sm-hide">${r.n}</td>
-          <td>${slaPill(r.sla)}</td>
-          ${buildSparkline(r.sparkVals, r.sla)}
-          ${buildSparkline(vals30, r.sla, 56, 'col-sm-hide')}
+          <td>${slaPill(slaDisp)}</td>
+          ${buildSparkline(r.sparkVals, slaDisp)}
+          ${buildSparkline(vals30, slaDisp, 56, 'col-sm-hide')}
         </tr>`;
       }).join('')
     : '<tr><td colspan="7" style="padding:24px;text-align:center;color:var(--text-muted)">No ATO data available yet</td></tr>';
@@ -911,7 +930,9 @@ async function main() {
   document.getElementById('perf-body').innerHTML = perfRows.length
     ? perfRows.map(r => {
         const gkey30 = `${r.account}::${r.id}`;
-        const vals30 = days30.map(d => d.dc_combined?.[gkey30]).filter(v => v != null);
+        const vals30  = days30.map(d => d.dc_combined?.[gkey30]).filter(v => v != null);
+        const sla30   = HAS_30D ? sla30dAvg(d => d.dc_combined?.[gkey30]) : null;
+        const slaDisp = sla30 ?? r.combined;
         const breachVal = r.breachN === 0
           ? `<span class="sla-pill sla-green">No breach</span>`
           : breachPill(r.breachPct, r.breachN);
@@ -919,14 +940,15 @@ async function main() {
         _details[dk] = {
           title: `<span class="dc-badge">${r.id}</span>${r.provider} — ${fmtAcct(r.account)}`,
           rows: [
-            { label: 'Throughput',      value: slaPill(r.throughput) },
-            { label: 'Combined SLA',    value: slaPill(r.combined) },
-            { label: 'Breach resp.',    value: breachVal },
-            { label: 'DC share',        value: fmtPct(r.dcShare) },
-            { label: 'Nominal (exp.)',  value: fmtTH(r.dcNominal) },
-            { label: 'Avg HR (up)',     value: fmtTH(r.avgDC) },
+            { label: HAS_30D ? 'Combined SLA (30d)' : 'Combined SLA (7d)', value: slaPill(slaDisp) },
+            ...(HAS_30D && r.combined != null ? [{ label: 'Trend 7d (combined)', value: slaPill(r.combined) }] : []),
+            { label: 'Throughput',       value: slaPill(r.throughput) },
+            { label: 'Breach resp.',     value: breachVal },
+            { label: 'DC share',         value: fmtPct(r.dcShare) },
+            { label: 'Nominal (exp.)',   value: fmtTH(r.dcNominal) },
+            { label: 'Avg HR (up)',      value: fmtTH(r.avgDC) },
             { label: 'Breach snapshots', value: `${r.breachN}` },
-            ...(vals30.length >= 2 ? [{ label: 'Daily points (30d)', value: `${vals30.length} days` }] : []),
+            { label: 'Daily data',       value: `${vals30.length} / 30 days` },
           ],
         };
         return `<tr onclick="showDetail('${dk}')">
@@ -936,10 +958,10 @@ async function main() {
           <td class="mono col-sm-hide">${fmtTH(r.dcNominal)}</td>
           <td class="mono col-sm-hide">${fmtTH(r.avgDC)}</td>
           <td class="col-sm-hide">${slaPill(r.throughput)}</td>
-          <td>${slaPill(r.combined)}</td>
+          <td>${slaPill(slaDisp)}</td>
           <td>${breachVal}</td>
-          ${buildSparkline(r.sparkVals, r.combined)}
-          ${buildSparkline(vals30, r.combined, 56, 'col-sm-hide')}
+          ${buildSparkline(r.sparkVals, slaDisp)}
+          ${buildSparkline(vals30, slaDisp, 56, 'col-sm-hide')}
         </tr>`;
       }).join('')
     : '<tr><td colspan="10" style="padding:24px;text-align:center;color:var(--text-muted)">No ATO data available</td></tr>';
@@ -951,14 +973,18 @@ async function main() {
   const to   = new Date(tsMax).toLocaleDateString('en-GB', { month: 'short', day: 'numeric' });
   const coverEl = document.getElementById('coverage-banner');
 
-  if (daysCovered < 7) {
-    coverEl.innerHTML = `<div class="banner warn">⚠️ <strong>Data window: ${daysCovered.toFixed(1)} days</strong> (${from} → ${to}).
-      SLA scores are based on limited data — see the note below on how to expand the window.</div>`;
-  } else if (daysCovered < 30) {
-    coverEl.innerHTML = `<div class="banner warn">⚠️ <strong>Data window: ${daysCovered.toFixed(1)} days</strong> (${from} → ${to}).
-      7-day SLA available. 30-day SLA requires increasing <code>MAX_SNAPSHOTS</code>.</div>`;
+  if (HAS_30D) {
+    const oldest = days30[0]?.date ?? from;
+    const newest = days30[days30.length - 1]?.date ?? to;
+    coverEl.innerHTML = `<div class="banner ok">✓ <strong>SLA contractuel 30 jours actif</strong> — ${days30.length} daily aggregates (${oldest} → ${newest}). Les % affichés sont des moyennes glissantes sur 30 jours.</div>`;
+  } else if (days30.length > 0) {
+    const remaining = 30 - days30.length;
+    const pct = Math.round(days30.length / 30 * 100);
+    coverEl.innerHTML = `<div class="banner warn">⏳ <strong>Construction de l'historique 30j : ${days30.length}/30 jours (${pct}%)</strong> — encore ${remaining} jour${remaining > 1 ? 's' : ''}.
+      Les % affichés sont calculés sur ${daysCovered.toFixed(1)} jours (fenêtre courante). Le SLA contractuel 30j s'activera automatiquement dès le ${remaining}e jour.</div>`;
   } else {
-    coverEl.innerHTML = `<div class="banner ok">✓ <strong>Data window: ${daysCovered.toFixed(1)} days</strong> (${from} → ${to}). 7-day and 30-day SLA windows available.</div>`;
+    coverEl.innerHTML = `<div class="banner warn">⚠️ <strong>Données disponibles : ${daysCovered.toFixed(1)} jours</strong> (${from} → ${to}).
+      Les agrégats daily démarrent ce soir à 05:00 UTC — le SLA 30j sera opérationnel dans 30 jours.</div>`;
   }
 
   document.getElementById('expand-note').innerHTML = `

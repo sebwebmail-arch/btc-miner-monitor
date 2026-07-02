@@ -1728,7 +1728,7 @@ function buildAccountHashrateChart(accountUser, rangeH) {
   const pxTs   = ts => PL + (new Date(ts).getTime() - tAxisStart) / tAxisSpan * cW;
   const atoLine = hasATO
     ? `<polyline points="${acctSnaps.map(p=>`${pxTs(p.ts).toFixed(1)},${pyATO(p).toFixed(1)}`).join(' ')}"
-         fill="none" stroke="#4ade80" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" opacity="0.85"/>`
+         fill="none" stroke="#60a5fa" stroke-width="1.5" stroke-dasharray="6,4" stroke-linejoin="round" stroke-linecap="round" opacity="0.9"/>`
     : '';
   const lastATO  = hasATO ? acctSnaps[acctSnaps.length-1].ato : null;
   const lastATOTH = lastATO ? (lastATO / 1e12).toFixed(0) : null;
@@ -1736,17 +1736,25 @@ function buildAccountHashrateChart(accountUser, rangeH) {
   // Stocke les données pour le tooltip hover
   _hrChartData[accountUser] = { pts, tAxisStart, tAxisSpan, maxHR };
 
-  // En-tête : Total + ATO si disponible
+  // En-tête : Total + ATO si disponible (ATO en dessous sur ligne séparée)
   const headerRight = lastATOTH
-    ? `<span style="font-size:26px;font-weight:800;color:var(--text-primary);line-height:1">${lastTH}</span>
-       <span style="font-size:11px;color:#bbb;margin-left:4px">TH/s total</span>
-       <span style="font-size:13px;font-weight:700;color:#4ade80;margin-left:14px">${lastATOTH}</span>
-       <span style="font-size:11px;color:#4ade80;opacity:.7;margin-left:3px">TH/s ATO</span>`
-    : `<span style="font-size:26px;font-weight:800;color:var(--text-primary);line-height:1">${lastTH}</span>
-       <span style="font-size:11px;color:#bbb;margin-left:4px">TH/s now</span>`;
+    ? `<div style="line-height:1.4">
+         <div style="display:flex;align-items:baseline;gap:4px;justify-content:flex-end">
+           <span style="font-size:26px;font-weight:800;color:var(--text-primary);line-height:1">${lastTH}</span>
+           <span style="font-size:11px;color:var(--text-muted)">TH/s total</span>
+         </div>
+         <div style="display:flex;align-items:baseline;gap:4px;justify-content:flex-end;margin-top:1px">
+           <span style="font-size:15px;font-weight:700;color:#60a5fa">${lastATOTH}</span>
+           <span style="font-size:11px;color:#60a5fa;opacity:.8">TH/s ATO</span>
+         </div>
+       </div>`
+    : `<div style="display:flex;align-items:baseline;gap:4px;justify-content:flex-end">
+         <span style="font-size:26px;font-weight:800;color:var(--text-primary);line-height:1">${lastTH}</span>
+         <span style="font-size:11px;color:var(--text-muted)">TH/s now</span>
+       </div>`;
 
   return `<div>
-    <div style="text-align:right;padding:0 4px 4px 0;display:flex;align-items:baseline;justify-content:flex-end;gap:0;flex-wrap:wrap">
+    <div style="padding:0 4px 6px 0;display:flex;justify-content:flex-end">
       ${headerRight}
     </div>
     <svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
@@ -1794,14 +1802,11 @@ function buildHashrateSection() {
   const contents = accounts.map(([k,],i) => {
     const rh = _hrRange[k];
     return `<div class="tab-content ${i===0?'active':''}" id="hr-tab-${k}">
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 20px 0">
-        <div style="font-size:11px;color:#bbb">Total hashrate — all workers combined (TH/s)</div>
-        <div style="display:flex;gap:4px">
-          <div class="range-btn ${rh===24?'active':''} hr-range-btn-${k}" data-h="24" onclick="setHrRange('${k}',24)">24h</div>
-          <div class="range-btn ${rh===72?'active':''} hr-range-btn-${k}" data-h="72" onclick="setHrRange('${k}',72)">72h</div>
-        </div>
+      <div style="display:flex;align-items:center;justify-content:flex-end;padding:10px 20px 0;gap:4px">
+        <div class="range-btn ${rh===24?'active':''} hr-range-btn-${k}" data-h="24" onclick="setHrRange('${k}',24)">24h</div>
+        <div class="range-btn ${rh===72?'active':''} hr-range-btn-${k}" data-h="72" onclick="setHrRange('${k}',72)">72h</div>
       </div>
-      <div style="padding:10px 20px 16px" id="hr-chart-${k}">
+      <div style="padding:4px 20px 16px" id="hr-chart-${k}">
         ${buildAccountHashrateChart(k, rh)}
       </div>
     </div>`;

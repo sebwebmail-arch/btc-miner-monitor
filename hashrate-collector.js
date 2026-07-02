@@ -532,9 +532,11 @@ function buildMorningEmail(offlineByAccount, workerIssues, now) {
   // ── Section anomalies hashrate ──
   const anomalySection = totalAnomalies === 0 ? '' : (() => {
     const rows = anomalyList.map(w => {
+      const dropIcon = `<img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cG9seWxpbmUgcG9pbnRzPSIxLDMgNSwzIDksOSAxMywxMSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYzAzOTJiIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjxwb2x5bGluZSBwb2ludHM9IjEwLDExIDEzLDExIDEzLDgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2MwMzkyYiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L3N2Zz4=" width="13" height="13" style="vertical-align:middle;margin-right:3px">`;
+      const waveIcon = `<img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cG9seWxpbmUgcG9pbnRzPSIxLDcgMywzIDUsMTAgNywyIDksOSAxMSw0IDEzLDciIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2I3OTUwYiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L3N2Zz4=" width="13" height="13" style="vertical-align:middle;margin-right:3px">`;
       const badge = w.type === 'level_drop'
-        ? `<span style="padding:2px 7px;border-radius:4px;background:#fdecea;color:#c0392b;font-size:11px;font-weight:700">📉 Drop ${w.drop_pct}%</span>`
-        : `<span style="padding:2px 7px;border-radius:4px;background:#fef9e7;color:#b7950b;font-size:11px;font-weight:700">📊 Unstable</span>`;
+        ? `<span style="display:inline-flex;align-items:center;padding:3px 9px;border-radius:100px;background:#fdecea;color:#c0392b;font-size:11px;font-weight:700">${dropIcon}Drop −${w.drop_pct}%</span>`
+        : `<span style="display:inline-flex;align-items:center;padding:3px 9px;border-radius:100px;background:#fef9e7;color:#b7950b;font-size:11px;font-weight:700">${waveIcon}Unstable</span>`;
       return `
         <tr>
           <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;font-family:'DM Mono',monospace;font-size:13px">${w.worker}</td>

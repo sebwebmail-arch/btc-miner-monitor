@@ -425,11 +425,9 @@ async function main() {
     }
   }
 
-  console.log('\n📧 Sending alert email...');
-  const { subject, html } = buildEmail(offlineByAccount, workerIssues);
-  await sendAlert(subject, html);
-
-  console.log('\nDone.\n');
+  // Email désactivé ici — géré exclusivement par hashrate-collector.js (rapport matin 05:00 UTC)
+  // monitor.js est conservé pour le tracking history.json uniquement
+  console.log('\n✅ History updated. Morning email handled by hashrate-collector.js.\n');
 }
 
 main().catch((err) => {

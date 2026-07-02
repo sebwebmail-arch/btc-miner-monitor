@@ -98,7 +98,7 @@
 [data-theme="dark"] .hr-tip-bg   { fill: #242318; stroke: #3a3927; }
 [data-theme="dark"] .hr-tip-dot  { fill: #242318; }
 [data-theme="dark"] .hr-tip-time { fill: #56543e; }
-[data-theme="dark"] .hr-tip-val  { fill: #4ade80; }
+[data-theme="dark"] .hr-tip-val  { fill: #16a34a; } /* couleur gérée par tspan, fallback */
 
 /* ── Theme pill (Light / Dark / Auto) ───────────────────────────────────── */
 .theme-pill {
@@ -1629,8 +1629,10 @@ function hrChartHover(event, accountUser) {
     const bg = document.getElementById(`hrc-tip-bg-${accountUser}`);
     if (bg) { bg.setAttribute('width', TW); bg.setAttribute('height', TH); }
     tipTime.textContent = timeStr;
-    tipVal.textContent  = `${thVal} TH/s`;
-    if (tipAto) tipAto.textContent = nearestATO ? `${(nearestATO.ato / 1e12).toFixed(0)} TH/s ATO` : '';
+    tipVal.innerHTML  = `<tspan fill="#16a34a" font-weight="700" font-size="13">${thVal}</tspan><tspan fill="#4ade80" font-weight="400" font-size="10"> TH/s</tspan>`;
+    if (tipAto) tipAto.innerHTML = nearestATO
+      ? `<tspan fill="#f97316" font-weight="700">${(nearestATO.ato / 1e12).toFixed(0)}</tspan><tspan fill="#fb923c" font-weight="400"> TH/s ATO</tspan>`
+      : '';
   }
 }
 

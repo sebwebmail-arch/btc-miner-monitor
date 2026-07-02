@@ -930,8 +930,8 @@ async function main() {
           ],
         };
         return `<tr onclick="showDetail('${dk}')">
-          <td><span class="dc-badge">${r.id}</span>${r.provider}</td>
-          <td class="col-sm-hide">${fmtAcct(r.account)}</td>
+          <td style="white-space:nowrap"><span class="dc-badge">${r.id}</span>${r.provider}</td>
+          <td class="col-sm-hide" style="white-space:nowrap">${fmtAcct(r.account)}</td>
           <td class="mono col-sm-hide">${fmtPct(r.dcShare)}</td>
           <td class="mono col-sm-hide">${fmtTH(r.dcNominal)}</td>
           <td class="mono col-sm-hide">${fmtTH(r.avgDC)}</td>

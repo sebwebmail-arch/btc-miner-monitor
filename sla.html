@@ -274,6 +274,11 @@ body::after {
 .modal-kv:last-child { border-bottom: none; }
 .modal-kv-label { font-size: 12px; color: var(--text-muted); font-weight: 500; flex-shrink: 0; }
 .modal-kv-value { font-size: 13px; font-weight: 600; text-align: right; }
+.modal-sparks { margin-top: 4px; }
+.modal-spark-row { display: flex; flex-direction: column; gap: 6px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.modal-spark-row:last-child { border-bottom: none; }
+.modal-spark-label { font-size: 12px; color: var(--text-muted); font-weight: 500; }
+.modal-spark-row svg { width: 100%; height: auto; display: block; }
 
 /* Rows clickable on mobile */
 @media(max-width: 640px) {
@@ -416,7 +421,7 @@ body::after {
                 <th class="col-sm-hide">Snapshots</th>
                 <th class="col-sm-hide">Avg online</th>
                 <th>Continuity</th>
-                <th class="spark-cell">7d</th>
+                <th class="spark-cell col-sm-hide">7d</th>
                 <th class="spark-cell col-sm-hide">30d</th>
               </tr>
             </thead>
@@ -460,7 +465,7 @@ body::after {
                 <th class="col-sm-hide">Avg total HR</th>
                 <th class="col-sm-hide">Matched snapshots</th>
                 <th>Performance</th>
-                <th class="spark-cell">7d</th>
+                <th class="spark-cell col-sm-hide">7d</th>
                 <th class="spark-cell col-sm-hide">30d</th>
               </tr>
             </thead>
@@ -504,8 +509,8 @@ body::after {
                 <th class="col-sm-hide">Avg HR (when up)</th>
                 <th class="col-sm-hide">Throughput</th>
                 <th>Combined</th>
-                <th>Breach ↓</th>
-                <th class="spark-cell">7d</th>
+                <th class="col-sm-hide">Breach ↓</th>
+                <th class="spark-cell col-sm-hide">7d</th>
                 <th class="spark-cell col-sm-hide">30d</th>
               </tr>
             </thead>
@@ -574,10 +579,18 @@ function showDetail(key) {
   const d = _details[key];
   if (!d) return;
   document.getElementById('modal-title').innerHTML = d.title;
-  document.getElementById('modal-body').innerHTML = d.rows
+  let body = d.rows
     .map(({label, value}) =>
       `<div class="modal-kv"><span class="modal-kv-label">${label}</span><span class="modal-kv-value">${value}</span></div>`)
     .join('');
+  if (d.sparks) {
+    const { vals7, vals30, score } = d.sparks;
+    body += `<div class="modal-sparks">`;
+    if (vals7?.length  >= 2) body += `<div class="modal-spark-row"><span class="modal-spark-label">7d trend</span>${sparkSVG(vals7,  score, 280, 44)}</div>`;
+    if (vals30?.length >= 2) body += `<div class="modal-spark-row"><span class="modal-spark-label">30d trend</span>${sparkSVG(vals30, score, 280, 44)}</div>`;
+    body += `</div>`;
+  }
+  document.getElementById('modal-body').innerHTML = body;
   document.getElementById('row-modal').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -626,14 +639,11 @@ function breachPill(p, n) {
   return `<span class="sla-pill ${cls}" title="${n} breach snapshot(s)">${fmtPct(p)}</span>`;
 }
 // ── Sparkline builder ────────────────────────────────────────────────────────
-// W: SVG width in px (90 = 7d dense, 56 = 30d daily)
-// cellExtra: extra CSS classes for the <td> (e.g. 'col-sm-hide')
-function buildSparkline(vals, slaScore, W = 90, cellExtra = '') {
-  const cellCls = cellExtra ? `spark-cell ${cellExtra}` : 'spark-cell';
-  if (!vals || vals.length < 2) return `<td class="${cellCls}"></td>`;
+function sparkSVG(vals, slaScore, W = 90, H = 28) {
+  if (!vals || vals.length < 2) return '';
   const cls = (slaScore == null || slaScore >= 95) ? 'green'
             : slaScore >= 90 ? 'orange' : 'red';
-  const H = 28, px = 3, py = 3;
+  const px = 3, py = 3;
   const MAX = 72;
   const data = vals.length > MAX
     ? vals.filter((_, i) => i % Math.ceil(vals.length / MAX) === 0)
@@ -649,12 +659,17 @@ function buildSparkline(vals, slaScore, W = 90, cellExtra = '') {
   const lastX  = pts[n-1].split(',')[0];
   const bottom = H - py;
   const areaD  = `M${pts[0]} ${pts.slice(1).join(' ')} L${lastX},${bottom} L${firstX},${bottom} Z`;
-  return `<td class="${cellCls}">
-    <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="display:block;overflow:visible">
-      <path d="${areaD}" class="spark-area-${cls}"/>
-      <polyline points="${ptsStr}" fill="none" class="spark-${cls}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </td>`;
+  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="display:block;overflow:visible">
+    <path d="${areaD}" class="spark-area-${cls}"/>
+    <polyline points="${ptsStr}" fill="none" class="spark-${cls}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>`;
+}
+// W: SVG width in px (90 = 7d dense, 56 = 30d daily)
+// cellExtra: extra CSS classes for the <td> (e.g. 'col-sm-hide')
+function buildSparkline(vals, slaScore, W = 90, cellExtra = '') {
+  const cellCls = cellExtra ? `spark-cell ${cellExtra}` : 'spark-cell';
+  if (!vals || vals.length < 2) return `<td class="${cellCls}"></td>`;
+  return `<td class="${cellCls}">${sparkSVG(vals, slaScore, W)}</td>`;
 }
 
 function nearestATO(sorted, tMs) {
@@ -778,6 +793,7 @@ async function main() {
             { label: 'Snapshots (7d)', value: `${r.n}` },
             { label: 'Daily data',     value: `${vals30.length} / 30 days` },
           ],
+          sparks: { vals7: r.sparkVals, vals30, score: slaDisp },
         };
         return `<tr onclick="showDetail('${dk}')">
           <td style="white-space:nowrap"><span class="dc-badge">${r.id}</span>${r.provider}</td>
@@ -786,7 +802,7 @@ async function main() {
           <td class="mono col-sm-hide">${r.n}</td>
           <td class="mono col-sm-hide">${fmtPct(r.avgRatio)} online</td>
           <td>${slaPill(slaDisp)}</td>
-          ${buildSparkline(r.sparkVals, slaDisp)}
+          ${buildSparkline(r.sparkVals, slaDisp, 90, 'col-sm-hide')}
           ${buildSparkline(vals30, slaDisp, 56, 'col-sm-hide')}
         </tr>`;
       }).join('')
@@ -833,6 +849,7 @@ async function main() {
             { label: 'Snapshots',    value: `${r.n}` },
             { label: 'Daily data',   value: `${vals30.length} / 30 days` },
           ],
+          sparks: { vals7: r.sparkVals, vals30, score: slaDisp },
         };
         return `<tr onclick="showDetail('${dk}')">
           <td>${fmtAcct(r.acctName)}</td>
@@ -840,7 +857,7 @@ async function main() {
           <td class="mono col-sm-hide">${fmtTH(r.avgHR)}</td>
           <td class="mono col-sm-hide">${r.n}</td>
           <td>${slaPill(slaDisp)}</td>
-          ${buildSparkline(r.sparkVals, slaDisp)}
+          ${buildSparkline(r.sparkVals, slaDisp, 90, 'col-sm-hide')}
           ${buildSparkline(vals30, slaDisp, 56, 'col-sm-hide')}
         </tr>`;
       }).join('')
@@ -947,11 +964,12 @@ async function main() {
             { label: 'Throughput',       value: slaPill(r.throughput) },
             { label: 'Breach resp.',     value: breachVal },
             { label: 'DC share',         value: fmtPct(r.dcShare) },
-            { label: 'Nominal (exp.)',   value: fmtTH(r.dcNominal) },
+            { label: 'Expected HR',      value: fmtTH(r.dcNominal) },
             { label: 'Avg HR (up)',      value: fmtTH(r.avgDC) },
             { label: 'Breach snapshots', value: `${r.breachN}` },
             { label: 'Daily data',       value: `${vals30.length} / 30 days` },
           ],
+          sparks: { vals7: r.sparkVals, vals30, score: slaDisp },
         };
         return `<tr onclick="showDetail('${dk}')">
           <td style="white-space:nowrap"><span class="dc-badge">${r.id}</span>${r.provider}</td>
@@ -961,8 +979,8 @@ async function main() {
           <td class="mono col-sm-hide">${fmtTH(r.avgDC)}</td>
           <td class="col-sm-hide">${slaPill(r.throughput)}</td>
           <td>${slaPill(slaDisp)}</td>
-          <td>${breachVal}</td>
-          ${buildSparkline(r.sparkVals, slaDisp)}
+          <td class="col-sm-hide">${breachVal}</td>
+          ${buildSparkline(r.sparkVals, slaDisp, 90, 'col-sm-hide')}
           ${buildSparkline(vals30, slaDisp, 56, 'col-sm-hide')}
         </tr>`;
       }).join('')
@@ -978,15 +996,15 @@ async function main() {
   if (HAS_30D) {
     const oldest = days30[0]?.date ?? from;
     const newest = days30[days30.length - 1]?.date ?? to;
-    coverEl.innerHTML = `<div class="banner ok">✓ <strong>SLA contractuel 30 jours actif</strong> — ${days30.length} daily aggregates (${oldest} → ${newest}). Les % affichés sont des moyennes glissantes sur 30 jours.</div>`;
+    coverEl.innerHTML = `<div class="banner ok">✓ <strong>30-day contractual SLA active</strong> — ${days30.length} daily aggregates (${oldest} → ${newest}). Percentages shown are 30-day rolling averages.</div>`;
   } else if (days30.length > 0) {
     const remaining = 30 - days30.length;
     const pct = Math.round(days30.length / 30 * 100);
-    coverEl.innerHTML = `<div class="banner warn">⏳ <strong>Construction de l'historique 30j : ${days30.length}/30 jours (${pct}%)</strong> — encore ${remaining} jour${remaining > 1 ? 's' : ''}.
-      Les % affichés sont calculés sur ${daysCovered.toFixed(1)} jours (fenêtre courante). Le SLA contractuel 30j s'activera automatiquement dès le ${remaining}e jour.</div>`;
+    coverEl.innerHTML = `<div class="banner warn">⏳ <strong>Building 30-day history: ${days30.length}/30 days (${pct}%)</strong> — ${remaining} day${remaining > 1 ? 's' : ''} remaining.
+      Percentages are currently computed over ${daysCovered.toFixed(1)} days (current window). The 30-day contractual SLA will activate automatically on day ${days30.length + remaining}.</div>`;
   } else {
-    coverEl.innerHTML = `<div class="banner warn">⚠️ <strong>Données disponibles : ${daysCovered.toFixed(1)} jours</strong> (${from} → ${to}).
-      Les agrégats daily démarrent ce soir à 05:00 UTC — le SLA 30j sera opérationnel dans 30 jours.</div>`;
+    coverEl.innerHTML = `<div class="banner warn">⚠️ <strong>Data available: ${daysCovered.toFixed(1)} days</strong> (${from} → ${to}).
+      Daily aggregates start tonight at 05:00 UTC — the 30-day SLA will be operational in 30 days.</div>`;
   }
 
   document.getElementById('expand-note').innerHTML = `

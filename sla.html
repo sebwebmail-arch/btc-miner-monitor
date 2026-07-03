@@ -491,7 +491,6 @@ body::after {
           <summary>How it's calculated</summary>
           <div class="formula-body">
             <strong>DC share</strong>: <code>avg_hr_dc / avg_total_hr</code> computed only on online snapshots — avoids downtime deflating the share.<br>
-            <strong>Expected at ts</strong>: <code>total_hr_ts × DC_share</code> — expected DC contribution relative to account total (not ATO).<br>
             <strong>Throughput</strong> (when online): <code>avg(min(1, hr_dc_ts / expected_at_ts))</code> — does the DC consistently deliver its proportional share?<br>
             <strong>Combined SLA</strong>: Continuity × Throughput — overall delivery including downtime.<br>
             <strong>Breach responsibility</strong>: during snapshots where <code>total_hr &lt; ATO</code> (client impact), what fraction of the shortfall was caused by this DC?<br>
@@ -506,17 +505,16 @@ body::after {
                 <th>Datacenter</th>
                 <th class="col-sm-hide">Account</th>
                 <th class="col-sm-hide">DC share</th>
-                <th class="col-sm-hide" style="width:72px">Expected</th>
                 <th class="col-sm-hide">Avg HR (when up)</th>
                 <th class="col-sm-hide">Throughput</th>
                 <th class="sla-col">Combined</th>
-                <th class="col-sm-hide">Breach ↓</th>
+                <th class="col-sm-hide">Breach</th>
                 <th class="spark-cell col-sm-hide">7d</th>
                 <th class="spark-cell col-sm-hide">30d</th>
               </tr>
             </thead>
             <tbody id="perf-body">
-              <tr><td colspan="10" style="padding:24px;text-align:center;color:var(--text-muted)">Loading…</td></tr>
+              <tr><td colspan="9" style="padding:24px;text-align:center;color:var(--text-muted)">Loading…</td></tr>
             </tbody>
           </table>
         </div>
@@ -912,7 +910,10 @@ async function main() {
       const avgDC        = sumDC / nDC;
       const avgTotAtDC   = sumTotAtDC / nDC;
       const dcShare      = avgTotAtDC > 0 ? avgDC / avgTotAtDC : 0;
-      const dcNominal    = avgTotAtDC * dcShare;
+      // Expected = ATO × DC_share : ce que ce DC devrait fournir vis-à-vis du contrat
+      const avgATO       = atoSorted.length > 0
+        ? atoSorted.reduce((s, a) => s + a.ato, 0) / atoSorted.length : 0;
+      const dcNominal    = avgATO * dcShare;
 
       // Throughput — nominal = total_hr_ts × dc_share (not ATO)
       // sparkVals: per snapshot ratio (0 when offline)
@@ -978,7 +979,6 @@ async function main() {
             { label: 'Throughput',       value: slaPill(r.throughput) },
             { label: 'Breach resp.',     value: breachVal },
             { label: 'DC share',         value: fmtPct(r.dcShare) },
-            { label: 'Expected HR',      value: fmtTH(r.dcNominal) },
             { label: 'Avg HR (up)',      value: fmtTH(r.avgDC) },
             { label: 'Breach snapshots', value: `${r.breachN}` },
             { label: 'Daily data',       value: `${vals30.length} / 30 days` },
@@ -989,7 +989,6 @@ async function main() {
           <td style="white-space:nowrap"><span class="dc-badge">${r.id}</span>${r.provider}</td>
           <td class="col-sm-hide" style="white-space:nowrap">${fmtAcct(r.account)}</td>
           <td class="mono col-sm-hide">${fmtPct(r.dcShare)}</td>
-          <td class="mono col-sm-hide">${fmtTH(r.dcNominal)}</td>
           <td class="mono col-sm-hide">${fmtTH(r.avgDC)}</td>
           <td class="col-sm-hide">${slaPill(r.throughput)}</td>
           <td>${slaPill(slaDisp)}</td>

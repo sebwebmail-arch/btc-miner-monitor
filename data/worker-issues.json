@@ -1,4 +1,18 @@
 {
-  "last_updated": "2026-07-03T17:00:59.814Z",
-  "issues": {}
+  "last_updated": "2026-07-03T17:30:49.897Z",
+  "issues": {
+    "cmine.s21xp002": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "worker": "s21xp002",
+      "group_id": "P1",
+      "provider": "Altos",
+      "type": "level_drop",
+      "current_avg_ths": 250.8,
+      "baseline_avg_ths": 455.8,
+      "drop_pct": 45,
+      "cv_pct": 41,
+      "zero_rate_pct": 0
+    }
+  }
 }

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-03T01:00:55.724Z",
+  "last_updated": "2026-07-03T01:30:51.452Z",
   "issues": {
     "everminer.dgahfkabdjfae06": {
       "account": "everminer",
@@ -8,10 +8,10 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "type": "volatile",
-      "current_avg_ths": 139.7,
-      "baseline_avg_ths": 473.8,
-      "drop_pct": 71,
-      "cv_pct": 129,
+      "current_avg_ths": 81.4,
+      "baseline_avg_ths": 472.8,
+      "drop_pct": 83,
+      "cv_pct": 131,
       "zero_rate_pct": 50
     },
     "everminer.dgahfkabdjfae04": {
@@ -21,9 +21,9 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "type": "volatile",
-      "current_avg_ths": 448.5,
-      "baseline_avg_ths": 1433.5,
-      "drop_pct": 69,
+      "current_avg_ths": 282.9,
+      "baseline_avg_ths": 1435.6,
+      "drop_pct": 80,
       "cv_pct": 128,
       "zero_rate_pct": 50
     },
@@ -34,10 +34,10 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "type": "volatile",
-      "current_avg_ths": 328.9,
-      "baseline_avg_ths": 970.5,
-      "drop_pct": 66,
-      "cv_pct": 131,
+      "current_avg_ths": 206.9,
+      "baseline_avg_ths": 978.8,
+      "drop_pct": 79,
+      "cv_pct": 125,
       "zero_rate_pct": 50
     },
     "everminer.e21xp012": {
@@ -47,10 +47,10 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)",
       "type": "level_drop",
-      "current_avg_ths": 99.2,
-      "baseline_avg_ths": 191.4,
-      "drop_pct": 48,
-      "cv_pct": 3,
+      "current_avg_ths": 99.8,
+      "baseline_avg_ths": 184.3,
+      "drop_pct": 46,
+      "cv_pct": 4,
       "zero_rate_pct": 0
     },
     "cmine.omxdefault": {
@@ -60,10 +60,10 @@
       "group_id": "OM",
       "provider": "Open Mine",
       "type": "level_drop",
-      "current_avg_ths": 816.1,
-      "baseline_avg_ths": 4274.5,
-      "drop_pct": 81,
-      "cv_pct": 6,
+      "current_avg_ths": 839.5,
+      "baseline_avg_ths": 4064.4,
+      "drop_pct": 79,
+      "cv_pct": 3,
       "zero_rate_pct": 0
     }
   }

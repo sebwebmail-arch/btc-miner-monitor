@@ -505,8 +505,8 @@ body::after {
                 <th>Datacenter</th>
                 <th class="col-sm-hide">Account</th>
                 <th class="col-sm-hide">DC share</th>
-                <th class="col-sm-hide">Avg HR (when up)</th>
                 <th class="col-sm-hide">Throughput</th>
+                <th class="col-sm-hide">Continuity</th>
                 <th class="col-sm-hide">Breach</th>
                 <th class="sla-col">Combined</th>
                 <th class="spark-cell col-sm-hide">7d</th>
@@ -953,8 +953,8 @@ async function main() {
 
       perfRows.push({
         id: gd.id, provider: gd.provider, account: acctName,
-        dcShare: dcShare * 100, dcNominal, avgDC,
-        throughput, combined, breachPct, breachN, sparkVals: dcSparkVals,
+        dcShare: dcShare * 100,
+        throughput, continuity: cont?.uptime ?? null, combined, breachPct, breachN, sparkVals: dcSparkVals,
       });
     }
   }
@@ -976,10 +976,10 @@ async function main() {
           rows: [
             { label: HAS_30D ? 'Combined SLA (30d)' : 'Combined SLA (7d)', value: slaPill(slaDisp) },
             ...(HAS_30D && r.combined != null ? [{ label: 'Trend 7d (combined)', value: slaPill(r.combined) }] : []),
-            { label: 'Throughput',       value: slaPill(r.throughput) },
-            { label: 'Breach resp.',     value: breachVal },
-            { label: 'DC share',         value: fmtPct(r.dcShare) },
-            { label: 'Avg HR (up)',      value: fmtTH(r.avgDC) },
+            { label: 'Throughput',   value: slaPill(r.throughput) },
+            { label: 'Continuity',   value: r.continuity != null ? slaPill(r.continuity) : '—' },
+            { label: 'Breach resp.', value: breachVal },
+            { label: 'DC share',     value: fmtPct(r.dcShare) },
             { label: 'Breach snapshots', value: `${r.breachN}` },
             { label: 'Daily data',       value: `${vals30.length} / 30 days` },
           ],
@@ -989,8 +989,8 @@ async function main() {
           <td style="white-space:nowrap"><span class="dc-badge">${r.id}</span>${r.provider}</td>
           <td class="col-sm-hide" style="white-space:nowrap">${fmtAcct(r.account)}</td>
           <td class="mono col-sm-hide">${fmtPct(r.dcShare)}</td>
-          <td class="mono col-sm-hide">${fmtTH(r.avgDC)}</td>
           <td class="col-sm-hide">${slaPill(r.throughput)}</td>
+          <td class="col-sm-hide">${r.continuity != null ? slaPill(r.continuity) : '—'}</td>
           <td class="col-sm-hide">${breachVal}</td>
           <td>${slaPill(slaDisp)}</td>
           ${buildSparkline(r.sparkVals, slaDisp, 90, 'col-sm-hide')}

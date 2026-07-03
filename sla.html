@@ -505,6 +505,7 @@ body::after {
                 <th>Datacenter</th>
                 <th class="col-sm-hide">Account</th>
                 <th class="col-sm-hide">DC share</th>
+                <th class="col-sm-hide">Expected</th>
                 <th class="col-sm-hide">Throughput</th>
                 <th class="col-sm-hide">Continuity</th>
                 <th class="col-sm-hide">Breach</th>
@@ -514,7 +515,7 @@ body::after {
               </tr>
             </thead>
             <tbody id="perf-body">
-              <tr><td colspan="9" style="padding:24px;text-align:center;color:var(--text-muted)">Loading…</td></tr>
+              <tr><td colspan="10" style="padding:24px;text-align:center;color:var(--text-muted)">Loading…</td></tr>
             </tbody>
           </table>
         </div>
@@ -953,7 +954,7 @@ async function main() {
 
       perfRows.push({
         id: gd.id, provider: gd.provider, account: acctName,
-        dcShare: dcShare * 100,
+        dcShare: dcShare * 100, expected: avgDC,
         throughput, continuity: cont?.uptime ?? null, combined, breachPct, breachN, sparkVals: dcSparkVals,
       });
     }
@@ -976,6 +977,7 @@ async function main() {
           rows: [
             { label: HAS_30D ? 'Combined SLA (30d)' : 'Combined SLA (7d)', value: slaPill(slaDisp) },
             ...(HAS_30D && r.combined != null ? [{ label: 'Trend 7d (combined)', value: slaPill(r.combined) }] : []),
+            { label: 'Expected',     value: fmtTH(r.expected) },
             { label: 'Throughput',   value: slaPill(r.throughput) },
             { label: 'Continuity',   value: r.continuity != null ? slaPill(r.continuity) : '—' },
             { label: 'Breach resp.', value: breachVal },
@@ -989,6 +991,7 @@ async function main() {
           <td style="white-space:nowrap"><span class="dc-badge">${r.id}</span>${r.provider}</td>
           <td class="col-sm-hide" style="white-space:nowrap">${fmtAcct(r.account)}</td>
           <td class="mono col-sm-hide">${fmtPct(r.dcShare)}</td>
+          <td class="mono col-sm-hide">${fmtTH(r.expected)}</td>
           <td class="col-sm-hide">${slaPill(r.throughput)}</td>
           <td class="col-sm-hide">${r.continuity != null ? slaPill(r.continuity) : '—'}</td>
           <td class="col-sm-hide">${breachVal}</td>

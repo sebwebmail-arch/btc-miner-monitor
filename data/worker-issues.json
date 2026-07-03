@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-03T08:01:04.575Z",
+  "last_updated": "2026-07-03T08:30:54.946Z",
   "issues": {
     "cmine.r20905": {
       "account": "cmine",
@@ -8,10 +8,10 @@
       "group_id": "R1",
       "provider": "IZTM",
       "type": "level_drop",
-      "current_avg_ths": 105.6,
-      "baseline_avg_ths": 243.5,
+      "current_avg_ths": 103.6,
+      "baseline_avg_ths": 240.8,
       "drop_pct": 57,
-      "cv_pct": 49,
+      "cv_pct": 48,
       "zero_rate_pct": 0
     },
     "cmine.r20437": {
@@ -21,10 +21,10 @@
       "group_id": "R1",
       "provider": "IZTM",
       "type": "volatile",
-      "current_avg_ths": 52.8,
-      "baseline_avg_ths": 184,
-      "drop_pct": 71,
-      "cv_pct": 124,
+      "current_avg_ths": 47.1,
+      "baseline_avg_ths": 183.5,
+      "drop_pct": 74,
+      "cv_pct": 116,
       "zero_rate_pct": 50
     },
     "cmine.r21039": {
@@ -34,10 +34,10 @@
       "group_id": "R1",
       "provider": "IZTM",
       "type": "level_drop",
-      "current_avg_ths": 74.5,
-      "baseline_avg_ths": 206.4,
-      "drop_pct": 64,
-      "cv_pct": 94,
+      "current_avg_ths": 89.7,
+      "baseline_avg_ths": 204.7,
+      "drop_pct": 56,
+      "cv_pct": 104,
       "zero_rate_pct": 33
     },
     "cmine.r20927": {
@@ -46,10 +46,10 @@
       "worker": "r20927",
       "group_id": "R1",
       "provider": "IZTM",
-      "type": "level_drop",
-      "current_avg_ths": 70.4,
-      "baseline_avg_ths": 134.1,
-      "drop_pct": 48,
+      "type": "volatile",
+      "current_avg_ths": 87.4,
+      "baseline_avg_ths": 132.6,
+      "drop_pct": 34,
       "cv_pct": 88,
       "zero_rate_pct": 33
     }

@@ -507,8 +507,8 @@ body::after {
                 <th class="col-sm-hide">DC share</th>
                 <th class="col-sm-hide">Avg HR (when up)</th>
                 <th class="col-sm-hide">Throughput</th>
-                <th class="sla-col">Combined</th>
                 <th class="col-sm-hide">Breach</th>
+                <th class="sla-col">Combined</th>
                 <th class="spark-cell col-sm-hide">7d</th>
                 <th class="spark-cell col-sm-hide">30d</th>
               </tr>
@@ -991,8 +991,8 @@ async function main() {
           <td class="mono col-sm-hide">${fmtPct(r.dcShare)}</td>
           <td class="mono col-sm-hide">${fmtTH(r.avgDC)}</td>
           <td class="col-sm-hide">${slaPill(r.throughput)}</td>
-          <td>${slaPill(slaDisp)}</td>
           <td class="col-sm-hide">${breachVal}</td>
+          <td>${slaPill(slaDisp)}</td>
           ${buildSparkline(r.sparkVals, slaDisp, 90, 'col-sm-hide')}
           ${buildSparkline(vals30, slaDisp, 56, 'col-sm-hide')}
         </tr>`;

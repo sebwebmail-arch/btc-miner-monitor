@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-02T05:30:48.719Z",
+  "last_updated": "2026-07-03T05:00:54.947Z",
   "snapshots": [
     {
       "ts": "2026-06-30T11:49:33.334Z",
@@ -69,18 +69,91 @@
       "dead_recent": 0,
       "dead_mid": 0,
       "dead_old": 0
+    },
+    {
+      "ts": "2026-07-03T05:00:54.947Z",
+      "by_account": {
+        "cmine": {
+          "name": "Cyberian Mine",
+          "total": 404,
+          "online": 399,
+          "offline": 4,
+          "dead": 1
+        },
+        "everminer": {
+          "name": "Everminer",
+          "total": 70,
+          "online": 69,
+          "offline": 1,
+          "dead": 0
+        }
+      },
+      "offline": 5,
+      "dead_recent": 1,
+      "dead_mid": 0,
+      "dead_old": 0
     }
   ],
   "workers": {},
   "current_issues": {
+    "cmine.c21xp024": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "c21xp024",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)",
+      "host": "69.204.13.233",
+      "last_share": "2026-07-03T02:16:24.000Z",
+      "category": "offline"
+    },
+    "cmine.c21xp001": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "c21xp001",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)",
+      "host": "69.204.13.233",
+      "last_share": "2026-07-02T16:58:38.000Z",
+      "category": "offline"
+    },
+    "cmine.r00420": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "r00420",
+      "group_id": "R1",
+      "provider": "IZTM",
+      "host": "45.8.93.188",
+      "last_share": "2026-07-02T07:20:02.000Z",
+      "category": "offline"
+    },
     "cmine.c21xp009": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
       "name": "c21xp009",
       "group_id": "U3",
       "provider": "ValueHash (NY)",
-      "host": "69.204.2.173",
+      "host": "?",
       "last_share": "2026-07-02T02:33:05.000Z",
+      "category": "dead_recent"
+    },
+    "cmine.c21xp030": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "c21xp030",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)",
+      "host": "69.204.13.233",
+      "last_share": "2026-07-02T15:19:03.000Z",
+      "category": "offline"
+    },
+    "everminer.e21xp009": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "e21xp009",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)",
+      "host": "69.204.2.173",
+      "last_share": "2026-07-02T14:00:03.000Z",
       "category": "offline"
     }
   }

@@ -1,34 +1,6 @@
 {
-  "last_updated": "2026-07-04T17:01:02.994Z",
+  "last_updated": "2026-07-04T17:30:52.291Z",
   "offline": {
-    "cmine.k2lx132x9x40": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "k2lx132x9x40",
-      "group_id": "R3",
-      "provider": "Minto"
-    },
-    "cmine.025": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "025",
-      "group_id": "E1",
-      "provider": "BitCluster"
-    },
-    "cmine.032": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "032",
-      "group_id": "E1",
-      "provider": "BitCluster"
-    },
-    "cmine.014": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "014",
-      "group_id": "E1",
-      "provider": "BitCluster"
-    },
     "cmine.030": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
@@ -36,12 +8,12 @@
       "group_id": "E1",
       "provider": "BitCluster"
     },
-    "cmine.c21xp031": {
+    "cmine.k2lx132x9x40": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
-      "name": "c21xp031",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)"
+      "name": "k2lx132x9x40",
+      "group_id": "R3",
+      "provider": "Minto"
     },
     "cmine.031": {
       "account": "cmine",
@@ -57,10 +29,10 @@
       "group_id": "E1",
       "provider": "BitCluster"
     },
-    "cmine.029": {
+    "cmine.027": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
-      "name": "029",
+      "name": "027",
       "group_id": "E1",
       "provider": "BitCluster"
     },
@@ -71,31 +43,38 @@
       "group_id": "E1",
       "provider": "BitCluster"
     },
-    "cmine.027": {
+    "cmine.025": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
-      "name": "027",
+      "name": "025",
       "group_id": "E1",
       "provider": "BitCluster"
     },
-    "everminer.018": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "018",
+    "cmine.014": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "014",
       "group_id": "E1",
       "provider": "BitCluster"
     },
-    "everminer.016": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "016",
+    "cmine.032": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "032",
       "group_id": "E1",
       "provider": "BitCluster"
     },
-    "everminer.015": {
+    "cmine.029": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "029",
+      "group_id": "E1",
+      "provider": "BitCluster"
+    },
+    "everminer.002": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "015",
+      "name": "002",
       "group_id": "E1",
       "provider": "BitCluster"
     },
@@ -106,17 +85,31 @@
       "group_id": "E1",
       "provider": "BitCluster"
     },
+    "everminer.018": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "018",
+      "group_id": "E1",
+      "provider": "BitCluster"
+    },
+    "everminer.015": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "015",
+      "group_id": "E1",
+      "provider": "BitCluster"
+    },
+    "everminer.016": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "016",
+      "group_id": "E1",
+      "provider": "BitCluster"
+    },
     "everminer.019": {
       "account": "everminer",
       "account_name": "Everminer",
       "name": "019",
-      "group_id": "E1",
-      "provider": "BitCluster"
-    },
-    "everminer.020": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "020",
       "group_id": "E1",
       "provider": "BitCluster"
     },
@@ -127,10 +120,10 @@
       "group_id": "E1",
       "provider": "BitCluster"
     },
-    "everminer.002": {
+    "everminer.020": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "002",
+      "name": "020",
       "group_id": "E1",
       "provider": "BitCluster"
     }

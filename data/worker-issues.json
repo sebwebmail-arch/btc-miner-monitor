@@ -1,6 +1,19 @@
 {
-  "last_updated": "2026-07-04T02:30:48.304Z",
+  "last_updated": "2026-07-04T03:00:58.829Z",
   "issues": {
+    "cmine.c21xp031": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "worker": "c21xp031",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)",
+      "type": "volatile",
+      "current_avg_ths": 5.3,
+      "baseline_avg_ths": 182.1,
+      "drop_pct": 97,
+      "cv_pct": 224,
+      "zero_rate_pct": 83
+    },
     "cmine.ynahfkabdajbh01": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
@@ -8,11 +21,11 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "type": "volatile",
-      "current_avg_ths": 1184.3,
-      "baseline_avg_ths": 1551.6,
-      "drop_pct": 24,
-      "cv_pct": 113,
-      "zero_rate_pct": 50
+      "current_avg_ths": 1697.6,
+      "baseline_avg_ths": 1429,
+      "drop_pct": -19,
+      "cv_pct": 81,
+      "zero_rate_pct": 33
     },
     "cmine.ynahfkabdajba01": {
       "account": "cmine",
@@ -21,11 +34,11 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "type": "volatile",
-      "current_avg_ths": 87.7,
-      "baseline_avg_ths": 122,
-      "drop_pct": 28,
-      "cv_pct": 110,
-      "zero_rate_pct": 50
+      "current_avg_ths": 132.1,
+      "baseline_avg_ths": 112.4,
+      "drop_pct": -18,
+      "cv_pct": 81,
+      "zero_rate_pct": 33
     },
     "cmine.ngsbfmabdjiaj02": {
       "account": "cmine",
@@ -34,11 +47,11 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "type": "volatile",
-      "current_avg_ths": 2037,
-      "baseline_avg_ths": 2761.7,
-      "drop_pct": 26,
-      "cv_pct": 111,
-      "zero_rate_pct": 50
+      "current_avg_ths": 2903.1,
+      "baseline_avg_ths": 2540.9,
+      "drop_pct": -14,
+      "cv_pct": 79,
+      "zero_rate_pct": 33
     },
     "cmine.ynahfkabdajbh02": {
       "account": "cmine",
@@ -47,11 +60,11 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "type": "volatile",
-      "current_avg_ths": 380,
-      "baseline_avg_ths": 520.4,
-      "drop_pct": 27,
-      "cv_pct": 109,
-      "zero_rate_pct": 50
+      "current_avg_ths": 544.8,
+      "baseline_avg_ths": 477.2,
+      "drop_pct": -14,
+      "cv_pct": 78,
+      "zero_rate_pct": 33
     },
     "cmine.ynahfkabdjiai08": {
       "account": "cmine",
@@ -60,11 +73,11 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "type": "volatile",
-      "current_avg_ths": 178.7,
-      "baseline_avg_ths": 242.6,
-      "drop_pct": 26,
-      "cv_pct": 113,
-      "zero_rate_pct": 50
+      "current_avg_ths": 257.9,
+      "baseline_avg_ths": 223.8,
+      "drop_pct": -15,
+      "cv_pct": 81,
+      "zero_rate_pct": 33
     },
     "everminer.dgahfkabdjfae06": {
       "account": "everminer",
@@ -73,11 +86,11 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "type": "volatile",
-      "current_avg_ths": 107,
-      "baseline_avg_ths": 319.1,
-      "drop_pct": 66,
-      "cv_pct": 154,
-      "zero_rate_pct": 67
+      "current_avg_ths": 186.8,
+      "baseline_avg_ths": 300.9,
+      "drop_pct": 38,
+      "cv_pct": 109,
+      "zero_rate_pct": 50
     },
     "everminer.ynahfkabdjiai04": {
       "account": "everminer",
@@ -86,11 +99,11 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "type": "volatile",
-      "current_avg_ths": 96.5,
-      "baseline_avg_ths": 116.4,
-      "drop_pct": 17,
-      "cv_pct": 109,
-      "zero_rate_pct": 50
+      "current_avg_ths": 132.7,
+      "baseline_avg_ths": 107,
+      "drop_pct": -24,
+      "cv_pct": 78,
+      "zero_rate_pct": 33
     },
     "everminer.dgahfkabdjfae04": {
       "account": "everminer",
@@ -99,11 +112,11 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "type": "volatile",
-      "current_avg_ths": 354.3,
-      "baseline_avg_ths": 982.7,
-      "drop_pct": 64,
-      "cv_pct": 152,
-      "zero_rate_pct": 50
+      "current_avg_ths": 587.4,
+      "baseline_avg_ths": 925.7,
+      "drop_pct": 37,
+      "cv_pct": 107,
+      "zero_rate_pct": 33
     },
     "everminer.ynahfkabdajbh02": {
       "account": "everminer",
@@ -112,11 +125,11 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "type": "volatile",
-      "current_avg_ths": 160.6,
-      "baseline_avg_ths": 211.2,
-      "drop_pct": 24,
-      "cv_pct": 112,
-      "zero_rate_pct": 50
+      "current_avg_ths": 230.1,
+      "baseline_avg_ths": 195,
+      "drop_pct": -18,
+      "cv_pct": 80,
+      "zero_rate_pct": 33
     },
     "everminer.piemfmabdajcj01": {
       "account": "everminer",
@@ -125,11 +138,11 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "type": "volatile",
-      "current_avg_ths": 1043.4,
-      "baseline_avg_ths": 1274.5,
-      "drop_pct": 18,
-      "cv_pct": 111,
-      "zero_rate_pct": 50
+      "current_avg_ths": 1497.1,
+      "baseline_avg_ths": 1172.3,
+      "drop_pct": -28,
+      "cv_pct": 80,
+      "zero_rate_pct": 33
     },
     "everminer.ngsbfmabdjiaj02": {
       "account": "everminer",
@@ -138,11 +151,11 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "type": "volatile",
-      "current_avg_ths": 1587.7,
-      "baseline_avg_ths": 2090,
-      "drop_pct": 24,
-      "cv_pct": 112,
-      "zero_rate_pct": 50
+      "current_avg_ths": 2275.5,
+      "baseline_avg_ths": 1917.7,
+      "drop_pct": -19,
+      "cv_pct": 80,
+      "zero_rate_pct": 33
     },
     "everminer.olttfkabdjfje01": {
       "account": "everminer",
@@ -151,11 +164,11 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "type": "volatile",
-      "current_avg_ths": 289.5,
-      "baseline_avg_ths": 735.2,
-      "drop_pct": 61,
-      "cv_pct": 151,
-      "zero_rate_pct": 50
+      "current_avg_ths": 485.5,
+      "baseline_avg_ths": 695.9,
+      "drop_pct": 30,
+      "cv_pct": 107,
+      "zero_rate_pct": 33
     },
     "everminer.ynahfkabdajbh01": {
       "account": "everminer",
@@ -164,11 +177,11 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "type": "volatile",
-      "current_avg_ths": 692.6,
-      "baseline_avg_ths": 974.2,
-      "drop_pct": 29,
-      "cv_pct": 112,
-      "zero_rate_pct": 50
+      "current_avg_ths": 1006.2,
+      "baseline_avg_ths": 894.4,
+      "drop_pct": -13,
+      "cv_pct": 80,
+      "zero_rate_pct": 33
     },
     "cmine.omxdefault": {
       "account": "cmine",
@@ -177,10 +190,10 @@
       "group_id": "OM",
       "provider": "Open Mine",
       "type": "level_drop",
-      "current_avg_ths": 1669,
-      "baseline_avg_ths": 3721.6,
-      "drop_pct": 55,
-      "cv_pct": 54,
+      "current_avg_ths": 2065.2,
+      "baseline_avg_ths": 3530.8,
+      "drop_pct": 42,
+      "cv_pct": 48,
       "zero_rate_pct": 0
     }
   }

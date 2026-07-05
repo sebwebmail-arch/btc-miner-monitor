@@ -292,6 +292,12 @@ body::after {
 .dead-empty { font-size: 12px; color: var(--text-muted); font-style: italic; padding: 8px 0; }
 .arch-note { font-size: 11px; color: var(--text-muted); font-style: italic; }
 
+/* ── Watchlist section header inside online table ── */
+.wl-hdr-row td { padding: 7px 12px 5px; background: var(--accent-red-dim); border-bottom: 1px solid rgba(192,57,43,0.18); }
+.wl-hdr-row .wl-hdr-title { font-size: 11px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--accent-red); }
+.wl-hdr-row .wl-hdr-note  { font-size: 11px; color: var(--text-muted); margin-left: 8px; }
+.wl-sep-row td { height: 6px; padding: 0; background: var(--border); }
+
 /* ── Anomaly badges ── */
 .anomaly-badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; white-space: nowrap; }
 .badge-drop { background: var(--accent-red-dim); color: var(--accent-red); }
@@ -1287,72 +1293,6 @@ function buildWorkerAnomalies() {
   </div>`;
 }
 
-// ── Still Degraded — Watchlist panel ─────────────────────────────────────────
-
-function buildWatchlistPanel() {
-  const entries = (_watchlist && _watchlist.entries) ? _watchlist.entries : [];
-  if (entries.length === 0) return ''; // rien à montrer
-
-  const fmtHR = hr => {
-    if (hr == null) return '—';
-    const ths = hr / 1e12;
-    return ths >= 1 ? ths.toFixed(1) + ' TH/s' : (hr / 1e9).toFixed(1) + ' GH/s';
-  };
-  const fmtDur = h => {
-    if (h < 1) return Math.round(h * 60) + 'm';
-    if (h < 24) return h.toFixed(1) + 'h';
-    return (h / 24).toFixed(1) + 'd';
-  };
-  const durClass = h => h >= 24 ? 'dur-red' : h >= 6 ? 'dur-orange' : '';
-  const dropClass = pct => pct >= 70 ? 'dur-red' : pct >= 40 ? 'dur-orange' : '';
-
-  const rows = entries.map(e => {
-    const name = e.type === 'worker_anomaly' ? e.worker : `Group ${e.group_id}`;
-    const typeLabel = e.type === 'worker_anomaly'
-      ? (e.anomaly_type === 'volatile' ? '<span class="anomaly-badge badge-volt">∿ Unstable</span>' : '<span class="anomaly-badge badge-drop">📉 Drop</span>')
-      : '<span class="anomaly-badge badge-drop">📉 Group drop</span>';
-    return `<tr>
-      <td style="font-family:var(--mono);font-size:12px;white-space:nowrap">${name}</td>
-      <td>${e.account_name || e.account}</td>
-      <td><span class="group-badge">${e.group_id}</span></td>
-      <td>${typeLabel}</td>
-      <td style="font-family:var(--mono);font-size:12px">${fmtHR(e.current_hr)}</td>
-      <td style="font-family:var(--mono);font-size:12px;color:var(--text-muted)">${fmtHR(e.baseline_hr)}</td>
-      <td class="${dropClass(e.drop_pct)}" style="font-family:var(--mono);font-size:12px;font-weight:600">−${e.drop_pct}%</td>
-      <td class="${durClass(e.duration_h)}" style="font-family:var(--mono);font-size:12px">${fmtDur(e.duration_h)}</td>
-    </tr>`;
-  }).join('');
-
-  return `
-  <div>
-    <div class="section-label" style="display:flex;justify-content:space-between;align-items:baseline">
-      <span>Still degraded</span>
-      <span class="section-note">⏱ Checked every 30 min · auto-clears on recovery</span>
-    </div>
-    <div class="panel panel-table" style="border-left:3px solid var(--accent-red)">
-      <div class="panel-header">
-        <div class="panel-title" style="color:var(--accent-red)">⚠ ${entries.length} worker${entries.length > 1 ? 's' : ''} / group${entries.length > 1 ? 's' : ''} under surveillance</div>
-        <div class="panel-note">Drop detected · not yet recovered to 75% of baseline</div>
-      </div>
-      <div style="overflow-x:auto">
-        <table class="dead-table" style="min-width:600px">
-          <thead><tr>
-            <th><div class="th-inner">Worker / Group</div></th>
-            <th><div class="th-inner">Account</div></th>
-            <th><div class="th-inner">DC</div></th>
-            <th><div class="th-inner">Type</div></th>
-            <th><div class="th-inner">Now</div></th>
-            <th><div class="th-inner">Baseline</div></th>
-            <th><div class="th-inner">Drop</div></th>
-            <th><div class="th-inner">Duration</div></th>
-          </tr></thead>
-          <tbody>${rows}</tbody>
-        </table>
-      </div>
-    </div>
-  </div>`;
-}
-
 // ── Online workers (healthy — bas de page) ────────────────────────────────────
 
 let _onlineSortCol = 'account';
@@ -1607,8 +1547,50 @@ function renderOnlineTable() {
   }).join('');
 
   const emptyRow = workers.length === 0
-    ? `<tr><td colspan="8" style="padding:20px;text-align:center;color:var(--text-muted);font-size:12px">No workers match the current filters.</td></tr>`
+    ? `<tr><td colspan="7" style="padding:20px;text-align:center;color:var(--text-muted);font-size:12px">No workers match the current filters.</td></tr>`
     : '';
+
+  // ── Watchlist rows (Still Degraded) — toujours en tête de table ──────────
+  const fmtDur = h => h < 1 ? Math.round(h * 60) + 'm' : h < 24 ? h.toFixed(1) + 'h' : (h / 24).toFixed(1) + 'd';
+  const durClass = h => h >= 24 ? 'dur-red' : h >= 6 ? 'dur-orange' : '';
+
+  const wlEntries = (_watchlist?.entries || []).filter(e => {
+    if (_dcFilter.size && !_dcFilter.has(e.group_id)) return false;
+    if (_onlineSearch) {
+      const name = (e.worker || `group${e.group_id}`).toLowerCase();
+      if (!name.includes(_onlineSearch)) return false;
+    }
+    return true;
+  });
+
+  const wlRows = wlEntries.length === 0 ? '' :
+    `<tr class="wl-hdr-row"><td colspan="7">
+       <span class="wl-hdr-title">⚠ Still degraded</span>
+       <span class="wl-hdr-note">not yet recovered to 75% of baseline · ${wlEntries.length} item${wlEntries.length > 1 ? 's' : ''}</span>
+     </td></tr>` +
+    wlEntries.map(e => {
+      const name   = e.type === 'worker_anomaly' ? e.worker : `Group ${e.group_id}`;
+      const nowTH  = e.current_hr  ? (e.current_hr  / 1e12).toFixed(1) : '—';
+      const baseTH = e.baseline_hr ? (e.baseline_hr / 1e12).toFixed(1) : '—';
+      const wkKey  = e.type === 'worker_anomaly' ? `${e.account}.${e.worker}` : null;
+      const spark  = wkKey ? miniSparkline(wkKey, 12) : '<span style="color:var(--text-muted)">—</span>';
+      const clickAttr = wkKey ? `onclick="openWorkerModal('${wkKey}')" style="cursor:pointer"` : '';
+      const dropLabel = `−${e.drop_pct}%`;
+      const durLabel  = `<span class="${durClass(e.duration_h)}">${fmtDur(e.duration_h)}</span>`;
+      return `<tr class="row-drop" ${clickAttr}>
+        <td><span class="worker-name">${name}</span></td>
+        <td class="online-acct">
+          <span class="account-label acct-long">${e.account_name || e.account}</span>
+          <span class="account-label acct-short" style="display:none">${e.account}</span>
+        </td>
+        <td class="td-dc"><span class="group-badge">${e.group_id}</span><span class="prov-name"> ${e.provider || ''}</span></td>
+        <td><span class="anomaly-badge badge-drop">${DROP_SVG}<span class="badge-label"> ${dropLabel} · ${durLabel}</span></span></td>
+        <td class="hr-now">${nowTH}<span class="hr-unit"> TH/s</span></td>
+        <td class="hr-avg mob-hide" title="Baseline: ${baseTH} TH/s">${baseTH} <span style="font-size:10px;color:var(--text-muted)">base</span></td>
+        <td class="spark-td mob-hide">${spark}</td>
+      </tr>`;
+    }).join('') +
+    `<tr class="wl-sep-row"><td colspan="7"></td></tr>`;
 
   wrap.innerHTML = `<table class="online-table">
     <thead><tr>
@@ -1620,7 +1602,7 @@ function renderOnlineTable() {
       <th class="mob-hide">Avg 3h</th>
       <th class="mob-hide">6h trend</th>
     </tr></thead>
-    <tbody>${emptyRow || tbody}</tbody>
+    <tbody>${wlRows}${emptyRow || tbody}</tbody>
   </table>`;
 }
 
@@ -1986,7 +1968,6 @@ async function render() {
     buildHashrateSection() +
     buildDatacenters(issues) +
     buildDeadTracker(issues) +
-    buildWatchlistPanel() +
     buildOnlineWorkers();
 
   document.getElementById('loading').style.display = 'none';

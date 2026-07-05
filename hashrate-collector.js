@@ -976,7 +976,7 @@ async function main() {
   console.log(`   Offline temps réel: ${Object.keys(offlineNow).length} worker(s)`);
 
   // ── 6. Rapport matin (05:00 UTC) ──────────────────────────────────────────
-  if (now.getUTCHours() === MORNING_HOUR_UTC) {
+  if (now.getUTCHours() === MORNING_HOUR_UTC && now.getUTCMinutes() < 15) {
     const morningKey = 'morning_report';
     const lastMorning = alertState[morningKey];
     const morningOk   = !lastMorning || (now - new Date(lastMorning)) > MORNING_COOLDOWN_H * 3600000;

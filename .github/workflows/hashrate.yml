@@ -15,6 +15,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Sync latest data files
+        run: git pull --rebase origin main
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:

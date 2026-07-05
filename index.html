@@ -985,10 +985,17 @@ function openWorkerModal(key) {
     ? `<span class="age-pill" style="background:rgba(22,163,74,0.10);color:var(--accent-green)">● Online${lastHRTH ? ' · ' + lastHRTH + ' TH/s' : ''}</span>`
     : `<span class="age-pill ${pillClass(cat)}">${pillLabel(cat, w.last_share)}</span>`;
 
-  // Badge anomalie (drop / instable) à afficher dans la modale
+  // Badge watchlist (contexte de l'alerte qui a conduit au clic)
+  const wlEntry = _watchlist?.entries?.find(e => e.key === 'w.' + key);
+  const fmtDurM = h => h < 1 ? Math.round(h * 60) + 'm' : h < 24 ? Math.round(h) + 'h' : Math.floor(h / 24) + 'd';
+  const wlBadge = wlEntry
+    ? `<span class="anomaly-badge badge-drop" title="At time of detection">${DROP_SVG}−${wlEntry.drop_pct}% · ${fmtDurM(wlEntry.duration_h)}</span>`
+    : '';
+
+  // Badge anomalie live (worker-issues.json — rolling 3h avg)
   const modalIssue = _workerIssues?.issues?.[key];
   const anomalyBadge = modalIssue?.type === 'level_drop'
-    ? `<span class="anomaly-badge badge-drop">${DROP_SVG}Drop ${modalIssue.drop_pct}%</span>`
+    ? `<span class="anomaly-badge badge-drop" ${wlEntry ? 'style="opacity:0.65"' : ''}>${DROP_SVG}Drop ${modalIssue.drop_pct}%${wlEntry ? `<span style="font-size:10px;font-weight:400;margin-left:3px">(3h avg vs ${modalIssue.baseline_avg_ths} TH/s)</span>` : ''}</span>`
     : modalIssue?.type === 'volatile'
       ? `<span class="anomaly-badge badge-volt">${WAVE_SVG}Unstable</span>`
       : '';
@@ -1000,7 +1007,7 @@ function openWorkerModal(key) {
     <div class="modal-head">
       <div>
         <div class="modal-worker">${w.name}</div>
-        <div style="margin-top:4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">${statusPill}${anomalyBadge}</div>
+        <div style="margin-top:4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">${statusPill}${wlBadge}${anomalyBadge}</div>
       </div>
       <div class="modal-close" onclick="closeModal()">✕</div>
     </div>

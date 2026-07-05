@@ -1460,6 +1460,25 @@ function renderOnlineTable() {
   // Cache for dropdown enumeration
   _onlineAllWorkers = all;
 
+  // ── Watchlist — calculé avant le filtre workers (évite TDZ) ─────────────
+  const fmtDur = h => h < 1 ? Math.round(h * 60) + 'm' : h < 24 ? h.toFixed(1) + 'h' : (h / 24).toFixed(1) + 'd';
+  const durClass = h => h >= 24 ? 'dur-red' : h >= 6 ? 'dur-orange' : '';
+
+  const wlEntries = (_watchlist?.entries || []).filter(e => {
+    if (e.duration_h < 1) return false; // drop trop récent — pas encore "still degraded"
+    if (_dcFilter.size && !_dcFilter.has(e.group_id)) return false;
+    if (_onlineSearch) {
+      const name = (e.worker || `group${e.group_id}`).toLowerCase();
+      if (!name.includes(_onlineSearch)) return false;
+    }
+    return true;
+  });
+
+  // Clés des workers watchlist → exclure du tableau normal (évite les doublons)
+  const wlWorkerKeys = new Set(
+    wlEntries.filter(e => e.type === 'worker_anomaly').map(e => `${e.account}.${e.worker}`)
+  );
+
   // Apply filters
   const hasFilters = _dcFilter.size || _onlineSearch || _onlineFilters.account.size || _onlineFilters.datacenter.size || _onlineFilters.status.size;
 
@@ -1551,25 +1570,7 @@ function renderOnlineTable() {
     ? `<tr><td colspan="7" style="padding:20px;text-align:center;color:var(--text-muted);font-size:12px">No workers match the current filters.</td></tr>`
     : '';
 
-  // ── Watchlist rows (Still Degraded) — toujours en tête de table ──────────
-  const fmtDur = h => h < 1 ? Math.round(h * 60) + 'm' : h < 24 ? h.toFixed(1) + 'h' : (h / 24).toFixed(1) + 'd';
-  const durClass = h => h >= 24 ? 'dur-red' : h >= 6 ? 'dur-orange' : '';
-
-  const wlEntries = (_watchlist?.entries || []).filter(e => {
-    if (e.duration_h < 1) return false; // drop trop récent — pas encore "still degraded"
-    if (_dcFilter.size && !_dcFilter.has(e.group_id)) return false;
-    if (_onlineSearch) {
-      const name = (e.worker || `group${e.group_id}`).toLowerCase();
-      if (!name.includes(_onlineSearch)) return false;
-    }
-    return true;
-  });
-
-  // Clés des workers watchlist → exclure du tableau normal (évite les doublons)
-  const wlWorkerKeys = new Set(
-    wlEntries.filter(e => e.type === 'worker_anomaly').map(e => `${e.account}.${e.worker}`)
-  );
-
+  // ── Watchlist rows (Still Degraded) ─────────────────────────────────────
   const wlRows = wlEntries.length === 0 ? '' :
     `<tr class="wl-hdr-row"><td colspan="7">
        <span class="wl-hdr-title">⚠ Still degraded</span>

@@ -1585,8 +1585,8 @@ function renderOnlineTable() {
      </td></tr>` +
     wlEntries.map(e => {
       const name   = e.type === 'worker_anomaly' ? e.worker : `Group ${e.group_id}`;
-      const nowTH  = e.current_hr  ? (e.current_hr  / 1e12).toFixed(1) : '—';
-      const baseTH = e.baseline_hr ? (e.baseline_hr / 1e12).toFixed(1) : '—';
+      const nowTH  = e.current_hr  != null ? (e.current_hr  / 1e12).toFixed(1) : '—';
+      const baseTH = e.baseline_hr != null ? (e.baseline_hr / 1e12).toFixed(1) : '—';
       const wkKey  = e.type === 'worker_anomaly' ? `${e.account}.${e.worker}` : null;
       const spark  = wkKey ? miniSparkline(wkKey, 12) : '<span style="color:var(--text-muted)">—</span>';
       const clickAttr = wkKey ? `onclick="openWorkerModal('${wkKey}')" style="cursor:pointer"` : '';

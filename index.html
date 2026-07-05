@@ -1461,7 +1461,7 @@ function renderOnlineTable() {
   _onlineAllWorkers = all;
 
   // ── Watchlist — calculé avant le filtre workers (évite TDZ) ─────────────
-  const fmtDur = h => h < 1 ? Math.round(h * 60) + 'm' : h < 24 ? h.toFixed(1) + 'h' : (h / 24).toFixed(1) + 'd';
+  const fmtDur = h => h < 1 ? Math.round(h * 60) + 'm' : h < 24 ? Math.round(h) + 'h' : Math.floor(h / 24) + 'd';
   const durClass = h => h >= 24 ? 'dur-red' : h >= 6 ? 'dur-orange' : '';
 
   const wlEntries = (_watchlist?.entries || []).filter(e => {

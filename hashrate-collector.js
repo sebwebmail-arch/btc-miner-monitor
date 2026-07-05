@@ -252,7 +252,17 @@ function detectWorkerAnomalies(hrData) {
     const variance = current.reduce((s, p) => s + Math.pow(p.hr - mean, 2), 0) / current.length;
     const cv       = Math.sqrt(variance) / mean;
 
-    const dropPct = baselineAvg > 0 ? (baselineAvg - currentAvg) / baselineAvg : 0;
+    // Sustained drop detection: si la baseline de 12h est elle-même dégradée
+    // (chute ancienne de >12h), on utilise le top-25% de tout l'historique disponible
+    let effectiveBaseline = baselineAvg;
+    if (snaps.length >= 96) { // au moins 48h d'historique
+      const allHR   = snaps.map(p => p.hr).sort((a, b) => b - a);
+      const topQ    = allHR.slice(0, Math.ceil(allHR.length * 0.25));
+      const topQAvg = topQ.reduce((s, h) => s + h, 0) / topQ.length;
+      if (topQAvg > effectiveBaseline * 1.5) effectiveBaseline = topQAvg;
+    }
+
+    const dropPct = effectiveBaseline > 0 ? (effectiveBaseline - currentAvg) / effectiveBaseline : 0;
 
     // Worker complètement offline → déjà suivi ailleurs, on skip
     if (currentAvg < MIN_HR_TH) continue;
@@ -285,8 +295,8 @@ function detectWorkerAnomalies(hrData) {
       group_id:         group.id,
       provider:         group.provider,
       type,
-      current_avg_ths:  +(currentAvg  / 1e12).toFixed(1),
-      baseline_avg_ths: +(baselineAvg / 1e12).toFixed(1),
+      current_avg_ths:  +(currentAvg         / 1e12).toFixed(1),
+      baseline_avg_ths: +(effectiveBaseline  / 1e12).toFixed(1),
       drop_pct:         Math.round(dropPct * 100),
       cv_pct:           Math.round(cv * 100),
       zero_rate_pct:    Math.round(zeroRate * 100),

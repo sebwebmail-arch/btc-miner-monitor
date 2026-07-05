@@ -1,4 +1,20 @@
 {
-  "last_updated": "2026-07-05T19:01:01.880Z",
-  "entries": []
+  "last_updated": "2026-07-05T19:09:19.682Z",
+  "entries": [
+    {
+      "key": "w.cmine.s21xp002",
+      "type": "worker_anomaly",
+      "provider": "Altos",
+      "group_id": "P1",
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "worker": "s21xp002",
+      "anomaly_type": "level_drop",
+      "baseline_hr": 513200000000000,
+      "current_hr": 46500000000000,
+      "drop_pct": 91,
+      "detected_at": "2026-06-30T19:00:00.000Z",
+      "duration_h": 120.2
+    }
+  ]
 }

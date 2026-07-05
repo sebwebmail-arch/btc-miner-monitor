@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-05T15:01:04.654Z",
+  "last_updated": "2026-07-05T15:30:56.498Z",
   "issues": {
     "cmine.s21xp002": {
       "account": "cmine",
@@ -8,10 +8,10 @@
       "group_id": "P1",
       "provider": "Altos",
       "type": "level_drop",
-      "current_avg_ths": 42.7,
-      "baseline_avg_ths": 151.1,
+      "current_avg_ths": 40.2,
+      "baseline_avg_ths": 141.1,
       "drop_pct": 72,
-      "cv_pct": 7,
+      "cv_pct": 18,
       "zero_rate_pct": 0
     }
   }

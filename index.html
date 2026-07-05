@@ -905,6 +905,7 @@ let _workerIssues  = null; // worker-issues.json
 let _offlineStatus = null; // offline-status.json (real-time offline workers)
 let _workerHosts   = {};   // worker-hosts.json (IP par worker)
 let _deadIssues    = {};   // history.json current_issues (dead/offline workers)
+let _watchlist     = null; // watchlist.json (post-drop surveillance)
 let _chartPts      = [];   // points du graphe modal courant (pour tooltip)
 let _chartGeo      = {};   // géométrie du graphe modal courant
 
@@ -1278,6 +1279,72 @@ function buildWorkerAnomalies() {
             <th><div class="th-inner">Current (3h avg)</div></th>
             <th><div class="th-inner">Baseline (12h)</div></th>
             <th><div class="th-inner">6h trend</div></th>
+          </tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ── Still Degraded — Watchlist panel ─────────────────────────────────────────
+
+function buildWatchlistPanel() {
+  const entries = (_watchlist && _watchlist.entries) ? _watchlist.entries : [];
+  if (entries.length === 0) return ''; // rien à montrer
+
+  const fmtHR = hr => {
+    if (hr == null) return '—';
+    const ths = hr / 1e12;
+    return ths >= 1 ? ths.toFixed(1) + ' TH/s' : (hr / 1e9).toFixed(1) + ' GH/s';
+  };
+  const fmtDur = h => {
+    if (h < 1) return Math.round(h * 60) + 'm';
+    if (h < 24) return h.toFixed(1) + 'h';
+    return (h / 24).toFixed(1) + 'd';
+  };
+  const durClass = h => h >= 24 ? 'dur-red' : h >= 6 ? 'dur-orange' : '';
+  const dropClass = pct => pct >= 70 ? 'dur-red' : pct >= 40 ? 'dur-orange' : '';
+
+  const rows = entries.map(e => {
+    const name = e.type === 'worker_anomaly' ? e.worker : `Group ${e.group_id}`;
+    const typeLabel = e.type === 'worker_anomaly'
+      ? (e.anomaly_type === 'volatile' ? '<span class="anomaly-badge badge-volt">∿ Unstable</span>' : '<span class="anomaly-badge badge-drop">📉 Drop</span>')
+      : '<span class="anomaly-badge badge-drop">📉 Group drop</span>';
+    return `<tr>
+      <td style="font-family:var(--mono);font-size:12px;white-space:nowrap">${name}</td>
+      <td>${e.account_name || e.account}</td>
+      <td><span class="group-badge">${e.group_id}</span></td>
+      <td>${typeLabel}</td>
+      <td style="font-family:var(--mono);font-size:12px">${fmtHR(e.current_hr)}</td>
+      <td style="font-family:var(--mono);font-size:12px;color:var(--text-muted)">${fmtHR(e.baseline_hr)}</td>
+      <td class="${dropClass(e.drop_pct)}" style="font-family:var(--mono);font-size:12px;font-weight:600">−${e.drop_pct}%</td>
+      <td class="${durClass(e.duration_h)}" style="font-family:var(--mono);font-size:12px">${fmtDur(e.duration_h)}</td>
+    </tr>`;
+  }).join('');
+
+  return `
+  <div>
+    <div class="section-label" style="display:flex;justify-content:space-between;align-items:baseline">
+      <span>Still degraded</span>
+      <span class="section-note">⏱ Checked every 30 min · auto-clears on recovery</span>
+    </div>
+    <div class="panel panel-table" style="border-left:3px solid var(--accent-red)">
+      <div class="panel-header">
+        <div class="panel-title" style="color:var(--accent-red)">⚠ ${entries.length} worker${entries.length > 1 ? 's' : ''} / group${entries.length > 1 ? 's' : ''} under surveillance</div>
+        <div class="panel-note">Drop detected · not yet recovered to 75% of baseline</div>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="dead-table" style="min-width:600px">
+          <thead><tr>
+            <th><div class="th-inner">Worker / Group</div></th>
+            <th><div class="th-inner">Account</div></th>
+            <th><div class="th-inner">DC</div></th>
+            <th><div class="th-inner">Type</div></th>
+            <th><div class="th-inner">Now</div></th>
+            <th><div class="th-inner">Baseline</div></th>
+            <th><div class="th-inner">Drop</div></th>
+            <th><div class="th-inner">Duration</div></th>
           </tr></thead>
           <tbody>${rows}</tbody>
         </table>
@@ -1875,12 +1942,13 @@ function buildHashrateSection() {
 async function render() {
   let data;
   try {
-    const [histRes, hrRes, wiRes, osRes, whRes] = await Promise.all([
+    const [histRes, hrRes, wiRes, osRes, whRes, wlRes] = await Promise.all([
       fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/history.json?t='        + Date.now()),
       fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/hashrate.json?t='       + Date.now()).catch(() => null),
       fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/worker-issues.json?t='  + Date.now()).catch(() => null),
       fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/offline-status.json?t=' + Date.now()).catch(() => null),
       fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/worker-hosts.json?t='   + Date.now()).catch(() => null),
+      fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/watchlist.json?t='      + Date.now()).catch(() => null),
     ]);
     if (!histRes.ok) throw new Error(`HTTP ${histRes.status}`);
     data = await histRes.json();
@@ -1888,6 +1956,7 @@ async function render() {
     if (wiRes && wiRes.ok) _workerIssues  = await wiRes.json();
     if (osRes && osRes.ok) _offlineStatus = await osRes.json();
     if (whRes && whRes.ok) _workerHosts   = await whRes.json();
+    if (wlRes && wlRes.ok) _watchlist     = await wlRes.json();
   } catch(e) {
     document.getElementById('loading').style.display = 'none';
     const err = document.getElementById('error-msg');
@@ -1917,6 +1986,7 @@ async function render() {
     buildHashrateSection() +
     buildDatacenters(issues) +
     buildDeadTracker(issues) +
+    buildWatchlistPanel() +
     buildOnlineWorkers();
 
   document.getElementById('loading').style.display = 'none';

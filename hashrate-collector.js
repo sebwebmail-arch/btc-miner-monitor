@@ -44,7 +44,11 @@ const HISTORY_PATH      = path.join(__dirname, 'data', 'history.json');
 const OFFLINESTATUS_PATH = path.join(__dirname, 'data', 'offline-status.json');
 const WORKERHOSTS_PATH   = path.join(__dirname, 'data', 'worker-hosts.json');
 const SLA_DAILY_PATH     = path.join(__dirname, 'data', 'sla-daily.json');
+const WATCHLIST_PATH     = path.join(__dirname, 'data', 'watchlist.json');
 const MAX_DAILY_ENTRIES  = 31; // 30 jours glissants + 1 marge
+
+const RECOVERY_THRESHOLD = 0.75; // 75% de la baseline = considéré récupéré
+const WATCHLIST_MAX_DAYS = 14;   // auto-expire après 14 jours sans récupération
 
 // Email destinataire rapport matin (commun aux deux comptes)
 const MORNING_ALERT_TO = process.env.ALERT_EMAIL || 'seb.webmail@gmail.com';
@@ -495,7 +499,7 @@ function updateHistory(h, now, allResults) {
   return h;
 }
 
-function buildMorningEmail(offlineByAccount, workerIssues, now) {
+function buildMorningEmail(offlineByAccount, workerIssues, watchlistEntries, now) {
   const date      = now.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
   const timeUTC   = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' });
   const timeParis = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' });
@@ -505,7 +509,8 @@ function buildMorningEmail(offlineByAccount, workerIssues, now) {
   const totalOffline    = offlineByAccount.reduce((s, a) => s + a.workers.length, 0);
   const anomalyList     = Object.values(workerIssues);
   const totalAnomalies  = anomalyList.length;
-  const allGood         = totalOffline === 0 && totalAnomalies === 0;
+  const totalWatchlist  = watchlistEntries.length;
+  const allGood         = totalOffline === 0 && totalAnomalies === 0 && totalWatchlist === 0;
 
   // ── Section workers offline ──
   const offlineSection = offlineByAccount
@@ -573,6 +578,40 @@ function buildMorningEmail(offlineByAccount, workerIssues, now) {
       </table>`;
   })();
 
+  // ── Section watchlist ──
+  const watchlistSection = totalWatchlist === 0 ? '' : (() => {
+    const rows = watchlistEntries.map(e => {
+      const label   = e.type === 'group_drop'
+        ? `${e.provider} (${e.group_id}) — ${e.account_name}`
+        : `${e.worker} · ${e.provider} (${e.group_id}) — ${e.account_name}`;
+      const typeTag = e.type === 'group_drop' ? 'Group drop' : (e.anomaly_type === 'level_drop' ? 'Level drop' : 'Unstable');
+      const baseTH  = (e.baseline_hr / 1e12).toFixed(1);
+      const nowTH   = (e.current_hr  / 1e12).toFixed(1);
+      const durLabel = e.duration_h < 24
+        ? `${e.duration_h}h`
+        : `${Math.floor(e.duration_h / 24)}d ${Math.round(e.duration_h % 24)}h`;
+      return `
+        <tr>
+          <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;font-size:13px;font-weight:600">${label}</td>
+          <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0"><span style="display:inline-block;padding:2px 8px;border-radius:100px;background:#fdecea;color:#c0392b;font-size:11px;font-weight:700">−${e.drop_pct}%</span></td>
+          <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;font-size:12px;color:#666">${nowTH} TH/s <span style="color:#aaa">/ ${baseTH} baseline</span></td>
+          <td style="padding:6px 12px;border-bottom:1px solid #f0f0f0;font-size:12px;color:#e67e22;font-weight:600">Since ${durLabel}</td>
+        </tr>`;
+    }).join('');
+    return `
+      <h3 style="margin:28px 0 8px;color:#1a1a14;font-size:16px">🔴 Still degraded — ongoing watch</h3>
+      <p style="margin:0 0 10px;font-size:12px;color:#999">These workers/groups were flagged and have not recovered to ≥75% of their baseline.</p>
+      <table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:1px solid #ddd;border-radius:6px;overflow:hidden">
+        <thead><tr style="background:#fdecea">
+          <th style="padding:8px 12px;text-align:left;font-size:12px;color:#c0392b;font-weight:600">WORKER / GROUP</th>
+          <th style="padding:8px 12px;text-align:left;font-size:12px;color:#c0392b;font-weight:600">DROP</th>
+          <th style="padding:8px 12px;text-align:left;font-size:12px;color:#c0392b;font-weight:600">NOW / BASELINE</th>
+          <th style="padding:8px 12px;text-align:left;font-size:12px;color:#c0392b;font-weight:600">DURATION</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  })();
+
   // ── En-tête ──
   const headerBg    = allGood ? '#27ae60' : totalOffline > 0 ? '#c0392b' : '#e67e22';
   const headerTitle = allGood
@@ -580,6 +619,7 @@ function buildMorningEmail(offlineByAccount, workerIssues, now) {
     : [
         totalOffline    > 0 ? `⚠️ ${totalOffline} worker${totalOffline > 1 ? 's' : ''} offline` : '',
         totalAnomalies  > 0 ? `⚡ ${totalAnomalies} warning${totalAnomalies > 1 ? 's' : ''}` : '',
+        totalWatchlist  > 0 ? `🔴 ${totalWatchlist} still degraded` : '',
       ].filter(Boolean).join(' · ');
 
   const allGoodSection = allGood
@@ -595,7 +635,7 @@ function buildMorningEmail(offlineByAccount, workerIssues, now) {
     <p style="margin:2px 0 0;color:rgba(255,255,255,.7);font-size:13px">${timeUTC} UTC — ${timeParis} ${tzLabel}</p>
   </div>
   <div style="padding:24px 32px">
-    ${allGoodSection}${offlineSection}${anomalySection}
+    ${allGoodSection}${watchlistSection}${offlineSection}${anomalySection}
     <div style="margin-top:32px;border-top:1px solid #f0f0f0;padding-top:24px;text-align:center">
       <a href="https://watcher.capone.market" style="display:inline-block;margin-bottom:16px;padding:8px 20px;background:#D97757;color:#000;text-decoration:none;border-radius:6px;font-size:13px;font-weight:600">Open dashboard →</a><br>
       <img src="https://capone.market/capone-fish-avatar-48-orange.svg" alt="capone" width="56" height="56" style="display:block;margin:0 auto 8px"/>
@@ -868,6 +908,19 @@ async function main() {
     try {
       await sendHashrateAlert(a.account, a.gid, a.provider, a.currentHR, a.refHR, a.dropPct, now);
       alertState[a.stateKey] = now.toISOString();
+      // Watchlist : surveillance post-drop
+      if (!alertState.watchlist) alertState.watchlist = {};
+      alertState.watchlist[`g.${a.stateKey}`] = {
+        type:        'group_drop',
+        baselineHR:  a.refHR,
+        currentHR:   a.currentHR,
+        provider:    a.provider,
+        groupId:     a.gid,
+        account:     a.account.user,
+        accountName: a.account.name,
+        detectedAt:  now.toISOString(),
+      };
+      console.log(`   👁️  Watchlist: ${a.stateKey} ajouté (baseline ${fmtTH(a.refHR)})`);
     } catch (err) {
       console.error(`   ❌ Alerte non envoyée pour ${a.stateKey}: ${err.message}`);
     }
@@ -889,6 +942,24 @@ async function main() {
       const account = ACCOUNTS.find(a => a.user === issue.account);
       if (account) workerAlertsToSend.push({ issue, account, stateKey });
       console.log(`   🚨 ${key}: ${issue.type} — drop ${issue.drop_pct}% / CV ${issue.cv_pct}%`);
+      // Watchlist : surveillance post-anomalie
+      if (!alertState.watchlist) alertState.watchlist = {};
+      const wlKey = `w.${key}`;
+      if (!alertState.watchlist[wlKey]) {
+        alertState.watchlist[wlKey] = {
+          type:        'worker_anomaly',
+          baselineHR:  issue.baseline_avg_ths * 1e12,
+          currentHR:   issue.current_avg_ths  * 1e12,
+          worker:      issue.worker,
+          provider:    issue.provider,
+          groupId:     issue.group_id,
+          account:     issue.account,
+          accountName: issue.account_name,
+          anomalyType: issue.type,
+          detectedAt:  now.toISOString(),
+        };
+        console.log(`   👁️  Watchlist: ${wlKey} ajouté (baseline ${issue.baseline_avg_ths} TH/s)`);
+      }
     } else {
       console.log(`   ⏳ ${key}: anomalie persistante (cooldown)`);
     }
@@ -898,6 +969,70 @@ async function main() {
 
   // Alertes Telegram worker désactivées — trop de bruit (fluctuations normales)
   // Les anomalies restent visibles dans le dashboard (worker-issues.json)
+
+  // ── 3c. Watchlist — recovery check (toutes les 30 min) ───────────────────
+  console.log('\n👁️  Vérification watchlist...');
+  if (!alertState.watchlist) alertState.watchlist = {};
+  const watchlistKeys = Object.keys(alertState.watchlist);
+  if (watchlistKeys.length === 0) {
+    console.log('   Watchlist vide.');
+  }
+  for (const wlKey of watchlistKeys) {
+    const entry = alertState.watchlist[wlKey];
+    // Auto-expire
+    const ageDays = (now - new Date(entry.detectedAt)) / 86400000;
+    if (ageDays > WATCHLIST_MAX_DAYS) {
+      console.log(`   🗑️  ${wlKey}: expiré (${Math.floor(ageDays)}j) — retiré`);
+      delete alertState.watchlist[wlKey];
+      continue;
+    }
+    // Récupère le HR actuel
+    let currentHR = 0;
+    if (entry.type === 'group_drop') {
+      const acct = ACCOUNTS.find(a => a.user === entry.account);
+      if (acct && allWorkers[acct.user]) {
+        currentHR = groupCurrentHR(allWorkers[acct.user], acct.user, entry.groupId);
+      }
+    } else if (entry.type === 'worker_anomaly') {
+      const workers = allWorkers[entry.account] || [];
+      const w = workers.find(w => w.hash_rate_info?.name === entry.worker);
+      currentHR = w ? (w.hash_rate_info?.h1_hash_rate ?? w.hash_rate_info?.hash_rate ?? 0) : 0;
+    }
+    entry.currentHR = currentHR;
+    const dropPct = entry.baselineHR > 0 ? Math.round((1 - currentHR / entry.baselineHR) * 100) : 0;
+    if (currentHR >= RECOVERY_THRESHOLD * entry.baselineHR) {
+      console.log(`   ✅ ${wlKey}: récupéré (${fmtTH(currentHR)} ≥ ${Math.round(RECOVERY_THRESHOLD*100)}% baseline) — retiré`);
+      delete alertState.watchlist[wlKey];
+    } else {
+      const durationH = ((now - new Date(entry.detectedAt)) / 3600000).toFixed(1);
+      console.log(`   ⚠️  ${wlKey}: toujours dégradé ${dropPct}% — ${fmtTH(currentHR)} depuis ${durationH}h`);
+    }
+  }
+  // Sauvegarde watchlist.json (lu par le dashboard)
+  const watchlistForDash = Object.entries(alertState.watchlist).map(([wlKey, entry]) => {
+    const durationH = +((now - new Date(entry.detectedAt)) / 3600000).toFixed(1);
+    const dropPct   = entry.baselineHR > 0 ? Math.round((1 - (entry.currentHR || 0) / entry.baselineHR) * 100) : 0;
+    return {
+      key:          wlKey,
+      type:         entry.type,
+      provider:     entry.provider,
+      group_id:     entry.groupId,
+      account:      entry.account,
+      account_name: entry.accountName,
+      worker:       entry.worker   || null,
+      anomaly_type: entry.anomalyType || null,
+      baseline_hr:  entry.baselineHR,
+      current_hr:   entry.currentHR || 0,
+      drop_pct:     dropPct,
+      detected_at:  entry.detectedAt,
+      duration_h:   durationH,
+    };
+  });
+  fs.writeFileSync(WATCHLIST_PATH, JSON.stringify({
+    last_updated: now.toISOString(),
+    entries: watchlistForDash,
+  }, null, 2));
+  console.log(`   ${watchlistForDash.length} entrée(s) en surveillance.`);
 
   // ── 4. Sauvegarde nouveaux snapshots ──────────────────────────────────────
   for (const account of ACCOUNTS) {
@@ -1007,7 +1142,7 @@ async function main() {
 
       // Email
       try {
-        const { subject, html } = buildMorningEmail(offlineByAccount, workerIssues, now);
+        const { subject, html } = buildMorningEmail(offlineByAccount, workerIssues, watchlistForDash, now);
         await sendEmail(MORNING_ALERT_TO, subject, html);
         alertState[morningKey] = now.toISOString();
         console.log(`   ✉️  Rapport envoyé → ${MORNING_ALERT_TO}`);

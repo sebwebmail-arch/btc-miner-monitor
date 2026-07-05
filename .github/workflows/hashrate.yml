@@ -38,6 +38,7 @@ jobs:
           TELEGRAM_CHAT_ID_CMINE: ${{ secrets.TELEGRAM_CHAT_ID_CMINE }}
           TELEGRAM_CHAT_ID_EVERMINER: ${{ secrets.TELEGRAM_CHAT_ID_EVERMINER }}
           TELEGRAM_CHAT_ID_PARAGUAY: ${{ secrets.TELEGRAM_CHAT_ID_PARAGUAY }}
+          TELEGRAM_CHAT_ID_MINTO: ${{ secrets.TELEGRAM_CHAT_ID_MINTO }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: node hashrate-collector.js
 
@@ -55,6 +56,7 @@ jobs:
           git add data/history.json          2>/dev/null || true
           git add data/offline-status.json   2>/dev/null || true
           git add data/worker-hosts.json     2>/dev/null || true
+          git add data/watchlist.json        2>/dev/null || true
           git status
           git diff --staged --quiet || git commit -m "data: hashrate $(date -u +'%Y-%m-%d %H:%M UTC')"
           git push && echo "push OK" || { echo "push FAILED: $?"; exit 128; }

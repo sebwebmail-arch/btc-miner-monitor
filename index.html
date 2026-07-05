@@ -1467,6 +1467,7 @@ function renderOnlineTable() {
   if (rb) rb.style.display = hasFilters ? 'block' : 'none';
 
   let workers = all.filter(w => {
+    if (wlWorkerKeys.has(w.key))                                                       return false; // déjà dans Still Degraded
     if (_dcFilter.size                 && !_dcFilter.has(w.groupId))                   return false;
     if (_onlineFilters.account.size    && !_onlineFilters.account.has(w.accountName)) return false;
     if (_onlineFilters.datacenter.size && !_onlineFilters.datacenter.has(w.groupId))  return false;
@@ -1555,6 +1556,7 @@ function renderOnlineTable() {
   const durClass = h => h >= 24 ? 'dur-red' : h >= 6 ? 'dur-orange' : '';
 
   const wlEntries = (_watchlist?.entries || []).filter(e => {
+    if (e.duration_h < 1) return false; // drop trop récent — pas encore "still degraded"
     if (_dcFilter.size && !_dcFilter.has(e.group_id)) return false;
     if (_onlineSearch) {
       const name = (e.worker || `group${e.group_id}`).toLowerCase();
@@ -1562,6 +1564,11 @@ function renderOnlineTable() {
     }
     return true;
   });
+
+  // Clés des workers watchlist → exclure du tableau normal (évite les doublons)
+  const wlWorkerKeys = new Set(
+    wlEntries.filter(e => e.type === 'worker_anomaly').map(e => `${e.account}.${e.worker}`)
+  );
 
   const wlRows = wlEntries.length === 0 ? '' :
     `<tr class="wl-hdr-row"><td colspan="7">

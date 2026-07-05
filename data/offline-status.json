@@ -1,24 +1,10 @@
 {
-  "last_updated": "2026-07-05T09:30:53.104Z",
+  "last_updated": "2026-07-05T10:01:06.276Z",
   "offline": {
-    "cmine.031": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "031",
-      "group_id": "E1",
-      "provider": "BitCluster"
-    },
     "cmine.033": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
       "name": "033",
-      "group_id": "E1",
-      "provider": "BitCluster"
-    },
-    "cmine.030": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "030",
       "group_id": "E1",
       "provider": "BitCluster"
     },
@@ -29,6 +15,20 @@
       "group_id": "E1",
       "provider": "BitCluster"
     },
+    "cmine.030": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "030",
+      "group_id": "E1",
+      "provider": "BitCluster"
+    },
+    "cmine.031": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "031",
+      "group_id": "E1",
+      "provider": "BitCluster"
+    },
     "cmine.032": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
@@ -36,17 +36,10 @@
       "group_id": "E1",
       "provider": "BitCluster"
     },
-    "everminer.015": {
+    "everminer.022": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "015",
-      "group_id": "E1",
-      "provider": "BitCluster"
-    },
-    "everminer.020": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "020",
+      "name": "022",
       "group_id": "E1",
       "provider": "BitCluster"
     },
@@ -57,10 +50,17 @@
       "group_id": "E1",
       "provider": "BitCluster"
     },
-    "everminer.022": {
+    "everminer.020": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "022",
+      "name": "020",
+      "group_id": "E1",
+      "provider": "BitCluster"
+    },
+    "everminer.015": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "015",
       "group_id": "E1",
       "provider": "BitCluster"
     }

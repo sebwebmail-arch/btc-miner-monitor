@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-05T19:09:19.682Z",
+  "last_updated": "2026-07-05T19:32:37.976Z",
   "entries": [
     {
       "key": "w.cmine.s21xp002",
@@ -11,10 +11,25 @@
       "worker": "s21xp002",
       "anomaly_type": "level_drop",
       "baseline_hr": 513200000000000,
-      "current_hr": 46500000000000,
-      "drop_pct": 91,
+      "current_hr": 43501566713164.234,
+      "drop_pct": 92,
       "detected_at": "2026-06-30T19:00:00.000Z",
-      "duration_h": 120.2
+      "duration_h": 120.5
+    },
+    {
+      "key": "w.cmine.c21xp031",
+      "type": "worker_anomaly",
+      "provider": "ValueHash (NY)",
+      "group_id": "U3",
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "worker": "c21xp031",
+      "anomaly_type": "volatile",
+      "baseline_hr": 295400000000000,
+      "current_hr": 0,
+      "drop_pct": 100,
+      "detected_at": "2026-07-05T19:32:37.976Z",
+      "duration_h": 0
     }
   ]
 }

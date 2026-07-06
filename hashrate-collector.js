@@ -45,7 +45,9 @@ const OFFLINESTATUS_PATH = path.join(__dirname, 'data', 'offline-status.json');
 const WORKERHOSTS_PATH   = path.join(__dirname, 'data', 'worker-hosts.json');
 const SLA_DAILY_PATH     = path.join(__dirname, 'data', 'sla-daily.json');
 const WATCHLIST_PATH     = path.join(__dirname, 'data', 'watchlist.json');
+const GHOSTWORKERS_PATH  = path.join(__dirname, 'data', 'ghost-workers.json');
 const MAX_DAILY_ENTRIES  = 31; // 30 jours glissants + 1 marge
+const GHOST_MAX_DAYS     = 90; // garder les workers Dead dans le registre jusqu'à 90 jours
 
 const RECOVERY_THRESHOLD = 0.75; // 75% de la baseline = considéré récupéré
 const WATCHLIST_MAX_DAYS = 14;   // auto-expire après 14 jours sans récupération
@@ -512,6 +514,52 @@ function findGhostWorkers(hrData, accountUser, currentWorkerNames, now) {
     });
   }
   return ghosts;
+}
+
+// ─── Ghost workers — registre persistant (survit aux purges de hashrate.json) ──
+// Nécessaire pour couvrir 8–90 jours (hashrate.json ne garde que 7 jours).
+function loadGhostWorkers() {
+  try { return JSON.parse(fs.readFileSync(GHOSTWORKERS_PATH, 'utf8')); }
+  catch { return { last_updated: null, ghosts: {} }; }
+}
+
+function saveGhostWorkers(gw) {
+  fs.mkdirSync(path.dirname(GHOSTWORKERS_PATH), { recursive: true });
+  fs.writeFileSync(GHOSTWORKERS_PATH, JSON.stringify(gw, null, 2));
+}
+
+// Retourne les ghosts actifs depuis le registre pour un compte donné (sans dead_old).
+// Recalcule la catégorie à chaque appel pour refléter l'âge actuel.
+function getGhostsFromStore(ghostData, accountUser, now) {
+  const nowMs = now.getTime();
+  return Object.entries(ghostData.ghosts || {})
+    .filter(([key]) => key.startsWith(accountUser + '.'))
+    .map(([, g]) => {
+      const lastMs     = new Date(g.lastSnapIso).getTime();
+      const minutesAgo = Math.round((nowMs - lastMs) / 60000);
+      const lastSeenStr = new Date(lastMs).toISOString().replace('T', ' ').slice(0, 19);
+      const ageH = minutesAgo / 60;
+      const ageD = ageH / 24;
+      let category;
+      if (ageH < 24)       category = 'offline';
+      else if (ageD <= 7)  category = 'dead_recent';
+      else if (ageD <= 90) category = 'dead_mid';
+      else                 category = 'dead_old';
+      const group = getGroup(g.name);
+      return {
+        account:    accountUser,
+        name:       g.name,
+        groupId:    g.groupId || group.id,
+        provider:   g.provider || group.provider,
+        lastSeen:   `${lastSeenStr} UTC (${minutesAgo}m ago) — Dead (no longer in pool API)`,
+        minutesAgo,
+        lastSnapIso: g.lastSnapIso,
+        category,
+        host:       '—',
+        isGhost:    true,
+      };
+    })
+    .filter(g => g.category !== 'dead_old'); // exclure >90j du rapport et de l'affichage
 }
 
 function loadHistory() {
@@ -1153,6 +1201,51 @@ async function main() {
   saveHashrate(h);
   saveAlertState(alertState);
 
+  // ── 4d. Maintenance ghost-workers.json (registre persistant 90 jours) ────────
+  // hashrate.json ne garde que 7 jours → ghost-workers.json assure la continuité jusqu'à 90j.
+  const ghostData = loadGhostWorkers();
+  for (const account of ACCOUNTS) {
+    const currentNames = new Set(
+      (allWorkers[account.user] || []).map(w => w.hash_rate_info?.name).filter(Boolean)
+    );
+    // 1. Nouveaux ghosts détectés via hashrate.json (window 7j)
+    for (const g of findGhostWorkers(h, account.user, currentNames, now)) {
+      const key = `${account.user}.${g.name}`;
+      if (!ghostData.ghosts[key]) {
+        ghostData.ghosts[key] = {
+          account:      g.account,
+          account_name: ACCOUNTS.find(a => a.user === g.account)?.name || g.account,
+          name:         g.name,
+          groupId:      g.groupId,
+          provider:     g.provider,
+          lastSnapIso:  g.lastSnapIso,
+          detectedAt:   now.toISOString(),
+        };
+        console.log(`   👻 Nouveau ghost enregistré : ${key} (last seen ${g.lastSnapIso})`);
+      }
+    }
+    // 2. Supprimer les workers revenus dans l'API (résolus)
+    for (const key of Object.keys(ghostData.ghosts)) {
+      if (!key.startsWith(account.user + '.')) continue;
+      const name = key.slice(account.user.length + 1);
+      if (currentNames.has(name)) {
+        console.log(`   ✅ Ghost résolu : ${key} (revenu dans l'API)`);
+        delete ghostData.ghosts[key];
+      }
+    }
+  }
+  // 3. Expirer les ghosts > 90 jours
+  for (const [key, g] of Object.entries(ghostData.ghosts)) {
+    const ageD = (now - new Date(g.lastSnapIso)) / 86400000;
+    if (ageD > GHOST_MAX_DAYS) {
+      console.log(`   🗑️  Ghost expiré : ${key} (${Math.round(ageD)}j > ${GHOST_MAX_DAYS}j)`);
+      delete ghostData.ghosts[key];
+    }
+  }
+  ghostData.last_updated = now.toISOString();
+  saveGhostWorkers(ghostData);
+  console.log(`   Ghosts actifs : ${Object.keys(ghostData.ghosts).length}`);
+
   // ── 5. Sauvegarde worker-issues.json (lu par le dashboard) ───────────────
   fs.mkdirSync(path.dirname(WORKERISSUES_PATH), { recursive: true });
   fs.writeFileSync(WORKERISSUES_PATH, JSON.stringify({
@@ -1179,11 +1272,8 @@ async function main() {
         provider:     group.provider,
       };
     }
-    // Workers fantômes : Dead, retirés de l'API mais encore dans hashrate.json
-    const currentNames = new Set(
-      (allWorkers[account.user] || []).map(w => w.hash_rate_info?.name).filter(Boolean)
-    );
-    for (const g of findGhostWorkers(h, account.user, currentNames, now)) {
+    // Workers fantômes : Dead, retirés de l'API → lus depuis ghost-workers.json (90j)
+    for (const g of getGhostsFromStore(ghostData, account.user, now)) {
       offlineNow[`${account.user}.${g.name}`] = {
         account:      account.user,
         account_name: account.name,
@@ -1211,13 +1301,10 @@ async function main() {
     if (morningOk) {
       console.log('\n🌅 Rapport matin...');
 
-      // Offline workers (tous comptes) + workers fantômes (Dead, disparus de l'API)
+      // Offline workers (tous comptes) + workers fantômes depuis ghost-workers.json (90j)
       const offlineByAccount = ACCOUNTS.map(account => {
-        const currentNames = new Set(
-          (allWorkers[account.user] || []).map(w => w.hash_rate_info?.name).filter(Boolean)
-        );
         const offline = findOfflineWorkers(allWorkers[account.user] || [], account.user);
-        const ghosts  = findGhostWorkers(h, account.user, currentNames, now);
+        const ghosts  = getGhostsFromStore(ghostData, account.user, now);
         return {
           accountName: account.name,
           accountUser: account.user,

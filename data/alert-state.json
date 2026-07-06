@@ -33,7 +33,7 @@
     "w.cmine.s21xp002": {
       "type": "worker_anomaly",
       "baselineHR": 513200000000000,
-      "currentHR": 15187920618345.812,
+      "currentHR": 18696584390537.67,
       "provider": "Altos",
       "groupId": "P1",
       "account": "cmine",
@@ -53,6 +53,18 @@
       "accountName": "Cyberian Mine",
       "anomalyType": "volatile",
       "detectedAt": "2026-07-05T19:32:37.976Z"
+    },
+    "w.everminer.olttfkabdjfje01": {
+      "type": "worker_anomaly",
+      "baselineHR": 1106400000000000.1,
+      "currentHR": 0,
+      "worker": "olttfkabdjfje01",
+      "provider": "Dataprana",
+      "groupId": "U1+U2",
+      "account": "everminer",
+      "accountName": "Everminer",
+      "anomalyType": "volatile",
+      "detectedAt": "2026-07-06T01:30:56.325Z"
     }
   }
 }

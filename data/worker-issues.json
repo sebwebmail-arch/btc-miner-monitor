@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-06T01:01:05.857Z",
+  "last_updated": "2026-07-06T01:30:56.325Z",
   "issues": {
     "cmine.s21xp002": {
       "account": "cmine",
@@ -8,11 +8,24 @@
       "group_id": "P1",
       "provider": "Altos",
       "type": "level_drop",
-      "current_avg_ths": 33.1,
+      "current_avg_ths": 29.5,
       "baseline_avg_ths": 511.5,
       "drop_pct": 94,
-      "cv_pct": 14,
+      "cv_pct": 26,
       "zero_rate_pct": 0
+    },
+    "everminer.olttfkabdjfje01": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "worker": "olttfkabdjfje01",
+      "group_id": "U1+U2",
+      "provider": "Dataprana",
+      "type": "volatile",
+      "current_avg_ths": 806.1,
+      "baseline_avg_ths": 1106.4,
+      "drop_pct": 27,
+      "cv_pct": 56,
+      "zero_rate_pct": 17
     }
   }
 }

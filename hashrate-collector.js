@@ -458,6 +458,49 @@ function findOfflineWorkers(workers, accountUser) {
     .filter(Boolean);
 }
 
+// ─── Détection workers "fantômes" (Dead — retirés de l'API f2pool après ~24h) ─
+// f2pool ne retourne plus les workers Dead dans la réponse API normale.
+// On les détecte en comparant hashrate.json avec la liste API courante.
+// Paramètre currentWorkerNames = Set des noms présents dans la réponse API.
+function findGhostWorkers(hrData, accountUser, currentWorkerNames, now) {
+  const ghosts   = [];
+  const nowMs    = now.getTime();
+  const SEVEN_DAYS_MS = 7 * 86400 * 1000;
+
+  for (const [key, snaps] of Object.entries(hrData.workers || {})) {
+    if (!key.startsWith(accountUser + '.')) continue;
+    const workerName = key.slice(accountUser.length + 1);
+    if (currentWorkerNames.has(workerName)) continue; // encore dans l'API
+    if (!snaps || snaps.length === 0) continue;
+
+    // Dernier snapshot connu
+    let lastSnapMs = 0;
+    for (const s of snaps) {
+      const t = new Date(s.ts).getTime();
+      if (t > lastSnapMs) lastSnapMs = t;
+    }
+    if (lastSnapMs === 0) continue;
+    if (nowMs - lastSnapMs > SEVEN_DAYS_MS) continue; // trop ancien → ignoré
+
+    const group = getGroup(workerName);
+    if (group.id === 'No Group') continue;
+
+    const minutesAgo  = Math.round((nowMs - lastSnapMs) / 60000);
+    const lastSeenStr = new Date(lastSnapMs).toISOString().replace('T', ' ').slice(0, 19);
+    ghosts.push({
+      account:   accountUser,
+      name:      workerName,
+      groupId:   group.id,
+      provider:  group.provider,
+      lastSeen:  `${lastSeenStr} UTC (${minutesAgo}m ago) — Dead (no longer in pool API)`,
+      minutesAgo,
+      host:      '—',
+      isGhost:   true,
+    });
+  }
+  return ghosts;
+}
+
 function loadHistory() {
   try { return JSON.parse(fs.readFileSync(HISTORY_PATH, 'utf8')); }
   catch { return { last_updated: null, snapshots: [], current_issues: {} }; }
@@ -1106,8 +1149,10 @@ async function main() {
 
   // ── 5b. Sauvegarde offline-status.json (statut temps réel des DCs) ────────
   // Critère : last_share_at > OFFLINE_MINUTES (même logique que le rapport matin)
+  // + workers "fantômes" : disparus de l'API f2pool (Dead >24h) mais historique récent
   const offlineNow = {};
   for (const account of ACCOUNTS) {
+    // Workers retournés par l'API (offline mais encore visibles)
     for (const w of allWorkers[account.user] || []) {
       if (!isWorkerOffline(w)) continue;
       const name  = w.hash_rate_info?.name || '?';
@@ -1119,6 +1164,20 @@ async function main() {
         name,
         group_id:     group.id,
         provider:     group.provider,
+      };
+    }
+    // Workers fantômes : Dead, retirés de l'API mais encore dans hashrate.json
+    const currentNames = new Set(
+      (allWorkers[account.user] || []).map(w => w.hash_rate_info?.name).filter(Boolean)
+    );
+    for (const g of findGhostWorkers(h, account.user, currentNames, now)) {
+      offlineNow[`${account.user}.${g.name}`] = {
+        account:      account.user,
+        account_name: account.name,
+        name:         g.name,
+        group_id:     g.groupId,
+        provider:     g.provider,
+        dead:         true,
       };
     }
   }
@@ -1137,12 +1196,19 @@ async function main() {
     if (morningOk) {
       console.log('\n🌅 Rapport matin...');
 
-      // Offline workers (tous comptes)
-      const offlineByAccount = ACCOUNTS.map(account => ({
-        accountName: account.name,
-        accountUser: account.user,
-        workers: findOfflineWorkers(allWorkers[account.user] || [], account.user),
-      }));
+      // Offline workers (tous comptes) + workers fantômes (Dead, disparus de l'API)
+      const offlineByAccount = ACCOUNTS.map(account => {
+        const currentNames = new Set(
+          (allWorkers[account.user] || []).map(w => w.hash_rate_info?.name).filter(Boolean)
+        );
+        const offline = findOfflineWorkers(allWorkers[account.user] || [], account.user);
+        const ghosts  = findGhostWorkers(h, account.user, currentNames, now);
+        return {
+          accountName: account.name,
+          accountUser: account.user,
+          workers: [...offline, ...ghosts],
+        };
+      });
 
       // History
       const historyResults = ACCOUNTS.map(account => ({

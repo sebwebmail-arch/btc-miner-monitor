@@ -1966,6 +1966,25 @@ async function render() {
   const snapshots = data.snapshots || [];
   _deadIssues = issues; // expose aux fonctions de rendu (exclure de Online Workers)
 
+  // Injecter les workers "fantômes" (Dead, retirés de l'API f2pool) depuis offline-status.json
+  // Ces workers ont dead:true — ils doivent apparaître dans le tracker et être exclus du tableau Online.
+  if (_offlineStatus) {
+    for (const [key, w] of Object.entries(_offlineStatus.offline || {})) {
+      if (w.dead && !_deadIssues[key]) {
+        _deadIssues[key] = {
+          account:      w.account,
+          account_name: w.account_name,
+          name:         w.name,
+          group_id:     w.group_id,
+          provider:     w.provider,
+          host:         '—',
+          last_share:   null,
+          category:     'dead_recent',
+        };
+      }
+    }
+  }
+
   const fmtTs = iso => {
     const d = new Date(iso);
     return `${d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',timeZone:'UTC'})} at ${d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:'UTC'})} UTC`;

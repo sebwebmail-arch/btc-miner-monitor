@@ -33,7 +33,7 @@
     "w.cmine.s21xp002": {
       "type": "worker_anomaly",
       "baselineHR": 513200000000000,
-      "currentHR": 30180372502864.78,
+      "currentHR": 29427817877631.43,
       "provider": "Altos",
       "groupId": "P1",
       "account": "cmine",
@@ -45,7 +45,7 @@
     "w.cmine.c21xp031": {
       "type": "worker_anomaly",
       "baselineHR": 269300000000000,
-      "currentHR": 138860988510590.3,
+      "currentHR": 166382986233410,
       "worker": "c21xp031",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -57,20 +57,8 @@
     "w.cmine.r20441": {
       "type": "worker_anomaly",
       "baselineHR": 187500000000000,
-      "currentHR": 90853867482717.3,
+      "currentHR": 97734366913422.22,
       "worker": "r20441",
-      "provider": "IZTM",
-      "groupId": "R1",
-      "account": "cmine",
-      "accountName": "Cyberian Mine",
-      "anomalyType": "level_drop",
-      "detectedAt": "2026-07-06T10:01:06.536Z"
-    },
-    "w.cmine.r21041": {
-      "type": "worker_anomaly",
-      "baselineHR": 156700000000000,
-      "currentHR": 74199931360670.16,
-      "worker": "r21041",
       "provider": "IZTM",
       "groupId": "R1",
       "account": "cmine",

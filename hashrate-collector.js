@@ -331,7 +331,7 @@ async function sendWorkerAlert(account, issue, now) {
     ``,
     detail,
     ``,
-    `🕐 ${timeUTC} UTC — ${timeParis} ${tzLabel}`,
+    `🕐 ${timeUTC} UTC`,
     `📊 https://watcher.capone.market`,
   ].join('\n');
 
@@ -360,7 +360,7 @@ async function sendHashrateAlert(account, groupId, provider, currentHR, refHR, d
     `Before (avg 1h30): <b>${fmtTH(refHR)}</b>`,
     `Now: <b>${fmtTH(currentHR)}</b>`,
     ``,
-    `🕐 ${timeUTC} UTC — ${timeParis} ${tzLabel}`,
+    `🕐 ${timeUTC} UTC`,
     `📊 https://watcher.capone.market`,
   ].join('\n');
 
@@ -387,7 +387,7 @@ async function sendHashrateAlert(account, groupId, provider, currentHR, refHR, d
   <div style="background:#D97757;padding:24px 32px">
     <h1 style="margin:0;color:#fff;font-size:20px">📉 Hashrate drop ${dropLabel}</h1>
     <p style="margin:4px 0 0;color:rgba(255,255,255,.85);font-size:14px">${dateFmt}</p>
-    <p style="margin:2px 0 0;color:rgba(255,255,255,.7);font-size:13px">${timeUTC} UTC — ${timeParis} ${tzLabel}</p>
+    <p style="margin:2px 0 0;color:rgba(255,255,255,.7);font-size:13px">${timeUTC} UTC</p>
   </div>
   <div style="padding:24px 32px">
     <table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:1px solid #eee;border-radius:6px;overflow:hidden;margin-bottom:20px">
@@ -650,7 +650,7 @@ function buildMorningEmail(offlineByAccount, workerIssues, watchlistEntries, now
   <div style="background:${headerBg};padding:24px 32px">
     <h1 style="margin:0;color:#fff;font-size:20px">${headerTitle}</h1>
     <p style="margin:4px 0 0;color:rgba(255,255,255,.85);font-size:14px">${date}</p>
-    <p style="margin:2px 0 0;color:rgba(255,255,255,.7);font-size:13px">${timeUTC} UTC — ${timeParis} ${tzLabel}</p>
+    <p style="margin:2px 0 0;color:rgba(255,255,255,.7);font-size:13px">${timeUTC} UTC</p>
   </div>
   <div style="padding:24px 32px">
     ${allGoodSection}${watchlistSection}${offlineSection}${anomalySection}

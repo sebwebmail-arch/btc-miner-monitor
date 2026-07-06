@@ -279,6 +279,13 @@ body::after {
 /* ── Dead tracker ── */
 .dead-section { padding: 14px 20px; border-bottom: 1px solid var(--border); }
 .dead-section:last-child { border-bottom: none; }
+/* table-layout fixed → colonnes identiques entre toutes les sections (offline / 1-7j / 8-90j) */
+.dead-section .issues-table { table-layout: fixed; }
+.dead-section .issues-table th:nth-child(1) { width: 22%; }
+.dead-section .issues-table th:nth-child(2) { width: 15%; }
+.dead-section .issues-table th:nth-child(3) { width: 25%; }
+.dead-section .issues-table th:nth-child(4) { width: 13%; }
+.dead-section .issues-table th:nth-child(5) { width: 25%; }
 .dead-section-title { font-size: 10px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 10px; display: flex; align-items: center; gap: 7px; }
 .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 .dot-yellow { background: #f1c40f; } .dot-orange { background: #e67e22; } .dot-red { background: var(--accent-red); } .dot-grey { background: var(--text-muted); }
@@ -506,9 +513,9 @@ const ACCOUNTS_META = {
 const GROUPS_RULES = [
   { id:'R1',    provider:'IZTM',           test: n => /^r/i.test(n) },
   { id:'R3',    provider:'Minto',          test: n => /^k2lx/i.test(n) },
-  { id:'E1',    provider:'BitCluster',     test: n => /^\d+$/.test(n) },
+  { id:'E1',    provider:'BitCluster',     test: n => /^\d{1,4}$/.test(n) },
   { id:'E2',    provider:'AmityAge',       test: n => /^aa/i.test(n) },
-  { id:'U1+U2', provider:'Dataprana',      test: n => /^(ngs|yna|pie|olt|dga)/i.test(n) },
+  { id:'U1+U2', provider:'Dataprana',      test: n => /^(ngs|yna|pie|olt|dga)/i.test(n) || /^[0-9a-f]{12}$/i.test(n) || /^\d{9,}$/.test(n) },
   { id:'U3',    provider:'ValueHash (NY)', test: n => /^(c21|e21)/i.test(n) },
   { id:'P1',    provider:'Altos',          test: n => /^s21/i.test(n) },
   { id:'F1',    provider:'Terahash',       test: n => /^18x/i.test(n) },
@@ -912,6 +919,7 @@ let _offlineStatus = null; // offline-status.json (real-time offline workers)
 let _workerHosts   = {};   // worker-hosts.json (IP par worker)
 let _deadIssues    = {};   // history.json current_issues (dead/offline workers)
 let _watchlist     = null; // watchlist.json (post-drop surveillance)
+let _noGroup       = null; // no-group.json (workers sans groupe)
 let _chartPts      = [];   // points du graphe modal courant (pour tooltip)
 let _chartGeo      = {};   // géométrie du graphe modal courant
 
@@ -1577,6 +1585,29 @@ function renderOnlineTable() {
     ? `<tr><td colspan="7" style="padding:20px;text-align:center;color:var(--text-muted);font-size:12px">No workers match the current filters.</td></tr>`
     : '';
 
+  // ── No Group rows (workers sans groupe — action requise) ─────────────────
+  const ngWorkers = (_noGroup && _noGroup.workers || [])
+    .filter(w => !_onlineFilters.account.size || _onlineFilters.account.has(w.account_name || w.account))
+    .filter(w => !_onlineSearch || w.name.toLowerCase().includes(_onlineSearch));
+  const ngRows = ngWorkers.length === 0 ? '' :
+    `<tr class="wl-hdr-row"><td colspan="7" style="background:rgba(142,68,173,0.08);border-bottom-color:rgba(142,68,173,0.2)">
+       <span class="wl-hdr-title" style="color:#8e44ad">🏷️ No Group</span>
+       <span class="wl-hdr-note">workers sans groupe — assigner sur f2pool · ${ngWorkers.length} worker${ngWorkers.length > 1 ? 's' : ''}</span>
+     </td></tr>` +
+    ngWorkers.map(w => `<tr style="background:rgba(142,68,173,0.03)">
+      <td><span class="worker-name">${w.name}</span></td>
+      <td class="online-acct">
+        <span class="account-label acct-long">${w.account_name || w.account}</span>
+        <span class="account-label acct-short" style="display:none">${w.account}</span>
+      </td>
+      <td class="td-dc"><span class="group-badge" style="background:rgba(142,68,173,0.12);color:#8e44ad">?</span><span class="prov-name"> Unknown</span></td>
+      <td><span class="anomaly-badge" style="background:rgba(142,68,173,0.12);color:#8e44ad;padding:3px 8px;border-radius:4px;font-size:11px;font-weight:600">No Group</span></td>
+      <td class="hr-now">—</td>
+      <td class="hr-avg mob-hide">—</td>
+      <td class="spark-td mob-hide">—</td>
+    </tr>`).join('') +
+    `<tr class="wl-sep-row"><td colspan="7"></td></tr>`;
+
   // ── Watchlist rows (Still Degraded) ─────────────────────────────────────
   const wlRows = wlEntries.length === 0 ? '' :
     `<tr class="wl-hdr-row"><td colspan="7">
@@ -1617,7 +1648,7 @@ function renderOnlineTable() {
       <th class="mob-hide">Avg 3h</th>
       <th class="mob-hide">6h trend</th>
     </tr></thead>
-    <tbody>${wlRows}${emptyRow || tbody}</tbody>
+    <tbody>${ngRows}${wlRows}${emptyRow || tbody}</tbody>
   </table>`;
 }
 
@@ -1939,13 +1970,14 @@ function buildHashrateSection() {
 async function render() {
   let data;
   try {
-    const [histRes, hrRes, wiRes, osRes, whRes, wlRes] = await Promise.all([
+    const [histRes, hrRes, wiRes, osRes, whRes, wlRes, ngRes] = await Promise.all([
       fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/history.json?t='        + Date.now()),
       fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/hashrate.json?t='       + Date.now()).catch(() => null),
       fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/worker-issues.json?t='  + Date.now()).catch(() => null),
       fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/offline-status.json?t=' + Date.now()).catch(() => null),
       fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/worker-hosts.json?t='   + Date.now()).catch(() => null),
       fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/watchlist.json?t='      + Date.now()).catch(() => null),
+      fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/no-group.json?t='       + Date.now()).catch(() => null),
     ]);
     if (!histRes.ok) throw new Error(`HTTP ${histRes.status}`);
     data = await histRes.json();
@@ -1954,6 +1986,7 @@ async function render() {
     if (osRes && osRes.ok) _offlineStatus = await osRes.json();
     if (whRes && whRes.ok) _workerHosts   = await whRes.json();
     if (wlRes && wlRes.ok) _watchlist     = await wlRes.json();
+    if (ngRes && ngRes.ok) _noGroup       = await ngRes.json();
   } catch(e) {
     document.getElementById('loading').style.display = 'none';
     const err = document.getElementById('error-msg');

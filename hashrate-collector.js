@@ -46,8 +46,10 @@ const WORKERHOSTS_PATH   = path.join(__dirname, 'data', 'worker-hosts.json');
 const SLA_DAILY_PATH     = path.join(__dirname, 'data', 'sla-daily.json');
 const WATCHLIST_PATH     = path.join(__dirname, 'data', 'watchlist.json');
 const GHOSTWORKERS_PATH  = path.join(__dirname, 'data', 'ghost-workers.json');
+const NOGROUP_PATH       = path.join(__dirname, 'data', 'no-group.json');
 const MAX_DAILY_ENTRIES  = 31; // 30 jours glissants + 1 marge
 const GHOST_MAX_DAYS     = 90; // garder les workers Dead dans le registre jusqu'à 90 jours
+const NOGROUP_COOLDOWN_H = 12; // alerte No Group : au plus 1 fois toutes les 12h par worker
 
 const RECOVERY_THRESHOLD = 0.75; // 75% de la baseline = considéré récupéré
 const WATCHLIST_MAX_DAYS = 14;   // auto-expire après 14 jours sans récupération
@@ -613,7 +615,7 @@ function updateHistory(h, now, allResults) {
   return h;
 }
 
-function buildMorningEmail(offlineByAccount, workerIssues, watchlistEntries, now) {
+function buildMorningEmail(offlineByAccount, workerIssues, watchlistEntries, noGroupWorkers, now) {
   const date      = now.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
   const timeUTC   = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' });
   const timeParis = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' });
@@ -632,7 +634,8 @@ function buildMorningEmail(offlineByAccount, workerIssues, watchlistEntries, now
     .map(([, v]) => v);
   const totalAnomalies  = anomalyList.length;
   const totalWatchlist  = watchlistEntries.length;
-  const allGood         = totalOffline === 0 && totalAnomalies === 0 && totalWatchlist === 0;
+  const totalNoGroup    = (noGroupWorkers || []).length;
+  const allGood         = totalOffline === 0 && totalAnomalies === 0 && totalWatchlist === 0 && totalNoGroup === 0;
 
   // ── Section workers offline ──
   const offlineSection = offlineByAccount
@@ -742,11 +745,34 @@ function buildMorningEmail(offlineByAccount, workerIssues, watchlistEntries, now
         totalOffline    > 0 ? `⚠️ ${totalOffline} worker${totalOffline > 1 ? 's' : ''} offline` : '',
         totalAnomalies  > 0 ? `⚡ ${totalAnomalies} warning${totalAnomalies > 1 ? 's' : ''}` : '',
         totalWatchlist  > 0 ? `🔴 ${totalWatchlist} still degraded` : '',
+        totalNoGroup    > 0 ? `🏷️ ${totalNoGroup} no group` : '',
       ].filter(Boolean).join(' · ');
 
   const allGoodSection = allGood
     ? `<p style="font-size:14px;color:#27ae60;font-weight:600;margin:0 0 16px">✅ All workers are online and reporting normally.</p>`
     : '';
+
+  const noGroupSection = totalNoGroup === 0 ? '' : (() => {
+    const rows = (noGroupWorkers || []).map(w => `
+      <tr>
+        <td style="padding:7px 12px;border-bottom:1px solid #f0f0f0;font-family:'DM Mono',monospace;font-size:13px">${w.name}</td>
+        <td style="padding:7px 12px;border-bottom:1px solid #f0f0f0;font-size:13px">${w.account_name}</td>
+        <td style="padding:7px 12px;border-bottom:1px solid #f0f0f0;font-size:13px;color:#999">${w.host}</td>
+      </tr>`).join('');
+    return `
+    <div style="margin-bottom:28px">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#8e44ad;margin-bottom:10px">🏷️ Workers sans groupe — action requise</div>
+      <table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:1px solid #eee;border-radius:6px;overflow:hidden">
+        <tr style="background:#f5eef8">
+          <td style="padding:7px 12px;font-size:11px;color:#8e44ad;font-weight:700;text-transform:uppercase">Worker</td>
+          <td style="padding:7px 12px;font-size:11px;color:#8e44ad;font-weight:700;text-transform:uppercase">Account</td>
+          <td style="padding:7px 12px;font-size:11px;color:#8e44ad;font-weight:700;text-transform:uppercase">Host</td>
+        </tr>
+        ${rows}
+      </table>
+      <p style="font-size:12px;color:#666;margin:8px 0 0">Assigner à un groupe sur f2pool, puis mettre à jour <code>groups.js</code>.</p>
+    </div>`;
+  })();
 
   const html = `
 <!DOCTYPE html><html><body style="margin:0;padding:0;background:#f7f6f2;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif">
@@ -757,7 +783,7 @@ function buildMorningEmail(offlineByAccount, workerIssues, watchlistEntries, now
     <p style="margin:2px 0 0;color:rgba(255,255,255,.7);font-size:13px">${timeUTC} UTC</p>
   </div>
   <div style="padding:24px 32px">
-    ${allGoodSection}${watchlistSection}${offlineSection}${anomalySection}
+    ${allGoodSection}${noGroupSection}${watchlistSection}${offlineSection}${anomalySection}
     <div style="margin-top:32px;border-top:1px solid #f0f0f0;padding-top:24px;text-align:center">
       <a href="https://watcher.capone.market" style="display:inline-block;margin-bottom:16px;padding:8px 20px;background:#D97757;color:#000;text-decoration:none;border-radius:6px;font-size:13px;font-weight:600">Open dashboard →</a><br>
       <img src="https://capone.market/capone-fish-avatar-48-orange.svg" alt="capone" width="56" height="56" style="display:block;margin:0 auto 8px"/>
@@ -771,6 +797,7 @@ function buildMorningEmail(offlineByAccount, workerIssues, watchlistEntries, now
   const subjectParts = [
     totalOffline   > 0 ? `${totalOffline} offline`                       : '',
     totalAnomalies > 0 ? `${totalAnomalies} warning${totalAnomalies > 1 ? 's' : ''}` : '',
+    totalNoGroup   > 0 ? `${totalNoGroup} no group` : '',
   ].filter(Boolean);
   const subject = subjectParts.length > 0
     ? `[Morning Report] ${subjectParts.join(' · ')} — ${date}`
@@ -1292,6 +1319,124 @@ async function main() {
   }, null, 2));
   console.log(`   Offline temps réel: ${Object.keys(offlineNow).length} worker(s)`);
 
+  // ── 5c. Détection workers "No Group" + alertes ───────────────────────────
+  // Un worker sans groupe = nommage inconnu → opérateur doit agir.
+  console.log('\n🏷️  Vérification workers No Group...');
+  const noGroupWorkers = [];
+  for (const account of ACCOUNTS) {
+    for (const w of allWorkers[account.user] || []) {
+      const name  = w.hash_rate_info?.name || '?';
+      const group = getGroup(name);
+      if (group.id !== 'No Group') continue;
+      const hr3h = w.hash_rate_info?.h3_hash_rate ?? w.hash_rate_info?.hash_rate ?? 0;
+      noGroupWorkers.push({
+        account:      account.user,
+        account_name: account.name,
+        name,
+        hr3h,
+        host: w.host || '?',
+      });
+    }
+  }
+
+  // Sauvegarde no-group.json (lu par le dashboard)
+  fs.writeFileSync(NOGROUP_PATH, JSON.stringify({
+    last_updated: now.toISOString(),
+    workers: noGroupWorkers,
+  }, null, 2));
+
+  if (noGroupWorkers.length === 0) {
+    console.log('   Aucun worker No Group.');
+  } else {
+    console.log(`   ⚠️  ${noGroupWorkers.length} worker(s) No Group détectés.`);
+
+    // Alerte Telegram + email (avec cooldown 12h par worker)
+    if (!alertState.nogroup) alertState.nogroup = {};
+    const newNoGroup = noGroupWorkers.filter(w => {
+      const key  = `${w.account}.${w.name}`;
+      const last = alertState.nogroup[key];
+      return !last || (now - new Date(last)) > NOGROUP_COOLDOWN_H * 3600000;
+    });
+
+    if (newNoGroup.length > 0) {
+      const timeUTC = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' });
+      const byAccount = {};
+      for (const w of newNoGroup) {
+        if (!byAccount[w.account_name]) byAccount[w.account_name] = [];
+        byAccount[w.account_name].push(w.name);
+      }
+      const lines = Object.entries(byAccount)
+        .map(([acct, names]) => `<b>${acct}:</b> ${names.join(', ')}`)
+        .join('\n');
+
+      // Telegram
+      const mainChatId = process.env.TELEGRAM_CHAT_ID;
+      if (mainChatId) {
+        const tgText = [
+          `🏷️ <b>Workers sans groupe détectés</b>`,
+          ``,
+          lines,
+          ``,
+          `Ces workers n'appartiennent à aucun groupe connu.`,
+          `➡️ Les assigner à un groupe f2pool et mettre à jour groups.js.`,
+          ``,
+          `🕐 ${timeUTC} UTC`,
+          `📊 https://watcher.capone.market`,
+        ].join('\n');
+        try {
+          await sendTelegram(mainChatId, tgText);
+        } catch(err) {
+          console.error(`   ❌ Telegram No Group: ${err.message}`);
+        }
+      }
+
+      // Email
+      const alertTo = process.env.ALERT_EMAIL || 'seb.webmail@gmail.com';
+      const workerRows = newNoGroup.map(w => `
+        <tr>
+          <td style="padding:8px 14px;font-family:'DM Mono',monospace;font-size:13px">${w.name}</td>
+          <td style="padding:8px 14px;font-size:13px">${w.account_name}</td>
+          <td style="padding:8px 14px;font-size:13px;color:#999">${w.host}</td>
+        </tr>`).join('');
+      const emailHtml = `
+<!DOCTYPE html><html><body style="margin:0;padding:0;background:#f7f6f2;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif">
+<div style="max-width:600px;margin:32px auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.08)">
+  <div style="background:#8e44ad;padding:24px 32px">
+    <h1 style="margin:0;color:#fff;font-size:20px">🏷️ Workers sans groupe</h1>
+    <p style="margin:4px 0 0;color:rgba(255,255,255,.85);font-size:14px">${timeUTC} UTC</p>
+  </div>
+  <div style="padding:24px 32px">
+    <p style="font-size:13px;color:#444;margin:0 0 16px">Ces workers n'appartiennent à aucun groupe connu dans groups.js. Action requise : les assigner à un groupe f2pool puis mettre à jour le mapping.</p>
+    <table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:1px solid #eee;border-radius:6px;overflow:hidden">
+      <tr style="background:#efede7">
+        <td style="padding:8px 14px;font-size:11px;color:#999;font-weight:700;text-transform:uppercase">Worker</td>
+        <td style="padding:8px 14px;font-size:11px;color:#999;font-weight:700;text-transform:uppercase">Account</td>
+        <td style="padding:8px 14px;font-size:11px;color:#999;font-weight:700;text-transform:uppercase">Host</td>
+      </tr>
+      ${workerRows}
+    </table>
+    <p style="margin-top:20px;font-size:13px;color:#666">Dashboard : <a href="https://watcher.capone.market" style="color:#D97757;font-weight:600">watcher.capone.market</a></p>
+    <div style="margin-top:32px;border-top:1px solid #f0f0f0;padding-top:20px;text-align:center">
+      <img src="https://capone.market/capone-fish-avatar-48-orange.svg" alt="capone" width="56" height="56" style="display:block;margin:0 auto 8px"/>
+      <p style="margin:0;color:#999;font-size:11px">This email was sent automatically — please do not reply.</p>
+    </div>
+  </div>
+</div>
+</body></html>`;
+      try {
+        await sendEmail(alertTo, `[ACTION REQUIRED] ${newNoGroup.length} worker(s) sans groupe`, emailHtml);
+      } catch(err) {
+        console.error(`   ❌ Email No Group: ${err.message}`);
+      }
+
+      // Enregistre le cooldown
+      for (const w of newNoGroup) {
+        alertState.nogroup[`${w.account}.${w.name}`] = now.toISOString();
+      }
+      saveAlertState(alertState);
+    }
+  }
+
   // ── 6. Rapport matin (05:00 UTC) ──────────────────────────────────────────
   if (now.getUTCHours() === MORNING_HOUR_UTC && now.getUTCMinutes() < 15) {
     const morningKey = 'morning_report';
@@ -1328,7 +1473,7 @@ async function main() {
 
       // Email
       try {
-        const { subject, html } = buildMorningEmail(offlineByAccount, workerIssues, watchlistForDash, now);
+        const { subject, html } = buildMorningEmail(offlineByAccount, workerIssues, watchlistForDash, noGroupWorkers, now);
         await sendEmail(MORNING_ALERT_TO, subject, html);
         alertState[morningKey] = now.toISOString();
         console.log(`   ✉️  Rapport envoyé → ${MORNING_ALERT_TO}`);

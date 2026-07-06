@@ -15,9 +15,9 @@ const GROUPS = [
   {
     id: 'E1',
     provider: 'BitCluster',
-    // Noms purement numériques — ex: 002, 031
-    // ATTENTION: peut se chevaucher entre cmine et everminer (ex: cmine.017 et everminer.017)
-    test: (name) => /^\d+$/.test(name),
+    // Noms purement numériques COURTS — ex: 002, 031 (max 4 chiffres)
+    // Limité à 1-4 chiffres pour ne pas capturer les adresses MAC numériques de Dataprana (11 chiffres)
+    test: (name) => /^\d{1,4}$/.test(name),
   },
   {
     id: 'E2',
@@ -28,7 +28,12 @@ const GROUPS = [
   {
     id: 'U1+U2',
     provider: 'Dataprana',
-    test: (name) => /^(ngs|yna|pie|olt|dga)/i.test(name),
+    // Ancien format (serial numbers): ngs, yna, pie, olt, dga
+    // Nouveau format (adresses MAC): 12 hex chars (ex: 02011366de33)
+    // Ou numérique long 11 chiffres (ex: 23181238824) — transition juillet 2026
+    test: (name) => /^(ngs|yna|pie|olt|dga)/i.test(name)
+                 || /^[0-9a-f]{12}$/i.test(name)
+                 || /^\d{9,}$/.test(name),
   },
   {
     id: 'U3',

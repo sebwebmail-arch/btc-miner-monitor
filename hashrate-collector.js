@@ -517,7 +517,15 @@ function buildMorningEmail(offlineByAccount, workerIssues, watchlistEntries, now
     .formatToParts(now).find(p => p.type === 'timeZoneName')?.value || 'CET';
 
   const totalOffline    = offlineByAccount.reduce((s, a) => s + a.workers.length, 0);
-  const anomalyList     = Object.values(workerIssues);
+  // Exclure de la section "warnings" les workers déjà listés en Still Degraded
+  const wlWorkerSet = new Set(
+    watchlistEntries
+      .filter(e => e.type === 'worker_anomaly')
+      .map(e => `${e.account}.${e.worker}`)
+  );
+  const anomalyList     = Object.entries(workerIssues)
+    .filter(([key]) => !wlWorkerSet.has(key))
+    .map(([, v]) => v);
   const totalAnomalies  = anomalyList.length;
   const totalWatchlist  = watchlistEntries.length;
   const allGood         = totalOffline === 0 && totalAnomalies === 0 && totalWatchlist === 0;

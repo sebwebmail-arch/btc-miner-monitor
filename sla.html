@@ -716,10 +716,13 @@ async function main() {
   }
 
   // ── Timestamps ─────────────────────────────────────────────────────────
-  let allTs = [];
+  let tsMin = Infinity, tsMax = -Infinity;
   for (const snaps of Object.values(hr.workers || {}))
-    for (const s of snaps) allTs.push(new Date(s.ts).getTime());
-  const tsMin = Math.min(...allTs), tsMax = Math.max(...allTs);
+    for (const s of snaps) {
+      const t = new Date(s.ts).getTime();
+      if (t < tsMin) tsMin = t;
+      if (t > tsMax) tsMax = t;
+    }
   const daysCovered = (tsMax - tsMin) / 864e5;
 
   const lastDate = new Date(tsMax);

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-06T15:31:05.191Z",
+  "last_updated": "2026-07-06T16:01:12.032Z",
   "entries": [
     {
       "key": "w.cmine.s21xp002",
@@ -11,10 +11,10 @@
       "worker": "s21xp002",
       "anomaly_type": "level_drop",
       "baseline_hr": 513200000000000,
-      "current_hr": 34949809608239.785,
-      "drop_pct": 93,
+      "current_hr": 30160825629482.098,
+      "drop_pct": 94,
       "detected_at": "2026-06-30T19:00:00.000Z",
-      "duration_h": 140.5
+      "duration_h": 141
     },
     {
       "key": "w.cmine.c21xp031",
@@ -26,10 +26,10 @@
       "worker": "c21xp031",
       "anomaly_type": "volatile",
       "baseline_hr": 269300000000000,
-      "current_hr": 122597989856196.83,
-      "drop_pct": 54,
+      "current_hr": 143864988096557.5,
+      "drop_pct": 47,
       "detected_at": "2026-07-06T06:31:01.269Z",
-      "duration_h": 9
+      "duration_h": 9.5
     }
   ]
 }

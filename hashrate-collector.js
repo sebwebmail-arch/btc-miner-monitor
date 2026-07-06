@@ -487,15 +487,28 @@ function findGhostWorkers(hrData, accountUser, currentWorkerNames, now) {
 
     const minutesAgo  = Math.round((nowMs - lastSnapMs) / 60000);
     const lastSeenStr = new Date(lastSnapMs).toISOString().replace('T', ' ').slice(0, 19);
+    const lastSnapIso = new Date(lastSnapMs).toISOString();
+
+    // Catégorie selon ancienneté (même logique que classifyWorker côté API)
+    const ageH = minutesAgo / 60;
+    const ageD = ageH / 24;
+    let category;
+    if (ageH < 24)       category = 'offline';
+    else if (ageD <= 7)  category = 'dead_recent';
+    else if (ageD <= 90) category = 'dead_mid';
+    else                 category = 'dead_old';
+
     ghosts.push({
-      account:   accountUser,
-      name:      workerName,
-      groupId:   group.id,
-      provider:  group.provider,
-      lastSeen:  `${lastSeenStr} UTC (${minutesAgo}m ago) — Dead (no longer in pool API)`,
+      account:    accountUser,
+      name:       workerName,
+      groupId:    group.id,
+      provider:   group.provider,
+      lastSeen:   `${lastSeenStr} UTC (${minutesAgo}m ago) — Dead (no longer in pool API)`,
       minutesAgo,
-      host:      '—',
-      isGhost:   true,
+      lastSnapIso,
+      category,
+      host:       '—',
+      isGhost:    true,
     });
   }
   return ghosts;
@@ -1178,6 +1191,8 @@ async function main() {
         group_id:     g.groupId,
         provider:     g.provider,
         dead:         true,
+        category:     g.category,
+        last_share:   g.lastSnapIso, // utilisé par categoryOf() dans le dashboard
       };
     }
   }

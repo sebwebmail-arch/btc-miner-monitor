@@ -1978,8 +1978,8 @@ async function render() {
           group_id:     w.group_id,
           provider:     w.provider,
           host:         '—',
-          last_share:   null,
-          category:     'dead_recent',
+          last_share:   w.last_share || null, // ISO string → categoryOf() calcule la bonne section
+          category:     w.category || 'dead_recent',
         };
       }
     }

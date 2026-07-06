@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-06T13:31:02.596Z",
+  "last_updated": "2026-07-06T14:01:09.254Z",
   "entries": [
     {
       "key": "w.cmine.s21xp002",
@@ -11,10 +11,10 @@
       "worker": "s21xp002",
       "anomaly_type": "level_drop",
       "baseline_hr": 513200000000000,
-      "current_hr": 31783216120244.906,
-      "drop_pct": 94,
+      "current_hr": 51584198856904.25,
+      "drop_pct": 90,
       "detected_at": "2026-06-30T19:00:00.000Z",
-      "duration_h": 138.5
+      "duration_h": 139
     },
     {
       "key": "w.cmine.c21xp031",
@@ -26,25 +26,10 @@
       "worker": "c21xp031",
       "anomaly_type": "volatile",
       "baseline_hr": 269300000000000,
-      "current_hr": 145115987993049.3,
-      "drop_pct": 46,
+      "current_hr": 150119987579016.53,
+      "drop_pct": 44,
       "detected_at": "2026-07-06T06:31:01.269Z",
-      "duration_h": 7
-    },
-    {
-      "key": "w.cmine.r20441",
-      "type": "worker_anomaly",
-      "provider": "IZTM",
-      "group_id": "R1",
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "r20441",
-      "anomaly_type": "level_drop",
-      "baseline_hr": 187500000000000,
-      "current_hr": 101330991615836.16,
-      "drop_pct": 46,
-      "detected_at": "2026-07-06T10:01:06.536Z",
-      "duration_h": 3.5
+      "duration_h": 7.5
     }
   ]
 }

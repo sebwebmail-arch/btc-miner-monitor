@@ -201,7 +201,7 @@
     "w.cmine.c21xp031": {
       "type": "worker_anomaly",
       "baselineHR": 264600000000000.03,
-      "currentHR": 99454491771098.45,
+      "currentHR": 102581991512327.97,
       "worker": "c21xp031",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -210,5 +210,8 @@
       "anomalyType": "level_drop",
       "detectedAt": "2026-07-06T23:30:59.009Z"
     }
+  },
+  "nogroup": {
+    "cmine.32x101": "2026-07-07T07:01:10.645Z"
   }
 }

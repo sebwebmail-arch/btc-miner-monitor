@@ -623,7 +623,7 @@ const GROUPS = [
   { id: 'U1', provider: 'Dataprana',  regex: /^(ngs|yna|pie|olt|dga)/i },
   { id: 'U3', provider: 'ValueHash',  regex: /^(c21|e21)/i },
   { id: 'P1', provider: 'Altos',      regex: /^s21/i },
-  { id: 'F1', provider: 'Terahash',   regex: /^18x/i },
+  { id: 'F1', provider: 'Terahash',   regex: /^(18x0x157|18x0x168|18x0x18|18x0x199|18x0x22|18x0x238|18x0x30|18x0x61|18x0x72|18x0x73|18x0x91|18x0x94|18x1x179|18x1x68)$/i },
 ];
 function classifyWorker(name) {
   for (const g of GROUPS) if (g.regex.test(name)) return g;

@@ -518,7 +518,7 @@ const GROUPS_RULES = [
   { id:'U1+U2', provider:'Dataprana',      test: n => /^(ngs|yna|pie|olt|dga)/i.test(n) || /^[0-9a-f]{12}$/i.test(n) || /^\d{9,}$/.test(n) },
   { id:'U3',    provider:'ValueHash (NY)', test: n => /^(c21|e21)/i.test(n) },
   { id:'P1',    provider:'Altos',          test: n => /^s21/i.test(n) },
-  { id:'F1',    provider:'Terahash',       test: n => /^18x/i.test(n) },
+  { id:'F1',    provider:'Terahash',       test: n => new Set(['18x0x157','18x0x168','18x0x18','18x0x199','18x0x22','18x0x238','18x0x30','18x0x61','18x0x72','18x0x73','18x0x91','18x0x94','18x1x179','18x1x68']).has(n) },
   { id:'OM',    provider:'Open Mine',      test: n => /^(omx|openfall)/i.test(n) },
 ];
 function getGroupFromName(name) {

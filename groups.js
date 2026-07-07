@@ -49,7 +49,16 @@ const GROUPS = [
   {
     id: 'F1',
     provider: 'Terahash',
-    test: (name) => /^18x/i.test(name),
+    // Liste explicite des 14 machines Terahash (Cyberian Mine).
+    // On évite le regex /^18x/ pour ne pas capturer des connexions
+    // transitoires (machines fallback, tests ponctuels, etc.)
+    // Si une nouvelle machine Terahash est ajoutée, ajouter son nom ici.
+    test: (name) => new Set([
+      '18x0x157', '18x0x168', '18x0x18',  '18x0x199',
+      '18x0x22',  '18x0x238', '18x0x30',  '18x0x61',
+      '18x0x72',  '18x0x73',  '18x0x91',  '18x0x94',
+      '18x1x179', '18x1x68',
+    ]).has(name),
   },
   {
     id: 'OM',

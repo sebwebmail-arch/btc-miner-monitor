@@ -761,7 +761,7 @@ function buildMorningEmail(offlineByAccount, workerIssues, watchlistEntries, noG
       </tr>`).join('');
     return `
     <div style="margin-bottom:28px">
-      <div style="font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#8e44ad;margin-bottom:10px">🏷️ Workers sans groupe — action requise</div>
+      <div style="font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#8e44ad;margin-bottom:10px">🏷️ Workers without a group — action required</div>
       <table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:1px solid #eee;border-radius:6px;overflow:hidden">
         <tr style="background:#f5eef8">
           <td style="padding:7px 12px;font-size:11px;color:#8e44ad;font-weight:700;text-transform:uppercase">Worker</td>
@@ -770,7 +770,7 @@ function buildMorningEmail(offlineByAccount, workerIssues, watchlistEntries, noG
         </tr>
         ${rows}
       </table>
-      <p style="font-size:12px;color:#666;margin:8px 0 0">Assigner à un groupe sur f2pool, puis mettre à jour <code>groups.js</code>.</p>
+      <p style="font-size:12px;color:#666;margin:8px 0 0">Assign them to a group on f2pool, then update <code>groups.js</code>.</p>
     </div>`;
   })();
 
@@ -1370,21 +1370,30 @@ async function main() {
         .join('\n');
 
       // Telegram
-      const mainChatId = process.env.TELEGRAM_CHAT_ID;
-      if (mainChatId) {
-        const tgText = [
-          `🏷️ <b>Workers sans groupe détectés</b>`,
-          ``,
-          lines,
-          ``,
-          `Ces workers n'appartiennent à aucun groupe connu.`,
-          `➡️ Les assigner à un groupe f2pool et mettre à jour groups.js.`,
-          ``,
-          `🕐 ${timeUTC} UTC`,
-          `📊 https://watcher.capone.market`,
-        ].join('\n');
+      const tgText = [
+        `🏷️ <b>Workers without group — action required</b>`,
+        ``,
+        lines,
+        ``,
+        `These workers do not match any known group.`,
+        `➡️ Assign them to a group on f2pool and update groups.js.`,
+        ``,
+        `🕐 ${timeUTC} UTC`,
+        `📊 https://watcher.capone.market`,
+      ].join('\n');
+      // Send to TELEGRAM_CHAT_ID if configured, otherwise fall back to each relevant account channel
+      const noGroupChatIds = new Set();
+      if (process.env.TELEGRAM_CHAT_ID) {
+        noGroupChatIds.add(process.env.TELEGRAM_CHAT_ID);
+      } else {
+        for (const w of newNoGroup) {
+          const acct = ACCOUNTS.find(a => a.user === w.account);
+          if (acct?.telegramChatId) noGroupChatIds.add(acct.telegramChatId);
+        }
+      }
+      for (const chatId of noGroupChatIds) {
         try {
-          await sendTelegram(mainChatId, tgText);
+          await sendTelegram(chatId, tgText);
         } catch(err) {
           console.error(`   ❌ Telegram No Group: ${err.message}`);
         }
@@ -1402,11 +1411,11 @@ async function main() {
 <!DOCTYPE html><html><body style="margin:0;padding:0;background:#f7f6f2;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif">
 <div style="max-width:600px;margin:32px auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.08)">
   <div style="background:#8e44ad;padding:24px 32px">
-    <h1 style="margin:0;color:#fff;font-size:20px">🏷️ Workers sans groupe</h1>
+    <h1 style="margin:0;color:#fff;font-size:20px">🏷️ Workers without a group</h1>
     <p style="margin:4px 0 0;color:rgba(255,255,255,.85);font-size:14px">${timeUTC} UTC</p>
   </div>
   <div style="padding:24px 32px">
-    <p style="font-size:13px;color:#444;margin:0 0 16px">Ces workers n'appartiennent à aucun groupe connu dans groups.js. Action requise : les assigner à un groupe f2pool puis mettre à jour le mapping.</p>
+    <p style="font-size:13px;color:#444;margin:0 0 16px">These workers do not match any known group in groups.js. Action required: assign them to a group on f2pool and update the mapping.</p>
     <table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:1px solid #eee;border-radius:6px;overflow:hidden">
       <tr style="background:#efede7">
         <td style="padding:8px 14px;font-size:11px;color:#999;font-weight:700;text-transform:uppercase">Worker</td>
@@ -1424,7 +1433,7 @@ async function main() {
 </div>
 </body></html>`;
       try {
-        await sendEmail(alertTo, `[ACTION REQUIRED] ${newNoGroup.length} worker(s) sans groupe`, emailHtml);
+        await sendEmail(alertTo, `[ACTION REQUIRED] ${newNoGroup.length} worker(s) without group`, emailHtml);
       } catch(err) {
         console.error(`   ❌ Email No Group: ${err.message}`);
       }

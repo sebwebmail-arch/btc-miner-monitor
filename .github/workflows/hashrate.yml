@@ -57,6 +57,8 @@ jobs:
           git add data/offline-status.json   2>/dev/null || true
           git add data/worker-hosts.json     2>/dev/null || true
           git add data/watchlist.json        2>/dev/null || true
+          git add data/ghost-workers.json    2>/dev/null || true
+          git add data/no-group.json         2>/dev/null || true
           git status
           git diff --staged --quiet || git commit -m "data: hashrate $(date -u +'%Y-%m-%d %H:%M UTC')"
           git push && echo "push OK" || { echo "push FAILED: $?"; exit 128; }

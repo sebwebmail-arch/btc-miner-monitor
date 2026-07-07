@@ -1,19 +1,26 @@
 {
-  "last_updated": "2026-07-07T17:01:20.579Z",
+  "last_updated": "2026-07-07T17:31:10.299Z",
   "offline": {
+    "cmine.ynahfkabdajba01": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "ynahfkabdajba01",
+      "group_id": "U1+U2",
+      "provider": "Dataprana"
+    },
+    "cmine.ynahfkabdjiai08": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "ynahfkabdjiai08",
+      "group_id": "U1+U2",
+      "provider": "Dataprana"
+    },
     "cmine.k2lx132x11x48": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
       "name": "k2lx132x11x48",
       "group_id": "R3",
       "provider": "Minto"
-    },
-    "cmine.ngsbfmabdjiaj02": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "ngsbfmabdjiaj02",
-      "group_id": "U1+U2",
-      "provider": "Dataprana"
     },
     "cmine.029": {
       "account": "cmine",
@@ -22,27 +29,6 @@
       "group_id": "E1",
       "provider": "BitCluster"
     },
-    "cmine.026": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "026",
-      "group_id": "E1",
-      "provider": "BitCluster"
-    },
-    "cmine.ynahfkabdajba01": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "ynahfkabdajba01",
-      "group_id": "U1+U2",
-      "provider": "Dataprana"
-    },
-    "cmine.ynahfkabdajbh02": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "ynahfkabdajbh02",
-      "group_id": "U1+U2",
-      "provider": "Dataprana"
-    },
     "cmine.s21xp005": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
@@ -50,10 +36,24 @@
       "group_id": "P1",
       "provider": "Altos"
     },
-    "cmine.ynahfkabdjiai08": {
+    "cmine.025": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
-      "name": "ynahfkabdjiai08",
+      "name": "025",
+      "group_id": "E1",
+      "provider": "BitCluster"
+    },
+    "cmine.s21xp004": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21xp004",
+      "group_id": "P1",
+      "provider": "Altos"
+    },
+    "cmine.ynahfkabdajbh02": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "ynahfkabdajbh02",
       "group_id": "U1+U2",
       "provider": "Dataprana"
     },
@@ -64,6 +64,13 @@
       "group_id": "P1",
       "provider": "Altos"
     },
+    "cmine.ngsbfmabdjiaj02": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "ngsbfmabdjiaj02",
+      "group_id": "U1+U2",
+      "provider": "Dataprana"
+    },
     "cmine.ynahfkabdajbh01": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
@@ -71,17 +78,10 @@
       "group_id": "U1+U2",
       "provider": "Dataprana"
     },
-    "cmine.s21xp004": {
+    "cmine.026": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
-      "name": "s21xp004",
-      "group_id": "P1",
-      "provider": "Altos"
-    },
-    "cmine.025": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "025",
+      "name": "026",
       "group_id": "E1",
       "provider": "BitCluster"
     },
@@ -175,38 +175,10 @@
       "category": "dead_recent",
       "last_share": "2026-07-01T00:01:01.760Z"
     },
-    "everminer.ngsbfmabdjiaj02": {
+    "everminer.olttfkabdjfje01": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "ngsbfmabdjiaj02",
-      "group_id": "U1+U2",
-      "provider": "Dataprana"
-    },
-    "everminer.ynahfkabdajbh02": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "ynahfkabdajbh02",
-      "group_id": "U1+U2",
-      "provider": "Dataprana"
-    },
-    "everminer.dgahfkabdjfae06": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "dgahfkabdjfae06",
-      "group_id": "U1+U2",
-      "provider": "Dataprana"
-    },
-    "everminer.021": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "021",
-      "group_id": "E1",
-      "provider": "BitCluster"
-    },
-    "everminer.ynahfkabdjiai04": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "ynahfkabdjiai04",
+      "name": "olttfkabdjfje01",
       "group_id": "U1+U2",
       "provider": "Dataprana"
     },
@@ -217,24 +189,38 @@
       "group_id": "E1",
       "provider": "BitCluster"
     },
-    "everminer.k2lx131x5x19": {
+    "everminer.dgahfkabdjfae06": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "k2lx131x5x19",
-      "group_id": "R3",
-      "provider": "Minto"
+      "name": "dgahfkabdjfae06",
+      "group_id": "U1+U2",
+      "provider": "Dataprana"
     },
-    "everminer.018": {
+    "everminer.ynahfkabdjiai04": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "018",
-      "group_id": "E1",
-      "provider": "BitCluster"
+      "name": "ynahfkabdjiai04",
+      "group_id": "U1+U2",
+      "provider": "Dataprana"
     },
-    "everminer.olttfkabdjfje01": {
+    "everminer.ynahfkabdajbh01": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "olttfkabdjfje01",
+      "name": "ynahfkabdajbh01",
+      "group_id": "U1+U2",
+      "provider": "Dataprana"
+    },
+    "everminer.ynahfkabdajbh02": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "ynahfkabdajbh02",
+      "group_id": "U1+U2",
+      "provider": "Dataprana"
+    },
+    "everminer.ngsbfmabdjiaj02": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "ngsbfmabdjiaj02",
       "group_id": "U1+U2",
       "provider": "Dataprana"
     },
@@ -245,6 +231,13 @@
       "group_id": "U1+U2",
       "provider": "Dataprana"
     },
+    "everminer.021": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "021",
+      "group_id": "E1",
+      "provider": "BitCluster"
+    },
     "everminer.dgahfkabdjfae04": {
       "account": "everminer",
       "account_name": "Everminer",
@@ -252,12 +245,19 @@
       "group_id": "U1+U2",
       "provider": "Dataprana"
     },
-    "everminer.ynahfkabdajbh01": {
+    "everminer.018": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "ynahfkabdajbh01",
-      "group_id": "U1+U2",
-      "provider": "Dataprana"
+      "name": "018",
+      "group_id": "E1",
+      "provider": "BitCluster"
+    },
+    "everminer.k2lx131x5x19": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x19",
+      "group_id": "R3",
+      "provider": "Minto"
     },
     "everminer.dgahfkubdjfae04": {
       "account": "everminer",

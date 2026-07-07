@@ -1,32 +1,6 @@
 {
-  "last_updated": "2026-07-07T15:31:12.031Z",
+  "last_updated": "2026-07-07T16:01:21.290Z",
   "issues": {
-    "cmine.s21xphyd0002": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "s21xphyd0002",
-      "group_id": "P1",
-      "provider": "Altos",
-      "type": "volatile",
-      "current_avg_ths": 361.6,
-      "baseline_avg_ths": 482.3,
-      "drop_pct": 25,
-      "cv_pct": 55,
-      "zero_rate_pct": 17
-    },
-    "cmine.s21xphyd005": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "s21xphyd005",
-      "group_id": "P1",
-      "provider": "Altos",
-      "type": "volatile",
-      "current_avg_ths": 386.9,
-      "baseline_avg_ths": 453.2,
-      "drop_pct": 15,
-      "cv_pct": 56,
-      "zero_rate_pct": 17
-    },
     "cmine.r21137": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
@@ -34,24 +8,11 @@
       "group_id": "R1",
       "provider": "IZTM",
       "type": "level_drop",
-      "current_avg_ths": 66.1,
-      "baseline_avg_ths": 111.5,
-      "drop_pct": 41,
-      "cv_pct": 8,
+      "current_avg_ths": 64.4,
+      "baseline_avg_ths": 110.3,
+      "drop_pct": 42,
+      "cv_pct": 9,
       "zero_rate_pct": 0
-    },
-    "cmine.s21xphyd0003": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "s21xphyd0003",
-      "group_id": "P1",
-      "provider": "Altos",
-      "type": "volatile",
-      "current_avg_ths": 333.7,
-      "baseline_avg_ths": 465,
-      "drop_pct": 28,
-      "cv_pct": 55,
-      "zero_rate_pct": 17
     },
     "everminer.k2lx131x5x19": {
       "account": "everminer",
@@ -59,12 +20,12 @@
       "worker": "k2lx131x5x19",
       "group_id": "R3",
       "provider": "Minto",
-      "type": "level_drop",
-      "current_avg_ths": 103.7,
-      "baseline_avg_ths": 191.8,
-      "drop_pct": 46,
-      "cv_pct": 87,
-      "zero_rate_pct": 33
+      "type": "volatile",
+      "current_avg_ths": 70.2,
+      "baseline_avg_ths": 192.4,
+      "drop_pct": 64,
+      "cv_pct": 121,
+      "zero_rate_pct": 50
     }
   }
 }

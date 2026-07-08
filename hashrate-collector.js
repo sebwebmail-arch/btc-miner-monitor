@@ -46,10 +46,9 @@ const WORKERHOSTS_PATH   = path.join(__dirname, 'data', 'worker-hosts.json');
 const SLA_DAILY_PATH     = path.join(__dirname, 'data', 'sla-daily.json');
 const WATCHLIST_PATH     = path.join(__dirname, 'data', 'watchlist.json');
 const GHOSTWORKERS_PATH  = path.join(__dirname, 'data', 'ghost-workers.json');
-const NOGROUP_PATH       = path.join(__dirname, 'data', 'no-group.json');
 const MAX_DAILY_ENTRIES  = 31; // 30 jours glissants + 1 marge
 const GHOST_MAX_DAYS     = 90; // garder les workers Dead dans le registre jusqu'à 90 jours
-// No Group : plus d'alerte temps-réel — visible uniquement dans le rapport matin
+// No Group : détection uniquement dans le rapport matin (05:00 UTC)
 
 const RECOVERY_THRESHOLD = 0.75; // 75% de la baseline = considéré récupéré
 const WATCHLIST_MAX_DAYS = 14;   // auto-expire après 14 jours sans récupération
@@ -761,7 +760,7 @@ function buildMorningEmail(offlineByAccount, workerIssues, watchlistEntries, noG
       </tr>`).join('');
     return `
     <div style="margin-bottom:28px">
-      <div style="font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#8e44ad;margin-bottom:10px">🏷️ Workers without a group — action required</div>
+      <div style="font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#8e44ad;margin-bottom:10px">🏷️ Workers sans groupe — action requise</div>
       <table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:1px solid #eee;border-radius:6px;overflow:hidden">
         <tr style="background:#f5eef8">
           <td style="padding:7px 12px;font-size:11px;color:#8e44ad;font-weight:700;text-transform:uppercase">Worker</td>
@@ -770,7 +769,7 @@ function buildMorningEmail(offlineByAccount, workerIssues, watchlistEntries, noG
         </tr>
         ${rows}
       </table>
-      <p style="font-size:12px;color:#666;margin:8px 0 0">Assign them to a group on f2pool, then update <code>groups.js</code>.</p>
+      <p style="font-size:12px;color:#666;margin:8px 0 0">Assigner à un groupe sur f2pool, puis mettre à jour <code>groups.js</code>.</p>
     </div>`;
   })();
 
@@ -1319,47 +1318,7 @@ async function main() {
   }, null, 2));
   console.log(`   Offline temps réel: ${Object.keys(offlineNow).length} worker(s)`);
 
-  // ── 5c. Détection workers "No Group" + alertes ───────────────────────────
-  // Un worker sans groupe = nommage inconnu → opérateur doit agir.
-  console.log('\n🏷️  Vérification workers No Group...');
-  const noGroupWorkers = [];
-  for (const account of ACCOUNTS) {
-    for (const w of allWorkers[account.user] || []) {
-      const name  = w.hash_rate_info?.name || '?';
-      const group = getGroup(name);
-      if (group.id !== 'No Group') continue;
-      const hr3h = w.hash_rate_info?.h3_hash_rate ?? w.hash_rate_info?.hash_rate ?? 0;
-      noGroupWorkers.push({
-        account:      account.user,
-        account_name: account.name,
-        name,
-        hr3h,
-        host: w.host || '?',
-      });
-    }
-  }
-
-  // Sauvegarde no-group.json (lu par le dashboard)
-  fs.writeFileSync(NOGROUP_PATH, JSON.stringify({
-    last_updated: now.toISOString(),
-    workers: noGroupWorkers,
-  }, null, 2));
-
-  if (noGroupWorkers.length === 0) {
-    console.log('   Aucun worker No Group.');
-  } else {
-    console.log(`   ⚠️  ${noGroupWorkers.length} worker(s) No Group détectés.`);
-
-    // Alerte Telegram + email (avec cooldown 12h par worker)
-    if (!alertState.nogroup) alertState.nogroup = {};
-    const newNoGroup = noGroupWorkers.filter(w => {
-      const key  = `${w.account}.${w.name}`;
-      const last = alertState.nogroup[key];
-      return !last || (now - new Date(last)) > NOGROUP_COOLDOWN_H * 3600000;
-    });
-
-    // Pas d'alerte temps-réel — les workers No Group sont signalés uniquement dans le rapport matin.
-  }
+  // No Group : détection uniquement dans le rapport matin (pas à chaque snapshot).
 
   // ── 6. Rapport matin (05:00 UTC) ──────────────────────────────────────────
   if (now.getUTCHours() === MORNING_HOUR_UTC && now.getUTCMinutes() < 15) {
@@ -1394,6 +1353,27 @@ async function main() {
 
       // SLA daily aggregate (données du jour J-1)
       writeDailySLA(h, now);
+
+      // Détection workers No Group (une seule fois par jour, au rapport matin)
+      console.log('   🏷️  Vérification workers No Group...');
+      const noGroupWorkers = [];
+      for (const account of ACCOUNTS) {
+        for (const w of allWorkers[account.user] || []) {
+          const name  = w.hash_rate_info?.name || '?';
+          const group = getGroup(name);
+          if (group.id !== 'No Group') continue;
+          noGroupWorkers.push({
+            account:      account.user,
+            account_name: account.name,
+            name,
+            hr3h: w.hash_rate_info?.h3_hash_rate ?? w.hash_rate_info?.hash_rate ?? 0,
+            host: w.host || '?',
+          });
+        }
+      }
+      if (noGroupWorkers.length > 0) {
+        console.log(`   ⚠️  ${noGroupWorkers.length} worker(s) No Group → inclus dans le rapport matin.`);
+      }
 
       // Email
       try {

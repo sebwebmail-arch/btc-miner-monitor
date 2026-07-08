@@ -267,6 +267,7 @@ body::after {
 .issues-table tr:hover td { background: var(--bg-surface); }
 .issues-table .no-results { padding: 24px; text-align: center; color: var(--text-muted); font-size: 12px; font-style: italic; }
 .worker-name { font-family: var(--mono); font-weight: 600; font-size: 12px; color: var(--text-primary); }
+.comment-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--accent-orange); vertical-align: middle; margin-left: 5px; flex-shrink: 0; opacity: .85; }
 .account-label { font-size: 11px; color: var(--text-secondary); }
 .group-badge { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: 700; background: var(--accent-orange-dim); color: var(--accent-orange); font-family: var(--mono); }
 .age-pill { display: inline-block; padding: 3px 9px; border-radius: 10px; font-size: 11px; font-weight: 600; white-space: nowrap; }
@@ -871,8 +872,10 @@ function renderDeadTracker() {
     const rows = workers.map(w => {
       const cat = categoryOf(w);
       const lastShareFmt = w.last_share ? new Date(w.last_share).toUTCString().replace(' GMT','') : '—';
-      return `<tr onclick="openWorkerModal('${w.account}.${w.name}')" style="cursor:pointer">
-        <td><span class="worker-name">${w.name}</span></td>
+      const wKey = `${w.account}.${w.name}`;
+      const hasCmtD = (_comments[wKey] || []).length > 0;
+      return `<tr onclick="openWorkerModal('${wKey}')" style="cursor:pointer">
+        <td><span class="worker-name">${w.name}</span>${hasCmtD ? '<span class="comment-dot" title="Has comments"></span>' : ''}</td>
         <td class="dead-col-acct"><span class="account-label">${w.account_name||w.account}</span></td>
         <td><span class="group-badge">${w.group_id}</span><span class="prov-name"> ${w.provider}</span></td>
         <td><span class="age-pill ${pillClass(cat)}">${pillLabel(cat, w.last_share)}</span></td>
@@ -937,7 +940,7 @@ let _offlineStatus = null; // offline-status.json (real-time offline workers)
 let _workerHosts   = {};   // worker-hosts.json (IP par worker)
 let _deadIssues    = {};   // history.json current_issues (dead/offline workers)
 let _watchlist     = null; // watchlist.json (post-drop surveillance)
-let _noGroup       = null; // no-group.json (workers sans groupe)
+let _comments      = {}; // worker-comments.json — { "acct.name": [{ts,text},...] }
 let _chartPts      = [];   // points du graphe modal courant (pour tooltip)
 let _chartGeo      = {};   // géométrie du graphe modal courant
 
@@ -1282,6 +1285,15 @@ async function saveComment(key) {
     const json = await r.json();
     if (!r.ok) throw new Error(json.error || 'Save failed');
     renderCommentList(el, json.comments || []);
+    // Mettre à jour le cache local pour que la bulle apparaisse immédiatement
+    _comments[key] = json.comments || [];
+    // Rafraîchir le point dans la ligne de la table (si visible)
+    document.querySelectorAll(`tr[onclick*="${key}"] .comment-dot`).forEach(d => d.remove());
+    document.querySelectorAll(`tr[onclick*="${key}"] .worker-name`).forEach(span => {
+      if (!span.nextElementSibling?.classList.contains('comment-dot')) {
+        span.insertAdjacentHTML('afterend', '<span class="comment-dot" title="Has comments"></span>');
+      }
+    });
     ta.value = '';
     document.getElementById('comment-input-area').style.display = 'none';
   } catch(e) {
@@ -1686,8 +1698,9 @@ function renderOnlineTable() {
       statusCell = `<span style="color:#27ae60;font-size:12px;font-weight:600">✓</span>`;
     }
 
+    const hasCmt = (_comments[w.key] || []).length > 0;
     return `<tr class="${rowClass}" onclick="openWorkerModal('${w.key}')" style="cursor:pointer">
-      <td><span class="worker-name">${w.workerName}</span></td>
+      <td><span class="worker-name">${w.workerName}</span>${hasCmt ? '<span class="comment-dot" title="Has comments"></span>' : ''}</td>
       <td class="online-acct"><span class="account-label acct-long">${w.accountName}</span><span class="account-label acct-short" style="display:none">${w.accountUser}</span></td>
       <td class="td-dc"><span class="group-badge">${w.groupId}</span><span class="prov-name"> ${w.provider}</span></td>
       <td>${statusCell}</td>
@@ -1700,29 +1713,6 @@ function renderOnlineTable() {
   const emptyRow = workers.length === 0
     ? `<tr><td colspan="7" style="padding:20px;text-align:center;color:var(--text-muted);font-size:12px">No workers match the current filters.</td></tr>`
     : '';
-
-  // ── No Group rows (workers sans groupe — action requise) ─────────────────
-  const ngWorkers = (_noGroup && _noGroup.workers || [])
-    .filter(w => !_onlineFilters.account.size || _onlineFilters.account.has(w.account_name || w.account))
-    .filter(w => !_onlineSearch || w.name.toLowerCase().includes(_onlineSearch));
-  const ngRows = ngWorkers.length === 0 ? '' :
-    `<tr class="wl-hdr-row"><td colspan="7" style="background:rgba(142,68,173,0.08);border-bottom-color:rgba(142,68,173,0.2)">
-       <span class="wl-hdr-title" style="color:#8e44ad">🏷️ No Group</span>
-       <span class="wl-hdr-note">workers sans groupe — assigner sur f2pool · ${ngWorkers.length} worker${ngWorkers.length > 1 ? 's' : ''}</span>
-     </td></tr>` +
-    ngWorkers.map(w => `<tr style="background:rgba(142,68,173,0.03)">
-      <td><span class="worker-name">${w.name}</span></td>
-      <td class="online-acct">
-        <span class="account-label acct-long">${w.account_name || w.account}</span>
-        <span class="account-label acct-short" style="display:none">${w.account}</span>
-      </td>
-      <td class="td-dc"><span class="group-badge" style="background:rgba(142,68,173,0.12);color:#8e44ad">?</span><span class="prov-name"> Unknown</span></td>
-      <td><span class="anomaly-badge" style="background:rgba(142,68,173,0.12);color:#8e44ad;padding:3px 8px;border-radius:4px;font-size:11px;font-weight:600">No Group</span></td>
-      <td class="hr-now">—</td>
-      <td class="hr-avg mob-hide">—</td>
-      <td class="spark-td mob-hide">—</td>
-    </tr>`).join('') +
-    `<tr class="wl-sep-row"><td colspan="7"></td></tr>`;
 
   // ── Watchlist rows (Still Degraded) ─────────────────────────────────────
   const wlRows = wlEntries.length === 0 ? '' :
@@ -1764,7 +1754,7 @@ function renderOnlineTable() {
       <th class="mob-hide">Avg 3h</th>
       <th class="mob-hide">6h trend</th>
     </tr></thead>
-    <tbody>${ngRows}${wlRows}${emptyRow || tbody}</tbody>
+    <tbody>${wlRows}${emptyRow || tbody}</tbody>
   </table>`;
 }
 
@@ -2086,23 +2076,23 @@ function buildHashrateSection() {
 async function render() {
   let data;
   try {
-    const [histRes, hrRes, wiRes, osRes, whRes, wlRes, ngRes] = await Promise.all([
+    const [histRes, hrRes, wiRes, osRes, whRes, wlRes, cmtRes] = await Promise.all([
       fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/history.json?t='        + Date.now()),
       fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/hashrate.json?t='       + Date.now()).catch(() => null),
       fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/worker-issues.json?t='  + Date.now()).catch(() => null),
       fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/offline-status.json?t=' + Date.now()).catch(() => null),
       fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/worker-hosts.json?t='   + Date.now()).catch(() => null),
       fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/watchlist.json?t='      + Date.now()).catch(() => null),
-      fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/no-group.json?t='       + Date.now()).catch(() => null),
+      fetch('/api/comments').catch(() => null),
     ]);
     if (!histRes.ok) throw new Error(`HTTP ${histRes.status}`);
     data = await histRes.json();
-    if (hrRes && hrRes.ok) _hashrate      = await hrRes.json();
-    if (wiRes && wiRes.ok) _workerIssues  = await wiRes.json();
-    if (osRes && osRes.ok) _offlineStatus = await osRes.json();
-    if (whRes && whRes.ok) _workerHosts   = await whRes.json();
-    if (wlRes && wlRes.ok) _watchlist     = await wlRes.json();
-    if (ngRes && ngRes.ok) _noGroup       = await ngRes.json();
+    if (hrRes  && hrRes.ok)  _hashrate      = await hrRes.json();
+    if (wiRes  && wiRes.ok)  _workerIssues  = await wiRes.json();
+    if (osRes  && osRes.ok)  _offlineStatus = await osRes.json();
+    if (whRes  && whRes.ok)  _workerHosts   = await whRes.json();
+    if (wlRes  && wlRes.ok)  _watchlist     = await wlRes.json();
+    if (cmtRes && cmtRes.ok) { const j = await cmtRes.json(); _comments = j.comments || j || {}; }
   } catch(e) {
     document.getElementById('loading').style.display = 'none';
     const err = document.getElementById('error-msg');

@@ -1715,12 +1715,18 @@ function renderOnlineTable() {
     : '';
 
   // ── Watchlist rows (Still Degraded) ─────────────────────────────────────
-  const wlRows = wlEntries.length === 0 ? '' :
+  // Exclure les workers déjà dans Offline/Dead (évite les doublons)
+  const offlineKeys = new Set(Object.keys(_offlineStatus?.offline || {}));
+  const wlVisible = wlEntries.filter(e => {
+    if (e.type !== 'worker_anomaly') return true; // garder les drops de groupe
+    return !offlineKeys.has(`${e.account}.${e.worker}`);
+  });
+  const wlRows = wlVisible.length === 0 ? '' :
     `<tr class="wl-hdr-row"><td colspan="7">
        <span class="wl-hdr-title">⚠ Still degraded</span>
-       <span class="wl-hdr-note">not yet recovered to 75% of baseline · ${wlEntries.length} item${wlEntries.length > 1 ? 's' : ''}</span>
+       <span class="wl-hdr-note">not yet recovered to 75% of baseline · ${wlVisible.length} item${wlVisible.length > 1 ? 's' : ''}</span>
      </td></tr>` +
-    wlEntries.map(e => {
+    wlVisible.map(e => {
       const name   = e.type === 'worker_anomaly' ? e.worker : `Group ${e.group_id}`;
       const nowTH  = e.current_hr  != null ? (e.current_hr  / 1e12).toFixed(1) : '—';
       const baseTH = e.baseline_hr != null ? (e.baseline_hr / 1e12).toFixed(1) : '—';
@@ -1729,8 +1735,9 @@ function renderOnlineTable() {
       const clickAttr = wkKey ? `onclick="openWorkerModal('${wkKey}')" style="cursor:pointer"` : '';
       const dropLabel = `−${e.drop_pct}%`;
       const durLabel  = `<span class="${durClass(e.duration_h)}">${fmtDur(e.duration_h)}</span>`;
+      const hasCmtWL  = wkKey && (_comments[wkKey] || []).length > 0;
       return `<tr class="row-drop" ${clickAttr}>
-        <td><span class="worker-name">${name}</span></td>
+        <td><span class="worker-name">${name}</span>${hasCmtWL ? '<span class="comment-dot" title="Has comments"></span>' : ''}</td>
         <td class="online-acct">
           <span class="account-label acct-long">${e.account_name || e.account}</span>
           <span class="account-label acct-short" style="display:none">${e.account}</span>

@@ -225,7 +225,7 @@
     "w.cmine.r21137": {
       "type": "worker_anomaly",
       "baselineHR": 147700000000000,
-      "currentHR": 69743244229418.1,
+      "currentHR": 64739244643450.88,
       "worker": "r21137",
       "provider": "IZTM",
       "groupId": "R1",
@@ -233,6 +233,18 @@
       "accountName": "Cyberian Mine",
       "anomalyType": "level_drop",
       "detectedAt": "2026-07-07T19:31:14.691Z"
+    },
+    "w.cmine.k2lx131x4x42": {
+      "type": "worker_anomaly",
+      "baselineHR": 183600000000000,
+      "currentHR": 0,
+      "worker": "k2lx131x4x42",
+      "provider": "Minto",
+      "groupId": "R3",
+      "account": "cmine",
+      "accountName": "Cyberian Mine",
+      "anomalyType": "volatile",
+      "detectedAt": "2026-07-08T04:01:17.739Z"
     }
   },
   "nogroup": {

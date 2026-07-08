@@ -1,44 +1,71 @@
 // Vercel serverless function — worker comments
 // GET  /api/comments?key=cmine.s21xp003   → { comments: [{ts, text}, ...] }
+// GET  /api/comments?debug=1              → diagnostic (token present, repo, github reachable)
 // POST /api/comments  body: { key, text }  → { ok: true, comments: [...] }
-//
-// Stockage : data/worker-comments.json dans le repo GitHub
-// Env vars Vercel requis : GITHUB_TOKEN, GITHUB_REPO (ex: "sebwebmail-arch/btc-miner-monitor")
 
-const FILE_PATH = 'data/worker-comments.json';
+const https = require('https');
+
+const FILE_PATH  = 'data/worker-comments.json';
+const GH_API     = 'api.github.com';
+
+// Minimal HTTPS request helper (no external deps, works in all Node versions)
+function ghRequest(opts, body) {
+  return new Promise((resolve, reject) => {
+    const req = https.request(opts, res => {
+      let data = '';
+      res.on('data', c => data += c);
+      res.on('end', () => {
+        try { resolve({ status: res.statusCode, json: JSON.parse(data) }); }
+        catch(e) { resolve({ status: res.statusCode, json: { _raw: data } }); }
+      });
+    });
+    req.on('error', reject);
+    if (body) req.write(body);
+    req.end();
+  });
+}
+
+function ghHeaders(token) {
+  return {
+    Authorization: `token ${token}`,
+    Accept:        'application/vnd.github.v3+json',
+    'Content-Type':'application/json',
+    'User-Agent':  'btc-miner-monitor/1.0',
+  };
+}
 
 async function getFile(token, repo) {
-  const r = await fetch(`https://api.github.com/repos/${repo}/contents/${FILE_PATH}`, {
-    headers: {
-      Authorization: `token ${token}`,
-      Accept: 'application/vnd.github.v3+json',
-    },
+  const r = await ghRequest({
+    hostname: GH_API,
+    path:     `/repos/${repo}/contents/${FILE_PATH}`,
+    method:   'GET',
+    headers:  ghHeaders(token),
   });
+  console.log(`GET file status: ${r.status}`);
   if (r.status === 404) return { sha: null, data: {} };
-  if (!r.ok) throw new Error(`GitHub GET ${r.status}`);
-  const j = await r.json();
-  const data = JSON.parse(Buffer.from(j.content, 'base64').toString('utf8'));
-  return { sha: j.sha, data };
+  if (r.status !== 200) throw new Error(`GitHub GET ${r.status}: ${r.json.message || JSON.stringify(r.json)}`);
+  const data = JSON.parse(Buffer.from(r.json.content, 'base64').toString('utf8'));
+  return { sha: r.json.sha, data };
 }
 
 async function putFile(token, repo, sha, data, message) {
-  const body = {
+  const bodyObj = {
     message,
     content: Buffer.from(JSON.stringify(data, null, 2)).toString('base64'),
   };
-  if (sha) body.sha = sha;
-  const r = await fetch(`https://api.github.com/repos/${repo}/contents/${FILE_PATH}`, {
-    method: 'PUT',
-    headers: {
-      Authorization: `token ${token}`,
-      Accept: 'application/vnd.github.v3+json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body),
-  });
-  if (!r.ok) {
-    const err = await r.json().catch(() => ({}));
-    throw new Error(err.message || `GitHub PUT ${r.status}`);
+  if (sha) bodyObj.sha = sha;
+  const bodyStr = JSON.stringify(bodyObj);
+
+  const r = await ghRequest({
+    hostname: GH_API,
+    path:     `/repos/${repo}/contents/${FILE_PATH}`,
+    method:   'PUT',
+    headers:  { ...ghHeaders(token), 'Content-Length': Buffer.byteLength(bodyStr) },
+  }, bodyStr);
+
+  console.log(`PUT file status: ${r.status}`);
+  if (r.status !== 200 && r.status !== 201) {
+    throw new Error(`GitHub PUT ${r.status}: ${r.json.message || JSON.stringify(r.json)}`);
   }
 }
 
@@ -50,8 +77,11 @@ module.exports = async function handler(req, res) {
 
   const token = process.env.GITHUB_TOKEN;
   const repo  = process.env.GITHUB_REPO;
+
+  console.log(`[comments] ${req.method} | token=${token ? token.slice(0,6)+'...' : 'MISSING'} | repo=${repo || 'MISSING'}`);
+
   if (!token || !repo) {
-    return res.status(500).json({ error: 'GITHUB_TOKEN or GITHUB_REPO not configured in Vercel' });
+    return res.status(500).json({ error: 'GITHUB_TOKEN or GITHUB_REPO not configured' });
   }
 
   try {
@@ -61,7 +91,10 @@ module.exports = async function handler(req, res) {
       return res.status(200).json({ comments: key ? (data[key] || []) : data });
 
     } else if (req.method === 'POST') {
-      const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+      let body = req.body;
+      if (typeof body === 'string') {
+        try { body = JSON.parse(body); } catch(e) { body = {}; }
+      }
       const { key, text } = body || {};
       if (!key || !String(text || '').trim()) {
         return res.status(400).json({ error: 'key and text required' });
@@ -76,7 +109,7 @@ module.exports = async function handler(req, res) {
       return res.status(405).json({ error: 'Method not allowed' });
     }
   } catch (err) {
-    console.error('Comments API error:', err.message);
+    console.error('[comments] ERROR:', err.message);
     return res.status(500).json({ error: err.message });
   }
 };

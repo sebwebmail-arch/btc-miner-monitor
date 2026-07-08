@@ -1565,6 +1565,18 @@
       "accountName": "Everminer",
       "anomalyType": "level_drop",
       "detectedAt": "2026-07-08T22:01:18.544Z"
+    },
+    "w.cmine.omxdefault": {
+      "type": "worker_anomaly",
+      "baselineHR": 4400300000000000,
+      "currentHR": 2184871319222936.5,
+      "worker": "omxdefault",
+      "provider": "Open Mine",
+      "groupId": "OM",
+      "account": "cmine",
+      "accountName": "Cyberian Mine",
+      "anomalyType": "level_drop",
+      "detectedAt": "2026-07-08T22:31:14.079Z"
     }
   },
   "nogroup": {

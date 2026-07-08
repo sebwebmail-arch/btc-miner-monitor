@@ -1,6 +1,13 @@
 {
-  "last_updated": "2026-07-08T03:01:16.687Z",
+  "last_updated": "2026-07-08T03:31:11.630Z",
   "offline": {
+    "cmine.s21xp003": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21xp003",
+      "group_id": "P1",
+      "provider": "Altos"
+    },
     "cmine.k2lx132x11x48": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
@@ -8,12 +15,12 @@
       "group_id": "R3",
       "provider": "Minto"
     },
-    "cmine.s21xp003": {
+    "cmine.k2lx131x4x42": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
-      "name": "s21xp003",
-      "group_id": "P1",
-      "provider": "Altos"
+      "name": "k2lx131x4x42",
+      "group_id": "R3",
+      "provider": "Minto"
     },
     "cmine.011": {
       "account": "cmine",
@@ -185,19 +192,19 @@
       "category": "offline",
       "last_share": "2026-07-08T00:01:20.772Z"
     },
-    "everminer.k2lx131x5x19": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "k2lx131x5x19",
-      "group_id": "R3",
-      "provider": "Minto"
-    },
     "everminer.015": {
       "account": "everminer",
       "account_name": "Everminer",
       "name": "015",
       "group_id": "E1",
       "provider": "BitCluster"
+    },
+    "everminer.k2lx131x5x19": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x19",
+      "group_id": "R3",
+      "provider": "Minto"
     },
     "everminer.dgahfkubdjfae04": {
       "account": "everminer",

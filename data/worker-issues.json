@@ -1,4 +1,18 @@
 {
-  "last_updated": "2026-07-08T17:01:20.573Z",
-  "issues": {}
+  "last_updated": "2026-07-08T17:31:15.640Z",
+  "issues": {
+    "everminer.e21xp021": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "worker": "e21xp021",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)",
+      "type": "level_drop",
+      "current_avg_ths": 173.5,
+      "baseline_avg_ths": 294.8,
+      "drop_pct": 41,
+      "cv_pct": 42,
+      "zero_rate_pct": 0
+    }
+  }
 }

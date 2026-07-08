@@ -374,6 +374,24 @@ body::after {
 .range-btn { padding: 3px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; color: var(--text-muted); cursor: pointer; border: 1px solid var(--border-md); background: var(--bg-card); }
 .range-btn:hover { color: var(--text-secondary); border-color: var(--border-md); }
 .range-btn.active { background: var(--text-primary); color: white; border-color: var(--text-primary); }
+/* ── Comments ── */
+.comments-section { border-top: 1px solid var(--border); padding-top: 14px; }
+.comments-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.btn-add-comment { padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; border: 1px solid var(--border-md); background: var(--bg-card); color: var(--text-secondary); cursor: pointer; }
+.btn-add-comment:hover { border-color: var(--accent-orange); color: var(--accent-orange); }
+.comment-input-area { margin-bottom: 10px; }
+.comment-textarea { width: 100%; box-sizing: border-box; border: 1px solid var(--border-md); border-radius: 6px; background: var(--bg-surface); color: var(--text-primary); font-size: 12px; font-family: var(--sans); padding: 8px 10px; resize: vertical; min-height: 64px; outline: none; }
+.comment-textarea:focus { border-color: var(--accent-orange); }
+.comment-actions { display: flex; gap: 6px; margin-top: 6px; }
+.btn-comment-save { padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; border: none; background: var(--accent-orange); color: #fff; cursor: pointer; }
+.btn-comment-save:hover { opacity: .85; }
+.btn-comment-cancel { padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; border: 1px solid var(--border-md); background: var(--bg-card); color: var(--text-muted); cursor: pointer; }
+.comment-list { display: flex; flex-direction: column; gap: 6px; }
+.comment-item { background: var(--bg-surface); border-radius: 6px; padding: 8px 10px; }
+.comment-ts { font-size: 10px; color: var(--text-muted); font-family: var(--mono); margin-bottom: 3px; }
+.comment-text { font-size: 12px; color: var(--text-primary); line-height: 1.5; white-space: pre-wrap; }
+.comment-empty { font-size: 12px; color: var(--text-muted); font-style: italic; }
+.comment-saving { font-size: 12px; color: var(--text-muted); }
 
 /* ── Loading / error ── */
 #loading { display: flex; align-items: center; justify-content: center; height: 40vh; flex-direction: column; gap: 12px; color: var(--text-muted); }
@@ -1045,6 +1063,24 @@ function openWorkerModal(key) {
         <div class="reco-title">${recoTitle}</div>
         ${recoText}
       </div>
+
+      <!-- Comments -->
+      <div class="comments-section">
+        <div class="comments-header">
+          <div class="mf-label">💬 Comments</div>
+          <button class="btn-add-comment" onclick="toggleCommentInput()">+ Add</button>
+        </div>
+        <div class="comment-input-area" id="comment-input-area" style="display:none">
+          <textarea class="comment-textarea" id="comment-textarea" placeholder="Add a note about this worker…"></textarea>
+          <div class="comment-actions">
+            <button class="btn-comment-save" onclick="saveComment('${key}')">Save</button>
+            <button class="btn-comment-cancel" onclick="cancelComment()">Cancel</button>
+          </div>
+        </div>
+        <div class="comment-list" id="comment-list">
+          <div class="comment-saving">Loading comments…</div>
+        </div>
+      </div>
     </div>
     <div class="modal-foot">
       <a class="modal-f2pool-link" href="${f2poolUrl}" target="_blank">→ View on f2pool ↗</a>
@@ -1052,6 +1088,7 @@ function openWorkerModal(key) {
     </div>`;
 
   document.getElementById('worker-modal').classList.add('open');
+  loadComments(key);
 }
 
 function setModalRange(h) {
@@ -1177,6 +1214,85 @@ function renderHashrateChart(key, rangeH) {
 function closeModal() {
   document.getElementById('worker-modal').classList.remove('open');
 }
+
+// ── Comments ──────────────────────────────────────────────────────────────────
+
+async function loadComments(key) {
+  const el = document.getElementById('comment-list');
+  if (!el) return;
+  try {
+    const r = await fetch(`/api/comments?key=${encodeURIComponent(key)}`);
+    const json = await r.json();
+    renderCommentList(el, json.comments || []);
+  } catch(e) {
+    el.innerHTML = `<div class="comment-empty">Could not load comments.</div>`;
+  }
+}
+
+function renderCommentList(el, comments) {
+  if (!comments.length) {
+    el.innerHTML = `<div class="comment-empty">No comments yet.</div>`;
+    return;
+  }
+  // Plus vieux en bas → afficher en ordre chronologique (index 0 = le plus vieux = en bas de liste)
+  // On renverse pour que le plus récent soit en haut
+  const sorted = [...comments].reverse();
+  el.innerHTML = sorted.map(c => {
+    const d = new Date(c.ts);
+    const ts = d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'UTC' }) + ' UTC';
+    return `<div class="comment-item">
+      <div class="comment-ts">${ts}</div>
+      <div class="comment-text">${c.text.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+    </div>`;
+  }).join('');
+}
+
+function toggleCommentInput() {
+  const area = document.getElementById('comment-input-area');
+  const ta   = document.getElementById('comment-textarea');
+  if (!area) return;
+  const open = area.style.display !== 'none';
+  area.style.display = open ? 'none' : 'block';
+  if (!open) ta?.focus();
+}
+
+function cancelComment() {
+  const area = document.getElementById('comment-input-area');
+  const ta   = document.getElementById('comment-textarea');
+  if (area) area.style.display = 'none';
+  if (ta)   ta.value = '';
+}
+
+async function saveComment(key) {
+  const ta = document.getElementById('comment-textarea');
+  const el = document.getElementById('comment-list');
+  if (!ta || !el) return;
+  const text = ta.value.trim();
+  if (!text) return;
+
+  const btn = document.querySelector('.btn-comment-save');
+  if (btn) { btn.disabled = true; btn.textContent = 'Saving…'; }
+
+  try {
+    const r = await fetch('/api/comments', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ key, text }),
+    });
+    const json = await r.json();
+    if (!r.ok) throw new Error(json.error || 'Save failed');
+    renderCommentList(el, json.comments || []);
+    ta.value = '';
+    document.getElementById('comment-input-area').style.display = 'none';
+  } catch(e) {
+    alert('Error saving comment: ' + e.message);
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = 'Save'; }
+  }
+}
+window.toggleCommentInput = toggleCommentInput;
+window.cancelComment      = cancelComment;
+window.saveComment        = saveComment;
 
 // ── Tooltip hover sur le graphe hashrate (desktop uniquement) ─────────────────
 function modalChartHover(evt) {

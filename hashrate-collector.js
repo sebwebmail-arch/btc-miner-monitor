@@ -49,7 +49,7 @@ const GHOSTWORKERS_PATH  = path.join(__dirname, 'data', 'ghost-workers.json');
 const NOGROUP_PATH       = path.join(__dirname, 'data', 'no-group.json');
 const MAX_DAILY_ENTRIES  = 31; // 30 jours glissants + 1 marge
 const GHOST_MAX_DAYS     = 90; // garder les workers Dead dans le registre jusqu'à 90 jours
-const NOGROUP_COOLDOWN_H = 12; // alerte No Group : au plus 1 fois toutes les 12h par worker
+// No Group : plus d'alerte temps-réel — visible uniquement dans le rapport matin
 
 const RECOVERY_THRESHOLD = 0.75; // 75% de la baseline = considéré récupéré
 const WATCHLIST_MAX_DAYS = 14;   // auto-expire après 14 jours sans récupération
@@ -783,7 +783,7 @@ function buildMorningEmail(offlineByAccount, workerIssues, watchlistEntries, noG
     <p style="margin:2px 0 0;color:rgba(255,255,255,.7);font-size:13px">${timeUTC} UTC</p>
   </div>
   <div style="padding:24px 32px">
-    ${allGoodSection}${noGroupSection}${watchlistSection}${offlineSection}${anomalySection}
+    ${allGoodSection}${watchlistSection}${offlineSection}${anomalySection}${noGroupSection}
     <div style="margin-top:32px;border-top:1px solid #f0f0f0;padding-top:24px;text-align:center">
       <a href="https://watcher.capone.market" style="display:inline-block;margin-bottom:16px;padding:8px 20px;background:#D97757;color:#000;text-decoration:none;border-radius:6px;font-size:13px;font-weight:600">Open dashboard →</a><br>
       <img src="https://capone.market/capone-fish-avatar-48-orange.svg" alt="capone" width="56" height="56" style="display:block;margin:0 auto 8px"/>
@@ -1358,92 +1358,7 @@ async function main() {
       return !last || (now - new Date(last)) > NOGROUP_COOLDOWN_H * 3600000;
     });
 
-    if (newNoGroup.length > 0) {
-      const timeUTC = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' });
-      const byAccount = {};
-      for (const w of newNoGroup) {
-        if (!byAccount[w.account_name]) byAccount[w.account_name] = [];
-        byAccount[w.account_name].push(w.name);
-      }
-      const lines = Object.entries(byAccount)
-        .map(([acct, names]) => `<b>${acct}:</b> ${names.join(', ')}`)
-        .join('\n');
-
-      // Telegram
-      const tgText = [
-        `🏷️ <b>Workers without group — action required</b>`,
-        ``,
-        lines,
-        ``,
-        `These workers do not match any known group.`,
-        `➡️ Assign them to a group on f2pool and update groups.js.`,
-        ``,
-        `🕐 ${timeUTC} UTC`,
-        `📊 https://watcher.capone.market`,
-      ].join('\n');
-      // Send to TELEGRAM_CHAT_ID if configured, otherwise fall back to each relevant account channel
-      const noGroupChatIds = new Set();
-      if (process.env.TELEGRAM_CHAT_ID) {
-        noGroupChatIds.add(process.env.TELEGRAM_CHAT_ID);
-      } else {
-        for (const w of newNoGroup) {
-          const acct = ACCOUNTS.find(a => a.user === w.account);
-          if (acct?.telegramChatId) noGroupChatIds.add(acct.telegramChatId);
-        }
-      }
-      for (const chatId of noGroupChatIds) {
-        try {
-          await sendTelegram(chatId, tgText);
-        } catch(err) {
-          console.error(`   ❌ Telegram No Group: ${err.message}`);
-        }
-      }
-
-      // Email
-      const alertTo = process.env.ALERT_EMAIL || 'seb.webmail@gmail.com';
-      const workerRows = newNoGroup.map(w => `
-        <tr>
-          <td style="padding:8px 14px;font-family:'DM Mono',monospace;font-size:13px">${w.name}</td>
-          <td style="padding:8px 14px;font-size:13px">${w.account_name}</td>
-          <td style="padding:8px 14px;font-size:13px;color:#999">${w.host}</td>
-        </tr>`).join('');
-      const emailHtml = `
-<!DOCTYPE html><html><body style="margin:0;padding:0;background:#f7f6f2;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif">
-<div style="max-width:600px;margin:32px auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.08)">
-  <div style="background:#8e44ad;padding:24px 32px">
-    <h1 style="margin:0;color:#fff;font-size:20px">🏷️ Workers without a group</h1>
-    <p style="margin:4px 0 0;color:rgba(255,255,255,.85);font-size:14px">${timeUTC} UTC</p>
-  </div>
-  <div style="padding:24px 32px">
-    <p style="font-size:13px;color:#444;margin:0 0 16px">These workers do not match any known group in groups.js. Action required: assign them to a group on f2pool and update the mapping.</p>
-    <table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:1px solid #eee;border-radius:6px;overflow:hidden">
-      <tr style="background:#efede7">
-        <td style="padding:8px 14px;font-size:11px;color:#999;font-weight:700;text-transform:uppercase">Worker</td>
-        <td style="padding:8px 14px;font-size:11px;color:#999;font-weight:700;text-transform:uppercase">Account</td>
-        <td style="padding:8px 14px;font-size:11px;color:#999;font-weight:700;text-transform:uppercase">Host</td>
-      </tr>
-      ${workerRows}
-    </table>
-    <p style="margin-top:20px;font-size:13px;color:#666">Dashboard : <a href="https://watcher.capone.market" style="color:#D97757;font-weight:600">watcher.capone.market</a></p>
-    <div style="margin-top:32px;border-top:1px solid #f0f0f0;padding-top:20px;text-align:center">
-      <img src="https://capone.market/capone-fish-avatar-48-orange.svg" alt="capone" width="56" height="56" style="display:block;margin:0 auto 8px"/>
-      <p style="margin:0;color:#999;font-size:11px">This email was sent automatically — please do not reply.</p>
-    </div>
-  </div>
-</div>
-</body></html>`;
-      try {
-        await sendEmail(alertTo, `[ACTION REQUIRED] ${newNoGroup.length} worker(s) without group`, emailHtml);
-      } catch(err) {
-        console.error(`   ❌ Email No Group: ${err.message}`);
-      }
-
-      // Enregistre le cooldown
-      for (const w of newNoGroup) {
-        alertState.nogroup[`${w.account}.${w.name}`] = now.toISOString();
-      }
-      saveAlertState(alertState);
-    }
+    // Pas d'alerte temps-réel — les workers No Group sont signalés uniquement dans le rapport matin.
   }
 
   // ── 6. Rapport matin (05:00 UTC) ──────────────────────────────────────────

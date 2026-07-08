@@ -273,7 +273,7 @@
     "w.cmine.s21xphyd004": {
       "type": "worker_anomaly",
       "baselineHR": 493500000000000,
-      "currentHR": 0,
+      "currentHR": 146904526907564.94,
       "worker": "s21xphyd004",
       "provider": "Altos",
       "groupId": "P1",
@@ -297,7 +297,7 @@
     "w.cmine.s21xp002": {
       "type": "worker_anomaly",
       "baselineHR": 471500000000000,
-      "currentHR": 0,
+      "currentHR": 140581113368266.53,
       "worker": "s21xp002",
       "provider": "Altos",
       "groupId": "P1",
@@ -1457,6 +1457,18 @@
       "accountName": "Everminer",
       "anomalyType": "level_drop",
       "detectedAt": "2026-07-08T21:01:16.550Z"
+    },
+    "w.everminer.e21xp027": {
+      "type": "worker_anomaly",
+      "baselineHR": 252000000000000,
+      "currentHR": 0,
+      "worker": "e21xp027",
+      "provider": "ValueHash (NY)",
+      "groupId": "U3",
+      "account": "everminer",
+      "accountName": "Everminer",
+      "anomalyType": "volatile",
+      "detectedAt": "2026-07-08T21:31:12.144Z"
     }
   },
   "nogroup": {

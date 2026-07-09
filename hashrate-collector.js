@@ -345,6 +345,12 @@ async function sendWorkerAlert(account, issue, now) {
 // ─────────────────────────────────────────────────────────────────────────────
 
 async function sendHashrateAlert(account, groupId, provider, currentHR, refHR, dropPct, now) {
+  // Vérification critique : si chatId manquant, on throw pour que alertState ne soit PAS mis à jour.
+  // Sans ça, le secret vide fait croire que l'alerte est partie (retour silencieux de sendTelegram).
+  if (!account.telegramChatId) {
+    throw new Error(`Telegram non configuré pour ${account.name} — vérifier secret TELEGRAM_CHAT_ID_${account.user.toUpperCase()} dans GitHub Actions`);
+  }
+
   const timeUTC   = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' });
   const dateFmt   = now.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
   const timeParis = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' });
@@ -367,22 +373,31 @@ async function sendHashrateAlert(account, groupId, provider, currentHR, refHR, d
     `📊 https://watcher.capone.market`,
   ].join('\n');
 
-  // Groupe compte (Cyberian Mine ou Everminer)
+  // Groupe compte (Cyberian Mine ou Everminer) — throw si échec (alertState non mis à jour)
   await sendTelegram(account.telegramChatId, tgText);
+  console.log(`   📲 Alerte → ${account.name}`);
 
-  // Groupe Paraguay — si le datacenter concerné est au Paraguay
+  // Groupe Paraguay — best-effort (ne bloque pas alertState si échec)
   if (PARAGUAY_GROUPS.includes(groupId) && TELEGRAM_CHAT_PARAGUAY && TELEGRAM_CHAT_PARAGUAY !== account.telegramChatId) {
-    await sendTelegram(TELEGRAM_CHAT_PARAGUAY, tgText);
-    console.log(`   📲 Alerte → groupe Paraguay (${groupId})`);
+    try {
+      await sendTelegram(TELEGRAM_CHAT_PARAGUAY, tgText);
+      console.log(`   📲 Alerte → groupe Paraguay (${groupId})`);
+    } catch (err) {
+      console.error(`   ⚠️  Alerte Paraguay non envoyée : ${err.message}`);
+    }
   }
 
-  // Groupe Minto — si le datacenter concerné est Minto
+  // Groupe Minto — best-effort
   if (MINTO_GROUPS.includes(groupId) && TELEGRAM_CHAT_MINTO && TELEGRAM_CHAT_MINTO !== account.telegramChatId) {
-    await sendTelegram(TELEGRAM_CHAT_MINTO, tgText);
-    console.log(`   📲 Alerte → groupe Minto (${groupId})`);
+    try {
+      await sendTelegram(TELEGRAM_CHAT_MINTO, tgText);
+      console.log(`   📲 Alerte → groupe Minto (${groupId})`);
+    } catch (err) {
+      console.error(`   ⚠️  Alerte Minto non envoyée : ${err.message}`);
+    }
   }
 
-  // ── Email ──
+  // ── Email — best-effort (échec email ne bloque pas alertState) ──
   const subject = `[ALERT] Hashrate drop ${dropLabel} — ${provider} (${groupId}) — ${account.name}`;
   const html = `
 <!DOCTYPE html><html><body style="margin:0;padding:0;background:#f7f6f2;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif">
@@ -418,7 +433,11 @@ async function sendHashrateAlert(account, groupId, provider, currentHR, refHR, d
 </div>
 </body></html>`;
 
-  await sendEmail(account.alertEmail, subject, html);
+  try {
+    await sendEmail(account.alertEmail, subject, html);
+  } catch (emailErr) {
+    console.error(`   ⚠️  Email non envoyé (Telegram OK) : ${emailErr.message}`);
+  }
 }
 
 // ─── Rapport matin — offline detection + history ──────────────────────────────
@@ -1088,7 +1107,7 @@ async function main() {
 
     if (cooldownOk) {
       const account = ACCOUNTS.find(a => a.user === issue.account);
-      if (account) workerAlertsToSend.push({ issue, account, stateKey });
+      alertState[stateKey] = now.toISOString(); // mise à jour cooldown
       console.log(`   🚨 ${key}: ${issue.type} — drop ${issue.drop_pct}% / CV ${issue.cv_pct}%`);
       // Watchlist : surveillance post-anomalie
       if (!alertState.watchlist) alertState.watchlist = {};

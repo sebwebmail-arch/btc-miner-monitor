@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-09T00:01:21.022Z",
+  "last_updated": "2026-07-09T00:31:06.682Z",
   "ghosts": {
     "cmine.011": {
       "account": "cmine",
@@ -279,6 +279,24 @@
       "provider": "BitCluster",
       "lastSnapIso": "2026-07-08T00:01:20.772Z",
       "detectedAt": "2026-07-08T00:31:06.364Z"
+    },
+    "cmine.s21xp003": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21xp003",
+      "groupId": "P1",
+      "provider": "Altos",
+      "lastSnapIso": "2026-07-09T00:01:21.022Z",
+      "detectedAt": "2026-07-09T00:31:06.682Z"
+    },
+    "everminer.k2lx131x5x19": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x19",
+      "groupId": "R3",
+      "provider": "Minto",
+      "lastSnapIso": "2026-07-09T00:01:21.022Z",
+      "detectedAt": "2026-07-09T00:31:06.682Z"
     }
   }
 }

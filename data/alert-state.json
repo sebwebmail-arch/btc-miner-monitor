@@ -221,18 +221,6 @@
       "accountName": "Cyberian Mine",
       "anomalyType": "volatile",
       "detectedAt": "2026-07-08T04:01:17.739Z"
-    },
-    "w.everminer.e21xp021": {
-      "type": "worker_anomaly",
-      "baselineHR": 294800000000000,
-      "currentHR": 203912983128164.12,
-      "worker": "e21xp021",
-      "provider": "ValueHash (NY)",
-      "groupId": "U3",
-      "account": "everminer",
-      "accountName": "Everminer",
-      "anomalyType": "level_drop",
-      "detectedAt": "2026-07-08T17:31:15.640Z"
     }
   },
   "nogroup": {

@@ -1,19 +1,6 @@
 {
-  "last_updated": "2026-07-10T07:31:06.406Z",
+  "last_updated": "2026-07-10T08:01:13.978Z",
   "issues": {
-    "cmine.s21xphyd0002": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "s21xphyd0002",
-      "group_id": "P1",
-      "provider": "Altos",
-      "type": "volatile",
-      "current_avg_ths": 351.7,
-      "baseline_avg_ths": 535,
-      "drop_pct": 34,
-      "cv_pct": 56,
-      "zero_rate_pct": 0
-    },
     "cmine.02a34725b1b2": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
@@ -21,10 +8,10 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "type": "level_drop",
-      "current_avg_ths": 43.6,
+      "current_avg_ths": 44,
       "baseline_avg_ths": 151.9,
       "drop_pct": 71,
-      "cv_pct": 4,
+      "cv_pct": 5,
       "zero_rate_pct": 0
     }
   }

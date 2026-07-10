@@ -142,6 +142,21 @@ body::after {
   overflow: hidden;
 }
 
+/* ── Incident History ── */
+.incident-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.incident-table th { padding: 8px 14px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-secondary); background: var(--bg-surface); border-bottom: 1px solid var(--border-md); white-space: nowrap; }
+.incident-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.incident-table tr:last-child td { border-bottom: none; }
+.incident-table tr:hover td { background: var(--bg-card-hover); }
+.incident-sev { display: inline-block; padding: 2px 8px; border-radius: 100px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+.incident-sev.critical { background: var(--accent-red-dim); color: var(--accent-red); }
+.incident-sev.warning  { background: #fef3e7; color: #e67e22; }
+.incident-open { display: inline-block; padding: 2px 8px; border-radius: 100px; font-size: 11px; font-weight: 700; background: #fff3cd; color: #856404; }
+.incident-dur { font-variant-numeric: tabular-nums; color: var(--text-secondary); }
+.incident-dc  { font-weight: 600; color: var(--text-primary); }
+.incident-dc small { font-weight: 400; color: var(--text-muted); font-size: 11px; margin-left: 4px; }
+.incident-empty { padding: 28px; text-align: center; color: var(--text-muted); font-size: 13px; font-style: italic; }
+
 /* ── SLA pills ───────────────────────────────────────────────────────────── */
 .sla-pill { display: inline-block; padding: 2px 9px; border-radius: 100px; font-size: 12px; font-weight: 700; white-space: nowrap; }
 .sla-green  { background: #f0fdf4; color: #15803d; }
@@ -529,6 +544,25 @@ body::after {
     <!-- Expand note -->
     <div id="expand-note" class="expand-box"></div>
 
+    <!-- ══════════════════════════════════════════════════════════════════════
+         4. INCIDENT HISTORY
+         ══════════════════════════════════════════════════════════════════════ -->
+    <div>
+      <div class="section-label" style="display:flex;justify-content:space-between;align-items:baseline">
+        <span>Incident history</span>
+        <span class="section-note">📋 Datacenter drops &gt; 30% · last 90 days</span>
+      </div>
+      <div class="panel">
+        <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+          <span style="font-size:13px;font-weight:600;color:var(--text-primary)">Hashrate incidents by datacenter</span>
+          <span style="font-size:12px;color:var(--text-muted)" id="incident-count"></span>
+        </div>
+        <div id="incident-table-wrap">
+          <div style="padding:24px;text-align:center;color:var(--text-muted);font-size:12px">Loading…</div>
+        </div>
+      </div>
+    </div>
+
   </div><!-- /#app -->
 </div><!-- /.page -->
 
@@ -694,9 +728,10 @@ function nearestATO(sorted, tMs) {
 
 // ── Main ─────────────────────────────────────────────────────────────────────
 async function main() {
-  const [hr, dailyRaw] = await Promise.all([
+  const [hr, dailyRaw, incidentsRaw] = await Promise.all([
     fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/hashrate.json').then(r => r.json()),
     fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/sla-daily.json').then(r => r.json()).catch(() => ({ days: [] })),
+    fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/incidents.json?t=' + Date.now()).then(r => r.json()).catch(() => ({ incidents: [] })),
   ]);
 
   // 30 derniers jours triés par date (du plus ancien au plus récent)
@@ -1020,7 +1055,7 @@ async function main() {
     const remaining = 30 - days30.length;
     const pct = Math.round(days30.length / 30 * 100);
     coverEl.innerHTML = `<div class="banner warn">⏳ <strong>Building 30-day history: ${days30.length}/30 days (${pct}%)</strong> — ${remaining} day${remaining > 1 ? 's' : ''} remaining.
-      Percentages are currently computed over ${daysCovered.toFixed(1)} days (current window). The 30-day contractual SLA will activate automatically on day ${days30.length + remaining}.</div>`;
+      Percentages are currently computed over ${daysCovered.toFixed(1)} days (current window).</div>`;
   } else {
     coverEl.innerHTML = `<div class="banner warn">⚠️ <strong>Data available: ${daysCovered.toFixed(1)} days</strong> (${from} → ${to}).
       Daily aggregates start tonight at 05:00 UTC — the 30-day SLA will be operational in 30 days.</div>`;
@@ -1038,6 +1073,57 @@ async function main() {
   document.querySelectorAll('.spark-30d-th').forEach(el => {
     if (!HAS_30D) el.classList.add('spark-30d-empty');
   });
+
+  // ── Incident History ────────────────────────────────────────────────────
+  const incWrap = document.getElementById('incident-table-wrap');
+  const incCnt  = document.getElementById('incident-count');
+  const incidents = (incidentsRaw.incidents || [])
+    .slice()
+    .sort((a, b) => new Date(b.started_at) - new Date(a.started_at));
+
+  if (incCnt) incCnt.textContent = incidents.length
+    ? `${incidents.length} incident${incidents.length > 1 ? 's' : ''}`
+    : '';
+
+  if (incWrap) {
+    if (incidents.length === 0) {
+      incWrap.innerHTML = `<div style="padding:28px;text-align:center;color:var(--text-muted);font-size:13px;font-style:italic">No incidents recorded yet — alerts will appear here when a datacenter drops more than 30%.</div>`;
+    } else {
+      const fmtDate = iso => new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+      const fmtTime = iso => new Date(iso).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' });
+      const fmtDur  = min => {
+        if (min == null) return '—';
+        if (min < 60) return `${min} min`;
+        const h = Math.floor(min / 60), m = min % 60;
+        return m > 0 ? `${h}h ${m}m` : `${h}h`;
+      };
+      const rows = incidents.map(inc => {
+        const sev    = inc.drop_pct >= 60 ? 'critical' : 'warning';
+        const sevLbl = inc.drop_pct >= 60 ? 'Critical' : 'Warning';
+        const dur    = inc.ended_at
+          ? `<span class="incident-dur">${fmtDur(inc.duration_min)}</span>`
+          : `<span class="incident-open">Ongoing</span>`;
+        const hrB = inc.hr_before ? `${(inc.hr_before / 1e12).toFixed(1)} TH/s` : '—';
+        const hrA = inc.hr_after  ? `${(inc.hr_after  / 1e12).toFixed(1)} TH/s` : '—';
+        return `<tr>
+          <td><div style="font-size:12px;color:var(--text-muted)">${fmtDate(inc.started_at)}</div>
+              <div style="font-size:11px;color:var(--text-muted)">${fmtTime(inc.started_at)} UTC</div></td>
+          <td><span class="incident-dc">${inc.provider}<small>(${inc.group_id})</small></span></td>
+          <td style="font-size:12px;color:var(--text-secondary)">${inc.account_name}</td>
+          <td><span class="incident-sev ${sev}">▼ ${inc.drop_pct}% — ${sevLbl}</span></td>
+          <td style="font-size:12px;color:var(--text-muted)">${hrB} → ${hrA}</td>
+          <td>${dur}</td>
+        </tr>`;
+      }).join('');
+      incWrap.innerHTML = `<table class="incident-table">
+        <thead><tr>
+          <th>Date (UTC)</th><th>Datacenter</th><th>Account</th>
+          <th>Severity</th><th>Hashrate</th><th>Duration</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+    }
+  }
 
   document.getElementById('loading').style.display = 'none';
   document.getElementById('app').style.display     = 'flex';

@@ -301,21 +301,6 @@ body::after {
 .dead-empty { font-size: 12px; color: var(--text-muted); font-style: italic; padding: 8px 0; }
 .arch-note { font-size: 11px; color: var(--text-muted); font-style: italic; }
 
-/* ── Incident History ── */
-.incident-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.incident-table th { padding: 8px 14px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-secondary); background: var(--bg-surface); border-bottom: 1px solid var(--border-md); white-space: nowrap; }
-.incident-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
-.incident-table tr:last-child td { border-bottom: none; }
-.incident-table tr:hover td { background: var(--bg-card-hover); }
-.incident-sev { display: inline-block; padding: 2px 8px; border-radius: 100px; font-size: 11px; font-weight: 700; white-space: nowrap; }
-.incident-sev.critical { background: var(--accent-red-dim); color: var(--accent-red); }
-.incident-sev.warning  { background: #fef3e7; color: #e67e22; }
-.incident-open { display: inline-block; padding: 2px 8px; border-radius: 100px; font-size: 11px; font-weight: 700; background: #fff3cd; color: #856404; }
-.incident-dur { font-variant-numeric: tabular-nums; color: var(--text-secondary); }
-.incident-dc  { font-weight: 600; color: var(--text-primary); }
-.incident-dc small { font-weight: 400; color: var(--text-muted); font-size: 11px; margin-left: 4px; }
-.incident-empty { padding: 28px; text-align: center; color: var(--text-muted); font-size: 13px; font-style: italic; }
-
 /* ── Watchlist section header inside online table ── */
 .wl-hdr-row td { padding: 7px 12px 5px; background: var(--accent-red-dim); border-bottom: 1px solid rgba(192,57,43,0.18); }
 .wl-hdr-row .wl-hdr-title { font-size: 11px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--accent-red); }
@@ -956,7 +941,6 @@ let _offlineStatus = null; // offline-status.json (real-time offline workers)
 let _workerHosts   = {};   // worker-hosts.json (IP par worker)
 let _deadIssues    = {};   // history.json current_issues (dead/offline workers)
 let _watchlist     = null; // watchlist.json (post-drop surveillance)
-let _incidents     = null; // incidents.json (incident history)
 let _comments      = {}; // worker-comments.json — { "acct.name": [{ts,text},...] }
 let _chartPts      = [];   // points du graphe modal courant (pour tooltip)
 let _chartGeo      = {};   // géométrie du graphe modal courant
@@ -2100,7 +2084,7 @@ function buildHashrateSection() {
 async function render() {
   let data;
   try {
-    const [histRes, hrRes, wiRes, osRes, whRes, wlRes, cmtRes, incRes] = await Promise.all([
+    const [histRes, hrRes, wiRes, osRes, whRes, wlRes, cmtRes] = await Promise.all([
       fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/history.json?t='        + Date.now()),
       fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/hashrate.json?t='       + Date.now()).catch(() => null),
       fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/worker-issues.json?t='  + Date.now()).catch(() => null),
@@ -2108,7 +2092,6 @@ async function render() {
       fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/worker-hosts.json?t='   + Date.now()).catch(() => null),
       fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/watchlist.json?t='      + Date.now()).catch(() => null),
       fetch('/api/comments').catch(() => null),
-      fetch('https://raw.githubusercontent.com/sebwebmail-arch/btc-miner-monitor/main/data/incidents.json?t='      + Date.now()).catch(() => null),
     ]);
     if (!histRes.ok) throw new Error(`HTTP ${histRes.status}`);
     data = await histRes.json();
@@ -2118,7 +2101,6 @@ async function render() {
     if (whRes  && whRes.ok)  _workerHosts   = await whRes.json();
     if (wlRes  && wlRes.ok)  _watchlist     = await wlRes.json();
     if (cmtRes && cmtRes.ok) { const j = await cmtRes.json(); _comments = j.comments || j || {}; }
-    if (incRes && incRes.ok) _incidents     = await incRes.json();
   } catch(e) {
     document.getElementById('loading').style.display = 'none';
     const err = document.getElementById('error-msg');
@@ -2167,8 +2149,7 @@ async function render() {
     buildHashrateSection() +
     buildDatacenters(issues) +
     buildDeadTracker(issues) +
-    buildOnlineWorkers() +
-    buildIncidentHistory();
+    buildOnlineWorkers();
 
   document.getElementById('loading').style.display = 'none';
   app.style.display = 'flex';
@@ -2185,92 +2166,6 @@ async function render() {
   // Populate la table online workers (dérivée de hashrate.json)
   renderOnlineTable();
 
-  // Populate incident history
-  renderIncidentHistory();
-}
-
-// ── Incident History ─────────────────────────────────────────────────────────
-
-function buildIncidentHistory() {
-  return `
-  <div>
-    <div class="section-label" style="display:flex;justify-content:space-between;align-items:baseline">
-      <span>Incident history</span>
-      <span class="section-note">📋 Datacenter drops &gt; 30% · last 90 days</span>
-    </div>
-    <div class="panel panel-table">
-      <div class="panel-header">
-        <div class="panel-title">Hashrate incidents by datacenter</div>
-        <div class="panel-note" id="incident-count"></div>
-      </div>
-      <div id="incident-table-wrap">
-        <div style="padding:24px;text-align:center;color:var(--text-muted);font-size:12px">Loading…</div>
-      </div>
-    </div>
-  </div>`;
-}
-
-function renderIncidentHistory() {
-  const wrap = document.getElementById('incident-table-wrap');
-  const cnt  = document.getElementById('incident-count');
-  if (!wrap) return;
-
-  const incidents = (_incidents?.incidents || [])
-    .slice()
-    .sort((a, b) => new Date(b.started_at) - new Date(a.started_at));
-
-  if (cnt) cnt.textContent = incidents.length
-    ? `${incidents.length} incident${incidents.length > 1 ? 's' : ''}`
-    : '';
-
-  if (incidents.length === 0) {
-    wrap.innerHTML = `<div class="incident-empty">No incidents recorded yet — alerts will appear here when a datacenter drops more than 30%.</div>`;
-    return;
-  }
-
-  const fmtDate = iso => {
-    const d = new Date(iso);
-    return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
-  };
-  const fmtTime = iso => new Date(iso).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' });
-
-  const fmtDuration = (min) => {
-    if (min == null) return '—';
-    if (min < 60) return `${min} min`;
-    const h = Math.floor(min / 60), m = min % 60;
-    return m > 0 ? `${h}h ${m}m` : `${h}h`;
-  };
-
-  const rows = incidents.map(inc => {
-    const sev     = inc.drop_pct >= 60 ? 'critical' : 'warning';
-    const sevLbl  = inc.drop_pct >= 60 ? 'Critical' : 'Warning';
-    const durHtml = inc.ended_at
-      ? `<span class="incident-dur">${fmtDuration(inc.duration_min)}</span>`
-      : `<span class="incident-open">Ongoing</span>`;
-    const hrBefore = inc.hr_before ? `${(inc.hr_before / 1e12).toFixed(1)} TH/s` : '—';
-    const hrAfter  = inc.hr_after  ? `${(inc.hr_after  / 1e12).toFixed(1)} TH/s` : '—';
-    return `<tr>
-      <td><div style="font-size:12px;color:var(--text-muted)">${fmtDate(inc.started_at)}</div>
-          <div style="font-size:11px;color:var(--text-muted)">${fmtTime(inc.started_at)} UTC</div></td>
-      <td><span class="incident-dc">${inc.provider}<small>(${inc.group_id})</small></span></td>
-      <td style="font-size:12px;color:var(--text-secondary)">${inc.account_name}</td>
-      <td><span class="incident-sev ${sev}">▼ ${inc.drop_pct}% — ${sevLbl}</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">${hrBefore} → ${hrAfter}</td>
-      <td>${durHtml}</td>
-    </tr>`;
-  }).join('');
-
-  wrap.innerHTML = `<table class="incident-table">
-    <thead><tr>
-      <th>Date (UTC)</th>
-      <th>Datacenter</th>
-      <th>Account</th>
-      <th>Severity</th>
-      <th>Hashrate</th>
-      <th>Duration</th>
-    </tr></thead>
-    <tbody>${rows}</tbody>
-  </table>`;
 }
 
 render();

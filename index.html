@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
 <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
 <script>if(localStorage.getItem('capone-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');</script>
 <style>
@@ -267,7 +268,7 @@ body::after {
 .issues-table tr:hover td { background: var(--bg-surface); }
 .issues-table .no-results { padding: 24px; text-align: center; color: var(--text-muted); font-size: 12px; font-style: italic; }
 .worker-name { font-family: var(--mono); font-weight: 600; font-size: 12px; color: var(--text-primary); }
-.comment-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--accent-orange); vertical-align: middle; margin-left: 5px; flex-shrink: 0; opacity: .85; }
+.comment-icon { font-size: 12px; color: #7f8fa6; vertical-align: middle; margin-left: 4px; flex-shrink: 0; line-height: 1; }
 .account-label { font-size: 11px; color: var(--text-secondary); }
 .group-badge { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: 700; background: var(--accent-orange-dim); color: var(--accent-orange); font-family: var(--mono); }
 .age-pill { display: inline-block; padding: 3px 9px; border-radius: 10px; font-size: 11px; font-weight: 600; white-space: nowrap; }
@@ -875,7 +876,7 @@ function renderDeadTracker() {
       const wKey = `${w.account}.${w.name}`;
       const hasCmtD = (_comments[wKey] || []).length > 0;
       return `<tr onclick="openWorkerModal('${wKey}')" style="cursor:pointer">
-        <td><span class="worker-name">${w.name}</span>${hasCmtD ? '<span class="comment-dot" title="Has comments"></span>' : ''}</td>
+        <td><span class="worker-name">${w.name}</span>${hasCmtD ? '<i class="ti ti-message-circle comment-icon" title="Has comments" aria-hidden="true"></i>' : ''}</td>
         <td class="dead-col-acct"><span class="account-label">${w.account_name||w.account}</span></td>
         <td><span class="group-badge">${w.group_id}</span><span class="prov-name"> ${w.provider}</span></td>
         <td><span class="age-pill ${pillClass(cat)}">${pillLabel(cat, w.last_share)}</span></td>
@@ -1288,10 +1289,10 @@ async function saveComment(key) {
     // Mettre à jour le cache local pour que la bulle apparaisse immédiatement
     _comments[key] = json.comments || [];
     // Rafraîchir le point dans la ligne de la table (si visible)
-    document.querySelectorAll(`tr[onclick*="${key}"] .comment-dot`).forEach(d => d.remove());
+    document.querySelectorAll(`tr[onclick*="${key}"] .comment-icon`).forEach(d => d.remove());
     document.querySelectorAll(`tr[onclick*="${key}"] .worker-name`).forEach(span => {
-      if (!span.nextElementSibling?.classList.contains('comment-dot')) {
-        span.insertAdjacentHTML('afterend', '<span class="comment-dot" title="Has comments"></span>');
+      if (!span.nextElementSibling?.classList.contains('comment-icon')) {
+        span.insertAdjacentHTML('afterend', '<i class="ti ti-message-circle comment-icon" title="Has comments" aria-hidden="true"></i>');
       }
     });
     ta.value = '';
@@ -1700,7 +1701,7 @@ function renderOnlineTable() {
 
     const hasCmt = (_comments[w.key] || []).length > 0;
     return `<tr class="${rowClass}" onclick="openWorkerModal('${w.key}')" style="cursor:pointer">
-      <td><span class="worker-name">${w.workerName}</span>${hasCmt ? '<span class="comment-dot" title="Has comments"></span>' : ''}</td>
+      <td><span class="worker-name">${w.workerName}</span>${hasCmt ? '<i class="ti ti-message-circle comment-icon" title="Has comments" aria-hidden="true"></i>' : ''}</td>
       <td class="online-acct"><span class="account-label acct-long">${w.accountName}</span><span class="account-label acct-short" style="display:none">${w.accountUser}</span></td>
       <td class="td-dc"><span class="group-badge">${w.groupId}</span><span class="prov-name"> ${w.provider}</span></td>
       <td>${statusCell}</td>
@@ -1737,7 +1738,7 @@ function renderOnlineTable() {
       const durLabel  = `<span class="${durClass(e.duration_h)}">${fmtDur(e.duration_h)}</span>`;
       const hasCmtWL  = wkKey && (_comments[wkKey] || []).length > 0;
       return `<tr class="row-drop" ${clickAttr}>
-        <td><span class="worker-name">${name}</span>${hasCmtWL ? '<span class="comment-dot" title="Has comments"></span>' : ''}</td>
+        <td><span class="worker-name">${name}</span>${hasCmtWL ? '<i class="ti ti-message-circle comment-icon" title="Has comments" aria-hidden="true"></i>' : ''}</td>
         <td class="online-acct">
           <span class="account-label acct-long">${e.account_name || e.account}</span>
           <span class="account-label acct-short" style="display:none">${e.account}</span>

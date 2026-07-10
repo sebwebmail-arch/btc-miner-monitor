@@ -46,8 +46,10 @@ const WORKERHOSTS_PATH   = path.join(__dirname, 'data', 'worker-hosts.json');
 const SLA_DAILY_PATH     = path.join(__dirname, 'data', 'sla-daily.json');
 const WATCHLIST_PATH     = path.join(__dirname, 'data', 'watchlist.json');
 const GHOSTWORKERS_PATH  = path.join(__dirname, 'data', 'ghost-workers.json');
+const INCIDENTS_PATH     = path.join(__dirname, 'data', 'incidents.json');
 const MAX_DAILY_ENTRIES  = 31; // 30 jours glissants + 1 marge
 const GHOST_MAX_DAYS     = 90; // garder les workers Dead dans le registre jusqu'à 90 jours
+const MAX_INCIDENT_DAYS  = 90; // conserver les incidents sur 90 jours
 // No Group : détection uniquement dans le rapport matin (05:00 UTC)
 
 const RECOVERY_THRESHOLD = 0.75; // 75% de la baseline = considéré récupéré
@@ -151,6 +153,16 @@ function loadAlertState() {
 function saveAlertState(s) {
   fs.mkdirSync(path.dirname(ALERTSTATE_PATH), { recursive: true });
   fs.writeFileSync(ALERTSTATE_PATH, JSON.stringify(s, null, 2));
+}
+
+function loadIncidents() {
+  try { return JSON.parse(fs.readFileSync(INCIDENTS_PATH, 'utf8')); }
+  catch { return { incidents: [] }; }
+}
+
+function saveIncidents(d) {
+  fs.mkdirSync(path.dirname(INCIDENTS_PATH), { recursive: true });
+  fs.writeFileSync(INCIDENTS_PATH, JSON.stringify(d, null, 2));
 }
 
 // ─── Hashrate helpers ─────────────────────────────────────────────────────────
@@ -1005,9 +1017,10 @@ async function main() {
   console.log(`\n📊 Hashrate Collector — ${now.toISOString()}\n`);
 
   // Charge l'état avant les nouvelles données (référence = anciens snapshots)
-  const h           = loadHashrate();
-  const alertState  = loadAlertState();
-  const allWorkers  = {}; // { accountUser: [workers] }
+  const h             = loadHashrate();
+  const alertState    = loadAlertState();
+  const incidentData  = loadIncidents();
+  const allWorkers    = {}; // { accountUser: [workers] }
 
   const atoData = {}; // { user: raw response from load_by_duration }
 
@@ -1088,6 +1101,21 @@ async function main() {
         detectedAt:  now.toISOString(),
       };
       console.log(`   👁️  Watchlist: ${a.stateKey} ajouté (baseline ${fmtTH(a.refHR)})`);
+      // Incident History : ouvre un nouvel incident
+      incidentData.incidents.push({
+        id:           `${a.account.user}.${a.gid}.${now.toISOString()}`,
+        group_id:     a.gid,
+        provider:     a.provider,
+        account:      a.account.user,
+        account_name: a.account.name,
+        drop_pct:     Math.round(a.dropPct * 100),
+        hr_before:    Math.round(a.refHR),
+        hr_after:     Math.round(a.currentHR),
+        started_at:   now.toISOString(),
+        ended_at:     null,
+        duration_min: null,
+      });
+      console.log(`   📋 Incident ouvert: ${a.gid} — chute ${Math.round(a.dropPct*100)}%`);
     } catch (err) {
       console.error(`   ❌ Alerte non envoyée pour ${a.stateKey}: ${err.message}`);
     }
@@ -1169,6 +1197,17 @@ async function main() {
     const dropPct = entry.baselineHR > 0 ? Math.round((1 - currentHR / entry.baselineHR) * 100) : 0;
     if (currentHR >= RECOVERY_THRESHOLD * entry.baselineHR) {
       console.log(`   ✅ ${wlKey}: récupéré (${fmtTH(currentHR)} ≥ ${Math.round(RECOVERY_THRESHOLD*100)}% baseline) — retiré`);
+      // Ferme l'incident ouvert pour ce groupe
+      if (entry.type === 'group_drop') {
+        const openIncident = incidentData.incidents
+          .filter(i => i.account === entry.account && i.group_id === entry.groupId && !i.ended_at)
+          .sort((a, b) => new Date(b.started_at) - new Date(a.started_at))[0];
+        if (openIncident) {
+          openIncident.ended_at    = now.toISOString();
+          openIncident.duration_min = Math.round((now - new Date(openIncident.started_at)) / 60000);
+          console.log(`   📋 Incident fermé: ${entry.groupId} — durée ${openIncident.duration_min} min`);
+        }
+      }
       delete alertState.watchlist[wlKey];
     } else {
       const durationH = ((now - new Date(entry.detectedAt)) / 3600000).toFixed(1);
@@ -1407,6 +1446,16 @@ async function main() {
       console.log('\n🌅 Rapport matin: déjà envoyé aujourd\'hui (cooldown)');
     }
   }
+
+  // ── 7. Sauvegarde incidents.json ──────────────────────────────────────────
+  // Prune des incidents > 90 jours
+  const incidentCutoff = new Date(now - MAX_INCIDENT_DAYS * 86400000).toISOString();
+  incidentData.incidents = incidentData.incidents.filter(i => i.started_at >= incidentCutoff);
+  incidentData.last_updated = now.toISOString();
+  saveIncidents(incidentData);
+  const openCount   = incidentData.incidents.filter(i => !i.ended_at).length;
+  const closedCount = incidentData.incidents.filter(i =>  i.ended_at).length;
+  console.log(`   📋 Incidents: ${openCount} ouverts, ${closedCount} résolus (90j)`);
 
   console.log(`\n✅ Sauvegardé — ${Object.keys(h.workers).length} workers | ${alertsToSend.length} alerte(s) groupe\n`);
 }

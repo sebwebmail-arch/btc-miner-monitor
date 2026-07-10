@@ -237,7 +237,7 @@
     "w.cmine.02a34725b1b2": {
       "type": "worker_anomaly",
       "baselineHR": 136400000000000,
-      "currentHR": 43784996377213.16,
+      "currentHR": 40970246610106.59,
       "worker": "02a34725b1b2",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -257,6 +257,30 @@
       "accountName": "Cyberian Mine",
       "anomalyType": "volatile",
       "detectedAt": "2026-07-10T13:01:16.296Z"
+    },
+    "w.cmine.s21xphyd0002": {
+      "type": "worker_anomaly",
+      "baselineHR": 428000000000000,
+      "currentHR": 0,
+      "worker": "s21xphyd0002",
+      "provider": "Altos",
+      "groupId": "P1",
+      "account": "cmine",
+      "accountName": "Cyberian Mine",
+      "anomalyType": "level_drop",
+      "detectedAt": "2026-07-10T19:01:09.414Z"
+    },
+    "w.cmine.k2lx132x10x50": {
+      "type": "worker_anomaly",
+      "baselineHR": 176700000000000,
+      "currentHR": 59422495083360.71,
+      "worker": "k2lx132x10x50",
+      "provider": "Minto",
+      "groupId": "R3",
+      "account": "cmine",
+      "accountName": "Cyberian Mine",
+      "anomalyType": "volatile",
+      "detectedAt": "2026-07-10T19:01:09.414Z"
     }
   },
   "nogroup": {
@@ -266,7 +290,7 @@
     "everminer.18x0x138": "2026-07-08T03:31:11.630Z"
   },
   "w.everminer.e21xp021": "2026-07-09T09:31:14.569Z",
-  "w.cmine.s21xphyd0002": "2026-07-10T07:31:06.406Z",
+  "w.cmine.s21xphyd0002": "2026-07-10T19:01:09.414Z",
   "w.cmine.s21xphyd005": "2026-07-09T23:01:09.393Z",
   "w.cmine.s21xp005": "2026-07-09T23:01:09.393Z",
   "w.cmine.s21xphyd0001": "2026-07-09T22:31:03.055Z",
@@ -418,7 +442,7 @@
   "w.cmine.k2lx131x2x31": "2026-07-10T04:01:11.127Z",
   "w.cmine.k2lx131x4x33": "2026-07-10T04:01:11.127Z",
   "w.cmine.k2lx131x4x49": "2026-07-10T04:01:11.127Z",
-  "w.cmine.k2lx132x10x50": "2026-07-10T04:01:11.127Z",
+  "w.cmine.k2lx132x10x50": "2026-07-10T19:01:09.414Z",
   "w.cmine.k2lx131x2x49": "2026-07-10T04:01:11.127Z",
   "w.cmine.k2lx131x3x29": "2026-07-10T04:01:11.127Z",
   "w.cmine.k2lx131x1x33": "2026-07-10T04:01:11.127Z",

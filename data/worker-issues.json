@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-10T20:31:11.412Z",
+  "last_updated": "2026-07-10T21:01:12.297Z",
   "issues": {
     "cmine.s21xphyd0002": {
       "account": "cmine",
@@ -8,10 +8,10 @@
       "group_id": "P1",
       "provider": "Altos",
       "type": "level_drop",
-      "current_avg_ths": 166.9,
-      "baseline_avg_ths": 432.3,
-      "drop_pct": 61,
-      "cv_pct": 69,
+      "current_avg_ths": 206,
+      "baseline_avg_ths": 427.1,
+      "drop_pct": 52,
+      "cv_pct": 76,
       "zero_rate_pct": 17
     },
     "cmine.k2lx132x10x50": {
@@ -21,11 +21,11 @@
       "group_id": "R3",
       "provider": "Minto",
       "type": "level_drop",
-      "current_avg_ths": 61.2,
-      "baseline_avg_ths": 178,
-      "drop_pct": 66,
-      "cv_pct": 73,
-      "zero_rate_pct": 17
+      "current_avg_ths": 37.7,
+      "baseline_avg_ths": 176.3,
+      "drop_pct": 79,
+      "cv_pct": 84,
+      "zero_rate_pct": 33
     },
     "cmine.02a34725b1b2": {
       "account": "cmine",
@@ -35,7 +35,7 @@
       "provider": "Dataprana",
       "type": "level_drop",
       "current_avg_ths": 41.7,
-      "baseline_avg_ths": 150.6,
+      "baseline_avg_ths": 150.4,
       "drop_pct": 72,
       "cv_pct": 9,
       "zero_rate_pct": 0

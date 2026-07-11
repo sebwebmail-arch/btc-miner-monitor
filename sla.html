@@ -1105,6 +1105,7 @@ async function main() {
         return m > 0 ? `${h}h ${m}m` : `${h}h`;
       };
       const rows = incidents.map((inc, idx) => {
+        const providerShort = inc.provider.replace(/\s*\(.*?\)$/, '');
         const sev    = inc.drop_pct >= 60 ? 'critical' : 'warning';
         const sevLbl = inc.drop_pct >= 60 ? 'Critical' : 'Warning';
         const durStr = inc.ended_at ? fmtDur(inc.duration_min) : 'Ongoing';
@@ -1129,7 +1130,7 @@ async function main() {
         return `<tr style="cursor:pointer" onclick="showDetail('${dk}')">
           <td style="white-space:nowrap"><div style="font-size:12px;color:var(--text-muted)">${fmtDate(inc.started_at)}</div>
               <div style="font-size:11px;color:var(--text-muted)">${fmtTime(inc.started_at)} UTC</div></td>
-          <td style="white-space:nowrap"><span class="dc-badge">${inc.group_id}</span>${inc.provider}</td>
+          <td style="white-space:nowrap"><span class="dc-badge">${inc.group_id}</span>${providerShort}</td>
           <td class="incident-col-acct" style="font-size:12px;color:var(--text-secondary);white-space:nowrap">${inc.account_name}</td>
           <td style="white-space:nowrap"><span class="incident-sev ${sev}">▼ ${inc.drop_pct}% — ${sevLbl}</span></td>
           <td class="incident-col-hr" style="font-size:12px;color:var(--text-muted);white-space:nowrap">${hrB} → ${hrA}</td>

@@ -556,12 +556,12 @@ body::after {
         <span style="white-space:nowrap">Incident history</span>
         <span class="section-note" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">📋 Datacenter drops &gt; 30% · last 90 days</span>
       </div>
-      <div class="panel">
-        <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+      <div class="panel" style="overflow-x:auto;overflow-y:visible">
+        <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;min-width:420px">
           <span style="font-size:13px;font-weight:600;color:var(--text-primary)">Hashrate incidents by datacenter</span>
           <span style="font-size:12px;color:var(--text-muted)" id="incident-count"></span>
         </div>
-        <div id="incident-table-wrap" style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+        <div id="incident-table-wrap">
           <div style="padding:24px;text-align:center;color:var(--text-muted);font-size:12px">Loading…</div>
         </div>
       </div>
@@ -1101,22 +1101,37 @@ async function main() {
         const h = Math.floor(min / 60), m = min % 60;
         return m > 0 ? `${h}h ${m}m` : `${h}h`;
       };
-      const rows = incidents.map(inc => {
+      const rows = incidents.map((inc, idx) => {
         const sev    = inc.drop_pct >= 60 ? 'critical' : 'warning';
         const sevLbl = inc.drop_pct >= 60 ? 'Critical' : 'Warning';
+        const durStr = inc.ended_at ? fmtDur(inc.duration_min) : 'Ongoing';
         const dur    = inc.ended_at
-          ? `<span class="incident-dur">${fmtDur(inc.duration_min)}</span>`
-          : `<span class="incident-open">Ongoing</span>`;
+          ? `<span class="incident-dur">${durStr}</span>`
+          : `<span class="incident-open">${durStr}</span>`;
         const hrB = inc.hr_before ? `${(inc.hr_before / 1e12).toFixed(1)} TH/s` : '—';
         const hrA = inc.hr_after  ? `${(inc.hr_after  / 1e12).toFixed(1)} TH/s` : '—';
-        return `<tr>
-          <td><div style="font-size:12px;color:var(--text-muted)">${fmtDate(inc.started_at)}</div>
+        // Populate _details for mobile modal (reuses showDetail infrastructure)
+        const dk = `incident-${idx}`;
+        _details[dk] = {
+          title: `${inc.provider} (${inc.group_id})`,
+          badge: null,
+          rows: [
+            { label: 'Date (UTC)',       value: `${fmtDate(inc.started_at)} · ${fmtTime(inc.started_at)}` },
+            { label: 'Account',          value: inc.account_name },
+            { label: 'Severity',         value: `▼ ${inc.drop_pct}% — ${sevLbl}` },
+            { label: 'Hashrate before',  value: hrB },
+            { label: 'Hashrate after',   value: hrA },
+            { label: 'Duration',         value: durStr },
+          ],
+        };
+        return `<tr style="cursor:pointer" onclick="showDetail('${dk}')">
+          <td style="white-space:nowrap"><div style="font-size:12px;color:var(--text-muted)">${fmtDate(inc.started_at)}</div>
               <div style="font-size:11px;color:var(--text-muted)">${fmtTime(inc.started_at)} UTC</div></td>
-          <td><span class="incident-dc">${inc.provider}<small>(${inc.group_id})</small></span></td>
-          <td style="font-size:12px;color:var(--text-secondary)">${inc.account_name}</td>
-          <td><span class="incident-sev ${sev}">▼ ${inc.drop_pct}% — ${sevLbl}</span></td>
-          <td class="incident-col-hr" style="font-size:12px;color:var(--text-muted)">${hrB} → ${hrA}</td>
-          <td class="incident-col-dur">${dur}</td>
+          <td style="white-space:nowrap"><span class="dc-badge">${inc.group_id}</span>${inc.provider}</td>
+          <td style="font-size:12px;color:var(--text-secondary);white-space:nowrap">${inc.account_name}</td>
+          <td style="white-space:nowrap"><span class="incident-sev ${sev}">▼ ${inc.drop_pct}% — ${sevLbl}</span></td>
+          <td class="incident-col-hr" style="font-size:12px;color:var(--text-muted);white-space:nowrap">${hrB} → ${hrA}</td>
+          <td class="incident-col-dur" style="white-space:nowrap">${dur}</td>
         </tr>`;
       }).join('');
       incWrap.innerHTML = `<table class="incident-table">

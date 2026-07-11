@@ -157,8 +157,11 @@ body::after {
 .incident-dc small { font-weight: 400; color: var(--text-muted); font-size: 11px; margin-left: 4px; }
 .incident-empty { padding: 28px; text-align: center; color: var(--text-muted); font-size: 13px; font-style: italic; }
 @media (max-width: 640px) {
-  .incident-col-hr  { display: none; }
-  .incident-col-dur { display: none; }
+  .incident-col-hr   { display: none; }
+  .incident-col-dur  { display: none; }
+  .incident-col-acct { display: none; }
+  .incident-table th,
+  .incident-table td { padding: 8px 10px; }
 }
 
 /* ── SLA pills ───────────────────────────────────────────────────────────── */
@@ -557,7 +560,7 @@ body::after {
         <span class="section-note" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">📋 Datacenter drops &gt; 30% · last 90 days</span>
       </div>
       <div class="panel" style="overflow-x:auto;overflow-y:visible">
-        <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;min-width:420px">
+        <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
           <span style="font-size:13px;font-weight:600;color:var(--text-primary)">Hashrate incidents by datacenter</span>
           <span style="font-size:12px;color:var(--text-muted)" id="incident-count"></span>
         </div>
@@ -1127,7 +1130,7 @@ async function main() {
           <td style="white-space:nowrap"><div style="font-size:12px;color:var(--text-muted)">${fmtDate(inc.started_at)}</div>
               <div style="font-size:11px;color:var(--text-muted)">${fmtTime(inc.started_at)} UTC</div></td>
           <td style="white-space:nowrap"><span class="dc-badge">${inc.group_id}</span>${inc.provider}</td>
-          <td style="font-size:12px;color:var(--text-secondary);white-space:nowrap">${inc.account_name}</td>
+          <td class="incident-col-acct" style="font-size:12px;color:var(--text-secondary);white-space:nowrap">${inc.account_name}</td>
           <td style="white-space:nowrap"><span class="incident-sev ${sev}">▼ ${inc.drop_pct}% — ${sevLbl}</span></td>
           <td class="incident-col-hr" style="font-size:12px;color:var(--text-muted);white-space:nowrap">${hrB} → ${hrA}</td>
           <td class="incident-col-dur" style="white-space:nowrap">${dur}</td>
@@ -1135,8 +1138,7 @@ async function main() {
       }).join('');
       incWrap.innerHTML = `<table class="incident-table">
         <thead><tr>
-          <th>Date (UTC)</th><th>Datacenter</th><th>Account</th>
-          <th>Severity</th><th class="incident-col-hr">Hashrate</th><th class="incident-col-dur">Duration</th>
+          <th>Date (UTC)</th><th>Datacenter</th><th class="incident-col-acct">Account</th><th>Severity</th><th class="incident-col-hr">Hashrate</th><th class="incident-col-dur">Duration</th>
         </tr></thead>
         <tbody>${rows}</tbody>
       </table>`;

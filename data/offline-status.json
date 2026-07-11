@@ -1,17 +1,17 @@
 {
-  "last_updated": "2026-07-10T23:31:06.194Z",
+  "last_updated": "2026-07-11T00:01:15.274Z",
   "offline": {
-    "cmine.k2lx131x1x38": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "k2lx131x1x38",
-      "group_id": "R3",
-      "provider": "Minto"
-    },
     "cmine.k2lx131x2x46": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
       "name": "k2lx131x2x46",
+      "group_id": "R3",
+      "provider": "Minto"
+    },
+    "cmine.k2lx131x1x38": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x1x38",
       "group_id": "R3",
       "provider": "Minto"
     },
@@ -202,7 +202,7 @@
       "group_id": "E1",
       "provider": "BitCluster",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-07-10T00:01:14.023Z"
     },
     "cmine.005": {
@@ -212,7 +212,7 @@
       "group_id": "E1",
       "provider": "BitCluster",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-07-10T00:01:14.023Z"
     },
     "cmine.027": {
@@ -222,7 +222,7 @@
       "group_id": "E1",
       "provider": "BitCluster",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-07-10T00:01:14.023Z"
     },
     "cmine.028": {
@@ -232,7 +232,7 @@
       "group_id": "E1",
       "provider": "BitCluster",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-07-10T00:01:14.023Z"
     },
     "cmine.024": {
@@ -242,7 +242,7 @@
       "group_id": "E1",
       "provider": "BitCluster",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-07-10T00:01:14.023Z"
     },
     "cmine.030": {
@@ -252,7 +252,7 @@
       "group_id": "E1",
       "provider": "BitCluster",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-07-10T00:01:14.023Z"
     },
     "cmine.018": {
@@ -262,7 +262,7 @@
       "group_id": "E1",
       "provider": "BitCluster",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-07-10T00:01:14.023Z"
     },
     "cmine.022": {
@@ -272,7 +272,7 @@
       "group_id": "E1",
       "provider": "BitCluster",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-07-10T00:01:14.023Z"
     },
     "cmine.k2lx131x4x42": {
@@ -282,7 +282,7 @@
       "group_id": "R3",
       "provider": "Minto",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-07-10T00:01:14.023Z"
     },
     "cmine.033": {
@@ -292,7 +292,7 @@
       "group_id": "E1",
       "provider": "BitCluster",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-07-10T00:01:14.023Z"
     },
     "cmine.023": {
@@ -302,7 +302,7 @@
       "group_id": "E1",
       "provider": "BitCluster",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-07-10T00:01:14.023Z"
     },
     "cmine.031": {
@@ -312,7 +312,7 @@
       "group_id": "E1",
       "provider": "BitCluster",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-07-10T00:01:14.023Z"
     },
     "cmine.021": {
@@ -322,7 +322,7 @@
       "group_id": "E1",
       "provider": "BitCluster",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-07-10T00:01:14.023Z"
     },
     "everminer.02b4889e5c95": {
@@ -489,7 +489,7 @@
       "group_id": "E1",
       "provider": "BitCluster",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-07-10T00:01:14.023Z"
     },
     "everminer.011": {
@@ -499,7 +499,7 @@
       "group_id": "E1",
       "provider": "BitCluster",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-07-10T00:01:14.023Z"
     },
     "everminer.022": {
@@ -509,7 +509,7 @@
       "group_id": "E1",
       "provider": "BitCluster",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-07-10T00:01:14.023Z"
     },
     "everminer.017": {
@@ -519,7 +519,7 @@
       "group_id": "E1",
       "provider": "BitCluster",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-07-10T00:01:14.023Z"
     },
     "everminer.019": {
@@ -529,7 +529,7 @@
       "group_id": "E1",
       "provider": "BitCluster",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-07-10T00:01:14.023Z"
     },
     "everminer.015": {
@@ -539,7 +539,7 @@
       "group_id": "E1",
       "provider": "BitCluster",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-07-10T00:01:14.023Z"
     },
     "everminer.012": {
@@ -549,7 +549,7 @@
       "group_id": "E1",
       "provider": "BitCluster",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-07-10T00:01:14.023Z"
     },
     "everminer.013": {
@@ -559,7 +559,7 @@
       "group_id": "E1",
       "provider": "BitCluster",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-07-10T00:01:14.023Z"
     },
     "everminer.007": {
@@ -569,7 +569,7 @@
       "group_id": "E1",
       "provider": "BitCluster",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-07-10T00:01:14.023Z"
     },
     "everminer.014": {
@@ -579,7 +579,7 @@
       "group_id": "E1",
       "provider": "BitCluster",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-07-10T00:01:14.023Z"
     }
   }

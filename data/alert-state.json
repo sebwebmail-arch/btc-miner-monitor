@@ -237,7 +237,7 @@
     "w.cmine.02a34725b1b2": {
       "type": "worker_anomaly",
       "baselineHR": 136400000000000,
-      "currentHR": 43472246403090.2,
+      "currentHR": 49727245885549.23,
       "worker": "02a34725b1b2",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -258,22 +258,10 @@
       "anomalyType": "volatile",
       "detectedAt": "2026-07-10T13:01:16.296Z"
     },
-    "w.cmine.aa05": {
-      "type": "worker_anomaly",
-      "baselineHR": 200800000000000,
-      "currentHR": 74434493841262.36,
-      "worker": "aa05",
-      "provider": "AmityAge",
-      "groupId": "E2",
-      "account": "cmine",
-      "accountName": "Cyberian Mine",
-      "anomalyType": "volatile",
-      "detectedAt": "2026-07-11T17:01:11.640Z"
-    },
     "w.cmine.r00317": {
       "type": "worker_anomaly",
       "baselineHR": 160200000000000,
-      "currentHR": 79086649706341.27,
+      "currentHR": 104722374147731.9,
       "worker": "r00317",
       "provider": "IZTM",
       "groupId": "R1",
@@ -285,7 +273,7 @@
     "w.everminer.023313547937": {
       "type": "worker_anomaly",
       "baselineHR": 293300000000000,
-      "currentHR": 188900984370262.47,
+      "currentHR": 187649984473770.66,
       "worker": "023313547937",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -293,6 +281,18 @@
       "accountName": "Everminer",
       "anomalyType": "level_drop",
       "detectedAt": "2026-07-11T18:31:13.096Z"
+    },
+    "w.everminer.e21xp019": {
+      "type": "worker_anomaly",
+      "baselineHR": 270200000000000,
+      "currentHR": 118844990166721.42,
+      "worker": "e21xp019",
+      "provider": "ValueHash (NY)",
+      "groupId": "U3",
+      "account": "everminer",
+      "accountName": "Everminer",
+      "anomalyType": "level_drop",
+      "detectedAt": "2026-07-11T20:31:05.054Z"
     }
   },
   "nogroup": {
@@ -330,7 +330,7 @@
   "w.everminer.e21xp002": "2026-07-09T19:01:08.196Z",
   "w.cmine.021741ace2c4": "2026-07-09T19:01:08.196Z",
   "w.everminer.e21xp024": "2026-07-09T19:31:02.837Z",
-  "w.everminer.e21xp019": "2026-07-09T19:31:02.837Z",
+  "w.everminer.e21xp019": "2026-07-11T20:31:05.054Z",
   "w.everminer.e21xp014": "2026-07-09T19:31:02.837Z",
   "w.everminer.e21xp013": "2026-07-09T19:31:02.837Z",
   "w.everminer.e21xp027": "2026-07-09T19:31:02.837Z",

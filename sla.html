@@ -1110,18 +1110,17 @@ async function main() {
           : `<span class="incident-open">${durStr}</span>`;
         const hrB = inc.hr_before ? `${(inc.hr_before / 1e12).toFixed(1)} TH/s` : '—';
         const hrA = inc.hr_after  ? `${(inc.hr_after  / 1e12).toFixed(1)} TH/s` : '—';
-        // Populate _details for mobile modal (reuses showDetail infrastructure)
         const dk = `incident-${idx}`;
         _details[dk] = {
           title: `${inc.provider} (${inc.group_id})`,
           badge: null,
           rows: [
-            { label: 'Date (UTC)',       value: `${fmtDate(inc.started_at)} · ${fmtTime(inc.started_at)}` },
-            { label: 'Account',          value: inc.account_name },
-            { label: 'Severity',         value: `▼ ${inc.drop_pct}% — ${sevLbl}` },
-            { label: 'Hashrate before',  value: hrB },
-            { label: 'Hashrate after',   value: hrA },
-            { label: 'Duration',         value: durStr },
+            { label: 'Date (UTC)',      value: `${fmtDate(inc.started_at)} · ${fmtTime(inc.started_at)}` },
+            { label: 'Account',         value: inc.account_name },
+            { label: 'Severity',        value: `▼ ${inc.drop_pct}% — ${sevLbl}` },
+            { label: 'Hashrate before', value: hrB },
+            { label: 'Hashrate after',  value: hrA },
+            { label: 'Duration',        value: durStr },
           ],
         };
         return `<tr style="cursor:pointer" onclick="showDetail('${dk}')">

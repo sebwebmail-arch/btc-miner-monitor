@@ -1,4 +1,18 @@
 {
-  "incidents": [],
-  "last_updated": "2026-07-11T01:01:07.478Z"
+  "incidents": [
+    {
+      "id": "cmine.U3.2026-07-11T01:31:05.829Z",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)",
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "drop_pct": 45,
+      "hr_before": 4474002403256882,
+      "hr_after": 2480302763528829,
+      "started_at": "2026-07-11T01:31:05.829Z",
+      "ended_at": null,
+      "duration_min": null
+    }
+  ],
+  "last_updated": "2026-07-11T01:31:05.829Z"
 }

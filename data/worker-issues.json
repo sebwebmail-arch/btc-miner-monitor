@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-11T10:31:11.194Z",
+  "last_updated": "2026-07-11T11:01:14.961Z",
   "issues": {
     "cmine.k2lx132x10x50": {
       "account": "cmine",
@@ -8,11 +8,11 @@
       "group_id": "R3",
       "provider": "Minto",
       "type": "level_drop",
-      "current_avg_ths": 40.3,
+      "current_avg_ths": 63,
       "baseline_avg_ths": 199.5,
-      "drop_pct": 80,
-      "cv_pct": 119,
-      "zero_rate_pct": 33
+      "drop_pct": 68,
+      "cv_pct": 88,
+      "zero_rate_pct": 17
     },
     "cmine.02a34725b1b2": {
       "account": "cmine",
@@ -21,10 +21,10 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "type": "level_drop",
-      "current_avg_ths": 43,
-      "baseline_avg_ths": 149.3,
+      "current_avg_ths": 43.3,
+      "baseline_avg_ths": 149.1,
       "drop_pct": 71,
-      "cv_pct": 4,
+      "cv_pct": 3,
       "zero_rate_pct": 0
     }
   }

@@ -156,6 +156,10 @@ body::after {
 .incident-dc  { font-weight: 600; color: var(--text-primary); }
 .incident-dc small { font-weight: 400; color: var(--text-muted); font-size: 11px; margin-left: 4px; }
 .incident-empty { padding: 28px; text-align: center; color: var(--text-muted); font-size: 13px; font-style: italic; }
+@media (max-width: 640px) {
+  .incident-col-hr  { display: none; }
+  .incident-col-dur { display: none; }
+}
 
 /* ── SLA pills ───────────────────────────────────────────────────────────── */
 .sla-pill { display: inline-block; padding: 2px 9px; border-radius: 100px; font-size: 12px; font-weight: 700; white-space: nowrap; }
@@ -1111,14 +1115,14 @@ async function main() {
           <td><span class="incident-dc">${inc.provider}<small>(${inc.group_id})</small></span></td>
           <td style="font-size:12px;color:var(--text-secondary)">${inc.account_name}</td>
           <td><span class="incident-sev ${sev}">▼ ${inc.drop_pct}% — ${sevLbl}</span></td>
-          <td style="font-size:12px;color:var(--text-muted)">${hrB} → ${hrA}</td>
-          <td>${dur}</td>
+          <td class="incident-col-hr" style="font-size:12px;color:var(--text-muted)">${hrB} → ${hrA}</td>
+          <td class="incident-col-dur">${dur}</td>
         </tr>`;
       }).join('');
       incWrap.innerHTML = `<table class="incident-table">
         <thead><tr>
           <th>Date (UTC)</th><th>Datacenter</th><th>Account</th>
-          <th>Severity</th><th>Hashrate</th><th>Duration</th>
+          <th>Severity</th><th class="incident-col-hr">Hashrate</th><th class="incident-col-dur">Duration</th>
         </tr></thead>
         <tbody>${rows}</tbody>
       </table>`;

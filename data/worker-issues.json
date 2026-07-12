@@ -1,19 +1,6 @@
 {
-  "last_updated": "2026-07-12T02:31:06.157Z",
+  "last_updated": "2026-07-12T03:01:09.083Z",
   "issues": {
-    "cmine.r00317": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "r00317",
-      "group_id": "R1",
-      "provider": "IZTM",
-      "type": "level_drop",
-      "current_avg_ths": 112.4,
-      "baseline_avg_ths": 192.4,
-      "drop_pct": 42,
-      "cv_pct": 28,
-      "zero_rate_pct": 0
-    },
     "cmine.02a34725b1b2": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
@@ -21,9 +8,9 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "type": "level_drop",
-      "current_avg_ths": 42.4,
-      "baseline_avg_ths": 147.9,
-      "drop_pct": 71,
+      "current_avg_ths": 42.1,
+      "baseline_avg_ths": 147.7,
+      "drop_pct": 72,
       "cv_pct": 7,
       "zero_rate_pct": 0
     }

@@ -237,7 +237,7 @@
     "w.cmine.02a34725b1b2": {
       "type": "worker_anomaly",
       "baselineHR": 136400000000000,
-      "currentHR": 45974246196073.81,
+      "currentHR": 50665495807918.08,
       "worker": "02a34725b1b2",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -261,7 +261,7 @@
     "w.everminer.023313547937": {
       "type": "worker_anomaly",
       "baselineHR": 293300000000000,
-      "currentHR": 171386985819377.22,
+      "currentHR": 166382986233410,
       "worker": "023313547937",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -273,7 +273,7 @@
     "w.everminer.e21xp019": {
       "type": "worker_anomaly",
       "baselineHR": 270200000000000,
-      "currentHR": 149494487630770.62,
+      "currentHR": 175139985508852.62,
       "worker": "e21xp019",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -297,7 +297,7 @@
     "w.cmine.k2lx132x10x50": {
       "type": "worker_anomaly",
       "baselineHR": 199100000000000,
-      "currentHR": 143552238122434.56,
+      "currentHR": 132293239054008.31,
       "worker": "k2lx132x10x50",
       "provider": "Minto",
       "groupId": "R3",
@@ -309,7 +309,7 @@
     "g.cmine.P1": {
       "type": "group_drop",
       "baselineHR": 11528485296128852,
-      "currentHR": 3715782442554781.5,
+      "currentHR": 0,
       "provider": "Altos",
       "groupId": "P1",
       "account": "cmine",
@@ -319,7 +319,7 @@
     "g.everminer.P1": {
       "type": "group_drop",
       "baselineHR": 2942873006505595.5,
-      "currentHR": 1002363667064058.2,
+      "currentHR": 0,
       "provider": "Altos",
       "groupId": "P1",
       "account": "everminer",
@@ -387,7 +387,7 @@
   "w.everminer.0231bb5e1929": "2026-07-09T20:31:05.843Z",
   "w.everminer.021cc0f8b327": "2026-07-09T20:31:05.843Z",
   "w.everminer.e21xp029": "2026-07-09T21:01:11.828Z",
-  "w.cmine.02a34725b1b2": "2026-07-11T21:31:15.133Z",
+  "w.cmine.02a34725b1b2": "2026-07-12T06:01:10.803Z",
   "w.everminer.e21xp017": "2026-07-09T21:31:06.617Z",
   "everminer.R3": "2026-07-09T22:31:03.055Z",
   "w.cmine.r00420": "2026-07-09T22:31:03.055Z",

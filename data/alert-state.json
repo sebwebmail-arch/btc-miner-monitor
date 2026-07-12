@@ -237,7 +237,7 @@
     "w.cmine.02a34725b1b2": {
       "type": "worker_anomaly",
       "baselineHR": 136400000000000,
-      "currentHR": 42221246506598.4,
+      "currentHR": 43784996377213.16,
       "worker": "02a34725b1b2",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -261,7 +261,7 @@
     "w.everminer.023313547937": {
       "type": "worker_anomaly",
       "baselineHR": 293300000000000,
-      "currentHR": 170135985922885.4,
+      "currentHR": 176390985405344.44,
       "worker": "023313547937",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -737,7 +737,7 @@
     "w.cmine.r00317": {
       "type": "worker_anomaly",
       "baselineHR": 191000000000000,
-      "currentHR": 100382968256775.97,
+      "currentHR": 79594868414291.06,
       "worker": "r00317",
       "provider": "IZTM",
       "groupId": "R1",
@@ -749,7 +749,7 @@
     "w.everminer.e21xp019": {
       "type": "worker_anomaly",
       "baselineHR": 285500000000000,
-      "currentHR": 125099989649180.44,
+      "currentHR": 130103989235147.66,
       "worker": "e21xp019",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -757,6 +757,18 @@
       "accountName": "Everminer",
       "anomalyType": "level_drop",
       "detectedAt": "2026-07-12T20:31:18.223Z"
+    },
+    "w.cmine.r00420": {
+      "type": "worker_anomaly",
+      "baselineHR": 192200000000000,
+      "currentHR": 0,
+      "worker": "r00420",
+      "provider": "IZTM",
+      "groupId": "R1",
+      "account": "cmine",
+      "accountName": "Cyberian Mine",
+      "anomalyType": "volatile",
+      "detectedAt": "2026-07-12T23:01:17.532Z"
     }
   },
   "nogroup": {
@@ -822,7 +834,7 @@
   "w.cmine.02a34725b1b2": "2026-07-12T22:01:20.481Z",
   "w.everminer.e21xp017": "2026-07-09T21:31:06.617Z",
   "everminer.R3": "2026-07-09T22:31:03.055Z",
-  "w.cmine.r00420": "2026-07-09T22:31:03.055Z",
+  "w.cmine.r00420": "2026-07-12T23:01:17.532Z",
   "cmine.R3": "2026-07-10T01:31:01.212Z",
   "w.cmine.k2lx132x10x42": "2026-07-10T03:31:00.581Z",
   "w.cmine.k2lx132x10x47": "2026-07-10T03:31:00.581Z",

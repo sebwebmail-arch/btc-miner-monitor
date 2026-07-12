@@ -237,7 +237,7 @@
     "w.cmine.02a34725b1b2": {
       "type": "worker_anomaly",
       "baselineHR": 136400000000000,
-      "currentHR": 42221246506598.4,
+      "currentHR": 40970246610106.59,
       "worker": "02a34725b1b2",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -261,7 +261,7 @@
     "w.everminer.023313547937": {
       "type": "worker_anomaly",
       "baselineHR": 293300000000000,
-      "currentHR": 172637985715869,
+      "currentHR": 165131986336918.2,
       "worker": "023313547937",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -281,6 +281,18 @@
       "accountName": "Everminer",
       "anomalyType": "level_drop",
       "detectedAt": "2026-07-11T20:31:05.054Z"
+    },
+    "w.everminer.e21xp012": {
+      "type": "worker_anomaly",
+      "baselineHR": 258600000000000.03,
+      "currentHR": 87569992754426.31,
+      "worker": "e21xp012",
+      "provider": "ValueHash (NY)",
+      "groupId": "U3",
+      "account": "everminer",
+      "accountName": "Everminer",
+      "anomalyType": "level_drop",
+      "detectedAt": "2026-07-12T00:01:21.133Z"
     }
   },
   "nogroup": {
@@ -322,7 +334,7 @@
   "w.everminer.e21xp014": "2026-07-09T19:31:02.837Z",
   "w.everminer.e21xp013": "2026-07-09T19:31:02.837Z",
   "w.everminer.e21xp027": "2026-07-09T19:31:02.837Z",
-  "w.everminer.e21xp012": "2026-07-10T23:01:11.512Z",
+  "w.everminer.e21xp012": "2026-07-12T00:01:21.133Z",
   "w.everminer.e21xp030": "2026-07-09T20:01:15.280Z",
   "w.everminer.e21xp015": "2026-07-09T20:01:15.280Z",
   "w.everminer.e21xp007": "2026-07-09T20:01:15.280Z",

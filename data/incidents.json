@@ -12,7 +12,33 @@
       "started_at": "2026-07-11T01:31:05.829Z",
       "ended_at": "2026-07-11T02:31:10.363Z",
       "duration_min": 60
+    },
+    {
+      "id": "cmine.P1.2026-07-12T05:31:05.897Z",
+      "group_id": "P1",
+      "provider": "Altos",
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "drop_pct": 68,
+      "hr_before": 11528485296128852,
+      "hr_after": 3715782442554782,
+      "started_at": "2026-07-12T05:31:05.897Z",
+      "ended_at": null,
+      "duration_min": null
+    },
+    {
+      "id": "everminer.P1.2026-07-12T05:31:05.897Z",
+      "group_id": "P1",
+      "provider": "Altos",
+      "account": "everminer",
+      "account_name": "Everminer",
+      "drop_pct": 66,
+      "hr_before": 2942873006505596,
+      "hr_after": 1002363667064058,
+      "started_at": "2026-07-12T05:31:05.897Z",
+      "ended_at": null,
+      "duration_min": null
     }
   ],
-  "last_updated": "2026-07-12T05:01:14.274Z"
+  "last_updated": "2026-07-12T05:31:05.897Z"
 }

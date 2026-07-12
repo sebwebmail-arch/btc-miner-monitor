@@ -1,8 +1,8 @@
 {
   "everminer.E1": "2026-06-30T15:06:14.563Z",
   "cmine.E1": "2026-06-30T16:48:38.075Z",
-  "cmine.P1": "2026-06-30T19:00:58.433Z",
-  "everminer.P1": "2026-07-01T02:00:58.170Z",
+  "cmine.P1": "2026-07-12T05:31:05.897Z",
+  "everminer.P1": "2026-07-12T05:31:05.897Z",
   "cmine.U1+U2": "2026-07-02T17:30:52.549Z",
   "everminer.U1+U2": "2026-07-02T22:30:47.869Z",
   "everminer.U3": "2026-06-30T21:01:02.245Z",
@@ -237,7 +237,7 @@
     "w.cmine.02a34725b1b2": {
       "type": "worker_anomaly",
       "baselineHR": 136400000000000,
-      "currentHR": 47225246092565.62,
+      "currentHR": 45974246196073.81,
       "worker": "02a34725b1b2",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -261,7 +261,7 @@
     "w.everminer.023313547937": {
       "type": "worker_anomaly",
       "baselineHR": 293300000000000,
-      "currentHR": 181394984991311.66,
+      "currentHR": 171386985819377.22,
       "worker": "023313547937",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -273,7 +273,7 @@
     "w.everminer.e21xp019": {
       "type": "worker_anomaly",
       "baselineHR": 270200000000000,
-      "currentHR": 129478489286901.77,
+      "currentHR": 149494487630770.62,
       "worker": "e21xp019",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -297,7 +297,7 @@
     "w.cmine.k2lx132x10x50": {
       "type": "worker_anomaly",
       "baselineHR": 199100000000000,
-      "currentHR": 144490488044803.4,
+      "currentHR": 143552238122434.56,
       "worker": "k2lx132x10x50",
       "provider": "Minto",
       "groupId": "R3",
@@ -305,6 +305,26 @@
       "accountName": "Cyberian Mine",
       "anomalyType": "level_drop",
       "detectedAt": "2026-07-12T04:31:05.591Z"
+    },
+    "g.cmine.P1": {
+      "type": "group_drop",
+      "baselineHR": 11528485296128852,
+      "currentHR": 3715782442554781.5,
+      "provider": "Altos",
+      "groupId": "P1",
+      "account": "cmine",
+      "accountName": "Cyberian Mine",
+      "detectedAt": "2026-07-12T05:31:05.897Z"
+    },
+    "g.everminer.P1": {
+      "type": "group_drop",
+      "baselineHR": 2942873006505595.5,
+      "currentHR": 1002363667064058.2,
+      "provider": "Altos",
+      "groupId": "P1",
+      "account": "everminer",
+      "accountName": "Everminer",
+      "detectedAt": "2026-07-12T05:31:05.897Z"
     }
   },
   "nogroup": {

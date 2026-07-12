@@ -237,7 +237,7 @@
     "w.cmine.02a34725b1b2": {
       "type": "worker_anomaly",
       "baselineHR": 136400000000000,
-      "currentHR": 41908496532475.445,
+      "currentHR": 49414495911426.27,
       "worker": "02a34725b1b2",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -261,7 +261,7 @@
     "w.everminer.023313547937": {
       "type": "worker_anomaly",
       "baselineHR": 293300000000000,
-      "currentHR": 173888985612360.8,
+      "currentHR": 192653984059737.88,
       "worker": "023313547937",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -273,7 +273,7 @@
     "w.everminer.e21xp019": {
       "type": "worker_anomaly",
       "baselineHR": 270200000000000,
-      "currentHR": 147617987786032.94,
+      "currentHR": 151370987475508.34,
       "worker": "e21xp019",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -981,5 +981,6 @@
   "w.cmine.aa12": "2026-07-12T08:01:13.095Z",
   "w.everminer.aa14": "2026-07-12T08:01:13.095Z",
   "w.everminer.aa07": "2026-07-12T08:01:13.095Z",
-  "w.cmine.c21xp024": "2026-07-12T16:31:08.003Z"
+  "w.cmine.c21xp024": "2026-07-12T16:31:08.003Z",
+  "w.cmine.r21041": "2026-07-12T17:31:03.874Z"
 }

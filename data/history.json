@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-11T05:01:16.633Z",
+  "last_updated": "2026-07-12T05:01:14.274Z",
   "snapshots": [
     {
       "ts": "2026-06-30T11:49:33.334Z",
@@ -345,18 +345,41 @@
       "dead_recent": 0,
       "dead_mid": 0,
       "dead_old": 0
+    },
+    {
+      "ts": "2026-07-12T05:01:14.274Z",
+      "by_account": {
+        "cmine": {
+          "name": "Cyberian Mine",
+          "total": 433,
+          "online": 432,
+          "offline": 1,
+          "dead": 0
+        },
+        "everminer": {
+          "name": "Everminer",
+          "total": 111,
+          "online": 111,
+          "offline": 0,
+          "dead": 0
+        }
+      },
+      "offline": 1,
+      "dead_recent": 0,
+      "dead_mid": 0,
+      "dead_old": 0
     }
   ],
   "workers": {},
   "current_issues": {
-    "cmine.k2lx131x1x38": {
+    "cmine.r00415": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
-      "name": "k2lx131x1x38",
-      "group_id": "R3",
-      "provider": "Minto",
-      "host": "91.107.201.193",
-      "last_share": "2026-07-10T10:50:35.000Z",
+      "name": "r00415",
+      "group_id": "R1",
+      "provider": "IZTM",
+      "host": "91.185.39.53",
+      "last_share": "2026-07-12T01:54:28.000Z",
       "category": "offline"
     }
   }

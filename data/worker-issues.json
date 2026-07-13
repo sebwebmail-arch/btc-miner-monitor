@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-13T22:31:13.322Z",
+  "last_updated": "2026-07-13T23:01:20.573Z",
   "issues": {
     "cmine.c21xp031": {
       "account": "cmine",
@@ -8,10 +8,10 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)",
       "type": "level_drop",
-      "current_avg_ths": 121.3,
-      "baseline_avg_ths": 253.8,
-      "drop_pct": 52,
-      "cv_pct": 7,
+      "current_avg_ths": 124.6,
+      "baseline_avg_ths": 245.7,
+      "drop_pct": 49,
+      "cv_pct": 4,
       "zero_rate_pct": 0
     },
     "cmine.c21xp001": {
@@ -20,12 +20,12 @@
       "worker": "c21xp001",
       "group_id": "U3",
       "provider": "ValueHash (NY)",
-      "type": "volatile",
-      "current_avg_ths": 173.9,
-      "baseline_avg_ths": 288.4,
-      "drop_pct": 40,
-      "cv_pct": 55,
-      "zero_rate_pct": 17
+      "type": "level_drop",
+      "current_avg_ths": 133.9,
+      "baseline_avg_ths": 285.6,
+      "drop_pct": 53,
+      "cv_pct": 82,
+      "zero_rate_pct": 33
     },
     "cmine.r20230": {
       "account": "cmine",
@@ -34,10 +34,10 @@
       "group_id": "R1",
       "provider": "IZTM",
       "type": "level_drop",
-      "current_avg_ths": 125.5,
+      "current_avg_ths": 118.8,
       "baseline_avg_ths": 211.2,
-      "drop_pct": 41,
-      "cv_pct": 29,
+      "drop_pct": 44,
+      "cv_pct": 33,
       "zero_rate_pct": 0
     },
     "everminer.e21xp014": {
@@ -47,9 +47,9 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)",
       "type": "level_drop",
-      "current_avg_ths": 132.8,
-      "baseline_avg_ths": 245.8,
-      "drop_pct": 46,
+      "current_avg_ths": 132.9,
+      "baseline_avg_ths": 239,
+      "drop_pct": 44,
       "cv_pct": 5,
       "zero_rate_pct": 0
     },
@@ -60,8 +60,8 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "type": "level_drop",
-      "current_avg_ths": 42.8,
-      "baseline_avg_ths": 143.7,
+      "current_avg_ths": 43.3,
+      "baseline_avg_ths": 143.4,
       "drop_pct": 70,
       "cv_pct": 10,
       "zero_rate_pct": 0

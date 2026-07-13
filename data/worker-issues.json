@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-13T10:31:13.685Z",
+  "last_updated": "2026-07-13T11:01:17.142Z",
   "issues": {
     "cmine.r21139": {
       "account": "cmine",
@@ -7,12 +7,12 @@
       "worker": "r21139",
       "group_id": "R1",
       "provider": "IZTM",
-      "type": "level_drop",
-      "current_avg_ths": 81.7,
-      "baseline_avg_ths": 179.6,
-      "drop_pct": 54,
-      "cv_pct": 95,
-      "zero_rate_pct": 33
+      "type": "volatile",
+      "current_avg_ths": 53,
+      "baseline_avg_ths": 179.4,
+      "drop_pct": 70,
+      "cv_pct": 133,
+      "zero_rate_pct": 50
     },
     "cmine.r21141": {
       "account": "cmine",
@@ -20,24 +20,24 @@
       "worker": "r21141",
       "group_id": "R1",
       "provider": "IZTM",
-      "type": "level_drop",
-      "current_avg_ths": 91.7,
-      "baseline_avg_ths": 192.6,
-      "drop_pct": 52,
-      "cv_pct": 93,
-      "zero_rate_pct": 33
+      "type": "volatile",
+      "current_avg_ths": 61.7,
+      "baseline_avg_ths": 191.9,
+      "drop_pct": 68,
+      "cv_pct": 130,
+      "zero_rate_pct": 50
     },
-    "everminer.023313547937": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "worker": "023313547937",
-      "group_id": "U1+U2",
-      "provider": "Dataprana",
+    "cmine.r00317": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "worker": "r00317",
+      "group_id": "R1",
+      "provider": "IZTM",
       "type": "level_drop",
-      "current_avg_ths": 171.2,
-      "baseline_avg_ths": 288.9,
-      "drop_pct": 41,
-      "cv_pct": 5,
+      "current_avg_ths": 100.5,
+      "baseline_avg_ths": 189.3,
+      "drop_pct": 47,
+      "cv_pct": 43,
       "zero_rate_pct": 0
     },
     "cmine.02a34725b1b2": {
@@ -47,10 +47,10 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "type": "level_drop",
-      "current_avg_ths": 41,
-      "baseline_avg_ths": 144.9,
-      "drop_pct": 72,
-      "cv_pct": 10,
+      "current_avg_ths": 41.4,
+      "baseline_avg_ths": 144.8,
+      "drop_pct": 71,
+      "cv_pct": 11,
       "zero_rate_pct": 0
     }
   }

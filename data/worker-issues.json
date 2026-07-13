@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-13T12:31:17.454Z",
+  "last_updated": "2026-07-13T13:01:18.507Z",
   "issues": {
     "cmine.r00317": {
       "account": "cmine",
@@ -8,10 +8,10 @@
       "group_id": "R1",
       "provider": "IZTM",
       "type": "level_drop",
-      "current_avg_ths": 62.5,
-      "baseline_avg_ths": 132.5,
-      "drop_pct": 53,
-      "cv_pct": 30,
+      "current_avg_ths": 76.7,
+      "baseline_avg_ths": 131.8,
+      "drop_pct": 42,
+      "cv_pct": 34,
       "zero_rate_pct": 0
     },
     "cmine.02a34725b1b2": {
@@ -21,10 +21,10 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "type": "level_drop",
-      "current_avg_ths": 44.9,
-      "baseline_avg_ths": 144.8,
+      "current_avg_ths": 45.2,
+      "baseline_avg_ths": 144.6,
       "drop_pct": 69,
-      "cv_pct": 3,
+      "cv_pct": 2,
       "zero_rate_pct": 0
     }
   }

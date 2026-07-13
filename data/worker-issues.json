@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-13T20:31:19.216Z",
+  "last_updated": "2026-07-13T21:01:18.636Z",
   "issues": {
     "cmine.c21xp031": {
       "account": "cmine",
@@ -8,10 +8,10 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)",
       "type": "level_drop",
-      "current_avg_ths": 142,
-      "baseline_avg_ths": 268,
-      "drop_pct": 47,
-      "cv_pct": 29,
+      "current_avg_ths": 125.3,
+      "baseline_avg_ths": 266.7,
+      "drop_pct": 53,
+      "cv_pct": 17,
       "zero_rate_pct": 0
     },
     "everminer.e21xp014": {
@@ -21,10 +21,10 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)",
       "type": "level_drop",
-      "current_avg_ths": 128.9,
-      "baseline_avg_ths": 269.2,
-      "drop_pct": 52,
-      "cv_pct": 4,
+      "current_avg_ths": 130.5,
+      "baseline_avg_ths": 262.7,
+      "drop_pct": 50,
+      "cv_pct": 5,
       "zero_rate_pct": 0
     },
     "cmine.02a34725b1b2": {
@@ -34,8 +34,8 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "type": "level_drop",
-      "current_avg_ths": 45.9,
-      "baseline_avg_ths": 144.1,
+      "current_avg_ths": 46.7,
+      "baseline_avg_ths": 143.9,
       "drop_pct": 68,
       "cv_pct": 9,
       "zero_rate_pct": 0

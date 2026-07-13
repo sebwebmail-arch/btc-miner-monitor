@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-13T08:01:19.035Z",
+  "last_updated": "2026-07-13T08:31:11.012Z",
   "issues": {
     "everminer.e21xp019": {
       "account": "everminer",
@@ -8,10 +8,10 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)",
       "type": "level_drop",
-      "current_avg_ths": 140.7,
-      "baseline_avg_ths": 285.1,
-      "drop_pct": 51,
-      "cv_pct": 6,
+      "current_avg_ths": 156.3,
+      "baseline_avg_ths": 284.7,
+      "drop_pct": 45,
+      "cv_pct": 17,
       "zero_rate_pct": 0
     },
     "cmine.02a34725b1b2": {
@@ -21,10 +21,10 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "type": "level_drop",
-      "current_avg_ths": 41.4,
+      "current_avg_ths": 40.7,
       "baseline_avg_ths": 145.1,
-      "drop_pct": 71,
-      "cv_pct": 8,
+      "drop_pct": 72,
+      "cv_pct": 6,
       "zero_rate_pct": 0
     }
   }

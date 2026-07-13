@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-13T13:31:10.511Z",
+  "last_updated": "2026-07-13T14:01:19.925Z",
   "issues": {
     "everminer.023313547937": {
       "account": "everminer",
@@ -8,11 +8,11 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "type": "level_drop",
-      "current_avg_ths": 171.6,
+      "current_avg_ths": 138.9,
       "baseline_avg_ths": 288.5,
-      "drop_pct": 41,
-      "cv_pct": 28,
-      "zero_rate_pct": 0
+      "drop_pct": 52,
+      "cv_pct": 56,
+      "zero_rate_pct": 17
     },
     "cmine.02a34725b1b2": {
       "account": "cmine",
@@ -21,10 +21,10 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "type": "level_drop",
-      "current_avg_ths": 44.1,
+      "current_avg_ths": 42.7,
       "baseline_avg_ths": 144.6,
-      "drop_pct": 69,
-      "cv_pct": 5,
+      "drop_pct": 70,
+      "cv_pct": 7,
       "zero_rate_pct": 0
     }
   }

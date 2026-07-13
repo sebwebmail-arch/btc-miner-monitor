@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-12T05:01:14.274Z",
+  "last_updated": "2026-07-13T05:01:15.817Z",
   "snapshots": [
     {
       "ts": "2026-06-30T11:49:33.334Z",
@@ -368,19 +368,432 @@
       "dead_recent": 0,
       "dead_mid": 0,
       "dead_old": 0
+    },
+    {
+      "ts": "2026-07-13T05:01:15.817Z",
+      "by_account": {
+        "cmine": {
+          "name": "Cyberian Mine",
+          "total": 435,
+          "online": 403,
+          "offline": 4,
+          "dead": 28
+        },
+        "everminer": {
+          "name": "Everminer",
+          "total": 112,
+          "online": 104,
+          "offline": 0,
+          "dead": 8
+        }
+      },
+      "offline": 4,
+      "dead_recent": 36,
+      "dead_mid": 0,
+      "dead_old": 0
     }
   ],
   "workers": {},
   "current_issues": {
-    "cmine.r00415": {
+    "cmine.s21hyd012": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
-      "name": "r00415",
-      "group_id": "R1",
-      "provider": "IZTM",
-      "host": "91.185.39.53",
-      "last_share": "2026-07-12T01:54:28.000Z",
+      "name": "s21hyd012",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:36:48.000Z",
+      "category": "dead_recent"
+    },
+    "cmine.s21hyd003": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21hyd003",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:35:19.000Z",
+      "category": "dead_recent"
+    },
+    "cmine.k2lx131x2x49": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x2x49",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-07-12T23:39:26.000Z",
       "category": "offline"
+    },
+    "cmine.k2lx131x4x33": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x4x33",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "157.245.76.212",
+      "last_share": "2026-07-12T23:39:27.000Z",
+      "category": "offline"
+    },
+    "cmine.s21hyd009": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21hyd009",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:36:24.000Z",
+      "category": "dead_recent"
+    },
+    "cmine.s21xp004": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21xp004",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:40:36.000Z",
+      "category": "dead_recent"
+    },
+    "cmine.s21xp005": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21xp005",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:40:55.000Z",
+      "category": "dead_recent"
+    },
+    "cmine.s21xphyd0002": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21xphyd0002",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:40:56.000Z",
+      "category": "dead_recent"
+    },
+    "cmine.02312b65fb93": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "02312b65fb93",
+      "group_id": "U1+U2",
+      "provider": "Dataprana",
+      "host": "35.131.134.226",
+      "last_share": "2026-07-12T17:07:00.000Z",
+      "category": "offline"
+    },
+    "cmine.s21hyd011": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21hyd011",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:36:40.000Z",
+      "category": "dead_recent"
+    },
+    "cmine.s21xphyd0004": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21xphyd0004",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:34:28.000Z",
+      "category": "dead_recent"
+    },
+    "cmine.s21xphyd004": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21xphyd004",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:41:29.000Z",
+      "category": "dead_recent"
+    },
+    "cmine.s21xp001": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21xp001",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:34:16.000Z",
+      "category": "dead_recent"
+    },
+    "cmine.k2lx131x3x40": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x3x40",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-07-12T23:37:25.000Z",
+      "category": "offline"
+    },
+    "cmine.s21xphyd001": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21xphyd001",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:36:51.000Z",
+      "category": "dead_recent"
+    },
+    "cmine.s21hyd007": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21hyd007",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:35:29.000Z",
+      "category": "dead_recent"
+    },
+    "cmine.s21hyd008": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21hyd008",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:36:14.000Z",
+      "category": "dead_recent"
+    },
+    "cmine.s21xphyd0001": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21xphyd0001",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:40:48.000Z",
+      "category": "dead_recent"
+    },
+    "cmine.s21hyd006": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21hyd006",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:35:15.000Z",
+      "category": "dead_recent"
+    },
+    "cmine.s21xphyd0003": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21xphyd0003",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:41:14.000Z",
+      "category": "dead_recent"
+    },
+    "cmine.s21xphyd008": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21xphyd008",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:41:30.000Z",
+      "category": "dead_recent"
+    },
+    "cmine.s21hyd002": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21hyd002",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:34:57.000Z",
+      "category": "dead_recent"
+    },
+    "cmine.s21xphyd005": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21xphyd005",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:41:26.000Z",
+      "category": "dead_recent"
+    },
+    "cmine.s21xphyd007": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21xphyd007",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:37:20.000Z",
+      "category": "dead_recent"
+    },
+    "cmine.s21xphyd002": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21xphyd002",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:36:58.000Z",
+      "category": "dead_recent"
+    },
+    "cmine.s21xphyd003": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21xphyd003",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:37:05.000Z",
+      "category": "dead_recent"
+    },
+    "cmine.s21xp006": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21xp006",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:34:27.000Z",
+      "category": "dead_recent"
+    },
+    "cmine.s21xp002": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21xp002",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:40:13.000Z",
+      "category": "dead_recent"
+    },
+    "cmine.s21hyd010": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21hyd010",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:36:15.000Z",
+      "category": "dead_recent"
+    },
+    "cmine.s21hyd005": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21hyd005",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:35:42.000Z",
+      "category": "dead_recent"
+    },
+    "cmine.s21xphyd006": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21xphyd006",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:37:13.000Z",
+      "category": "dead_recent"
+    },
+    "cmine.s21hyd001": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21hyd001",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:34:44.000Z",
+      "category": "dead_recent"
+    },
+    "everminer.s21hyd004": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "s21hyd004",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:38:09.000Z",
+      "category": "dead_recent"
+    },
+    "everminer.s21hyd008": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "s21hyd008",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:38:46.000Z",
+      "category": "dead_recent"
+    },
+    "everminer.s21hyd005": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "s21hyd005",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:38:02.000Z",
+      "category": "dead_recent"
+    },
+    "everminer.s21hyd006": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "s21hyd006",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:42:23.000Z",
+      "category": "dead_recent"
+    },
+    "everminer.s21hyd001": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "s21hyd001",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:37:41.000Z",
+      "category": "dead_recent"
+    },
+    "everminer.s21hyd003": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "s21hyd003",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:37:59.000Z",
+      "category": "dead_recent"
+    },
+    "everminer.s21hyd002": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "s21hyd002",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:37:07.000Z",
+      "category": "dead_recent"
+    },
+    "everminer.s21hyd007": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "s21hyd007",
+      "group_id": "P1",
+      "provider": "Altos",
+      "host": "?",
+      "last_share": "2026-07-12T04:38:14.000Z",
+      "category": "dead_recent"
     }
   }
 }

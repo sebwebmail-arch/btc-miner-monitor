@@ -237,7 +237,7 @@
     "w.cmine.02a34725b1b2": {
       "type": "worker_anomaly",
       "baselineHR": 136400000000000,
-      "currentHR": 50352745833795.125,
+      "currentHR": 46286996170196.766,
       "worker": "02a34725b1b2",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -749,7 +749,7 @@
     "w.everminer.e21xp014": {
       "type": "worker_anomaly",
       "baselineHR": 275600000000000.03,
-      "currentHR": 163880986440426.38,
+      "currentHR": 159189736828582.12,
       "worker": "e21xp014",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -761,7 +761,7 @@
     "w.cmine.c21xp001": {
       "type": "worker_anomaly",
       "baselineHR": 288400000000000,
-      "currentHR": 2501999792983.609,
+      "currentHR": 121503364946766.5,
       "worker": "c21xp001",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -773,7 +773,7 @@
     "w.cmine.k2lx132x11x35": {
       "type": "worker_anomaly",
       "baselineHR": 290200000000000,
-      "currentHR": 156687737035598.5,
+      "currentHR": 145428737967172.28,
       "worker": "k2lx132x11x35",
       "provider": "Minto",
       "groupId": "R3",
@@ -781,6 +781,18 @@
       "accountName": "Cyberian Mine",
       "anomalyType": "level_drop",
       "detectedAt": "2026-07-14T04:01:18.767Z"
+    },
+    "w.cmine.r00317": {
+      "type": "worker_anomaly",
+      "baselineHR": 185400000000000,
+      "currentHR": 58171495186868.91,
+      "worker": "r00317",
+      "provider": "IZTM",
+      "groupId": "R1",
+      "account": "cmine",
+      "accountName": "Cyberian Mine",
+      "anomalyType": "level_drop",
+      "detectedAt": "2026-07-14T12:31:10.571Z"
     }
   },
   "nogroup": {
@@ -1012,7 +1024,7 @@
   "w.everminer.e21xp011": "2026-07-11T03:01:10.913Z",
   "w.cmine.c21xp027": "2026-07-11T03:31:01.645Z",
   "w.cmine.aa05": "2026-07-11T17:01:11.640Z",
-  "w.cmine.r00317": "2026-07-14T01:31:07.419Z",
+  "w.cmine.r00317": "2026-07-14T12:31:10.571Z",
   "w.everminer.023313547937": "2026-07-13T13:31:10.511Z",
   "w.cmine.r00415": "2026-07-12T04:01:11.355Z",
   "w.cmine.s21hyd010": "2026-07-12T06:31:08.479Z",

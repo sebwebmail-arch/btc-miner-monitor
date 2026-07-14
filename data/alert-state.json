@@ -237,7 +237,7 @@
     "w.cmine.02a34725b1b2": {
       "type": "worker_anomaly",
       "baselineHR": 136400000000000,
-      "currentHR": 44723246299582.01,
+      "currentHR": 41908496532475.445,
       "worker": "02a34725b1b2",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -749,7 +749,7 @@
     "w.cmine.k2lx132x11x35": {
       "type": "worker_anomaly",
       "baselineHR": 290200000000000,
-      "currentHR": 173263485664114.9,
+      "currentHR": 184522484732541.16,
       "worker": "k2lx132x11x35",
       "provider": "Minto",
       "groupId": "R3",
@@ -761,7 +761,7 @@
     "w.cmine.k2lx132x10x50": {
       "type": "worker_anomaly",
       "baselineHR": 192900000000000,
-      "currentHR": 118844990166721.42,
+      "currentHR": 131667739105762.42,
       "worker": "k2lx132x10x50",
       "provider": "Minto",
       "groupId": "R3",
@@ -785,7 +785,7 @@
     "w.cmine.c21xp031": {
       "type": "worker_anomaly",
       "baselineHR": 253800000000000,
-      "currentHR": 112589990684262.4,
+      "currentHR": 78578430998391.47,
       "worker": "c21xp031",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -793,6 +793,18 @@
       "accountName": "Cyberian Mine",
       "anomalyType": "volatile",
       "detectedAt": "2026-07-14T18:01:22.123Z"
+    },
+    "w.everminer.02a13716759b": {
+      "type": "worker_anomaly",
+      "baselineHR": 232800000000000,
+      "currentHR": 0,
+      "worker": "02a13716759b",
+      "provider": "Dataprana",
+      "groupId": "U1+U2",
+      "account": "everminer",
+      "accountName": "Everminer",
+      "anomalyType": "volatile",
+      "detectedAt": "2026-07-14T20:31:18.827Z"
     }
   },
   "nogroup": {
@@ -844,7 +856,7 @@
   "w.everminer.0216c0e82428": "2026-07-09T20:31:05.843Z",
   "w.everminer.02831b0fd505": "2026-07-09T20:31:05.843Z",
   "w.everminer.029c3cb5f721": "2026-07-09T20:31:05.843Z",
-  "w.everminer.02a13716759b": "2026-07-09T20:31:05.843Z",
+  "w.everminer.02a13716759b": "2026-07-14T20:31:18.827Z",
   "w.everminer.028e78f6862a": "2026-07-09T20:31:05.843Z",
   "w.everminer.023c6894df0b": "2026-07-09T20:31:05.843Z",
   "w.everminer.02290d012b09": "2026-07-09T20:31:05.843Z",

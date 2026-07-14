@@ -237,7 +237,7 @@
     "w.cmine.02a34725b1b2": {
       "type": "worker_anomaly",
       "baselineHR": 136400000000000,
-      "currentHR": 46912496118442.664,
+      "currentHR": 43784996377213.16,
       "worker": "02a34725b1b2",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -749,7 +749,7 @@
     "w.cmine.k2lx132x11x35": {
       "type": "worker_anomaly",
       "baselineHR": 290200000000000,
-      "currentHR": 186398984577278.88,
+      "currentHR": 179518485146573.94,
       "worker": "k2lx132x11x35",
       "provider": "Minto",
       "groupId": "R3",
@@ -761,7 +761,7 @@
     "w.cmine.k2lx132x10x50": {
       "type": "worker_anomaly",
       "baselineHR": 192900000000000,
-      "currentHR": 135420738795237.83,
+      "currentHR": 130416739209270.61,
       "worker": "k2lx132x10x50",
       "provider": "Minto",
       "groupId": "R3",
@@ -773,7 +773,7 @@
     "w.cmine.k2lx131x1x5": {
       "type": "worker_anomaly",
       "baselineHR": 173300000000000,
-      "currentHR": 103832991408819.77,
+      "currentHR": 128540239364532.9,
       "worker": "k2lx131x1x5",
       "provider": "Minto",
       "groupId": "R3",
@@ -785,7 +785,7 @@
     "w.cmine.c21xp031": {
       "type": "worker_anomaly",
       "baselineHR": 253800000000000,
-      "currentHR": 7505999378950.827,
+      "currentHR": 0,
       "worker": "c21xp031",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -806,22 +806,10 @@
       "anomalyType": "volatile",
       "detectedAt": "2026-07-14T20:31:18.827Z"
     },
-    "w.cmine.r00317": {
-      "type": "worker_anomaly",
-      "baselineHR": 184400000000000,
-      "currentHR": 124279020967107.7,
-      "worker": "r00317",
-      "provider": "IZTM",
-      "groupId": "R1",
-      "account": "cmine",
-      "accountName": "Cyberian Mine",
-      "anomalyType": "level_drop",
-      "detectedAt": "2026-07-14T21:31:14.284Z"
-    },
     "g.cmine.E2": {
       "type": "group_drop",
       "baselineHR": 3259792980283520,
-      "currentHR": 2106371075718076,
+      "currentHR": 367481219594467.5,
       "provider": "AmityAge",
       "groupId": "E2",
       "account": "cmine",
@@ -831,7 +819,7 @@
     "g.everminer.E2": {
       "type": "group_drop",
       "baselineHR": 3283874728290986.5,
-      "currentHR": 1969386587052223.2,
+      "currentHR": 366855719646221.6,
       "provider": "AmityAge",
       "groupId": "E2",
       "account": "everminer",

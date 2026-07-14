@@ -237,7 +237,7 @@
     "w.cmine.02a34725b1b2": {
       "type": "worker_anomaly",
       "baselineHR": 136400000000000,
-      "currentHR": 43784996377213.16,
+      "currentHR": 44723246299582.01,
       "worker": "02a34725b1b2",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -749,7 +749,7 @@
     "w.everminer.e21xp014": {
       "type": "worker_anomaly",
       "baselineHR": 275600000000000.03,
-      "currentHR": 160440736725073.9,
+      "currentHR": 167633986129901.78,
       "worker": "e21xp014",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -761,7 +761,7 @@
     "w.cmine.k2lx132x11x35": {
       "type": "worker_anomaly",
       "baselineHR": 290200000000000,
-      "currentHR": 165757486285164.1,
+      "currentHR": 201410983335180.5,
       "worker": "k2lx132x11x35",
       "provider": "Minto",
       "groupId": "R3",
@@ -770,22 +770,10 @@
       "anomalyType": "level_drop",
       "detectedAt": "2026-07-14T04:01:18.767Z"
     },
-    "w.cmine.r00317": {
-      "type": "worker_anomaly",
-      "baselineHR": 185400000000000,
-      "currentHR": 67338978803347.914,
-      "worker": "r00317",
-      "provider": "IZTM",
-      "groupId": "R1",
-      "account": "cmine",
-      "accountName": "Cyberian Mine",
-      "anomalyType": "level_drop",
-      "detectedAt": "2026-07-14T12:31:10.571Z"
-    },
     "w.cmine.k2lx132x10x50": {
       "type": "worker_anomaly",
       "baselineHR": 192900000000000,
-      "currentHR": 114153740554877.16,
+      "currentHR": 116968490321983.72,
       "worker": "k2lx132x10x50",
       "provider": "Minto",
       "groupId": "R3",

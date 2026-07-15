@@ -1,6 +1,19 @@
 {
-  "last_updated": "2026-07-15T02:01:16.269Z",
+  "last_updated": "2026-07-15T02:31:08.031Z",
   "issues": {
+    "everminer.e21xp026": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "worker": "e21xp026",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)",
+      "type": "level_drop",
+      "current_avg_ths": 172.8,
+      "baseline_avg_ths": 290.7,
+      "drop_pct": 41,
+      "cv_pct": 48,
+      "zero_rate_pct": 0
+    },
     "cmine.02a34725b1b2": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
@@ -8,8 +21,8 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "type": "level_drop",
-      "current_avg_ths": 46.8,
-      "baseline_avg_ths": 123.2,
+      "current_avg_ths": 46.5,
+      "baseline_avg_ths": 122,
       "drop_pct": 62,
       "cv_pct": 6,
       "zero_rate_pct": 0

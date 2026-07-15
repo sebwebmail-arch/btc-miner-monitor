@@ -237,7 +237,7 @@
     "w.cmine.02a34725b1b2": {
       "type": "worker_anomaly",
       "baselineHR": 136400000000000,
-      "currentHR": 42221246506598.4,
+      "currentHR": 40657496635983.64,
       "worker": "02a34725b1b2",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -749,7 +749,7 @@
     "w.cmine.k2lx132x11x35": {
       "type": "worker_anomaly",
       "baselineHR": 290200000000000,
-      "currentHR": 182645984887803.44,
+      "currentHR": 165131986336918.2,
       "worker": "k2lx132x11x35",
       "provider": "Minto",
       "groupId": "R3",
@@ -761,7 +761,7 @@
     "w.cmine.k2lx132x10x50": {
       "type": "worker_anomaly",
       "baselineHR": 192900000000000,
-      "currentHR": 128540239364532.9,
+      "currentHR": 121659739933827.98,
       "worker": "k2lx132x10x50",
       "provider": "Minto",
       "groupId": "R3",
@@ -773,7 +773,7 @@
     "w.cmine.c21xp031": {
       "type": "worker_anomaly",
       "baselineHR": 253800000000000,
-      "currentHR": 0,
+      "currentHR": 62188377667010.56,
       "worker": "c21xp031",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -785,7 +785,7 @@
     "w.everminer.02a13716759b": {
       "type": "worker_anomaly",
       "baselineHR": 232800000000000,
-      "currentHR": 22517998136852.48,
+      "currentHR": 121346989959705.03,
       "worker": "02a13716759b",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -793,6 +793,18 @@
       "accountName": "Everminer",
       "anomalyType": "volatile",
       "detectedAt": "2026-07-14T20:31:18.827Z"
+    },
+    "w.everminer.e21xp026": {
+      "type": "worker_anomaly",
+      "baselineHR": 290700000000000,
+      "currentHR": 133856988924623.08,
+      "worker": "e21xp026",
+      "provider": "ValueHash (NY)",
+      "groupId": "U3",
+      "account": "everminer",
+      "accountName": "Everminer",
+      "anomalyType": "level_drop",
+      "detectedAt": "2026-07-15T02:31:08.031Z"
     }
   },
   "nogroup": {
@@ -1050,5 +1062,6 @@
   "w.cmine.c21xp001": "2026-07-13T22:31:13.322Z",
   "w.cmine.k2lx131x1x5": "2026-07-14T17:01:23.817Z",
   "cmine.E2": "2026-07-14T22:31:16.528Z",
-  "everminer.E2": "2026-07-14T22:31:16.528Z"
+  "everminer.E2": "2026-07-14T22:31:16.528Z",
+  "w.everminer.e21xp026": "2026-07-15T02:31:08.031Z"
 }

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-15T12:01:31.308Z",
+  "last_updated": "2026-07-15T12:31:18.712Z",
   "issues": {
     "cmine.r21037": {
       "account": "cmine",
@@ -8,11 +8,11 @@
       "group_id": "R1",
       "provider": "IZTM",
       "type": "level_drop",
-      "current_avg_ths": 59.1,
-      "baseline_avg_ths": 189.5,
-      "drop_pct": 69,
-      "cv_pct": 79,
-      "zero_rate_pct": 33
+      "current_avg_ths": 77.5,
+      "baseline_avg_ths": 180.9,
+      "drop_pct": 57,
+      "cv_pct": 53,
+      "zero_rate_pct": 17
     },
     "cmine.k2lx132x11x35": {
       "account": "cmine",
@@ -21,37 +21,11 @@
       "group_id": "R3",
       "provider": "Minto",
       "type": "level_drop",
-      "current_avg_ths": 162,
-      "baseline_avg_ths": 286,
-      "drop_pct": 43,
-      "cv_pct": 8,
+      "current_avg_ths": 150.6,
+      "baseline_avg_ths": 285.9,
+      "drop_pct": 47,
+      "cv_pct": 13,
       "zero_rate_pct": 0
-    },
-    "cmine.r00506": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "r00506",
-      "group_id": "R1",
-      "provider": "IZTM",
-      "type": "volatile",
-      "current_avg_ths": 140.3,
-      "baseline_avg_ths": 165.4,
-      "drop_pct": 15,
-      "cv_pct": 56,
-      "zero_rate_pct": 17
-    },
-    "cmine.r00511": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "r00511",
-      "group_id": "R1",
-      "provider": "IZTM",
-      "type": "volatile",
-      "current_avg_ths": 138.1,
-      "baseline_avg_ths": 185.5,
-      "drop_pct": 26,
-      "cv_pct": 60,
-      "zero_rate_pct": 17
     },
     "everminer.e21xp026": {
       "account": "everminer",
@@ -60,10 +34,10 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)",
       "type": "level_drop",
-      "current_avg_ths": 135.9,
+      "current_avg_ths": 136.8,
       "baseline_avg_ths": 302.7,
       "drop_pct": 55,
-      "cv_pct": 3,
+      "cv_pct": 2,
       "zero_rate_pct": 0
     },
     "cmine.02a34725b1b2": {
@@ -73,10 +47,10 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "type": "level_drop",
-      "current_avg_ths": 41.8,
-      "baseline_avg_ths": 102.1,
-      "drop_pct": 59,
-      "cv_pct": 5,
+      "current_avg_ths": 42.5,
+      "baseline_avg_ths": 101.2,
+      "drop_pct": 58,
+      "cv_pct": 8,
       "zero_rate_pct": 0
     }
   }

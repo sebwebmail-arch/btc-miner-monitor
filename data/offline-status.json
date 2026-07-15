@@ -1,13 +1,6 @@
 {
-  "last_updated": "2026-07-15T00:01:23.429Z",
+  "last_updated": "2026-07-15T00:31:08.575Z",
   "offline": {
-    "cmine.k2lx": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "k2lx",
-      "group_id": "R3",
-      "provider": "Minto"
-    },
     "cmine.c21xp031": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
@@ -112,7 +105,7 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-07-08T00:01:20.772Z"
     },
     "cmine.026": {
@@ -122,7 +115,7 @@
       "group_id": "E1",
       "provider": "BitCluster",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-07-08T00:01:20.772Z"
     },
     "cmine.029": {
@@ -132,7 +125,7 @@
       "group_id": "E1",
       "provider": "BitCluster",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-07-08T00:01:20.772Z"
     },
     "cmine.ynahfkabdajba01": {
@@ -142,7 +135,7 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-07-08T00:01:20.772Z"
     },
     "cmine.ngsbfmabdjiaj02": {
@@ -152,7 +145,7 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-07-08T00:01:20.772Z"
     },
     "cmine.ynahfkabdajbh02": {
@@ -162,7 +155,7 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-07-08T00:01:20.772Z"
     },
     "cmine.025": {
@@ -172,7 +165,7 @@
       "group_id": "E1",
       "provider": "BitCluster",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-07-08T00:01:20.772Z"
     },
     "cmine.ynahfkabdjiai08": {
@@ -182,7 +175,7 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-07-08T00:01:20.772Z"
     },
     "cmine.s21xp003": {
@@ -655,6 +648,16 @@
       "category": "dead_recent",
       "last_share": "2026-07-14T00:01:18.465Z"
     },
+    "cmine.k2lx": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx",
+      "group_id": "R3",
+      "provider": "Minto",
+      "dead": true,
+      "category": "offline",
+      "last_share": "2026-07-15T00:01:23.429Z"
+    },
     "everminer.dgahfkubdjfae04": {
       "account": "everminer",
       "account_name": "Everminer",
@@ -692,7 +695,7 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-07-08T00:01:20.772Z"
     },
     "everminer.016": {
@@ -702,7 +705,7 @@
       "group_id": "E1",
       "provider": "BitCluster",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-07-08T00:01:20.772Z"
     },
     "everminer.ynahfkabdjiai04": {
@@ -712,7 +715,7 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-07-08T00:01:20.772Z"
     },
     "everminer.dgahfkabdjfae04": {
@@ -722,7 +725,7 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-07-08T00:01:20.772Z"
     },
     "everminer.ynahfkabdajbh02": {
@@ -732,7 +735,7 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-07-08T00:01:20.772Z"
     },
     "everminer.021": {
@@ -742,7 +745,7 @@
       "group_id": "E1",
       "provider": "BitCluster",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-07-08T00:01:20.772Z"
     },
     "everminer.piemfmabdajcj01": {
@@ -752,7 +755,7 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-07-08T00:01:20.772Z"
     },
     "everminer.ngsbfmabdjiaj02": {
@@ -762,7 +765,7 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-07-08T00:01:20.772Z"
     },
     "everminer.olttfkabdjfje01": {
@@ -772,7 +775,7 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-07-08T00:01:20.772Z"
     },
     "everminer.ynahfkabdajbh01": {
@@ -782,7 +785,7 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-07-08T00:01:20.772Z"
     },
     "everminer.018": {
@@ -792,7 +795,7 @@
       "group_id": "E1",
       "provider": "BitCluster",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-07-08T00:01:20.772Z"
     },
     "everminer.k2lx131x5x19": {

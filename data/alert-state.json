@@ -237,7 +237,7 @@
     "w.cmine.02a34725b1b2": {
       "type": "worker_anomaly",
       "baselineHR": 136400000000000,
-      "currentHR": 42533996480721.35,
+      "currentHR": 41282996584229.55,
       "worker": "02a34725b1b2",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -297,7 +297,7 @@
     "w.everminer.e21xp026": {
       "type": "worker_anomaly",
       "baselineHR": 290700000000000,
-      "currentHR": 117593990270229.62,
+      "currentHR": 134482488872868.98,
       "worker": "e21xp026",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -306,22 +306,10 @@
       "anomalyType": "level_drop",
       "detectedAt": "2026-07-15T02:31:08.031Z"
     },
-    "w.cmine.r21037": {
-      "type": "worker_anomaly",
-      "baselineHR": 201400000000000,
-      "currentHR": 147305237811909.97,
-      "worker": "r21037",
-      "provider": "IZTM",
-      "groupId": "R1",
-      "account": "cmine",
-      "accountName": "Cyberian Mine",
-      "anomalyType": "volatile",
-      "detectedAt": "2026-07-15T09:31:12.145Z"
-    },
     "w.cmine.k2lx132x11x35": {
       "type": "worker_anomaly",
       "baselineHR": 286100000000000,
-      "currentHR": 110166178384809.53,
+      "currentHR": 165053798843387.44,
       "worker": "k2lx132x11x35",
       "provider": "Minto",
       "groupId": "R3",
@@ -329,16 +317,6 @@
       "accountName": "Cyberian Mine",
       "anomalyType": "level_drop",
       "detectedAt": "2026-07-15T11:01:21.835Z"
-    },
-    "g.cmine.R3": {
-      "type": "group_drop",
-      "baselineHR": 30607751858128252,
-      "currentHR": 20228208974747990,
-      "provider": "Minto",
-      "groupId": "R3",
-      "account": "cmine",
-      "accountName": "Cyberian Mine",
-      "detectedAt": "2026-07-15T12:31:18.712Z"
     }
   },
   "nogroup": {
@@ -421,14 +399,14 @@
   "w.cmine.k2lx132x10x43": "2026-07-10T03:31:00.581Z",
   "w.cmine.k2lx132x11x44": "2026-07-10T03:31:00.581Z",
   "w.cmine.k2lx131x2x33": "2026-07-10T03:31:00.581Z",
-  "w.cmine.k2lx132x11x41": "2026-07-10T03:31:00.581Z",
+  "w.cmine.k2lx132x11x41": "2026-07-15T14:01:32.751Z",
   "w.cmine.k2lx132x12x45": "2026-07-10T03:31:00.581Z",
   "w.cmine.k2lx132x10x30": "2026-07-10T03:31:00.581Z",
   "w.cmine.k2lx132x12x50": "2026-07-10T03:31:00.581Z",
   "w.cmine.k2lx131x2x38": "2026-07-10T03:31:00.581Z",
   "w.cmine.k2lx132x11x38": "2026-07-10T03:31:00.581Z",
   "w.cmine.k2lx132x12x30": "2026-07-10T03:31:00.581Z",
-  "w.cmine.k2lx132x12x33": "2026-07-10T03:31:00.581Z",
+  "w.cmine.k2lx132x12x33": "2026-07-15T14:01:32.751Z",
   "w.cmine.k2lx131x3x44": "2026-07-10T03:31:00.581Z",
   "w.cmine.k2lx132x10x35": "2026-07-10T03:31:00.581Z",
   "w.cmine.k2lx132x11x40": "2026-07-10T03:31:00.581Z",

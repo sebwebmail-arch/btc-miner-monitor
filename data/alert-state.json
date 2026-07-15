@@ -237,7 +237,7 @@
     "w.cmine.02a34725b1b2": {
       "type": "worker_anomaly",
       "baselineHR": 136400000000000,
-      "currentHR": 44410496325459.055,
+      "currentHR": 40970246610106.59,
       "worker": "02a34725b1b2",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -749,7 +749,7 @@
     "w.everminer.e21xp026": {
       "type": "worker_anomaly",
       "baselineHR": 290700000000000,
-      "currentHR": 130103989235147.66,
+      "currentHR": 136358988717606.69,
       "worker": "e21xp026",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -757,6 +757,42 @@
       "accountName": "Everminer",
       "anomalyType": "level_drop",
       "detectedAt": "2026-07-15T02:31:08.031Z"
+    },
+    "w.cmine.r21037": {
+      "type": "worker_anomaly",
+      "baselineHR": 201400000000000,
+      "currentHR": 1250999896491.8044,
+      "worker": "r21037",
+      "provider": "IZTM",
+      "groupId": "R1",
+      "account": "cmine",
+      "accountName": "Cyberian Mine",
+      "anomalyType": "volatile",
+      "detectedAt": "2026-07-15T09:31:12.145Z"
+    },
+    "w.cmine.r00506": {
+      "type": "worker_anomaly",
+      "baselineHR": 173200000000000,
+      "currentHR": 66302994514065.63,
+      "worker": "r00506",
+      "provider": "IZTM",
+      "groupId": "R1",
+      "account": "cmine",
+      "accountName": "Cyberian Mine",
+      "anomalyType": "volatile",
+      "detectedAt": "2026-07-15T09:31:12.145Z"
+    },
+    "w.cmine.r00511": {
+      "type": "worker_anomaly",
+      "baselineHR": 195500000000000,
+      "currentHR": 54105745523270.54,
+      "worker": "r00511",
+      "provider": "IZTM",
+      "groupId": "R1",
+      "account": "cmine",
+      "accountName": "Cyberian Mine",
+      "anomalyType": "volatile",
+      "detectedAt": "2026-07-15T09:31:12.145Z"
     }
   },
   "nogroup": {
@@ -1016,5 +1052,8 @@
   "cmine.E2": "2026-07-14T22:31:16.528Z",
   "everminer.E2": "2026-07-14T22:31:16.528Z",
   "w.everminer.e21xp026": "2026-07-15T02:31:08.031Z",
-  "w.cmine.r00413": "2026-07-15T08:01:18.828Z"
+  "w.cmine.r00413": "2026-07-15T08:01:18.828Z",
+  "w.cmine.r21037": "2026-07-15T09:31:12.145Z",
+  "w.cmine.r00506": "2026-07-15T09:31:12.145Z",
+  "w.cmine.r00511": "2026-07-15T09:31:12.145Z"
 }

@@ -237,7 +237,7 @@
     "w.cmine.02a34725b1b2": {
       "type": "worker_anomaly",
       "baselineHR": 136400000000000,
-      "currentHR": 41595746558352.5,
+      "currentHR": 40970246610106.59,
       "worker": "02a34725b1b2",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -297,7 +297,7 @@
     "w.cmine.k2lx132x11x35": {
       "type": "worker_anomaly",
       "baselineHR": 286100000000000,
-      "currentHR": 168582009488962,
+      "currentHR": 172335009178437.4,
       "worker": "k2lx132x11x35",
       "provider": "Minto",
       "groupId": "R3",
@@ -309,7 +309,7 @@
     "w.everminer.aa05": {
       "type": "worker_anomaly",
       "baselineHR": 222400000000000,
-      "currentHR": 12509998964918.045,
+      "currentHR": 5629499534213.12,
       "worker": "aa05",
       "provider": "AmityAge",
       "groupId": "E2",
@@ -333,7 +333,7 @@
     "g.cmine.E2": {
       "type": "group_drop",
       "baselineHR": 3233000732500319.5,
-      "currentHR": 1263509895456722.5,
+      "currentHR": 616117449022213.5,
       "provider": "AmityAge",
       "groupId": "E2",
       "account": "cmine",
@@ -343,7 +343,7 @@
     "g.everminer.E2": {
       "type": "group_drop",
       "baselineHR": 3040555248423331,
-      "currentHR": 1266011895249706,
+      "currentHR": 555131204068238.2,
       "provider": "AmityAge",
       "groupId": "E2",
       "account": "everminer",

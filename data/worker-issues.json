@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-16T03:01:27.661Z",
+  "last_updated": "2026-07-16T03:31:14.550Z",
   "issues": {
     "cmine.r21037": {
       "account": "cmine",
@@ -8,50 +8,11 @@
       "group_id": "R1",
       "provider": "IZTM",
       "type": "volatile",
-      "current_avg_ths": 38.6,
-      "baseline_avg_ths": 160.9,
-      "drop_pct": 76,
-      "cv_pct": 128,
+      "current_avg_ths": 20.7,
+      "baseline_avg_ths": 161.9,
+      "drop_pct": 87,
+      "cv_pct": 123,
       "zero_rate_pct": 50
-    },
-    "cmine.k2lx132x10x50": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "k2lx132x10x50",
-      "group_id": "R3",
-      "provider": "Minto",
-      "type": "level_drop",
-      "current_avg_ths": 100.4,
-      "baseline_avg_ths": 182.2,
-      "drop_pct": 45,
-      "cv_pct": 34,
-      "zero_rate_pct": 0
-    },
-    "cmine.k2lx131x2x41": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "k2lx131x2x41",
-      "group_id": "R3",
-      "provider": "Minto",
-      "type": "level_drop",
-      "current_avg_ths": 126.4,
-      "baseline_avg_ths": 211.5,
-      "drop_pct": 40,
-      "cv_pct": 35,
-      "zero_rate_pct": 0
-    },
-    "cmine.k2lx132x12x46": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "k2lx132x12x46",
-      "group_id": "R3",
-      "provider": "Minto",
-      "type": "level_drop",
-      "current_avg_ths": 168,
-      "baseline_avg_ths": 287,
-      "drop_pct": 41,
-      "cv_pct": 42,
-      "zero_rate_pct": 0
     },
     "cmine.k2lx132x11x35": {
       "account": "cmine",
@@ -60,10 +21,10 @@
       "group_id": "R3",
       "provider": "Minto",
       "type": "level_drop",
-      "current_avg_ths": 153.2,
-      "baseline_avg_ths": 281.2,
-      "drop_pct": 46,
-      "cv_pct": 23,
+      "current_avg_ths": 167.7,
+      "baseline_avg_ths": 280.6,
+      "drop_pct": 40,
+      "cv_pct": 19,
       "zero_rate_pct": 0
     },
     "everminer.aa05": {
@@ -73,10 +34,10 @@
       "group_id": "E2",
       "provider": "AmityAge",
       "type": "level_drop",
-      "current_avg_ths": 21.8,
+      "current_avg_ths": 20.4,
       "baseline_avg_ths": 243.2,
-      "drop_pct": 91,
-      "cv_pct": 25,
+      "drop_pct": 92,
+      "cv_pct": 31,
       "zero_rate_pct": 0
     },
     "cmine.02a34725b1b2": {
@@ -86,10 +47,10 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "type": "level_drop",
-      "current_avg_ths": 46,
-      "baseline_avg_ths": 84.7,
-      "drop_pct": 46,
-      "cv_pct": 4,
+      "current_avg_ths": 46.8,
+      "baseline_avg_ths": 83.6,
+      "drop_pct": 44,
+      "cv_pct": 5,
       "zero_rate_pct": 0
     }
   }

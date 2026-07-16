@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-15T05:01:19.563Z",
+  "last_updated": "2026-07-16T05:01:28.396Z",
   "snapshots": [
     {
       "ts": "2026-06-30T11:49:33.334Z",
@@ -437,8 +437,42 @@
       "dead_recent": 0,
       "dead_mid": 0,
       "dead_old": 0
+    },
+    {
+      "ts": "2026-07-16T05:01:28.396Z",
+      "by_account": {
+        "cmine": {
+          "name": "Cyberian Mine",
+          "total": 437,
+          "online": 437,
+          "offline": 0,
+          "dead": 0
+        },
+        "everminer": {
+          "name": "Everminer",
+          "total": 115,
+          "online": 114,
+          "offline": 1,
+          "dead": 0
+        }
+      },
+      "offline": 1,
+      "dead_recent": 0,
+      "dead_mid": 0,
+      "dead_old": 0
     }
   ],
   "workers": {},
-  "current_issues": {}
+  "current_issues": {
+    "everminer.02a13716759b": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "02a13716759b",
+      "group_id": "U1+U2",
+      "provider": "Dataprana",
+      "host": "64.186.136.18",
+      "last_share": "2026-07-16T00:29:47.000Z",
+      "category": "offline"
+    }
+  }
 }

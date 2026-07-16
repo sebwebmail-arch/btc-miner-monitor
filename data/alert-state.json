@@ -237,7 +237,7 @@
     "w.cmine.02a34725b1b2": {
       "type": "worker_anomaly",
       "baselineHR": 136400000000000,
-      "currentHR": 22517998136852.48,
+      "currentHR": 0,
       "worker": "02a34725b1b2",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -297,7 +297,7 @@
     "w.cmine.k2lx132x11x35": {
       "type": "worker_anomaly",
       "baselineHR": 286100000000000,
-      "currentHR": 174514485560606.72,
+      "currentHR": 179205735172451,
       "worker": "k2lx132x11x35",
       "provider": "Minto",
       "groupId": "R3",
@@ -321,7 +321,7 @@
     "w.cmine.r21041": {
       "type": "worker_anomaly",
       "baselineHR": 195100000000000,
-      "currentHR": 125725489597426.34,
+      "currentHR": 112589990684262.4,
       "worker": "r21041",
       "provider": "IZTM",
       "groupId": "R1",
@@ -333,7 +333,7 @@
     "w.cmine.r21037": {
       "type": "worker_anomaly",
       "baselineHR": 215000000000000,
-      "currentHR": 111964490736016.5,
+      "currentHR": 103832991408819.77,
       "worker": "r21037",
       "provider": "IZTM",
       "groupId": "R1",
@@ -357,7 +357,7 @@
     "w.cmine.s21xphyd0003": {
       "type": "worker_anomaly",
       "baselineHR": 416400000000000,
-      "currentHR": 281035172059545.6,
+      "currentHR": 202075577030191.78,
       "worker": "s21xphyd0003",
       "provider": "Altos",
       "groupId": "P1",
@@ -369,7 +369,7 @@
     "w.everminer.e21xp014": {
       "type": "worker_anomaly",
       "baselineHR": 413500000000000,
-      "currentHR": 142613988200065.72,
+      "currentHR": 145115987993049.3,
       "worker": "e21xp014",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -381,7 +381,7 @@
     "g.cmine.U1+U2": {
       "type": "group_drop",
       "baselineHR": 10016026421270260,
-      "currentHR": 4397264636168693,
+      "currentHR": 0,
       "provider": "Dataprana",
       "groupId": "U1+U2",
       "account": "cmine",
@@ -391,7 +391,7 @@
     "g.everminer.U1+U2": {
       "type": "group_drop",
       "baselineHR": 12214345989380482,
-      "currentHR": 7015607419526040,
+      "currentHR": 3054941747232986,
       "provider": "Dataprana",
       "groupId": "U1+U2",
       "account": "everminer",

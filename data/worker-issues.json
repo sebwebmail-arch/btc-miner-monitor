@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-16T15:01:09.882Z",
+  "last_updated": "2026-07-16T15:30:58.231Z",
   "issues": {
     "cmine.s21xphyd0002": {
       "account": "cmine",
@@ -7,11 +7,11 @@
       "worker": "s21xphyd0002",
       "group_id": "P1",
       "provider": "Altos",
-      "type": "level_drop",
-      "current_avg_ths": 260.7,
-      "baseline_avg_ths": 443.7,
-      "drop_pct": 41,
-      "cv_pct": 53,
+      "type": "volatile",
+      "current_avg_ths": 285.3,
+      "baseline_avg_ths": 449.8,
+      "drop_pct": 37,
+      "cv_pct": 56,
       "zero_rate_pct": 0
     },
     "cmine.r21037": {
@@ -34,11 +34,11 @@
       "group_id": "R1",
       "provider": "IZTM",
       "type": "volatile",
-      "current_avg_ths": 75.3,
-      "baseline_avg_ths": 186.2,
-      "drop_pct": 60,
-      "cv_pct": 112,
-      "zero_rate_pct": 50
+      "current_avg_ths": 42.5,
+      "baseline_avg_ths": 185.6,
+      "drop_pct": 77,
+      "cv_pct": 158,
+      "zero_rate_pct": 67
     }
   }
 }

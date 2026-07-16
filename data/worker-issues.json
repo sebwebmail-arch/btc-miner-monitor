@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-16T09:31:10.751Z",
+  "last_updated": "2026-07-16T10:01:23.491Z",
   "issues": {
     "cmine.r00307": {
       "account": "cmine",
@@ -8,24 +8,11 @@
       "group_id": "R1",
       "provider": "IZTM",
       "type": "volatile",
-      "current_avg_ths": 32.8,
-      "baseline_avg_ths": 189.9,
-      "drop_pct": 83,
-      "cv_pct": 130,
-      "zero_rate_pct": 50
-    },
-    "cmine.r21037": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "r21037",
-      "group_id": "R1",
-      "provider": "IZTM",
-      "type": "level_drop",
-      "current_avg_ths": 128.6,
-      "baseline_avg_ths": 215,
-      "drop_pct": 40,
-      "cv_pct": 12,
-      "zero_rate_pct": 0
+      "current_avg_ths": 18,
+      "baseline_avg_ths": 185.7,
+      "drop_pct": 90,
+      "cv_pct": 197,
+      "zero_rate_pct": 67
     },
     "cmine.k2lx132x11x35": {
       "account": "cmine",
@@ -34,7 +21,7 @@
       "group_id": "R3",
       "provider": "Minto",
       "type": "level_drop",
-      "current_avg_ths": 166.2,
+      "current_avg_ths": 165.4,
       "baseline_avg_ths": 277.9,
       "drop_pct": 40,
       "cv_pct": 6,
@@ -47,10 +34,10 @@
       "group_id": "P1",
       "provider": "Altos",
       "type": "volatile",
-      "current_avg_ths": 296.9,
-      "baseline_avg_ths": 457.7,
-      "drop_pct": 35,
-      "cv_pct": 61,
+      "current_avg_ths": 288.1,
+      "baseline_avg_ths": 458,
+      "drop_pct": 37,
+      "cv_pct": 60,
       "zero_rate_pct": 17
     },
     "everminer.aa05": {
@@ -60,23 +47,10 @@
       "group_id": "E2",
       "provider": "AmityAge",
       "type": "level_drop",
-      "current_avg_ths": 59.2,
+      "current_avg_ths": 91.3,
       "baseline_avg_ths": 241.6,
-      "drop_pct": 76,
-      "cv_pct": 69,
-      "zero_rate_pct": 0
-    },
-    "cmine.02a34725b1b2": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "02a34725b1b2",
-      "group_id": "U1+U2",
-      "provider": "Dataprana",
-      "type": "level_drop",
-      "current_avg_ths": 42.7,
-      "baseline_avg_ths": 71.3,
-      "drop_pct": 40,
-      "cv_pct": 10,
+      "drop_pct": 62,
+      "cv_pct": 79,
       "zero_rate_pct": 0
     }
   }

@@ -1,17 +1,10 @@
 {
-  "last_updated": "2026-07-17T01:01:03.960Z",
+  "last_updated": "2026-07-17T01:30:52.526Z",
   "offline": {
     "cmine.r21133": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
       "name": "r21133",
-      "group_id": "R1",
-      "provider": "IZTM"
-    },
-    "cmine.r00307": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "r00307",
       "group_id": "R1",
       "provider": "IZTM"
     },
@@ -21,6 +14,13 @@
       "name": "openfallback",
       "group_id": "OM",
       "provider": "Open Mine"
+    },
+    "cmine.r00307": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "r00307",
+      "group_id": "R1",
+      "provider": "IZTM"
     },
     "cmine.011": {
       "account": "cmine",

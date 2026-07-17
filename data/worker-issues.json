@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-17T17:30:57.752Z",
+  "last_updated": "2026-07-17T18:01:05.328Z",
   "issues": {
     "cmine.s21xp001": {
       "account": "cmine",
@@ -8,11 +8,24 @@
       "group_id": "P1",
       "provider": "Altos",
       "type": "level_drop",
-      "current_avg_ths": 276.3,
-      "baseline_avg_ths": 468.3,
-      "drop_pct": 41,
-      "cv_pct": 43,
+      "current_avg_ths": 223.3,
+      "baseline_avg_ths": 468.4,
+      "drop_pct": 52,
+      "cv_pct": 36,
       "zero_rate_pct": 0
+    },
+    "cmine.s21xphyd0002": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "worker": "s21xphyd0002",
+      "group_id": "P1",
+      "provider": "Altos",
+      "type": "level_drop",
+      "current_avg_ths": 232.8,
+      "baseline_avg_ths": 489.6,
+      "drop_pct": 52,
+      "cv_pct": 70,
+      "zero_rate_pct": 17
     },
     "cmine.s21xphyd006": {
       "account": "cmine",
@@ -21,10 +34,10 @@
       "group_id": "P1",
       "provider": "Altos",
       "type": "level_drop",
-      "current_avg_ths": 100.4,
-      "baseline_avg_ths": 426.8,
-      "drop_pct": 76,
-      "cv_pct": 31,
+      "current_avg_ths": 104.5,
+      "baseline_avg_ths": 414.2,
+      "drop_pct": 75,
+      "cv_pct": 32,
       "zero_rate_pct": 0
     },
     "cmine.s21xphyd007": {
@@ -34,10 +47,10 @@
       "group_id": "P1",
       "provider": "Altos",
       "type": "level_drop",
-      "current_avg_ths": 97.6,
+      "current_avg_ths": 100.9,
       "baseline_avg_ths": 531.4,
-      "drop_pct": 82,
-      "cv_pct": 63,
+      "drop_pct": 81,
+      "cv_pct": 58,
       "zero_rate_pct": 0
     },
     "cmine.s21hyd007": {
@@ -47,10 +60,10 @@
       "group_id": "P1",
       "provider": "Altos",
       "type": "level_drop",
-      "current_avg_ths": 200.1,
+      "current_avg_ths": 169.6,
       "baseline_avg_ths": 434.4,
-      "drop_pct": 54,
-      "cv_pct": 41,
+      "drop_pct": 61,
+      "cv_pct": 56,
       "zero_rate_pct": 0
     },
     "cmine.s21xphyd001": {
@@ -60,10 +73,10 @@
       "group_id": "P1",
       "provider": "Altos",
       "type": "level_drop",
-      "current_avg_ths": 257.5,
-      "baseline_avg_ths": 452.4,
-      "drop_pct": 43,
-      "cv_pct": 43,
+      "current_avg_ths": 213.9,
+      "baseline_avg_ths": 451.9,
+      "drop_pct": 53,
+      "cv_pct": 38,
       "zero_rate_pct": 0
     },
     "cmine.s21xphyd002": {
@@ -73,10 +86,10 @@
       "group_id": "P1",
       "provider": "Altos",
       "type": "level_drop",
-      "current_avg_ths": 64.5,
+      "current_avg_ths": 71.4,
       "baseline_avg_ths": 522.4,
-      "drop_pct": 88,
-      "cv_pct": 82,
+      "drop_pct": 86,
+      "cv_pct": 70,
       "zero_rate_pct": 0
     },
     "cmine.s21xphyd0004": {
@@ -86,10 +99,10 @@
       "group_id": "P1",
       "provider": "Altos",
       "type": "level_drop",
-      "current_avg_ths": 203.9,
-      "baseline_avg_ths": 475.8,
-      "drop_pct": 57,
-      "cv_pct": 31,
+      "current_avg_ths": 180.7,
+      "baseline_avg_ths": 466.9,
+      "drop_pct": 61,
+      "cv_pct": 30,
       "zero_rate_pct": 0
     },
     "cmine.s21xphyd0003": {
@@ -99,11 +112,11 @@
       "group_id": "P1",
       "provider": "Altos",
       "type": "level_drop",
-      "current_avg_ths": 106,
-      "baseline_avg_ths": 445.4,
-      "drop_pct": 76,
-      "cv_pct": 21,
-      "zero_rate_pct": 0
+      "current_avg_ths": 87,
+      "baseline_avg_ths": 444.1,
+      "drop_pct": 80,
+      "cv_pct": 51,
+      "zero_rate_pct": 17
     },
     "cmine.s21xp006": {
       "account": "cmine",
@@ -112,10 +125,10 @@
       "group_id": "P1",
       "provider": "Altos",
       "type": "level_drop",
-      "current_avg_ths": 134.5,
-      "baseline_avg_ths": 454.2,
-      "drop_pct": 70,
-      "cv_pct": 45,
+      "current_avg_ths": 122.4,
+      "baseline_avg_ths": 445.8,
+      "drop_pct": 73,
+      "cv_pct": 33,
       "zero_rate_pct": 0
     },
     "cmine.s21xphyd003": {
@@ -125,10 +138,10 @@
       "group_id": "P1",
       "provider": "Altos",
       "type": "level_drop",
-      "current_avg_ths": 115.9,
-      "baseline_avg_ths": 445.7,
-      "drop_pct": 74,
-      "cv_pct": 97,
+      "current_avg_ths": 98,
+      "baseline_avg_ths": 436.5,
+      "drop_pct": 78,
+      "cv_pct": 93,
       "zero_rate_pct": 17
     },
     "everminer.e21xp014": {
@@ -138,10 +151,23 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)",
       "type": "level_drop",
-      "current_avg_ths": 135.9,
+      "current_avg_ths": 134.3,
       "baseline_avg_ths": 401,
-      "drop_pct": 66,
-      "cv_pct": 7,
+      "drop_pct": 67,
+      "cv_pct": 8,
+      "zero_rate_pct": 0
+    },
+    "everminer.s21hyd004": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "worker": "s21hyd004",
+      "group_id": "P1",
+      "provider": "Altos",
+      "type": "volatile",
+      "current_avg_ths": 269,
+      "baseline_avg_ths": 372.5,
+      "drop_pct": 28,
+      "cv_pct": 55,
       "zero_rate_pct": 0
     },
     "everminer.s21hyd006": {
@@ -150,11 +176,11 @@
       "worker": "s21hyd006",
       "group_id": "P1",
       "provider": "Altos",
-      "type": "volatile",
-      "current_avg_ths": 253.2,
-      "baseline_avg_ths": 397.1,
-      "drop_pct": 36,
-      "cv_pct": 59,
+      "type": "level_drop",
+      "current_avg_ths": 212.5,
+      "baseline_avg_ths": 395.7,
+      "drop_pct": 46,
+      "cv_pct": 64,
       "zero_rate_pct": 0
     }
   }

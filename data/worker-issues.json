@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-17T09:30:55.465Z",
+  "last_updated": "2026-07-17T10:01:08.105Z",
   "issues": {
     "cmine.s21hyd007": {
       "account": "cmine",
@@ -8,10 +8,10 @@
       "group_id": "P1",
       "provider": "Altos",
       "type": "level_drop",
-      "current_avg_ths": 222.9,
-      "baseline_avg_ths": 398.3,
-      "drop_pct": 44,
-      "cv_pct": 33,
+      "current_avg_ths": 217.5,
+      "baseline_avg_ths": 396.1,
+      "drop_pct": 45,
+      "cv_pct": 29,
       "zero_rate_pct": 0
     },
     "cmine.r21037": {
@@ -21,10 +21,10 @@
       "group_id": "R1",
       "provider": "IZTM",
       "type": "level_drop",
-      "current_avg_ths": 110.6,
-      "baseline_avg_ths": 214.4,
-      "drop_pct": 48,
-      "cv_pct": 10,
+      "current_avg_ths": 104.1,
+      "baseline_avg_ths": 214.1,
+      "drop_pct": 51,
+      "cv_pct": 9,
       "zero_rate_pct": 0
     },
     "cmine.k2lx132x11x35": {
@@ -34,10 +34,10 @@
       "group_id": "R3",
       "provider": "Minto",
       "type": "level_drop",
-      "current_avg_ths": 129.3,
+      "current_avg_ths": 142,
       "baseline_avg_ths": 270.6,
-      "drop_pct": 52,
-      "cv_pct": 43,
+      "drop_pct": 48,
+      "cv_pct": 39,
       "zero_rate_pct": 0
     },
     "cmine.r21129": {
@@ -47,10 +47,10 @@
       "group_id": "R1",
       "provider": "IZTM",
       "type": "volatile",
-      "current_avg_ths": 103,
-      "baseline_avg_ths": 92.4,
-      "drop_pct": -11,
-      "cv_pct": 61,
+      "current_avg_ths": 112.2,
+      "baseline_avg_ths": 93.7,
+      "drop_pct": -20,
+      "cv_pct": 60,
       "zero_rate_pct": 0
     },
     "cmine.r21041": {
@@ -60,10 +60,10 @@
       "group_id": "R1",
       "provider": "IZTM",
       "type": "level_drop",
-      "current_avg_ths": 94.9,
+      "current_avg_ths": 79.5,
       "baseline_avg_ths": 194.5,
-      "drop_pct": 51,
-      "cv_pct": 39,
+      "drop_pct": 59,
+      "cv_pct": 49,
       "zero_rate_pct": 0
     },
     "everminer.e21xp014": {
@@ -73,10 +73,10 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)",
       "type": "level_drop",
-      "current_avg_ths": 134.5,
+      "current_avg_ths": 136.2,
       "baseline_avg_ths": 401,
       "drop_pct": 66,
-      "cv_pct": 6,
+      "cv_pct": 8,
       "zero_rate_pct": 0
     }
   }

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-17T06:30:55.188Z",
+  "last_updated": "2026-07-17T07:01:08.494Z",
   "issues": {
     "cmine.r21037": {
       "account": "cmine",
@@ -8,10 +8,23 @@
       "group_id": "R1",
       "provider": "IZTM",
       "type": "level_drop",
-      "current_avg_ths": 124.3,
+      "current_avg_ths": 125.5,
       "baseline_avg_ths": 214.5,
-      "drop_pct": 42,
+      "drop_pct": 41,
       "cv_pct": 9,
+      "zero_rate_pct": 0
+    },
+    "cmine.k2lx132x11x35": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "worker": "k2lx132x11x35",
+      "group_id": "R3",
+      "provider": "Minto",
+      "type": "level_drop",
+      "current_avg_ths": 157.7,
+      "baseline_avg_ths": 271.4,
+      "drop_pct": 42,
+      "cv_pct": 19,
       "zero_rate_pct": 0
     },
     "everminer.e21xp014": {
@@ -21,11 +34,24 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)",
       "type": "level_drop",
-      "current_avg_ths": 144.9,
+      "current_avg_ths": 144.7,
       "baseline_avg_ths": 401,
       "drop_pct": 64,
       "cv_pct": 8,
       "zero_rate_pct": 0
+    },
+    "everminer.02a13716759b": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "worker": "02a13716759b",
+      "group_id": "U1+U2",
+      "provider": "Dataprana",
+      "type": "volatile",
+      "current_avg_ths": 8.3,
+      "baseline_avg_ths": 264.4,
+      "drop_pct": 97,
+      "cv_pct": 224,
+      "zero_rate_pct": 83
     }
   }
 }

@@ -237,7 +237,7 @@
     "w.cmine.02a34725b1b2": {
       "type": "worker_anomaly",
       "baselineHR": 136400000000000,
-      "currentHR": 49101745937303.33,
+      "currentHR": 53792995549147.59,
       "worker": "02a34725b1b2",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -297,7 +297,7 @@
     "w.cmine.k2lx132x11x35": {
       "type": "worker_anomaly",
       "baselineHR": 286100000000000,
-      "currentHR": 172950735689991.97,
+      "currentHR": 164506486388672.28,
       "worker": "k2lx132x11x35",
       "provider": "Minto",
       "groupId": "R3",
@@ -321,7 +321,7 @@
     "w.cmine.r21041": {
       "type": "worker_anomaly",
       "baselineHR": 195100000000000,
-      "currentHR": 116968490321983.72,
+      "currentHR": 117593990270229.62,
       "worker": "r21041",
       "provider": "IZTM",
       "groupId": "R1",
@@ -333,7 +333,7 @@
     "w.cmine.r21037": {
       "type": "worker_anomaly",
       "baselineHR": 215000000000000,
-      "currentHR": 111964490736016.5,
+      "currentHR": 103832991408819.77,
       "worker": "r21037",
       "provider": "IZTM",
       "groupId": "R1",
@@ -341,18 +341,6 @@
       "accountName": "Cyberian Mine",
       "anomalyType": "level_drop",
       "detectedAt": "2026-07-16T12:31:12.929Z"
-    },
-    "w.cmine.r21133": {
-      "type": "worker_anomaly",
-      "baselineHR": 187400000000000,
-      "currentHR": 88039117715610.73,
-      "worker": "r21133",
-      "provider": "IZTM",
-      "groupId": "R1",
-      "account": "cmine",
-      "accountName": "Cyberian Mine",
-      "anomalyType": "level_drop",
-      "detectedAt": "2026-07-16T14:31:14.031Z"
     },
     "w.everminer.e21xp014": {
       "type": "worker_anomaly",
@@ -393,7 +381,7 @@
     "w.cmine.s21xphyd0003": {
       "type": "worker_anomaly",
       "baselineHR": 510000000000000,
-      "currentHR": 146660190990281.38,
+      "currentHR": 350162689777409.1,
       "worker": "s21xphyd0003",
       "provider": "Altos",
       "groupId": "P1",
@@ -672,7 +660,7 @@
   "w.cmine.k2lx131x2x13": "2026-07-15T19:31:12.148Z",
   "w.cmine.k2lx131x3x9": "2026-07-15T19:31:12.148Z",
   "w.cmine.r00307": "2026-07-16T08:01:23.671Z",
-  "w.cmine.r21133": "2026-07-16T14:31:14.031Z",
+  "w.cmine.r21133": "2026-07-17T03:01:04.203Z",
   "w.cmine.028d13f60d6f": "2026-07-16T19:30:49.810Z",
   "w.cmine.0281dd3eaa23": "2026-07-16T19:30:49.810Z",
   "w.cmine.02ab894b0d0c": "2026-07-16T19:30:49.810Z",

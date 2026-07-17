@@ -237,7 +237,7 @@
     "w.cmine.02a34725b1b2": {
       "type": "worker_anomaly",
       "baselineHR": 136400000000000,
-      "currentHR": 54731245471516.445,
+      "currentHR": 50039995859672.18,
       "worker": "02a34725b1b2",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -297,7 +297,7 @@
     "w.cmine.k2lx132x11x35": {
       "type": "worker_anomaly",
       "baselineHR": 286100000000000,
-      "currentHR": 173302579410880.28,
+      "currentHR": 171113329592019.62,
       "worker": "k2lx132x11x35",
       "provider": "Minto",
       "groupId": "R3",
@@ -321,7 +321,7 @@
     "w.cmine.r21041": {
       "type": "worker_anomaly",
       "baselineHR": 195100000000000,
-      "currentHR": 24394497981590.188,
+      "currentHR": 37217246920631.18,
       "worker": "r21041",
       "provider": "IZTM",
       "groupId": "R1",
@@ -333,7 +333,7 @@
     "w.cmine.r21037": {
       "type": "worker_anomaly",
       "baselineHR": 215000000000000,
-      "currentHR": 98828991822852.55,
+      "currentHR": 92261242366270.58,
       "worker": "r21037",
       "provider": "IZTM",
       "groupId": "R1",
@@ -345,7 +345,7 @@
     "w.everminer.e21xp014": {
       "type": "worker_anomaly",
       "baselineHR": 413500000000000,
-      "currentHR": 126350989545672.25,
+      "currentHR": 156374987061475.56,
       "worker": "e21xp014",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -365,18 +365,6 @@
       "accountName": "Cyberian Mine",
       "anomalyType": "volatile",
       "detectedAt": "2026-07-16T21:30:56.454Z"
-    },
-    "w.cmine.s21hyd007": {
-      "type": "worker_anomaly",
-      "baselineHR": 401000000000000,
-      "currentHR": 240827253511363.7,
-      "worker": "s21hyd007",
-      "provider": "Altos",
-      "groupId": "P1",
-      "account": "cmine",
-      "accountName": "Cyberian Mine",
-      "anomalyType": "level_drop",
-      "detectedAt": "2026-07-17T09:01:10.334Z"
     }
   },
   "nogroup": {
@@ -723,5 +711,6 @@
   "w.everminer.029b7d0b2bb3": "2026-07-16T20:01:00.088Z",
   "w.everminer.02bbcf69f88b": "2026-07-16T20:01:00.088Z",
   "w.cmine.openfallback": "2026-07-16T21:30:56.454Z",
-  "w.cmine.omxdefault": "2026-07-16T22:01:08.529Z"
+  "w.cmine.omxdefault": "2026-07-16T22:01:08.529Z",
+  "w.cmine.r21129": "2026-07-17T09:30:55.465Z"
 }

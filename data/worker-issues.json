@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-17T05:30:52.673Z",
+  "last_updated": "2026-07-17T06:01:05.924Z",
   "issues": {
     "cmine.r21037": {
       "account": "cmine",
@@ -8,7 +8,7 @@
       "group_id": "R1",
       "provider": "IZTM",
       "type": "level_drop",
-      "current_avg_ths": 119.7,
+      "current_avg_ths": 120.5,
       "baseline_avg_ths": 214.7,
       "drop_pct": 44,
       "cv_pct": 11,
@@ -21,10 +21,10 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)",
       "type": "level_drop",
-      "current_avg_ths": 144.7,
+      "current_avg_ths": 142.5,
       "baseline_avg_ths": 401,
       "drop_pct": 64,
-      "cv_pct": 6,
+      "cv_pct": 8,
       "zero_rate_pct": 0
     }
   }

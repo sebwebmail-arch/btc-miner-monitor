@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-18T09:01:03.080Z",
+  "last_updated": "2026-07-18T09:30:50.386Z",
   "issues": {
     "cmine.s21xp001": {
       "account": "cmine",
@@ -8,11 +8,11 @@
       "group_id": "P1",
       "provider": "Altos",
       "type": "volatile",
-      "current_avg_ths": 191.8,
-      "baseline_avg_ths": 445.8,
-      "drop_pct": 57,
-      "cv_pct": 110,
-      "zero_rate_pct": 50
+      "current_avg_ths": 110.5,
+      "baseline_avg_ths": 466.1,
+      "drop_pct": 76,
+      "cv_pct": 156,
+      "zero_rate_pct": 67
     },
     "cmine.s21xphyd006": {
       "account": "cmine",
@@ -21,10 +21,10 @@
       "group_id": "P1",
       "provider": "Altos",
       "type": "level_drop",
-      "current_avg_ths": 196.1,
-      "baseline_avg_ths": 443,
-      "drop_pct": 56,
-      "cv_pct": 72,
+      "current_avg_ths": 221.9,
+      "baseline_avg_ths": 450.3,
+      "drop_pct": 51,
+      "cv_pct": 67,
       "zero_rate_pct": 17
     },
     "cmine.s21xphyd007": {
@@ -34,10 +34,23 @@
       "group_id": "P1",
       "provider": "Altos",
       "type": "level_drop",
-      "current_avg_ths": 195.5,
+      "current_avg_ths": 175.5,
       "baseline_avg_ths": 524.7,
-      "drop_pct": 63,
-      "cv_pct": 69,
+      "drop_pct": 67,
+      "cv_pct": 86,
+      "zero_rate_pct": 0
+    },
+    "cmine.r21037": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "worker": "r21037",
+      "group_id": "R1",
+      "provider": "IZTM",
+      "type": "level_drop",
+      "current_avg_ths": 107.8,
+      "baseline_avg_ths": 211.3,
+      "drop_pct": 49,
+      "cv_pct": 10,
       "zero_rate_pct": 0
     },
     "cmine.r20230": {
@@ -47,10 +60,10 @@
       "group_id": "R1",
       "provider": "IZTM",
       "type": "level_drop",
-      "current_avg_ths": 84.4,
-      "baseline_avg_ths": 148.7,
-      "drop_pct": 43,
-      "cv_pct": 73,
+      "current_avg_ths": 81.9,
+      "baseline_avg_ths": 151.5,
+      "drop_pct": 46,
+      "cv_pct": 70,
       "zero_rate_pct": 0
     },
     "cmine.r20901": {
@@ -60,10 +73,10 @@
       "group_id": "R1",
       "provider": "IZTM",
       "type": "level_drop",
-      "current_avg_ths": 95.1,
-      "baseline_avg_ths": 238.3,
-      "drop_pct": 60,
-      "cv_pct": 60,
+      "current_avg_ths": 80.4,
+      "baseline_avg_ths": 235.9,
+      "drop_pct": 66,
+      "cv_pct": 46,
       "zero_rate_pct": 0
     },
     "everminer.e21xp014": {
@@ -73,10 +86,10 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)",
       "type": "level_drop",
-      "current_avg_ths": 149,
+      "current_avg_ths": 150.2,
       "baseline_avg_ths": 401,
       "drop_pct": 63,
-      "cv_pct": 11,
+      "cv_pct": 10,
       "zero_rate_pct": 0
     }
   }

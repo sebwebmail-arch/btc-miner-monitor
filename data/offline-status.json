@@ -1,17 +1,17 @@
 {
-  "last_updated": "2026-07-18T18:01:03.569Z",
+  "last_updated": "2026-07-18T18:30:52.683Z",
   "offline": {
+    "cmine.r00401": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "r00401",
+      "group_id": "R1",
+      "provider": "IZTM"
+    },
     "cmine.s21hyd005": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
       "name": "s21hyd005",
-      "group_id": "P1",
-      "provider": "Altos"
-    },
-    "cmine.s21xp001": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "s21xp001",
       "group_id": "P1",
       "provider": "Altos"
     },
@@ -29,24 +29,17 @@
       "group_id": "P1",
       "provider": "Altos"
     },
-    "cmine.r00401": {
+    "cmine.s21xp001": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
-      "name": "r00401",
-      "group_id": "R1",
-      "provider": "IZTM"
+      "name": "s21xp001",
+      "group_id": "P1",
+      "provider": "Altos"
     },
     "cmine.s21hyd010": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
       "name": "s21hyd010",
-      "group_id": "P1",
-      "provider": "Altos"
-    },
-    "cmine.s21xphyd0004": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "s21xphyd0004",
       "group_id": "P1",
       "provider": "Altos"
     },

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-18T00:01:08.988Z",
+  "last_updated": "2026-07-18T00:30:52.642Z",
   "ghosts": {
     "cmine.011": {
       "account": "cmine",
@@ -558,6 +558,24 @@
       "provider": "Minto",
       "lastSnapIso": "2026-07-15T00:01:23.429Z",
       "detectedAt": "2026-07-15T00:31:08.575Z"
+    },
+    "cmine.r00307": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "r00307",
+      "groupId": "R1",
+      "provider": "IZTM",
+      "lastSnapIso": "2026-07-18T00:01:08.988Z",
+      "detectedAt": "2026-07-18T00:30:52.642Z"
+    },
+    "cmine.openfallback": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "openfallback",
+      "groupId": "OM",
+      "provider": "Open Mine",
+      "lastSnapIso": "2026-07-18T00:01:08.988Z",
+      "detectedAt": "2026-07-18T00:30:52.642Z"
     }
   }
 }

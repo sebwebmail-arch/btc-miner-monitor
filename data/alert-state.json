@@ -12,7 +12,7 @@
   "w.cmine.ynahfkabdajbh01": "2026-06-30T22:01:00.027Z",
   "w.cmine.s21xphyd001": "2026-07-19T15:31:00.805Z",
   "w.cmine.s21hyd008": "2026-07-19T20:01:01.163Z",
-  "w.cmine.s21hyd009": "2026-07-19T12:01:02.078Z",
+  "w.cmine.s21hyd009": "2026-07-19T20:30:51.772Z",
   "w.cmine.s21hyd002": "2026-07-19T12:30:52.069Z",
   "w.cmine.r20333": "2026-06-30T22:01:00.027Z",
   "w.cmine.ynahfkabdajba01": "2026-06-30T22:01:00.027Z",
@@ -237,7 +237,7 @@
     "w.cmine.02a34725b1b2": {
       "type": "worker_anomaly",
       "baselineHR": 136400000000000,
-      "currentHR": 38155496843000.04,
+      "currentHR": 43472246403090.2,
       "worker": "02a34725b1b2",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -297,7 +297,7 @@
     "w.cmine.k2lx132x11x35": {
       "type": "worker_anomaly",
       "baselineHR": 286100000000000,
-      "currentHR": 191090234189123.12,
+      "currentHR": 174827235534729.66,
       "worker": "k2lx132x11x35",
       "provider": "Minto",
       "groupId": "R3",
@@ -321,7 +321,7 @@
     "w.everminer.e21xp014": {
       "type": "worker_anomaly",
       "baselineHR": 413500000000000,
-      "currentHR": 123848989752688.64,
+      "currentHR": 116342990373737.81,
       "worker": "e21xp014",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -477,7 +477,7 @@
     "w.cmine.s21xphyd002": {
       "type": "worker_anomaly",
       "baselineHR": 513400000000000,
-      "currentHR": 0,
+      "currentHR": 163460728662698.66,
       "worker": "s21xphyd002",
       "provider": "Altos",
       "groupId": "P1",
@@ -513,7 +513,7 @@
     "w.cmine.s21xphyd003": {
       "type": "worker_anomaly",
       "baselineHR": 529299999999999.94,
-      "currentHR": 0,
+      "currentHR": 177554024371614.16,
       "worker": "s21xphyd003",
       "provider": "Altos",
       "groupId": "P1",
@@ -525,7 +525,7 @@
     "w.everminer.s21hyd004": {
       "type": "worker_anomaly",
       "baselineHR": 399400000000000,
-      "currentHR": 78627298181848.17,
+      "currentHR": 140239043084069.55,
       "worker": "s21hyd004",
       "provider": "Altos",
       "groupId": "P1",
@@ -537,7 +537,7 @@
     "w.everminer.s21hyd007": {
       "type": "worker_anomaly",
       "baselineHR": 390800000000000,
-      "currentHR": 221769051963246.38,
+      "currentHR": 155123987164983.75,
       "worker": "s21hyd007",
       "provider": "Altos",
       "groupId": "P1",
@@ -549,7 +549,7 @@
     "w.cmine.r21041": {
       "type": "worker_anomaly",
       "baselineHR": 192700000000000,
-      "currentHR": 135107988821114.88,
+      "currentHR": 115717490425491.9,
       "worker": "r21041",
       "provider": "IZTM",
       "groupId": "R1",
@@ -573,7 +573,7 @@
     "w.cmine.s21xphyd0002": {
       "type": "worker_anomaly",
       "baselineHR": 489500000000000,
-      "currentHR": 219550481834311.7,
+      "currentHR": 276040945910269.72,
       "worker": "s21xphyd0002",
       "provider": "Altos",
       "groupId": "P1",
@@ -585,7 +585,7 @@
     "w.cmine.s21xphyd0003": {
       "type": "worker_anomaly",
       "baselineHR": 471400000000000,
-      "currentHR": 90805000299260.6,
+      "currentHR": 101164843192083.34,
       "worker": "s21xphyd0003",
       "provider": "Altos",
       "groupId": "P1",
@@ -609,7 +609,7 @@
     "w.cmine.s21hyd008": {
       "type": "worker_anomaly",
       "baselineHR": 398700000000000,
-      "currentHR": 82380297871323.6,
+      "currentHR": 165571790988028.6,
       "worker": "s21hyd008",
       "provider": "Altos",
       "groupId": "P1",
@@ -621,7 +621,7 @@
     "w.cmine.s21hyd011": {
       "type": "worker_anomaly",
       "baselineHR": 396600000000000,
-      "currentHR": 82048001023817.95,
+      "currentHR": 136779246495334.4,
       "worker": "s21hyd011",
       "provider": "Altos",
       "groupId": "P1",
@@ -633,7 +633,7 @@
     "w.everminer.s21hyd003": {
       "type": "worker_anomaly",
       "baselineHR": 428400000000000,
-      "currentHR": 69166611464628.91,
+      "currentHR": 156111104270809.3,
       "worker": "s21hyd003",
       "provider": "Altos",
       "groupId": "P1",
@@ -641,6 +641,18 @@
       "accountName": "Everminer",
       "anomalyType": "level_drop",
       "detectedAt": "2026-07-19T20:01:01.163Z"
+    },
+    "w.cmine.s21hyd009": {
+      "type": "worker_anomaly",
+      "baselineHR": 391000000000000,
+      "currentHR": 187747718840684.1,
+      "worker": "s21hyd009",
+      "provider": "Altos",
+      "groupId": "P1",
+      "account": "cmine",
+      "accountName": "Cyberian Mine",
+      "anomalyType": "level_drop",
+      "detectedAt": "2026-07-19T20:30:51.772Z"
     }
   },
   "nogroup": {

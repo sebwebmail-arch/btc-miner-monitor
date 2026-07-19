@@ -237,7 +237,7 @@
     "w.cmine.02a34725b1b2": {
       "type": "worker_anomaly",
       "baselineHR": 136400000000000,
-      "currentHR": 48163496014934.47,
+      "currentHR": 43784996377213.16,
       "worker": "02a34725b1b2",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -297,7 +297,7 @@
     "w.cmine.k2lx132x11x35": {
       "type": "worker_anomaly",
       "baselineHR": 286100000000000,
-      "currentHR": 188275484422016.56,
+      "currentHR": 193592233982106.75,
       "worker": "k2lx132x11x35",
       "provider": "Minto",
       "groupId": "R3",
@@ -321,7 +321,7 @@
     "w.everminer.e21xp014": {
       "type": "worker_anomaly",
       "baselineHR": 413500000000000,
-      "currentHR": 103832991408819.77,
+      "currentHR": 125099989649180.44,
       "worker": "e21xp014",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -393,7 +393,7 @@
     "w.cmine.r21041": {
       "type": "worker_anomaly",
       "baselineHR": 185800000000000,
-      "currentHR": 111964490736016.5,
+      "currentHR": 113840990580754.2,
       "worker": "r21041",
       "provider": "IZTM",
       "groupId": "R1",
@@ -405,7 +405,7 @@
     "w.cmine.s21xp001": {
       "type": "worker_anomaly",
       "baselineHR": 435100000000000,
-      "currentHR": 8414928991245.653,
+      "currentHR": 0,
       "worker": "s21xp001",
       "provider": "Altos",
       "groupId": "P1",
@@ -417,7 +417,7 @@
     "w.cmine.s21xphyd007": {
       "type": "worker_anomaly",
       "baselineHR": 524000000000000,
-      "currentHR": 7603733745864.249,
+      "currentHR": 0,
       "worker": "s21xphyd007",
       "provider": "Altos",
       "groupId": "P1",
@@ -429,7 +429,7 @@
     "w.cmine.s21xphyd001": {
       "type": "worker_anomaly",
       "baselineHR": 462500000000000,
-      "currentHR": 9656155451046.115,
+      "currentHR": 0,
       "worker": "s21xphyd001",
       "provider": "Altos",
       "groupId": "P1",
@@ -441,7 +441,7 @@
     "w.cmine.s21xphyd006": {
       "type": "worker_anomaly",
       "baselineHR": 523700000000000.06,
-      "currentHR": 4319859017573.262,
+      "currentHR": 0,
       "worker": "s21xphyd006",
       "provider": "Altos",
       "groupId": "P1",
@@ -473,114 +473,6 @@
       "accountName": "Everminer",
       "anomalyType": "volatile",
       "detectedAt": "2026-07-18T20:01:04.328Z"
-    },
-    "w.cmine.s21hyd008": {
-      "type": "worker_anomaly",
-      "baselineHR": 337700000000000,
-      "currentHR": 172041806077697.12,
-      "worker": "s21hyd008",
-      "provider": "Altos",
-      "groupId": "P1",
-      "account": "cmine",
-      "accountName": "Cyberian Mine",
-      "anomalyType": "volatile",
-      "detectedAt": "2026-07-19T03:30:50.449Z"
-    },
-    "w.cmine.s21hyd009": {
-      "type": "worker_anomaly",
-      "baselineHR": 351500000000000,
-      "currentHR": 202945412895721.25,
-      "worker": "s21hyd009",
-      "provider": "Altos",
-      "groupId": "P1",
-      "account": "cmine",
-      "accountName": "Cyberian Mine",
-      "anomalyType": "volatile",
-      "detectedAt": "2026-07-19T03:30:50.449Z"
-    },
-    "w.cmine.s21hyd002": {
-      "type": "worker_anomaly",
-      "baselineHR": 350900000000000,
-      "currentHR": 178707289901192.53,
-      "worker": "s21hyd002",
-      "provider": "Altos",
-      "groupId": "P1",
-      "account": "cmine",
-      "accountName": "Cyberian Mine",
-      "anomalyType": "volatile",
-      "detectedAt": "2026-07-19T03:30:50.449Z"
-    },
-    "w.cmine.s21hyd003": {
-      "type": "worker_anomaly",
-      "baselineHR": 385300000000000,
-      "currentHR": 163470502099390,
-      "worker": "s21hyd003",
-      "provider": "Altos",
-      "groupId": "P1",
-      "account": "cmine",
-      "accountName": "Cyberian Mine",
-      "anomalyType": "volatile",
-      "detectedAt": "2026-07-19T03:30:50.449Z"
-    },
-    "w.cmine.s21hyd011": {
-      "type": "worker_anomaly",
-      "baselineHR": 373200000000000,
-      "currentHR": 193944077702995.06,
-      "worker": "s21hyd011",
-      "provider": "Altos",
-      "groupId": "P1",
-      "account": "cmine",
-      "accountName": "Cyberian Mine",
-      "anomalyType": "level_drop",
-      "detectedAt": "2026-07-19T03:30:50.449Z"
-    },
-    "w.everminer.s21hyd005": {
-      "type": "worker_anomaly",
-      "baselineHR": 382400000000000,
-      "currentHR": 215162208759899.03,
-      "worker": "s21hyd005",
-      "provider": "Altos",
-      "groupId": "P1",
-      "account": "everminer",
-      "accountName": "Everminer",
-      "anomalyType": "volatile",
-      "detectedAt": "2026-07-19T03:30:50.449Z"
-    },
-    "w.everminer.s21hyd003": {
-      "type": "worker_anomaly",
-      "baselineHR": 385900000000000,
-      "currentHR": 208936529587514.03,
-      "worker": "s21hyd003",
-      "provider": "Altos",
-      "groupId": "P1",
-      "account": "everminer",
-      "accountName": "Everminer",
-      "anomalyType": "volatile",
-      "detectedAt": "2026-07-19T03:30:50.449Z"
-    },
-    "w.everminer.s21hyd008": {
-      "type": "worker_anomaly",
-      "baselineHR": 384400000000000,
-      "currentHR": 210871670052399.78,
-      "worker": "s21hyd008",
-      "provider": "Altos",
-      "groupId": "P1",
-      "account": "everminer",
-      "accountName": "Everminer",
-      "anomalyType": "volatile",
-      "detectedAt": "2026-07-19T03:30:50.449Z"
-    },
-    "w.everminer.s21hyd004": {
-      "type": "worker_anomaly",
-      "baselineHR": 348300000000000,
-      "currentHR": 230711746535824.5,
-      "worker": "s21hyd004",
-      "provider": "Altos",
-      "groupId": "P1",
-      "account": "everminer",
-      "accountName": "Everminer",
-      "anomalyType": "volatile",
-      "detectedAt": "2026-07-19T03:30:50.449Z"
     }
   },
   "nogroup": {
@@ -619,7 +511,7 @@
   "w.cmine.021741ace2c4": "2026-07-17T19:30:58.717Z",
   "w.everminer.e21xp024": "2026-07-13T01:31:11.397Z",
   "w.everminer.e21xp019": "2026-07-13T05:01:15.817Z",
-  "w.everminer.e21xp014": "2026-07-18T19:30:51.744Z",
+  "w.everminer.e21xp014": "2026-07-19T04:01:02.791Z",
   "w.everminer.e21xp013": "2026-07-13T01:01:18.865Z",
   "w.everminer.e21xp027": "2026-07-13T01:31:11.397Z",
   "w.everminer.e21xp012": "2026-07-13T00:31:12.006Z",

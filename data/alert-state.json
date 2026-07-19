@@ -10,7 +10,7 @@
   "w.cmine.s21xphyd006": "2026-07-19T02:30:50.193Z",
   "w.cmine.s21xphyd007": "2026-07-19T00:01:10.068Z",
   "w.cmine.ynahfkabdajbh01": "2026-06-30T22:01:00.027Z",
-  "w.cmine.s21xphyd001": "2026-07-18T14:30:48.363Z",
+  "w.cmine.s21xphyd001": "2026-07-19T07:30:52.326Z",
   "w.cmine.s21hyd008": "2026-07-19T03:30:50.449Z",
   "w.cmine.s21hyd009": "2026-07-19T03:30:50.449Z",
   "w.cmine.s21hyd002": "2026-07-19T03:30:50.449Z",
@@ -19,7 +19,7 @@
   "w.cmine.ngsbfmabdjiaj02": "2026-06-30T22:01:00.027Z",
   "w.cmine.s21hyd006": "2026-07-19T06:01:12.379Z",
   "w.cmine.s21xphyd002": "2026-07-19T01:00:58.243Z",
-  "w.cmine.s21xphyd0004": "2026-07-18T14:30:48.363Z",
+  "w.cmine.s21xphyd0004": "2026-07-19T07:30:52.326Z",
   "w.cmine.s21hyd001": "2026-07-19T05:00:58.537Z",
   "w.cmine.s21hyd003": "2026-07-19T03:30:50.449Z",
   "w.cmine.s21xp006": "2026-07-18T12:30:52.192Z",
@@ -237,7 +237,7 @@
     "w.cmine.02a34725b1b2": {
       "type": "worker_anomaly",
       "baselineHR": 136400000000000,
-      "currentHR": 47850746040811.52,
+      "currentHR": 44097746351336.11,
       "worker": "02a34725b1b2",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -297,7 +297,7 @@
     "w.cmine.k2lx132x11x35": {
       "type": "worker_anomaly",
       "baselineHR": 286100000000000,
-      "currentHR": 142301238225942.75,
+      "currentHR": 168572236052270.66,
       "worker": "k2lx132x11x35",
       "provider": "Minto",
       "groupId": "R3",
@@ -321,7 +321,7 @@
     "w.everminer.e21xp014": {
       "type": "worker_anomaly",
       "baselineHR": 413500000000000,
-      "currentHR": 125725489597426.34,
+      "currentHR": 122597989856196.83,
       "worker": "e21xp014",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -393,7 +393,7 @@
     "w.cmine.r21041": {
       "type": "worker_anomaly",
       "baselineHR": 185800000000000,
-      "currentHR": 111964490736016.5,
+      "currentHR": 120721490011459.12,
       "worker": "r21041",
       "provider": "IZTM",
       "groupId": "R1",
@@ -405,7 +405,7 @@
     "w.cmine.s21xp001": {
       "type": "worker_anomaly",
       "baselineHR": 435100000000000,
-      "currentHR": 210001834186870.34,
+      "currentHR": 267547829425493.34,
       "worker": "s21xp001",
       "provider": "Altos",
       "groupId": "P1",
@@ -417,7 +417,7 @@
     "w.cmine.s21xphyd007": {
       "type": "worker_anomaly",
       "baselineHR": 524000000000000,
-      "currentHR": 217869450723400.8,
+      "currentHR": 250952533923594.25,
       "worker": "s21xphyd007",
       "provider": "Altos",
       "groupId": "P1",
@@ -429,7 +429,7 @@
     "w.cmine.s21xphyd001": {
       "type": "worker_anomaly",
       "baselineHR": 462500000000000,
-      "currentHR": 230838801212811.94,
+      "currentHR": 288384796451434.94,
       "worker": "s21xphyd001",
       "provider": "Altos",
       "groupId": "P1",
@@ -441,7 +441,7 @@
     "w.cmine.s21xphyd006": {
       "type": "worker_anomaly",
       "baselineHR": 523700000000000.06,
-      "currentHR": 211594904367559.12,
+      "currentHR": 286654898157067.4,
       "worker": "s21xphyd006",
       "provider": "Altos",
       "groupId": "P1",
@@ -477,7 +477,7 @@
     "w.cmine.r21037": {
       "type": "worker_anomaly",
       "baselineHR": 172800000000000,
-      "currentHR": 94919617146315.66,
+      "currentHR": 96483367016930.42,
       "worker": "r21037",
       "provider": "IZTM",
       "groupId": "R1",
@@ -489,7 +489,7 @@
     "w.cmine.s21hyd006": {
       "type": "worker_anomaly",
       "baselineHR": 374300000000000,
-      "currentHR": 5003999585967.218,
+      "currentHR": 117623310580303.64,
       "worker": "s21hyd006",
       "provider": "Altos",
       "groupId": "P1",
@@ -497,6 +497,18 @@
       "accountName": "Cyberian Mine",
       "anomalyType": "volatile",
       "detectedAt": "2026-07-19T06:01:12.379Z"
+    },
+    "w.cmine.s21xphyd0004": {
+      "type": "worker_anomaly",
+      "baselineHR": 517000000000000,
+      "currentHR": 279637570612683.66,
+      "worker": "s21xphyd0004",
+      "provider": "Altos",
+      "groupId": "P1",
+      "account": "cmine",
+      "accountName": "Cyberian Mine",
+      "anomalyType": "volatile",
+      "detectedAt": "2026-07-19T07:30:52.326Z"
     }
   },
   "nogroup": {

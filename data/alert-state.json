@@ -237,7 +237,7 @@
     "w.cmine.02a34725b1b2": {
       "type": "worker_anomaly",
       "baselineHR": 136400000000000,
-      "currentHR": 40344746661860.695,
+      "currentHR": 47225246092565.62,
       "worker": "02a34725b1b2",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -297,7 +297,7 @@
     "w.cmine.k2lx132x11x35": {
       "type": "worker_anomaly",
       "baselineHR": 286100000000000,
-      "currentHR": 166695736207532.94,
+      "currentHR": 178580235224205.1,
       "worker": "k2lx132x11x35",
       "provider": "Minto",
       "groupId": "R3",
@@ -321,7 +321,7 @@
     "w.everminer.e21xp014": {
       "type": "worker_anomaly",
       "baselineHR": 413500000000000,
-      "currentHR": 126976489493918.16,
+      "currentHR": 128227489390409.95,
       "worker": "e21xp014",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -393,7 +393,7 @@
     "w.cmine.r21041": {
       "type": "worker_anomaly",
       "baselineHR": 185800000000000,
-      "currentHR": 107585991098295.19,
+      "currentHR": 126350989545672.25,
       "worker": "r21041",
       "provider": "IZTM",
       "groupId": "R1",
@@ -473,30 +473,6 @@
       "accountName": "Everminer",
       "anomalyType": "volatile",
       "detectedAt": "2026-07-18T20:01:04.328Z"
-    },
-    "w.cmine.s21hyd001": {
-      "type": "worker_anomaly",
-      "baselineHR": 334800000000000,
-      "currentHR": 241110683175412.62,
-      "worker": "s21hyd001",
-      "provider": "Altos",
-      "groupId": "P1",
-      "account": "cmine",
-      "accountName": "Cyberian Mine",
-      "anomalyType": "level_drop",
-      "detectedAt": "2026-07-19T05:00:58.537Z"
-    },
-    "w.everminer.s21hyd001": {
-      "type": "worker_anomaly",
-      "baselineHR": 362800000000000,
-      "currentHR": 202143991087031.2,
-      "worker": "s21hyd001",
-      "provider": "Altos",
-      "groupId": "P1",
-      "account": "everminer",
-      "accountName": "Everminer",
-      "anomalyType": "level_drop",
-      "detectedAt": "2026-07-19T05:00:58.537Z"
     }
   },
   "nogroup": {

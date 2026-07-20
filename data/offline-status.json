@@ -1,10 +1,10 @@
 {
-  "last_updated": "2026-07-20T16:01:00.086Z",
+  "last_updated": "2026-07-20T16:30:56.068Z",
   "offline": {
-    "cmine.s21hyd001": {
+    "cmine.s21xphyd0004": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
-      "name": "s21hyd001",
+      "name": "s21xphyd0004",
       "group_id": "P1",
       "provider": "Altos"
     },
@@ -15,6 +15,13 @@
       "group_id": "P1",
       "provider": "Altos"
     },
+    "cmine.s21hyd003": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21hyd003",
+      "group_id": "P1",
+      "provider": "Altos"
+    },
     "cmine.s21xphyd007": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
@@ -22,10 +29,45 @@
       "group_id": "P1",
       "provider": "Altos"
     },
-    "cmine.s21xp006": {
+    "cmine.s21hyd011": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
-      "name": "s21xp006",
+      "name": "s21hyd011",
+      "group_id": "P1",
+      "provider": "Altos"
+    },
+    "cmine.k2lx132x9x42": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x9x42",
+      "group_id": "R3",
+      "provider": "Minto"
+    },
+    "cmine.s21hyd001": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21hyd001",
+      "group_id": "P1",
+      "provider": "Altos"
+    },
+    "cmine.s21xphyd001": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21xphyd001",
+      "group_id": "P1",
+      "provider": "Altos"
+    },
+    "cmine.s21xphyd003": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21xphyd003",
+      "group_id": "P1",
+      "provider": "Altos"
+    },
+    "cmine.s21xphyd006": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21xphyd006",
       "group_id": "P1",
       "provider": "Altos"
     },
@@ -43,17 +85,17 @@
       "group_id": "P1",
       "provider": "Altos"
     },
-    "cmine.s21xphyd006": {
+    "cmine.s21hyd009": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
-      "name": "s21xphyd006",
+      "name": "s21hyd009",
       "group_id": "P1",
       "provider": "Altos"
     },
-    "cmine.s21xphyd003": {
+    "cmine.s21xp006": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
-      "name": "s21xphyd003",
+      "name": "s21xp006",
       "group_id": "P1",
       "provider": "Altos"
     },
@@ -61,13 +103,6 @@
       "account": "cmine",
       "account_name": "Cyberian Mine",
       "name": "s21hyd008",
-      "group_id": "P1",
-      "provider": "Altos"
-    },
-    "cmine.s21xphyd001": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "s21xphyd001",
       "group_id": "P1",
       "provider": "Altos"
     },
@@ -85,48 +120,6 @@
       "group_id": "P1",
       "provider": "Altos"
     },
-    "cmine.s21hyd003": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "s21hyd003",
-      "group_id": "P1",
-      "provider": "Altos"
-    },
-    "cmine.k2lx132x9x42": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "k2lx132x9x42",
-      "group_id": "R3",
-      "provider": "Minto"
-    },
-    "cmine.s21hyd009": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "s21hyd009",
-      "group_id": "P1",
-      "provider": "Altos"
-    },
-    "cmine.s21hyd011": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "s21hyd011",
-      "group_id": "P1",
-      "provider": "Altos"
-    },
-    "cmine.s21xphyd0004": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "s21xphyd0004",
-      "group_id": "P1",
-      "provider": "Altos"
-    },
-    "everminer.e21xp016": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "e21xp016",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)"
-    },
     "everminer.e21xp026": {
       "account": "everminer",
       "account_name": "Everminer",
@@ -134,31 +127,17 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)"
     },
-    "everminer.e21xp018": {
+    "everminer.e21xp023": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "e21xp018",
+      "name": "e21xp023",
       "group_id": "U3",
       "provider": "ValueHash (NY)"
     },
-    "everminer.e21xp028": {
+    "everminer.e21xp031": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "e21xp028",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)"
-    },
-    "everminer.s21hyd003": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "s21hyd003",
-      "group_id": "P1",
-      "provider": "Altos"
-    },
-    "everminer.e21xp015": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "e21xp015",
+      "name": "e21xp031",
       "group_id": "U3",
       "provider": "ValueHash (NY)"
     },
@@ -176,66 +155,10 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)"
     },
-    "everminer.s21hyd007": {
+    "everminer.e21xp025": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "s21hyd007",
-      "group_id": "P1",
-      "provider": "Altos"
-    },
-    "everminer.e21xp024": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "e21xp024",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)"
-    },
-    "everminer.e21xp014": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "e21xp014",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)"
-    },
-    "everminer.s21hyd005": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "s21hyd005",
-      "group_id": "P1",
-      "provider": "Altos"
-    },
-    "everminer.e21xp029": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "e21xp029",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)"
-    },
-    "everminer.e21xp012": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "e21xp012",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)"
-    },
-    "everminer.s21hyd002": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "s21hyd002",
-      "group_id": "P1",
-      "provider": "Altos"
-    },
-    "everminer.e21xp017": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "e21xp017",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)"
-    },
-    "everminer.e21xp027": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "e21xp027",
+      "name": "e21xp025",
       "group_id": "U3",
       "provider": "ValueHash (NY)"
     },
@@ -246,12 +169,12 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)"
     },
-    "everminer.e21xp025": {
+    "everminer.s21hyd005": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "e21xp025",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)"
+      "name": "s21hyd005",
+      "group_id": "P1",
+      "provider": "Altos"
     },
     "everminer.e21xp013": {
       "account": "everminer",
@@ -260,17 +183,38 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)"
     },
-    "everminer.e21xp023": {
+    "everminer.e21xp024": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "e21xp023",
+      "name": "e21xp024",
       "group_id": "U3",
       "provider": "ValueHash (NY)"
     },
-    "everminer.e21xp019": {
+    "everminer.e21xp027": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "e21xp019",
+      "name": "e21xp027",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)"
+    },
+    "everminer.s21hyd002": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "s21hyd002",
+      "group_id": "P1",
+      "provider": "Altos"
+    },
+    "everminer.e21xp015": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "e21xp015",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)"
+    },
+    "everminer.e21xp028": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "e21xp028",
       "group_id": "U3",
       "provider": "ValueHash (NY)"
     },
@@ -281,12 +225,54 @@
       "group_id": "P1",
       "provider": "Altos"
     },
+    "everminer.e21xp016": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "e21xp016",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)"
+    },
+    "everminer.e21xp017": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "e21xp017",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)"
+    },
+    "everminer.e21xp018": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "e21xp018",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)"
+    },
+    "everminer.s21hyd007": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "s21hyd007",
+      "group_id": "P1",
+      "provider": "Altos"
+    },
     "everminer.e21xp022": {
       "account": "everminer",
       "account_name": "Everminer",
       "name": "e21xp022",
       "group_id": "U3",
       "provider": "ValueHash (NY)"
+    },
+    "everminer.e21xp029": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "e21xp029",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)"
+    },
+    "everminer.s21hyd003": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "s21hyd003",
+      "group_id": "P1",
+      "provider": "Altos"
     },
     "everminer.s21hyd008": {
       "account": "everminer",
@@ -295,10 +281,24 @@
       "group_id": "P1",
       "provider": "Altos"
     },
-    "everminer.e21xp031": {
+    "everminer.e21xp012": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "e21xp031",
+      "name": "e21xp012",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)"
+    },
+    "everminer.e21xp014": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "e21xp014",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)"
+    },
+    "everminer.e21xp019": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "e21xp019",
       "group_id": "U3",
       "provider": "ValueHash (NY)"
     }

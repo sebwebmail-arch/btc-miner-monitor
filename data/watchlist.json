@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-20T14:30:52.244Z",
+  "last_updated": "2026-07-20T15:01:09.519Z",
   "entries": [
     {
       "key": "g.everminer.U3",
@@ -11,9 +11,39 @@
       "worker": null,
       "anomaly_type": null,
       "baseline_hr": 7608581370463154,
-      "current_hr": 3865589680159675.5,
-      "drop_pct": 49,
+      "current_hr": 2786602269435494.5,
+      "drop_pct": 63,
       "detected_at": "2026-07-20T14:30:52.244Z",
+      "duration_h": 0.5
+    },
+    {
+      "key": "g.cmine.P1",
+      "type": "group_drop",
+      "provider": "Altos",
+      "group_id": "P1",
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "worker": null,
+      "anomaly_type": null,
+      "baseline_hr": 6104475526163430,
+      "current_hr": 3949543501338305.5,
+      "drop_pct": 35,
+      "detected_at": "2026-07-20T15:01:09.519Z",
+      "duration_h": 0
+    },
+    {
+      "key": "g.everminer.P1",
+      "type": "group_drop",
+      "provider": "Altos",
+      "group_id": "P1",
+      "account": "everminer",
+      "account_name": "Everminer",
+      "worker": null,
+      "anomaly_type": null,
+      "baseline_hr": 2130035823760045.8,
+      "current_hr": 843173930235476.2,
+      "drop_pct": 60,
+      "detected_at": "2026-07-20T15:01:09.519Z",
       "duration_h": 0
     }
   ]

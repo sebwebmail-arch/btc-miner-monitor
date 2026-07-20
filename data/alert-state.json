@@ -3,13 +3,35 @@
     "g.everminer.U3": {
       "type": "group_drop",
       "baselineHR": 7608581370463154,
-      "currentHR": 3865589680159675.5,
+      "currentHR": 2786602269435494.5,
       "provider": "ValueHash (NY)",
       "groupId": "U3",
       "account": "everminer",
       "accountName": "Everminer",
       "detectedAt": "2026-07-20T14:30:52.244Z"
+    },
+    "g.cmine.P1": {
+      "type": "group_drop",
+      "baselineHR": 6104475526163430,
+      "currentHR": 3949543501338305.5,
+      "provider": "Altos",
+      "groupId": "P1",
+      "account": "cmine",
+      "accountName": "Cyberian Mine",
+      "detectedAt": "2026-07-20T15:01:09.519Z"
+    },
+    "g.everminer.P1": {
+      "type": "group_drop",
+      "baselineHR": 2130035823760045.8,
+      "currentHR": 843173930235476.2,
+      "provider": "Altos",
+      "groupId": "P1",
+      "account": "everminer",
+      "accountName": "Everminer",
+      "detectedAt": "2026-07-20T15:01:09.519Z"
     }
   },
-  "everminer.U3": "2026-07-20T14:30:52.244Z"
+  "everminer.U3": "2026-07-20T14:30:52.244Z",
+  "cmine.P1": "2026-07-20T15:01:09.519Z",
+  "everminer.P1": "2026-07-20T15:01:09.519Z"
 }

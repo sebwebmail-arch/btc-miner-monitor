@@ -1,4 +1,18 @@
 {
-  "incidents": [],
-  "last_updated": "2026-07-20T14:01:04.071Z"
+  "incidents": [
+    {
+      "id": "everminer.U3.2026-07-20T14:30:52.244Z",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)",
+      "account": "everminer",
+      "account_name": "Everminer",
+      "drop_pct": 49,
+      "hr_before": 7608581370463154,
+      "hr_after": 3865589680159676,
+      "started_at": "2026-07-20T14:30:52.244Z",
+      "ended_at": null,
+      "duration_min": null
+    }
+  ],
+  "last_updated": "2026-07-20T14:30:52.244Z"
 }

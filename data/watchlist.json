@@ -1,4 +1,20 @@
 {
-  "last_updated": "2026-07-20T14:01:04.071Z",
-  "entries": []
+  "last_updated": "2026-07-20T14:30:52.244Z",
+  "entries": [
+    {
+      "key": "g.everminer.U3",
+      "type": "group_drop",
+      "provider": "ValueHash (NY)",
+      "group_id": "U3",
+      "account": "everminer",
+      "account_name": "Everminer",
+      "worker": null,
+      "anomaly_type": null,
+      "baseline_hr": 7608581370463154,
+      "current_hr": 3865589680159675.5,
+      "drop_pct": 49,
+      "detected_at": "2026-07-20T14:30:52.244Z",
+      "duration_h": 0
+    }
+  ]
 }

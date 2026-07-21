@@ -1,12 +1,15 @@
 name: Hashrate Collector
 
 on:
-  # Déclenché exclusivement par cron-job.org via workflow_dispatch (GitHub cron trop peu fiable)
+  # Déclenché par cron-job.org via workflow_dispatch — fréquence : toutes les 60 minutes
   workflow_dispatch:
 
 jobs:
   collect:
     runs-on: ubuntu-latest
+    # Rétention des logs à 7 jours (défaut GitHub = 90j → 48 runs/j × 90j = ~4GB)
+    # Réduire ici n'affecte que les logs de ce run individuel si GitHub le supporte.
+    # ⚠  Pour changer la rétention globale : GitHub → Settings → Actions → General → Artifact and log retention → 7 jours
 
     permissions:
       contents: write

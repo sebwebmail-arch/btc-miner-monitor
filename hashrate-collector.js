@@ -1288,12 +1288,20 @@ async function main() {
   // ── 4d. Maintenance ghost-workers.json (registre persistant 90 jours) ────────
   // hashrate.json ne garde que 7 jours → ghost-workers.json assure la continuité jusqu'à 90j.
   const ghostData = loadGhostWorkers();
+  const ACTIVE_THRESHOLD_MS = 24 * 3600 * 1000; // last_share_at < 24h = vraiment en ligne
   for (const account of ACCOUNTS) {
-    const currentNames = new Set(
-      (allWorkers[account.user] || []).map(w => w.hash_rate_info?.name).filter(Boolean)
+    const workers = allWorkers[account.user] || [];
+    // Tous les noms présents dans l'API (actifs ou non) — pour findGhostWorkers
+    const allApiNames = new Set(workers.map(w => w.hash_rate_info?.name).filter(Boolean));
+    // Noms ACTIFS uniquement (last_share_at récent) — pour résoudre les ghosts
+    // ⚠ f2pool retourne parfois des workers morts dans l'API — ne pas les considérer résolus
+    const activeNames = new Set(
+      workers
+        .filter(w => w.hash_rate_info?.name && (now.getTime() - (w.last_share_at || 0) * 1000) < ACTIVE_THRESHOLD_MS)
+        .map(w => w.hash_rate_info.name)
     );
     // 1. Nouveaux ghosts détectés via hashrate.json (window 7j)
-    for (const g of findGhostWorkers(h, account.user, currentNames, now)) {
+    for (const g of findGhostWorkers(h, account.user, allApiNames, now)) {
       const key = `${account.user}.${g.name}`;
       if (!ghostData.ghosts[key]) {
         ghostData.ghosts[key] = {
@@ -1308,12 +1316,12 @@ async function main() {
         console.log(`   👻 Nouveau ghost enregistré : ${key} (last seen ${g.lastSnapIso})`);
       }
     }
-    // 2. Supprimer les workers revenus dans l'API (résolus)
+    // 2. Supprimer les workers réellement revenus en ligne (last_share_at < 24h)
     for (const key of Object.keys(ghostData.ghosts)) {
       if (!key.startsWith(account.user + '.')) continue;
       const name = key.slice(account.user.length + 1);
-      if (currentNames.has(name)) {
-        console.log(`   ✅ Ghost résolu : ${key} (revenu dans l'API)`);
+      if (activeNames.has(name)) {
+        console.log(`   ✅ Ghost résolu : ${key} (revenu actif, last_share_at < 24h)`);
         delete ghostData.ghosts[key];
       }
     }

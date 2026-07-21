@@ -1768,7 +1768,7 @@ function renderOnlineTable() {
 
 // ── Helpers graphes hashrate ───────────────────────────────────────────────────
 
-const GAP_MS = 45 * 60 * 1000; // gap > 45min = run manqué → pointillés
+const GAP_MS = 90 * 60 * 1000; // gap > 90min = run manqué (interval = 60min) → pointillés
 
 /**
  * Découpe un tableau de points en segments continus + calcule les lacunes.

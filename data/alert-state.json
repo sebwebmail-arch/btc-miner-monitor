@@ -179,6 +179,26 @@
       "accountName": "Everminer",
       "anomalyType": "volatile",
       "detectedAt": "2026-07-21T22:01:02.992Z"
+    },
+    "g.cmine.E2": {
+      "type": "group_drop",
+      "baselineHR": 3344756723253587.5,
+      "currentHR": 1826303473890972.8,
+      "provider": "AmityAge",
+      "groupId": "E2",
+      "account": "cmine",
+      "accountName": "Cyberian Mine",
+      "detectedAt": "2026-07-22T05:00:59.585Z"
+    },
+    "g.everminer.E2": {
+      "type": "group_drop",
+      "baselineHR": 3313898725806790.5,
+      "currentHR": 1817937412083184.5,
+      "provider": "AmityAge",
+      "groupId": "E2",
+      "account": "everminer",
+      "accountName": "Everminer",
+      "detectedAt": "2026-07-22T05:00:59.585Z"
     }
   },
   "everminer.U3": "2026-07-20T14:30:52.244Z",
@@ -241,5 +261,7 @@
   "w.cmine.s21xp004": "2026-07-21T19:01:03.774Z",
   "w.cmine.c21xp001": "2026-07-21T20:01:03.594Z",
   "w.cmine.s21xphyd004": "2026-07-21T20:01:03.594Z",
-  "w.cmine.s21xp002": "2026-07-21T20:01:03.594Z"
+  "w.cmine.s21xp002": "2026-07-21T20:01:03.594Z",
+  "cmine.E2": "2026-07-22T05:00:59.585Z",
+  "everminer.E2": "2026-07-22T05:00:59.585Z"
 }

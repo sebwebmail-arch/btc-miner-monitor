@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-22T16:01:05.794Z",
+  "last_updated": "2026-07-22T17:01:00.534Z",
   "issues": {
     "cmine.c21xp001": {
       "account": "cmine",
@@ -8,11 +8,24 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)",
       "type": "volatile",
-      "current_avg_ths": 116.3,
-      "baseline_avg_ths": 98.8,
-      "drop_pct": -18,
-      "cv_pct": 121,
-      "zero_rate_pct": 50
+      "current_avg_ths": 163.8,
+      "baseline_avg_ths": 87,
+      "drop_pct": -88,
+      "cv_pct": 86,
+      "zero_rate_pct": 33
+    },
+    "everminer.k2lx131x5x2": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "worker": "k2lx131x5x2",
+      "group_id": "R3",
+      "provider": "Minto",
+      "type": "volatile",
+      "current_avg_ths": 200.9,
+      "baseline_avg_ths": 273.9,
+      "drop_pct": 27,
+      "cv_pct": 58,
+      "zero_rate_pct": 17
     }
   }
 }

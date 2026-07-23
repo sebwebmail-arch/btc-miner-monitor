@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-22T05:00:59.585Z",
+  "last_updated": "2026-07-23T05:01:01.851Z",
   "snapshots": [
     {
       "ts": "2026-06-30T11:49:33.334Z",
@@ -598,48 +598,51 @@
       "dead_recent": 0,
       "dead_mid": 0,
       "dead_old": 0
+    },
+    {
+      "ts": "2026-07-23T05:01:01.851Z",
+      "by_account": {
+        "cmine": {
+          "name": "Cyberian Mine",
+          "total": 432,
+          "online": 430,
+          "offline": 2,
+          "dead": 0
+        },
+        "everminer": {
+          "name": "Everminer",
+          "total": 123,
+          "online": 104,
+          "offline": 19,
+          "dead": 0
+        }
+      },
+      "offline": 21,
+      "dead_recent": 0,
+      "dead_mid": 0,
+      "dead_old": 0
     }
   ],
   "workers": {},
   "current_issues": {
-    "cmine.02a34725b1b2": {
+    "cmine.openfallback": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
-      "name": "02a34725b1b2",
-      "group_id": "U1+U2",
-      "provider": "Dataprana",
-      "host": "35.131.134.226",
-      "last_share": "2026-07-21T14:29:17.000Z",
+      "name": "openfallback",
+      "group_id": "OM",
+      "provider": "Open Mine",
+      "host": "178.105.17.8",
+      "last_share": "2026-07-22T20:20:56.000Z",
       "category": "offline"
     },
-    "cmine.c21xp001": {
+    "cmine.k2lx131x3x42": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
-      "name": "c21xp001",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)",
-      "host": "69.204.13.233",
-      "last_share": "2026-07-21T17:03:08.000Z",
-      "category": "offline"
-    },
-    "everminer.029c3cb5f721": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "029c3cb5f721",
-      "group_id": "U1+U2",
-      "provider": "Dataprana",
-      "host": "64.186.136.18",
-      "last_share": "2026-07-21T18:30:24.000Z",
-      "category": "offline"
-    },
-    "everminer.02b18d53c9b9": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "02b18d53c9b9",
-      "group_id": "U1+U2",
-      "provider": "Dataprana",
-      "host": "64.186.136.18",
-      "last_share": "2026-07-21T18:30:15.000Z",
+      "name": "k2lx131x3x42",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-07-23T03:19:41.000Z",
       "category": "offline"
     },
     "everminer.028e78f6862a": {
@@ -649,17 +652,17 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "host": "64.186.136.18",
-      "last_share": "2026-07-21T18:29:02.000Z",
+      "last_share": "2026-07-22T17:58:05.000Z",
       "category": "offline"
     },
-    "everminer.02290d012b09": {
+    "everminer.029c3cb5f721": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "02290d012b09",
+      "name": "029c3cb5f721",
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "host": "64.186.136.18",
-      "last_share": "2026-07-21T18:29:07.000Z",
+      "last_share": "2026-07-22T17:58:11.000Z",
       "category": "offline"
     },
     "everminer.023c6894df0b": {
@@ -669,17 +672,17 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "host": "64.186.136.18",
-      "last_share": "2026-07-21T18:30:47.000Z",
+      "last_share": "2026-07-22T17:57:53.000Z",
       "category": "offline"
     },
-    "everminer.023e6ccfafbd": {
+    "everminer.02290d012b09": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "023e6ccfafbd",
+      "name": "02290d012b09",
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "host": "64.186.136.18",
-      "last_share": "2026-07-21T18:30:05.000Z",
+      "last_share": "2026-07-22T17:58:11.000Z",
       "category": "offline"
     },
     "everminer.0231bb5e1929": {
@@ -689,7 +692,7 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "host": "64.186.136.18",
-      "last_share": "2026-07-21T18:30:42.000Z",
+      "last_share": "2026-07-22T17:58:23.000Z",
       "category": "offline"
     },
     "everminer.02831b0fd505": {
@@ -699,27 +702,27 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "host": "64.186.136.18",
-      "last_share": "2026-07-21T18:30:29.000Z",
+      "last_share": "2026-07-22T17:58:09.000Z",
       "category": "offline"
     },
-    "everminer.029bc156a03f": {
+    "everminer.k2lx131x5x3": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "029bc156a03f",
-      "group_id": "U1+U2",
-      "provider": "Dataprana",
-      "host": "64.186.136.18",
-      "last_share": "2026-07-21T18:30:28.000Z",
+      "name": "k2lx131x5x3",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.98.76.17",
+      "last_share": "2026-07-22T14:14:20.000Z",
       "category": "offline"
     },
-    "everminer.021cc0f8b327": {
+    "everminer.k2lx131x5x6": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "021cc0f8b327",
-      "group_id": "U1+U2",
-      "provider": "Dataprana",
-      "host": "64.186.136.18",
-      "last_share": "2026-07-21T18:29:39.000Z",
+      "name": "k2lx131x5x6",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "157.245.76.212",
+      "last_share": "2026-07-22T14:13:26.000Z",
       "category": "offline"
     },
     "everminer.0216c0e82428": {
@@ -729,7 +732,7 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "host": "64.186.136.18",
-      "last_share": "2026-07-21T18:30:32.000Z",
+      "last_share": "2026-07-22T17:58:11.000Z",
       "category": "offline"
     },
     "everminer.02a13716759b": {
@@ -739,7 +742,77 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "host": "64.186.136.18",
-      "last_share": "2026-07-22T00:50:33.000Z",
+      "last_share": "2026-07-22T17:58:22.000Z",
+      "category": "offline"
+    },
+    "everminer.02b18d53c9b9": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "02b18d53c9b9",
+      "group_id": "U1+U2",
+      "provider": "Dataprana",
+      "host": "64.186.136.18",
+      "last_share": "2026-07-22T17:58:06.000Z",
+      "category": "offline"
+    },
+    "everminer.k2lx131x5x7": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x7",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.98.76.17",
+      "last_share": "2026-07-22T14:14:16.000Z",
+      "category": "offline"
+    },
+    "everminer.021cc0f8b327": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "021cc0f8b327",
+      "group_id": "U1+U2",
+      "provider": "Dataprana",
+      "host": "64.186.136.18",
+      "last_share": "2026-07-22T17:58:06.000Z",
+      "category": "offline"
+    },
+    "everminer.k2lx131x5x5": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x5",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-07-22T14:14:16.000Z",
+      "category": "offline"
+    },
+    "everminer.023e6ccfafbd": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "023e6ccfafbd",
+      "group_id": "U1+U2",
+      "provider": "Dataprana",
+      "host": "64.186.136.18",
+      "last_share": "2026-07-22T17:57:40.000Z",
+      "category": "offline"
+    },
+    "everminer.k2lx131x5x2": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x2",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-07-22T14:14:18.000Z",
+      "category": "offline"
+    },
+    "everminer.029bc156a03f": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "029bc156a03f",
+      "group_id": "U1+U2",
+      "provider": "Dataprana",
+      "host": "64.186.136.18",
+      "last_share": "2026-07-22T17:58:12.000Z",
       "category": "offline"
     },
     "everminer.02b4889e5c95": {
@@ -749,7 +822,17 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "host": "64.186.136.18",
-      "last_share": "2026-07-21T18:30:28.000Z",
+      "last_share": "2026-07-22T17:58:08.000Z",
+      "category": "offline"
+    },
+    "everminer.k2lx131x5x50": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x50",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "157.245.76.212",
+      "last_share": "2026-07-22T14:14:14.000Z",
       "category": "offline"
     }
   }

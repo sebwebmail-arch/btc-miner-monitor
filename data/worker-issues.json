@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-23T20:01:00.442Z",
+  "last_updated": "2026-07-23T21:01:03.727Z",
   "issues": {
     "cmine.omxdefault": {
       "account": "cmine",
@@ -8,10 +8,10 @@
       "group_id": "OM",
       "provider": "Open Mine",
       "type": "level_drop",
-      "current_avg_ths": 1622.7,
-      "baseline_avg_ths": 3514.9,
-      "drop_pct": 54,
-      "cv_pct": 3,
+      "current_avg_ths": 1628.2,
+      "baseline_avg_ths": 3417.3,
+      "drop_pct": 52,
+      "cv_pct": 2,
       "zero_rate_pct": 0
     },
     "cmine.s21xphyd004": {
@@ -21,10 +21,36 @@
       "group_id": "P1",
       "provider": "Altos",
       "type": "level_drop",
-      "current_avg_ths": 47.4,
-      "baseline_avg_ths": 428.1,
+      "current_avg_ths": 44,
+      "baseline_avg_ths": 410,
       "drop_pct": 89,
-      "cv_pct": 47,
+      "cv_pct": 54,
+      "zero_rate_pct": 0
+    },
+    "cmine.s21xphyd0002": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "worker": "s21xphyd0002",
+      "group_id": "P1",
+      "provider": "Altos",
+      "type": "volatile",
+      "current_avg_ths": 289.9,
+      "baseline_avg_ths": 357,
+      "drop_pct": 19,
+      "cv_pct": 61,
+      "zero_rate_pct": 17
+    },
+    "cmine.s21xp002": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "worker": "s21xp002",
+      "group_id": "P1",
+      "provider": "Altos",
+      "type": "volatile",
+      "current_avg_ths": 358.8,
+      "baseline_avg_ths": 472.3,
+      "drop_pct": 24,
+      "cv_pct": 56,
       "zero_rate_pct": 0
     }
   }

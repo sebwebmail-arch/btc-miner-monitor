@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-23T19:00:59.952Z",
+  "last_updated": "2026-07-23T20:01:00.442Z",
   "offline": {
     "cmine.openfallback": {
       "account": "cmine",
@@ -7,13 +7,6 @@
       "name": "openfallback",
       "group_id": "OM",
       "provider": "Open Mine"
-    },
-    "cmine.s21xphyd0002": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "s21xphyd0002",
-      "group_id": "P1",
-      "provider": "Altos"
     },
     "cmine.k2lx132x9x42": {
       "account": "cmine",
@@ -35,24 +28,10 @@
       "category": "offline",
       "last_share": "2026-07-23T00:01:10.819Z"
     },
-    "everminer.k2lx131x5x50": {
+    "everminer.k2lx131x5x7": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "k2lx131x5x50",
-      "group_id": "R3",
-      "provider": "Minto"
-    },
-    "everminer.k2lx131x5x5": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "k2lx131x5x5",
-      "group_id": "R3",
-      "provider": "Minto"
-    },
-    "everminer.k2lx131x5x2": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "k2lx131x5x2",
+      "name": "k2lx131x5x7",
       "group_id": "R3",
       "provider": "Minto"
     },
@@ -63,6 +42,13 @@
       "group_id": "R3",
       "provider": "Minto"
     },
+    "everminer.k2lx131x5x5": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x5",
+      "group_id": "R3",
+      "provider": "Minto"
+    },
     "everminer.k2lx131x5x3": {
       "account": "everminer",
       "account_name": "Everminer",
@@ -70,10 +56,17 @@
       "group_id": "R3",
       "provider": "Minto"
     },
-    "everminer.k2lx131x5x7": {
+    "everminer.k2lx131x5x50": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "k2lx131x5x7",
+      "name": "k2lx131x5x50",
+      "group_id": "R3",
+      "provider": "Minto"
+    },
+    "everminer.k2lx131x5x2": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x2",
       "group_id": "R3",
       "provider": "Minto"
     }

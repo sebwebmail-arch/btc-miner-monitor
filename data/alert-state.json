@@ -171,7 +171,7 @@
     "w.everminer.0231bb5e1929": {
       "type": "worker_anomaly",
       "baselineHR": 111700000000000,
-      "currentHR": 0,
+      "currentHR": 36181262631348.91,
       "worker": "0231bb5e1929",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -243,7 +243,7 @@
     "w.cmine.k2lx131x3x42": {
       "type": "worker_anomaly",
       "baselineHR": 179200000000000,
-      "currentHR": 0,
+      "currentHR": 60986244953975.47,
       "worker": "k2lx131x3x42",
       "provider": "Minto",
       "groupId": "R3",
@@ -255,7 +255,7 @@
     "g.cmine.OM": {
       "type": "group_drop",
       "baselineHR": 4178339654282626.5,
-      "currentHR": 1641311864197247.5,
+      "currentHR": 1590020868441083.5,
       "provider": "Open Mine",
       "groupId": "OM",
       "account": "cmine",

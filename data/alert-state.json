@@ -239,30 +239,6 @@
       "accountName": "Everminer",
       "anomalyType": "volatile",
       "detectedAt": "2026-07-22T21:00:59.968Z"
-    },
-    "w.cmine.s21xphyd0002": {
-      "type": "worker_anomaly",
-      "baselineHR": 457900000000000,
-      "currentHR": 0,
-      "worker": "s21xphyd0002",
-      "provider": "Altos",
-      "groupId": "P1",
-      "account": "cmine",
-      "accountName": "Cyberian Mine",
-      "anomalyType": "volatile",
-      "detectedAt": "2026-07-22T22:01:06.887Z"
-    },
-    "w.cmine.s21xphyd0001": {
-      "type": "worker_anomaly",
-      "baselineHR": 463300000000000,
-      "currentHR": 0,
-      "worker": "s21xphyd0001",
-      "provider": "Altos",
-      "groupId": "P1",
-      "account": "cmine",
-      "accountName": "Cyberian Mine",
-      "anomalyType": "volatile",
-      "detectedAt": "2026-07-22T23:01:06.207Z"
     }
   },
   "everminer.U3": "2026-07-20T14:30:52.244Z",

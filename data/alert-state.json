@@ -251,6 +251,16 @@
       "accountName": "Cyberian Mine",
       "anomalyType": "level_drop",
       "detectedAt": "2026-07-23T07:01:04.569Z"
+    },
+    "g.cmine.OM": {
+      "type": "group_drop",
+      "baselineHR": 4178339654282626.5,
+      "currentHR": 2590195285686281,
+      "provider": "Open Mine",
+      "groupId": "OM",
+      "account": "cmine",
+      "accountName": "Cyberian Mine",
+      "detectedAt": "2026-07-23T08:01:05.933Z"
     }
   },
   "everminer.U3": "2026-07-20T14:30:52.244Z",
@@ -323,5 +333,6 @@
   "w.everminer.k2lx131x5x3": "2026-07-22T18:01:01.945Z",
   "w.everminer.k2lx131x5x5": "2026-07-22T18:01:01.945Z",
   "w.cmine.s21xphyd0001": "2026-07-22T23:01:06.207Z",
-  "w.cmine.k2lx131x3x42": "2026-07-23T07:01:04.569Z"
+  "w.cmine.k2lx131x3x42": "2026-07-23T07:01:04.569Z",
+  "cmine.OM": "2026-07-23T08:01:05.933Z"
 }

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-23T07:01:04.569Z",
+  "last_updated": "2026-07-23T08:01:05.933Z",
   "issues": {
     "cmine.k2lx131x3x42": {
       "account": "cmine",
@@ -7,12 +7,12 @@
       "worker": "k2lx131x3x42",
       "group_id": "R3",
       "provider": "Minto",
-      "type": "level_drop",
-      "current_avg_ths": 102.2,
-      "baseline_avg_ths": 179.2,
-      "drop_pct": 43,
-      "cv_pct": 76,
-      "zero_rate_pct": 33
+      "type": "volatile",
+      "current_avg_ths": 77,
+      "baseline_avg_ths": 177.7,
+      "drop_pct": 57,
+      "cv_pct": 107,
+      "zero_rate_pct": 50
     }
   }
 }

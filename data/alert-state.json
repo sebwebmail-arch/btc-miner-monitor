@@ -86,18 +86,18 @@
     },
     "g.cmine.OM": {
       "type": "group_drop",
-      "baselineHR": 4178339654282626.5,
-      "currentHR": 1745076441549227.8,
+      "baselineHR": 1780599626110026.2,
+      "currentHR": 1132281961002070.5,
       "provider": "Open Mine",
       "groupId": "OM",
       "account": "cmine",
       "accountName": "Cyberian Mine",
-      "detectedAt": "2026-07-23T08:01:05.933Z"
+      "detectedAt": "2026-07-24T01:00:59.134Z"
     },
     "w.cmine.omxdefault": {
       "type": "worker_anomaly",
       "baselineHR": 4195000000000000,
-      "currentHR": 1745076441549227.8,
+      "currentHR": 1132281961002070.5,
       "worker": "omxdefault",
       "provider": "Open Mine",
       "groupId": "OM",
@@ -109,7 +109,7 @@
     "w.cmine.s21xphyd004": {
       "type": "worker_anomaly",
       "baselineHR": 474600000000000,
-      "currentHR": 39201254568973.66,
+      "currentHR": 11679256846153.955,
       "worker": "s21xphyd004",
       "provider": "Altos",
       "groupId": "P1",
@@ -121,7 +121,7 @@
     "w.cmine.s21xp002": {
       "type": "worker_anomaly",
       "baselineHR": 472300000000000,
-      "currentHR": 26407825940006.684,
+      "currentHR": 7906710283295.857,
       "worker": "s21xp002",
       "provider": "Altos",
       "groupId": "P1",
@@ -129,6 +129,16 @@
       "accountName": "Cyberian Mine",
       "anomalyType": "volatile",
       "detectedAt": "2026-07-23T21:01:03.727Z"
+    },
+    "g.cmine.F1": {
+      "type": "group_drop",
+      "baselineHR": 5792129520757055,
+      "currentHR": 2034438581669797,
+      "provider": "Terahash",
+      "groupId": "F1",
+      "account": "cmine",
+      "accountName": "Cyberian Mine",
+      "detectedAt": "2026-07-24T01:00:59.134Z"
     }
   },
   "everminer.U3": "2026-07-20T14:30:52.244Z",
@@ -202,8 +212,9 @@
   "w.everminer.k2lx131x5x5": "2026-07-22T18:01:01.945Z",
   "w.cmine.s21xphyd0001": "2026-07-22T23:01:06.207Z",
   "w.cmine.k2lx131x3x42": "2026-07-23T15:01:06.885Z",
-  "cmine.OM": "2026-07-23T08:01:05.933Z",
+  "cmine.OM": "2026-07-24T01:00:59.134Z",
   "w.cmine.r20915": "2026-07-23T09:01:09.463Z",
   "w.cmine.aa14": "2026-07-23T11:01:06.523Z",
-  "w.cmine.omxdefault": "2026-07-23T22:01:04.021Z"
+  "w.cmine.omxdefault": "2026-07-23T22:01:04.021Z",
+  "cmine.F1": "2026-07-24T01:00:59.134Z"
 }

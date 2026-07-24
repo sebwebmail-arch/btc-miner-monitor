@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-23T23:01:04.687Z",
+  "last_updated": "2026-07-24T00:01:09.640Z",
   "offline": {
     "cmine.openfallback": {
       "account": "cmine",
@@ -25,20 +25,13 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-07-23T00:01:10.819Z"
     },
-    "everminer.k2lx131x5x7": {
+    "everminer.k2lx131x5x2": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "k2lx131x5x7",
-      "group_id": "R3",
-      "provider": "Minto"
-    },
-    "everminer.k2lx131x5x5": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "k2lx131x5x5",
+      "name": "k2lx131x5x2",
       "group_id": "R3",
       "provider": "Minto"
     },
@@ -49,6 +42,13 @@
       "group_id": "R3",
       "provider": "Minto"
     },
+    "everminer.k2lx131x5x5": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x5",
+      "group_id": "R3",
+      "provider": "Minto"
+    },
     "everminer.k2lx131x5x3": {
       "account": "everminer",
       "account_name": "Everminer",
@@ -56,10 +56,10 @@
       "group_id": "R3",
       "provider": "Minto"
     },
-    "everminer.k2lx131x5x2": {
+    "everminer.k2lx131x5x7": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "k2lx131x5x2",
+      "name": "k2lx131x5x7",
       "group_id": "R3",
       "provider": "Minto"
     },

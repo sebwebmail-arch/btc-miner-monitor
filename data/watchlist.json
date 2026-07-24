@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-24T08:01:06.536Z",
+  "last_updated": "2026-07-24T09:01:07.162Z",
   "entries": [
     {
       "key": "w.cmine.02a34725b1b2",
@@ -14,7 +14,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-21T18:00:58.646Z",
-      "duration_h": 62
+      "duration_h": 63
     },
     {
       "key": "w.everminer.k2lx131x5x2",
@@ -29,7 +29,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-22T17:01:00.534Z",
-      "duration_h": 39
+      "duration_h": 40
     },
     {
       "key": "w.everminer.k2lx131x5x6",
@@ -44,7 +44,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-22T18:01:01.945Z",
-      "duration_h": 38
+      "duration_h": 39
     },
     {
       "key": "w.everminer.k2lx131x5x7",
@@ -59,7 +59,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-22T18:01:01.945Z",
-      "duration_h": 38
+      "duration_h": 39
     },
     {
       "key": "w.everminer.k2lx131x5x50",
@@ -74,7 +74,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-22T18:01:01.945Z",
-      "duration_h": 38
+      "duration_h": 39
     },
     {
       "key": "w.everminer.k2lx131x5x3",
@@ -89,7 +89,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-22T18:01:01.945Z",
-      "duration_h": 38
+      "duration_h": 39
     },
     {
       "key": "w.everminer.k2lx131x5x5",
@@ -104,22 +104,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-22T18:01:01.945Z",
-      "duration_h": 38
-    },
-    {
-      "key": "g.cmine.OM",
-      "type": "group_drop",
-      "provider": "Open Mine",
-      "group_id": "OM",
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": null,
-      "anomaly_type": null,
-      "baseline_hr": 1780599626110026.2,
-      "current_hr": 920120197306413.5,
-      "drop_pct": 48,
-      "detected_at": "2026-07-24T01:00:59.134Z",
-      "duration_h": 7
+      "duration_h": 39
     },
     {
       "key": "w.cmine.omxdefault",
@@ -131,10 +116,10 @@
       "worker": "omxdefault",
       "anomaly_type": "level_drop",
       "baseline_hr": 4195000000000000,
-      "current_hr": 920120197306413.5,
-      "drop_pct": 78,
+      "current_hr": 1584117712679512.8,
+      "drop_pct": 62,
       "detected_at": "2026-07-23T13:01:10.470Z",
-      "duration_h": 19
+      "duration_h": 20
     },
     {
       "key": "w.cmine.s21xphyd004",
@@ -146,10 +131,10 @@
       "worker": "s21xphyd004",
       "anomaly_type": "volatile",
       "baseline_hr": 474600000000000,
-      "current_hr": 13233233280077.37,
-      "drop_pct": 97,
+      "current_hr": 39054653018603.52,
+      "drop_pct": 92,
       "detected_at": "2026-07-23T14:01:09.412Z",
-      "duration_h": 18
+      "duration_h": 19
     },
     {
       "key": "w.cmine.s21xp002",
@@ -161,55 +146,10 @@
       "worker": "s21xp002",
       "anomaly_type": "volatile",
       "baseline_hr": 472300000000000,
-      "current_hr": 7222569714901.902,
-      "drop_pct": 98,
+      "current_hr": 21501560720952.89,
+      "drop_pct": 95,
       "detected_at": "2026-07-23T21:01:03.727Z",
-      "duration_h": 11
-    },
-    {
-      "key": "g.cmine.F1",
-      "type": "group_drop",
-      "provider": "Terahash",
-      "group_id": "F1",
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": null,
-      "anomaly_type": null,
-      "baseline_hr": 5792129520757055,
-      "current_hr": 1686973360419198.2,
-      "drop_pct": 71,
-      "detected_at": "2026-07-24T01:00:59.134Z",
-      "duration_h": 7
-    },
-    {
-      "key": "w.cmine.18x0x238",
-      "type": "worker_anomaly",
-      "provider": "Terahash",
-      "group_id": "F1",
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "18x0x238",
-      "anomaly_type": "volatile",
-      "baseline_hr": 407500000000000,
-      "current_hr": 32838747282909.867,
-      "drop_pct": 92,
-      "detected_at": "2026-07-24T03:01:02.986Z",
-      "duration_h": 5
-    },
-    {
-      "key": "w.cmine.18x0x199",
-      "type": "worker_anomaly",
-      "provider": "Terahash",
-      "group_id": "F1",
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "18x0x199",
-      "anomaly_type": "volatile",
-      "baseline_hr": 401000000000000,
-      "current_hr": 56920495290377.1,
-      "drop_pct": 86,
-      "detected_at": "2026-07-24T03:01:02.986Z",
-      "duration_h": 5
+      "duration_h": 12
     },
     {
       "key": "w.cmine.18x1x68",
@@ -221,55 +161,10 @@
       "worker": "18x1x68",
       "anomaly_type": "volatile",
       "baseline_hr": 412000000000000,
-      "current_hr": 0,
-      "drop_pct": 100,
+      "current_hr": 232373230773352.7,
+      "drop_pct": 44,
       "detected_at": "2026-07-24T03:01:02.986Z",
-      "duration_h": 5
-    },
-    {
-      "key": "w.cmine.18x1x179",
-      "type": "worker_anomaly",
-      "provider": "Terahash",
-      "group_id": "F1",
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "18x1x179",
-      "anomaly_type": "volatile",
-      "baseline_hr": 399200000000000,
-      "current_hr": 0,
-      "drop_pct": 100,
-      "detected_at": "2026-07-24T03:01:02.986Z",
-      "duration_h": 5
-    },
-    {
-      "key": "w.cmine.18x0x168",
-      "type": "worker_anomaly",
-      "provider": "Terahash",
-      "group_id": "F1",
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "18x0x168",
-      "anomaly_type": "volatile",
-      "baseline_hr": 400400000000000,
-      "current_hr": 166070236259287.03,
-      "drop_pct": 59,
-      "detected_at": "2026-07-24T03:01:02.986Z",
-      "duration_h": 5
-    },
-    {
-      "key": "w.cmine.18x0x157",
-      "type": "worker_anomaly",
-      "provider": "Terahash",
-      "group_id": "F1",
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "18x0x157",
-      "anomaly_type": "volatile",
-      "baseline_hr": 402100000000000,
-      "current_hr": 121346989959705.03,
-      "drop_pct": 70,
-      "detected_at": "2026-07-24T03:01:02.986Z",
-      "duration_h": 5
+      "duration_h": 6
     },
     {
       "key": "w.everminer.e21xp015",
@@ -281,10 +176,10 @@
       "worker": "e21xp015",
       "anomaly_type": "level_drop",
       "baseline_hr": 284800000000000,
-      "current_hr": 123848989752688.64,
-      "drop_pct": 57,
+      "current_hr": 147617987786032.94,
+      "drop_pct": 48,
       "detected_at": "2026-07-24T03:01:02.986Z",
-      "duration_h": 5
+      "duration_h": 6
     },
     {
       "key": "w.everminer.e21xp031",
@@ -296,130 +191,25 @@
       "worker": "e21xp031",
       "anomaly_type": "level_drop",
       "baseline_hr": 298300000000000,
-      "current_hr": 161378986647442.78,
-      "drop_pct": 46,
+      "current_hr": 146366987889541.12,
+      "drop_pct": 51,
       "detected_at": "2026-07-24T03:01:02.986Z",
-      "duration_h": 5
+      "duration_h": 6
     },
     {
-      "key": "w.cmine.18x0x18",
+      "key": "w.cmine.k2lx",
       "type": "worker_anomaly",
-      "provider": "Terahash",
-      "group_id": "F1",
+      "provider": "Minto",
+      "group_id": "R3",
       "account": "cmine",
       "account_name": "Cyberian Mine",
-      "worker": "18x0x18",
-      "anomaly_type": "level_drop",
-      "baseline_hr": 391700000000000,
-      "current_hr": 167633986129901.78,
-      "drop_pct": 57,
-      "detected_at": "2026-07-24T04:01:01.981Z",
-      "duration_h": 4
-    },
-    {
-      "key": "w.cmine.18x0x72",
-      "type": "worker_anomaly",
-      "provider": "Terahash",
-      "group_id": "F1",
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "18x0x72",
-      "anomaly_type": "level_drop",
-      "baseline_hr": 405300000000000,
-      "current_hr": 138235488562344.39,
-      "drop_pct": 66,
-      "detected_at": "2026-07-24T04:01:01.981Z",
-      "duration_h": 4
-    },
-    {
-      "key": "w.cmine.18x0x94",
-      "type": "worker_anomaly",
-      "provider": "Terahash",
-      "group_id": "F1",
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "18x0x94",
+      "worker": "k2lx",
       "anomaly_type": "volatile",
-      "baseline_hr": 395200000000000,
-      "current_hr": 144803238018926.38,
-      "drop_pct": 63,
-      "detected_at": "2026-07-24T04:01:01.981Z",
-      "duration_h": 4
-    },
-    {
-      "key": "w.cmine.18x0x22",
-      "type": "worker_anomaly",
-      "provider": "Terahash",
-      "group_id": "F1",
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "18x0x22",
-      "anomaly_type": "level_drop",
-      "baseline_hr": 399100000000000,
-      "current_hr": 148556237708401.78,
-      "drop_pct": 63,
-      "detected_at": "2026-07-24T04:01:01.981Z",
-      "duration_h": 4
-    },
-    {
-      "key": "w.cmine.18x0x73",
-      "type": "worker_anomaly",
-      "provider": "Terahash",
-      "group_id": "F1",
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "18x0x73",
-      "anomaly_type": "volatile",
-      "baseline_hr": 407000000000000,
-      "current_hr": 182333234913680.5,
-      "drop_pct": 55,
-      "detected_at": "2026-07-24T04:01:01.981Z",
-      "duration_h": 4
-    },
-    {
-      "key": "w.cmine.18x0x30",
-      "type": "worker_anomaly",
-      "provider": "Terahash",
-      "group_id": "F1",
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "18x0x30",
-      "anomaly_type": "volatile",
-      "baseline_hr": 393300000000000,
-      "current_hr": 168572236052270.66,
-      "drop_pct": 57,
-      "detected_at": "2026-07-24T04:01:01.981Z",
-      "duration_h": 4
-    },
-    {
-      "key": "w.cmine.18x0x61",
-      "type": "worker_anomaly",
-      "provider": "Terahash",
-      "group_id": "F1",
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "18x0x61",
-      "anomaly_type": "level_drop",
-      "baseline_hr": 399600000000000,
-      "current_hr": 187024484525524.75,
-      "drop_pct": 53,
-      "detected_at": "2026-07-24T04:01:01.981Z",
-      "duration_h": 4
-    },
-    {
-      "key": "w.cmine.18x0x91",
-      "type": "worker_anomaly",
-      "provider": "Terahash",
-      "group_id": "F1",
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "18x0x91",
-      "anomaly_type": "volatile",
-      "baseline_hr": 406700000000000,
-      "current_hr": 172637985715869,
-      "drop_pct": 58,
-      "detected_at": "2026-07-24T04:01:01.981Z",
-      "duration_h": 4
+      "baseline_hr": 184100000000000,
+      "current_hr": 0,
+      "drop_pct": 100,
+      "detected_at": "2026-07-24T09:01:07.162Z",
+      "duration_h": 0
     }
   ]
 }

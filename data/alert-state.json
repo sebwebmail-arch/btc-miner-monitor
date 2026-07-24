@@ -87,7 +87,7 @@
     "g.cmine.OM": {
       "type": "group_drop",
       "baselineHR": 1780599626110026.2,
-      "currentHR": 821007775819512,
+      "currentHR": 887936270281823.6,
       "provider": "Open Mine",
       "groupId": "OM",
       "account": "cmine",
@@ -97,7 +97,7 @@
     "w.cmine.omxdefault": {
       "type": "worker_anomaly",
       "baselineHR": 4195000000000000,
-      "currentHR": 821007775819512,
+      "currentHR": 887936270281823.6,
       "worker": "omxdefault",
       "provider": "Open Mine",
       "groupId": "OM",
@@ -109,7 +109,7 @@
     "w.cmine.s21xphyd004": {
       "type": "worker_anomaly",
       "baselineHR": 474600000000000,
-      "currentHR": 31245677102221.086,
+      "currentHR": 35145278342066.633,
       "worker": "s21xphyd004",
       "provider": "Altos",
       "groupId": "P1",
@@ -121,7 +121,7 @@
     "w.cmine.s21xp002": {
       "type": "worker_anomaly",
       "baselineHR": 472300000000000,
-      "currentHR": 15500670592468.764,
+      "currentHR": 24697474519021.797,
       "worker": "s21xp002",
       "provider": "Altos",
       "groupId": "P1",
@@ -215,7 +215,7 @@
     "w.everminer.e21xp015": {
       "type": "worker_anomaly",
       "baselineHR": 284800000000000,
-      "currentHR": 108211491046541.08,
+      "currentHR": 135107988821114.88,
       "worker": "e21xp015",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -227,7 +227,7 @@
     "w.everminer.e21xp031": {
       "type": "worker_anomaly",
       "baselineHR": 298300000000000,
-      "currentHR": 160127986750950.97,
+      "currentHR": 136358988717606.69,
       "worker": "e21xp031",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -331,18 +331,6 @@
       "accountName": "Cyberian Mine",
       "anomalyType": "volatile",
       "detectedAt": "2026-07-24T04:01:01.981Z"
-    },
-    "w.everminer.02a13716759b": {
-      "type": "worker_anomaly",
-      "baselineHR": 242700000000000,
-      "currentHR": 105328327222595.12,
-      "worker": "02a13716759b",
-      "provider": "Dataprana",
-      "groupId": "U1+U2",
-      "account": "everminer",
-      "accountName": "Everminer",
-      "anomalyType": "volatile",
-      "detectedAt": "2026-07-24T04:01:01.981Z"
     }
   },
   "everminer.U3": "2026-07-20T14:30:52.244Z",
@@ -419,7 +407,7 @@
   "cmine.OM": "2026-07-24T01:00:59.134Z",
   "w.cmine.r20915": "2026-07-23T09:01:09.463Z",
   "w.cmine.aa14": "2026-07-23T11:01:06.523Z",
-  "w.cmine.omxdefault": "2026-07-23T22:01:04.021Z",
+  "w.cmine.omxdefault": "2026-07-24T07:01:04.481Z",
   "cmine.F1": "2026-07-24T01:00:59.134Z",
   "w.cmine.18x0x238": "2026-07-24T03:01:02.986Z",
   "w.cmine.18x0x199": "2026-07-24T03:01:02.986Z",

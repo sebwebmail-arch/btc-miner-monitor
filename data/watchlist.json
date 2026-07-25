@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-25T11:00:59.373Z",
+  "last_updated": "2026-07-25T12:00:58.998Z",
   "entries": [
     {
       "key": "w.cmine.02a34725b1b2",
@@ -14,7 +14,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-21T18:00:58.646Z",
-      "duration_h": 89
+      "duration_h": 90
     },
     {
       "key": "w.everminer.k2lx131x5x2",
@@ -29,7 +29,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-22T17:01:00.534Z",
-      "duration_h": 66
+      "duration_h": 67
     },
     {
       "key": "w.everminer.k2lx131x5x6",
@@ -44,7 +44,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-22T18:01:01.945Z",
-      "duration_h": 65
+      "duration_h": 66
     },
     {
       "key": "w.everminer.k2lx131x5x7",
@@ -59,7 +59,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-22T18:01:01.945Z",
-      "duration_h": 65
+      "duration_h": 66
     },
     {
       "key": "w.everminer.k2lx131x5x50",
@@ -74,7 +74,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-22T18:01:01.945Z",
-      "duration_h": 65
+      "duration_h": 66
     },
     {
       "key": "w.everminer.k2lx131x5x3",
@@ -89,7 +89,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-22T18:01:01.945Z",
-      "duration_h": 65
+      "duration_h": 66
     },
     {
       "key": "w.everminer.k2lx131x5x5",
@@ -104,7 +104,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-22T18:01:01.945Z",
-      "duration_h": 65
+      "duration_h": 66
     },
     {
       "key": "w.cmine.omxdefault",
@@ -116,10 +116,10 @@
       "worker": "omxdefault",
       "anomaly_type": "level_drop",
       "baseline_hr": 4195000000000000,
-      "current_hr": 1532474873202460.5,
-      "drop_pct": 63,
+      "current_hr": 1689299438351737.8,
+      "drop_pct": 60,
       "detected_at": "2026-07-23T13:01:10.470Z",
-      "duration_h": 46
+      "duration_h": 47
     },
     {
       "key": "w.cmine.s21xphyd004",
@@ -131,10 +131,10 @@
       "worker": "s21xphyd004",
       "anomaly_type": "volatile",
       "baseline_hr": 474600000000000,
-      "current_hr": 28645942942324.055,
-      "drop_pct": 94,
+      "current_hr": 33239458187254.9,
+      "drop_pct": 93,
       "detected_at": "2026-07-23T14:01:09.412Z",
-      "duration_h": 45
+      "duration_h": 46
     },
     {
       "key": "w.cmine.s21xp002",
@@ -146,10 +146,10 @@
       "worker": "s21xp002",
       "anomaly_type": "volatile",
       "baseline_hr": 472300000000000,
-      "current_hr": 19292764028709.547,
+      "current_hr": 16947139222787.414,
       "drop_pct": 96,
       "detected_at": "2026-07-23T21:01:03.727Z",
-      "duration_h": 38
+      "duration_h": 39
     },
     {
       "key": "w.everminer.e21xp015",
@@ -161,10 +161,10 @@
       "worker": "e21xp015",
       "anomaly_type": "level_drop",
       "baseline_hr": 284800000000000,
-      "current_hr": 119470490114967.33,
-      "drop_pct": 58,
+      "current_hr": 141988488251819.8,
+      "drop_pct": 50,
       "detected_at": "2026-07-24T03:01:02.986Z",
-      "duration_h": 32
+      "duration_h": 33
     },
     {
       "key": "w.everminer.e21xp031",
@@ -176,10 +176,10 @@
       "worker": "e21xp031",
       "anomaly_type": "level_drop",
       "baseline_hr": 298300000000000,
-      "current_hr": 128852989338655.86,
-      "drop_pct": 57,
+      "current_hr": 144490488044803.4,
+      "drop_pct": 52,
       "detected_at": "2026-07-24T03:01:02.986Z",
-      "duration_h": 32
+      "duration_h": 33
     },
     {
       "key": "w.cmine.k2lx",
@@ -194,7 +194,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-24T09:01:07.162Z",
-      "duration_h": 26
+      "duration_h": 27
     },
     {
       "key": "w.everminer.e21xp021",
@@ -206,10 +206,10 @@
       "worker": "e21xp021",
       "anomaly_type": "level_drop",
       "baseline_hr": 287700000000000,
-      "current_hr": 160127986750950.97,
-      "drop_pct": 44,
+      "current_hr": 166382986233410,
+      "drop_pct": 42,
       "detected_at": "2026-07-25T00:01:07.423Z",
-      "duration_h": 11
+      "duration_h": 12
     },
     {
       "key": "w.everminer.e21xp028",
@@ -221,10 +221,10 @@
       "worker": "e21xp028",
       "anomaly_type": "level_drop",
       "baseline_hr": 293100000000000,
-      "current_hr": 162629986543934.56,
-      "drop_pct": 45,
+      "current_hr": 132605989028131.27,
+      "drop_pct": 55,
       "detected_at": "2026-07-25T02:00:58.236Z",
-      "duration_h": 9
+      "duration_h": 10
     },
     {
       "key": "w.cmine.s21xphyd0002",
@@ -239,7 +239,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-25T09:01:05.058Z",
-      "duration_h": 2
+      "duration_h": 3
     },
     {
       "key": "w.cmine.c21xp024",
@@ -254,7 +254,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-25T10:01:10.025Z",
-      "duration_h": 1
+      "duration_h": 2
     }
   ]
 }

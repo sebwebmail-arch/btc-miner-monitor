@@ -1,19 +1,19 @@
 {
-  "last_updated": "2026-07-25T20:01:00.367Z",
+  "last_updated": "2026-07-25T21:01:03.982Z",
   "offline": {
-    "cmine.c21xp024": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "c21xp024",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)"
-    },
     "cmine.k2lx": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
       "name": "k2lx",
       "group_id": "R3",
       "provider": "Minto"
+    },
+    "cmine.c21xp024": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "c21xp024",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)"
     },
     "cmine.k2lx132x9x42": {
       "account": "cmine",
@@ -44,6 +44,13 @@
       "dead": true,
       "category": "dead_recent",
       "last_share": "2026-07-24T00:01:09.640Z"
+    },
+    "everminer.e21xp021": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "e21xp021",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)"
     },
     "everminer.k2lx131x5x2": {
       "account": "everminer",

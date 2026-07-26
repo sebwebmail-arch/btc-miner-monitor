@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-26T21:00:57.838Z",
+  "last_updated": "2026-07-26T22:01:01.653Z",
   "issues": {
     "cmine.omxdefault": {
       "account": "cmine",
@@ -8,10 +8,10 @@
       "group_id": "OM",
       "provider": "Open Mine",
       "type": "level_drop",
-      "current_avg_ths": 1657.7,
+      "current_avg_ths": 1577.7,
       "baseline_avg_ths": 4744.6,
-      "drop_pct": 65,
-      "cv_pct": 10,
+      "drop_pct": 67,
+      "cv_pct": 16,
       "zero_rate_pct": 0
     },
     "cmine.r21129": {
@@ -21,10 +21,10 @@
       "group_id": "R1",
       "provider": "IZTM",
       "type": "level_drop",
-      "current_avg_ths": 87.1,
+      "current_avg_ths": 84.4,
       "baseline_avg_ths": 163.9,
-      "drop_pct": 47,
-      "cv_pct": 7,
+      "drop_pct": 48,
+      "cv_pct": 8,
       "zero_rate_pct": 0
     },
     "cmine.s21xphyd004": {
@@ -34,7 +34,7 @@
       "group_id": "P1",
       "provider": "Altos",
       "type": "level_drop",
-      "current_avg_ths": 14.4,
+      "current_avg_ths": 14.6,
       "baseline_avg_ths": 494.3,
       "drop_pct": 97,
       "cv_pct": 57,
@@ -47,10 +47,10 @@
       "group_id": "P1",
       "provider": "Altos",
       "type": "level_drop",
-      "current_avg_ths": 222.7,
+      "current_avg_ths": 192.5,
       "baseline_avg_ths": 520.5,
-      "drop_pct": 57,
-      "cv_pct": 58,
+      "drop_pct": 63,
+      "cv_pct": 39,
       "zero_rate_pct": 0
     },
     "cmine.s21xp002": {
@@ -60,10 +60,10 @@
       "group_id": "P1",
       "provider": "Altos",
       "type": "level_drop",
-      "current_avg_ths": 10.4,
+      "current_avg_ths": 9.9,
       "baseline_avg_ths": 512.7,
       "drop_pct": 98,
-      "cv_pct": 57,
+      "cv_pct": 58,
       "zero_rate_pct": 17
     },
     "everminer.e21xp028": {
@@ -73,10 +73,10 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)",
       "type": "level_drop",
-      "current_avg_ths": 99.6,
+      "current_avg_ths": 89.8,
       "baseline_avg_ths": 305.7,
-      "drop_pct": 67,
-      "cv_pct": 31,
+      "drop_pct": 71,
+      "cv_pct": 35,
       "zero_rate_pct": 0
     },
     "everminer.e21xp015": {
@@ -86,10 +86,23 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)",
       "type": "level_drop",
-      "current_avg_ths": 102.3,
+      "current_avg_ths": 91.2,
       "baseline_avg_ths": 287.8,
-      "drop_pct": 64,
-      "cv_pct": 34,
+      "drop_pct": 68,
+      "cv_pct": 31,
+      "zero_rate_pct": 0
+    },
+    "everminer.e21xp019": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "worker": "e21xp019",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)",
+      "type": "level_drop",
+      "current_avg_ths": 108.3,
+      "baseline_avg_ths": 198.9,
+      "drop_pct": 46,
+      "cv_pct": 50,
       "zero_rate_pct": 0
     },
     "everminer.e21xp031": {
@@ -99,10 +112,10 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)",
       "type": "level_drop",
-      "current_avg_ths": 106.2,
+      "current_avg_ths": 94.2,
       "baseline_avg_ths": 303.2,
-      "drop_pct": 65,
-      "cv_pct": 27,
+      "drop_pct": 69,
+      "cv_pct": 29,
       "zero_rate_pct": 0
     },
     "everminer.02a13716759b": {
@@ -111,12 +124,12 @@
       "worker": "02a13716759b",
       "group_id": "U1+U2",
       "provider": "Dataprana",
-      "type": "level_drop",
-      "current_avg_ths": 113.6,
-      "baseline_avg_ths": 230.8,
-      "drop_pct": 51,
-      "cv_pct": 95,
-      "zero_rate_pct": 33
+      "type": "volatile",
+      "current_avg_ths": 75.6,
+      "baseline_avg_ths": 230.6,
+      "drop_pct": 67,
+      "cv_pct": 132,
+      "zero_rate_pct": 50
     },
     "everminer.e21xp014": {
       "account": "everminer",
@@ -125,10 +138,10 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)",
       "type": "level_drop",
-      "current_avg_ths": 122,
+      "current_avg_ths": 90.3,
       "baseline_avg_ths": 285.6,
-      "drop_pct": 57,
-      "cv_pct": 57,
+      "drop_pct": 68,
+      "cv_pct": 35,
       "zero_rate_pct": 0
     }
   }

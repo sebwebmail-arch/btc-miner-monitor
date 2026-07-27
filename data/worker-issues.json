@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-27T12:01:11.861Z",
+  "last_updated": "2026-07-27T13:01:05.275Z",
   "issues": {
     "cmine.omxdefault": {
       "account": "cmine",
@@ -8,7 +8,7 @@
       "group_id": "OM",
       "provider": "Open Mine",
       "type": "level_drop",
-      "current_avg_ths": 1508.8,
+      "current_avg_ths": 1508.7,
       "baseline_avg_ths": 4726.8,
       "drop_pct": 68,
       "cv_pct": 5,
@@ -21,11 +21,11 @@
       "group_id": "P1",
       "provider": "Altos",
       "type": "level_drop",
-      "current_avg_ths": 14.8,
+      "current_avg_ths": 13.2,
       "baseline_avg_ths": 491.9,
       "drop_pct": 97,
-      "cv_pct": 23,
-      "zero_rate_pct": 0
+      "cv_pct": 48,
+      "zero_rate_pct": 17
     },
     "cmine.s21xp002": {
       "account": "cmine",
@@ -34,11 +34,11 @@
       "group_id": "P1",
       "provider": "Altos",
       "type": "level_drop",
-      "current_avg_ths": 14.2,
+      "current_avg_ths": 13.4,
       "baseline_avg_ths": 509.5,
       "drop_pct": 97,
-      "cv_pct": 33,
-      "zero_rate_pct": 0
+      "cv_pct": 48,
+      "zero_rate_pct": 17
     },
     "everminer.e21xp028": {
       "account": "everminer",
@@ -47,9 +47,9 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)",
       "type": "level_drop",
-      "current_avg_ths": 114.2,
+      "current_avg_ths": 124.5,
       "baseline_avg_ths": 304.2,
-      "drop_pct": 62,
+      "drop_pct": 59,
       "cv_pct": 13,
       "zero_rate_pct": 0
     },
@@ -60,10 +60,10 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)",
       "type": "level_drop",
-      "current_avg_ths": 124,
+      "current_avg_ths": 132.1,
       "baseline_avg_ths": 286.4,
-      "drop_pct": 57,
-      "cv_pct": 15,
+      "drop_pct": 54,
+      "cv_pct": 7,
       "zero_rate_pct": 0
     },
     "everminer.e21xp031": {
@@ -73,11 +73,24 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)",
       "type": "level_drop",
-      "current_avg_ths": 121.3,
+      "current_avg_ths": 128.4,
       "baseline_avg_ths": 301.3,
-      "drop_pct": 60,
+      "drop_pct": 57,
       "cv_pct": 9,
       "zero_rate_pct": 0
+    },
+    "everminer.02290d012b09": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "worker": "02290d012b09",
+      "group_id": "U1+U2",
+      "provider": "Dataprana",
+      "type": "volatile",
+      "current_avg_ths": 41.5,
+      "baseline_avg_ths": 251.4,
+      "drop_pct": 83,
+      "cv_pct": 218,
+      "zero_rate_pct": 67
     }
   }
 }

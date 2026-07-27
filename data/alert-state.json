@@ -87,7 +87,7 @@
     "w.cmine.omxdefault": {
       "type": "worker_anomaly",
       "baselineHR": 4195000000000000,
-      "currentHR": 1083424550982050.8,
+      "currentHR": 1200246439753664.2,
       "worker": "omxdefault",
       "provider": "Open Mine",
       "groupId": "OM",
@@ -159,7 +159,7 @@
     "w.cmine.r21129": {
       "type": "worker_anomaly",
       "baselineHR": 162300000000000,
-      "currentHR": 94450492185131.23,
+      "currentHR": 90071992547409.92,
       "worker": "r21129",
       "provider": "IZTM",
       "groupId": "R1",
@@ -171,7 +171,7 @@
     "g.everminer.U3": {
       "type": "group_drop",
       "baselineHR": 6700511820597168,
-      "currentHR": 2709665775801248.5,
+      "currentHR": 2616466283512609,
       "provider": "ValueHash (NY)",
       "groupId": "U3",
       "account": "everminer",

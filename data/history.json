@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-27T05:01:01.009Z",
+  "last_updated": "2026-07-28T05:01:03.226Z",
   "snapshots": [
     {
       "ts": "2026-06-30T11:49:33.334Z",
@@ -713,148 +713,41 @@
       "dead_recent": 0,
       "dead_mid": 0,
       "dead_old": 0
+    },
+    {
+      "ts": "2026-07-28T05:01:03.226Z",
+      "by_account": {
+        "cmine": {
+          "name": "Cyberian Mine",
+          "total": 431,
+          "online": 430,
+          "offline": 1,
+          "dead": 0
+        },
+        "everminer": {
+          "name": "Everminer",
+          "total": 115,
+          "online": 96,
+          "offline": 19,
+          "dead": 0
+        }
+      },
+      "offline": 20,
+      "dead_recent": 0,
+      "dead_mid": 0,
+      "dead_old": 0
     }
   ],
   "workers": {},
   "current_issues": {
-    "everminer.e21xp017": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "e21xp017",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)",
-      "host": "65.39.121.122",
-      "last_share": "2026-07-27T03:57:03.000Z",
-      "category": "offline"
-    },
-    "everminer.e21xp024": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "e21xp024",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)",
-      "host": "65.39.121.122",
-      "last_share": "2026-07-27T03:57:19.000Z",
-      "category": "offline"
-    },
-    "everminer.023e6ccfafbd": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "023e6ccfafbd",
-      "group_id": "U1+U2",
-      "provider": "Dataprana",
-      "host": "64.186.136.18",
-      "last_share": "2026-07-26T22:10:34.000Z",
-      "category": "offline"
-    },
-    "everminer.e21xp027": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "e21xp027",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)",
-      "host": "65.39.121.122",
-      "last_share": "2026-07-27T03:57:07.000Z",
-      "category": "offline"
-    },
-    "everminer.02290d012b09": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "02290d012b09",
-      "group_id": "U1+U2",
-      "provider": "Dataprana",
-      "host": "64.186.136.18",
-      "last_share": "2026-07-26T21:19:33.000Z",
-      "category": "offline"
-    },
-    "everminer.e21xp018": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "e21xp018",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)",
-      "host": "65.39.121.122",
-      "last_share": "2026-07-27T03:57:17.000Z",
-      "category": "offline"
-    },
-    "everminer.e21xp030": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "e21xp030",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)",
-      "host": "65.39.121.122",
-      "last_share": "2026-07-27T03:57:08.000Z",
-      "category": "offline"
-    },
-    "everminer.e21xp022": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "e21xp022",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)",
-      "host": "65.39.121.122",
-      "last_share": "2026-07-27T03:57:09.000Z",
-      "category": "offline"
-    },
-    "everminer.e21xp028": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "e21xp028",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)",
-      "host": "65.39.121.122",
-      "last_share": "2026-07-27T03:56:59.000Z",
-      "category": "offline"
-    },
-    "everminer.e21xp025": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "e21xp025",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)",
-      "host": "65.39.121.122",
-      "last_share": "2026-07-27T03:56:47.000Z",
-      "category": "offline"
-    },
-    "everminer.e21xp016": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "e21xp016",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)",
-      "host": "65.39.121.122",
-      "last_share": "2026-07-27T03:57:29.000Z",
-      "category": "offline"
-    },
-    "everminer.e21xp023": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "e21xp023",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)",
-      "host": "65.39.121.122",
-      "last_share": "2026-07-27T03:56:53.000Z",
-      "category": "offline"
-    },
-    "everminer.e21xp029": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "e21xp029",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)",
-      "host": "65.39.121.122",
-      "last_share": "2026-07-27T03:57:17.000Z",
-      "category": "offline"
-    },
-    "everminer.e21xp019": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "e21xp019",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)",
-      "host": "65.39.121.122",
-      "last_share": "2026-07-27T03:56:58.000Z",
+    "cmine.k2lx131x3x42": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x3x42",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-07-27T21:14:38.000Z",
       "category": "offline"
     },
     "everminer.e21xp012": {
@@ -864,37 +757,7 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)",
       "host": "65.39.121.122",
-      "last_share": "2026-07-27T03:57:20.000Z",
-      "category": "offline"
-    },
-    "everminer.e21xp031": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "e21xp031",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)",
-      "host": "65.39.121.122",
-      "last_share": "2026-07-27T03:57:20.000Z",
-      "category": "offline"
-    },
-    "everminer.e21xp020": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "e21xp020",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)",
-      "host": "65.39.121.122",
-      "last_share": "2026-07-27T03:57:10.000Z",
-      "category": "offline"
-    },
-    "everminer.e21xp026": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "e21xp026",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)",
-      "host": "65.39.121.122",
-      "last_share": "2026-07-27T03:57:18.000Z",
+      "last_share": "2026-07-28T03:59:13.000Z",
       "category": "offline"
     },
     "everminer.e21xp013": {
@@ -904,17 +767,37 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)",
       "host": "65.39.121.122",
-      "last_share": "2026-07-27T03:57:37.000Z",
+      "last_share": "2026-07-28T03:58:53.000Z",
       "category": "offline"
     },
-    "everminer.e21xp015": {
+    "everminer.e21xp026": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "e21xp015",
+      "name": "e21xp026",
       "group_id": "U3",
       "provider": "ValueHash (NY)",
       "host": "65.39.121.122",
-      "last_share": "2026-07-27T03:57:18.000Z",
+      "last_share": "2026-07-28T03:59:30.000Z",
+      "category": "offline"
+    },
+    "everminer.e21xp017": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "e21xp017",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)",
+      "host": "65.39.121.122",
+      "last_share": "2026-07-28T03:59:12.000Z",
+      "category": "offline"
+    },
+    "everminer.e21xp027": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "e21xp027",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)",
+      "host": "65.39.121.122",
+      "last_share": "2026-07-28T03:59:21.000Z",
       "category": "offline"
     },
     "everminer.e21xp014": {
@@ -924,7 +807,137 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)",
       "host": "65.39.121.122",
-      "last_share": "2026-07-27T03:56:48.000Z",
+      "last_share": "2026-07-28T03:59:20.000Z",
+      "category": "offline"
+    },
+    "everminer.e21xp018": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "e21xp018",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)",
+      "host": "65.39.121.122",
+      "last_share": "2026-07-28T03:59:03.000Z",
+      "category": "offline"
+    },
+    "everminer.e21xp024": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "e21xp024",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)",
+      "host": "65.39.121.122",
+      "last_share": "2026-07-28T03:59:05.000Z",
+      "category": "offline"
+    },
+    "everminer.e21xp019": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "e21xp019",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)",
+      "host": "65.39.121.122",
+      "last_share": "2026-07-28T03:59:34.000Z",
+      "category": "offline"
+    },
+    "everminer.e21xp028": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "e21xp028",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)",
+      "host": "65.39.121.122",
+      "last_share": "2026-07-28T03:58:25.000Z",
+      "category": "offline"
+    },
+    "everminer.e21xp031": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "e21xp031",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)",
+      "host": "65.39.121.122",
+      "last_share": "2026-07-28T03:59:13.000Z",
+      "category": "offline"
+    },
+    "everminer.e21xp030": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "e21xp030",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)",
+      "host": "65.39.121.122",
+      "last_share": "2026-07-28T03:57:56.000Z",
+      "category": "offline"
+    },
+    "everminer.e21xp015": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "e21xp015",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)",
+      "host": "65.39.121.122",
+      "last_share": "2026-07-28T03:59:03.000Z",
+      "category": "offline"
+    },
+    "everminer.e21xp020": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "e21xp020",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)",
+      "host": "65.39.121.122",
+      "last_share": "2026-07-28T03:58:47.000Z",
+      "category": "offline"
+    },
+    "everminer.e21xp022": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "e21xp022",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)",
+      "host": "65.39.121.122",
+      "last_share": "2026-07-28T03:59:13.000Z",
+      "category": "offline"
+    },
+    "everminer.e21xp023": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "e21xp023",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)",
+      "host": "65.39.121.122",
+      "last_share": "2026-07-28T03:59:25.000Z",
+      "category": "offline"
+    },
+    "everminer.e21xp029": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "e21xp029",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)",
+      "host": "65.39.121.122",
+      "last_share": "2026-07-28T03:59:17.000Z",
+      "category": "offline"
+    },
+    "everminer.e21xp016": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "e21xp016",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)",
+      "host": "65.39.121.122",
+      "last_share": "2026-07-28T03:59:31.000Z",
+      "category": "offline"
+    },
+    "everminer.e21xp025": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "e21xp025",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)",
+      "host": "65.39.121.122",
+      "last_share": "2026-07-28T03:59:30.000Z",
       "category": "offline"
     }
   }

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-28T13:01:11.587Z",
+  "last_updated": "2026-07-28T14:01:12.752Z",
   "entries": [
     {
       "key": "w.cmine.02a34725b1b2",
@@ -14,7 +14,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-21T18:00:58.646Z",
-      "duration_h": 163
+      "duration_h": 164
     },
     {
       "key": "w.everminer.k2lx131x5x2",
@@ -29,7 +29,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-22T17:01:00.534Z",
-      "duration_h": 140
+      "duration_h": 141
     },
     {
       "key": "w.everminer.k2lx131x5x6",
@@ -44,7 +44,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-22T18:01:01.945Z",
-      "duration_h": 139
+      "duration_h": 140
     },
     {
       "key": "w.everminer.k2lx131x5x7",
@@ -59,7 +59,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-22T18:01:01.945Z",
-      "duration_h": 139
+      "duration_h": 140
     },
     {
       "key": "w.everminer.k2lx131x5x50",
@@ -74,7 +74,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-22T18:01:01.945Z",
-      "duration_h": 139
+      "duration_h": 140
     },
     {
       "key": "w.everminer.k2lx131x5x3",
@@ -89,7 +89,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-22T18:01:01.945Z",
-      "duration_h": 139
+      "duration_h": 140
     },
     {
       "key": "w.everminer.k2lx131x5x5",
@@ -104,7 +104,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-22T18:01:01.945Z",
-      "duration_h": 139
+      "duration_h": 140
     },
     {
       "key": "w.cmine.omxdefault",
@@ -116,10 +116,10 @@
       "worker": "omxdefault",
       "anomaly_type": "level_drop",
       "baseline_hr": 4195000000000000,
-      "current_hr": 17582412607724.658,
+      "current_hr": 12959577052719.787,
       "drop_pct": 100,
       "detected_at": "2026-07-23T13:01:10.470Z",
-      "duration_h": 120
+      "duration_h": 121
     },
     {
       "key": "w.cmine.k2lx131x3x42",
@@ -134,7 +134,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-28T01:01:04.253Z",
-      "duration_h": 12
+      "duration_h": 13
     },
     {
       "key": "g.cmine.OM",
@@ -146,10 +146,10 @@
       "worker": null,
       "anomaly_type": null,
       "baseline_hr": 528612612512396.3,
-      "current_hr": 17582412607724.658,
-      "drop_pct": 97,
+      "current_hr": 12959577052719.787,
+      "drop_pct": 98,
       "detected_at": "2026-07-28T13:01:11.587Z",
-      "duration_h": 0
+      "duration_h": 1
     }
   ]
 }

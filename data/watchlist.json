@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-28T07:01:03.647Z",
+  "last_updated": "2026-07-28T08:01:09.711Z",
   "entries": [
     {
       "key": "w.cmine.02a34725b1b2",
@@ -14,7 +14,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-21T18:00:58.646Z",
-      "duration_h": 157
+      "duration_h": 158
     },
     {
       "key": "w.everminer.k2lx131x5x2",
@@ -29,7 +29,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-22T17:01:00.534Z",
-      "duration_h": 134
+      "duration_h": 135
     },
     {
       "key": "w.everminer.k2lx131x5x6",
@@ -44,7 +44,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-22T18:01:01.945Z",
-      "duration_h": 133
+      "duration_h": 134
     },
     {
       "key": "w.everminer.k2lx131x5x7",
@@ -59,7 +59,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-22T18:01:01.945Z",
-      "duration_h": 133
+      "duration_h": 134
     },
     {
       "key": "w.everminer.k2lx131x5x50",
@@ -74,7 +74,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-22T18:01:01.945Z",
-      "duration_h": 133
+      "duration_h": 134
     },
     {
       "key": "w.everminer.k2lx131x5x3",
@@ -89,7 +89,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-22T18:01:01.945Z",
-      "duration_h": 133
+      "duration_h": 134
     },
     {
       "key": "w.everminer.k2lx131x5x5",
@@ -104,7 +104,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-22T18:01:01.945Z",
-      "duration_h": 133
+      "duration_h": 134
     },
     {
       "key": "w.cmine.omxdefault",
@@ -116,55 +116,10 @@
       "worker": "omxdefault",
       "anomaly_type": "level_drop",
       "baseline_hr": 4195000000000000,
-      "current_hr": 932385860354048,
-      "drop_pct": 78,
+      "current_hr": 503732700508469.5,
+      "drop_pct": 88,
       "detected_at": "2026-07-23T13:01:10.470Z",
-      "duration_h": 114
-    },
-    {
-      "key": "w.everminer.e21xp015",
-      "type": "worker_anomaly",
-      "provider": "ValueHash (NY)",
-      "group_id": "U3",
-      "account": "everminer",
-      "account_name": "Everminer",
-      "worker": "e21xp015",
-      "anomaly_type": "level_drop",
-      "baseline_hr": 284800000000000,
-      "current_hr": 212669982403606.75,
-      "drop_pct": 25,
-      "detected_at": "2026-07-24T03:01:02.986Z",
-      "duration_h": 100
-    },
-    {
-      "key": "w.cmine.k2lx",
-      "type": "worker_anomaly",
-      "provider": "Minto",
-      "group_id": "R3",
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "k2lx",
-      "anomaly_type": "volatile",
-      "baseline_hr": 184100000000000,
-      "current_hr": 113528240606631.25,
-      "drop_pct": 38,
-      "detected_at": "2026-07-24T09:01:07.162Z",
-      "duration_h": 94
-    },
-    {
-      "key": "w.everminer.e21xp021",
-      "type": "worker_anomaly",
-      "provider": "ValueHash (NY)",
-      "group_id": "U3",
-      "account": "everminer",
-      "account_name": "Everminer",
-      "worker": "e21xp021",
-      "anomaly_type": "level_drop",
-      "baseline_hr": 287700000000000,
-      "current_hr": 181707734965434.6,
-      "drop_pct": 37,
-      "detected_at": "2026-07-25T00:01:07.423Z",
-      "duration_h": 79
+      "duration_h": 115
     },
     {
       "key": "w.cmine.r21129",
@@ -176,10 +131,10 @@
       "worker": "r21129",
       "anomaly_type": "level_drop",
       "baseline_hr": 162300000000000,
-      "current_hr": 107273241124172.23,
-      "drop_pct": 34,
+      "current_hr": 112589990684262.4,
+      "drop_pct": 31,
       "detected_at": "2026-07-27T17:01:13.038Z",
-      "duration_h": 14
+      "duration_h": 15
     },
     {
       "key": "w.cmine.k2lx131x3x42",
@@ -194,7 +149,22 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-07-28T01:01:04.253Z",
-      "duration_h": 6
+      "duration_h": 7
+    },
+    {
+      "key": "g.cmine.OM",
+      "type": "group_drop",
+      "provider": "Open Mine",
+      "group_id": "OM",
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "worker": null,
+      "anomaly_type": null,
+      "baseline_hr": 1049673616274615.5,
+      "current_hr": 503732700508469.5,
+      "drop_pct": 52,
+      "detected_at": "2026-07-28T08:01:09.711Z",
+      "duration_h": 0
     }
   ]
 }

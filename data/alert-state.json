@@ -87,7 +87,7 @@
     "w.cmine.omxdefault": {
       "type": "worker_anomaly",
       "baselineHR": 4195000000000000,
-      "currentHR": 17826748525008.215,
+      "currentHR": 30375841236691.625,
       "worker": "omxdefault",
       "provider": "Open Mine",
       "groupId": "OM",
@@ -159,7 +159,7 @@
     "w.cmine.k2lx131x5x40": {
       "type": "worker_anomaly",
       "baselineHR": 219600000000000,
-      "currentHR": 43159496428967.25,
+      "currentHR": 59735245057483.664,
       "worker": "k2lx131x5x40",
       "provider": "Minto",
       "groupId": "R3",
@@ -183,7 +183,7 @@
     "w.cmine.k2lx131x1x5": {
       "type": "worker_anomaly",
       "baselineHR": 137900000000000,
-      "currentHR": 70055994203541.05,
+      "currentHR": 0,
       "worker": "k2lx131x1x5",
       "provider": "Minto",
       "groupId": "R3",
@@ -203,6 +203,30 @@
       "accountName": "Cyberian Mine",
       "anomalyType": "volatile",
       "detectedAt": "2026-07-29T09:01:08.667Z"
+    },
+    "w.everminer.aa12": {
+      "type": "worker_anomaly",
+      "baselineHR": 224500000000000,
+      "currentHR": 0,
+      "worker": "aa12",
+      "provider": "AmityAge",
+      "groupId": "E2",
+      "account": "everminer",
+      "accountName": "Everminer",
+      "anomalyType": "volatile",
+      "detectedAt": "2026-07-29T15:01:13.712Z"
+    },
+    "w.everminer.aa14": {
+      "type": "worker_anomaly",
+      "baselineHR": 217600000000000,
+      "currentHR": 0,
+      "worker": "aa14",
+      "provider": "AmityAge",
+      "groupId": "E2",
+      "account": "everminer",
+      "accountName": "Everminer",
+      "anomalyType": "volatile",
+      "detectedAt": "2026-07-29T15:01:13.712Z"
     }
   },
   "everminer.U3": "2026-07-28T21:00:59.294Z",
@@ -467,5 +491,7 @@
   "w.cmine.k2lx132x12x39": "2026-07-29T09:01:08.667Z",
   "w.cmine.k2lx132x9x47": "2026-07-29T09:01:08.667Z",
   "w.cmine.k2lx131x4x20": "2026-07-29T09:01:08.667Z",
-  "w.cmine.k2lx131x3x21": "2026-07-29T09:01:08.667Z"
+  "w.cmine.k2lx131x3x21": "2026-07-29T09:01:08.667Z",
+  "w.everminer.aa12": "2026-07-29T15:01:13.712Z",
+  "w.everminer.aa14": "2026-07-29T15:01:13.712Z"
 }

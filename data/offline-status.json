@@ -1,20 +1,6 @@
 {
-  "last_updated": "2026-07-29T17:01:03.309Z",
+  "last_updated": "2026-07-29T18:01:03.707Z",
   "offline": {
-    "cmine.k2lx132x9x47": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "k2lx132x9x47",
-      "group_id": "R3",
-      "provider": "Minto"
-    },
-    "cmine.k2lx131x1x42": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "k2lx131x1x42",
-      "group_id": "R3",
-      "provider": "Minto"
-    },
     "cmine.k2lx": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
@@ -33,6 +19,20 @@
       "account": "cmine",
       "account_name": "Cyberian Mine",
       "name": "k2lx132x11x35",
+      "group_id": "R3",
+      "provider": "Minto"
+    },
+    "cmine.k2lx131x1x42": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x1x42",
+      "group_id": "R3",
+      "provider": "Minto"
+    },
+    "cmine.k2lx132x9x47": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x9x47",
       "group_id": "R3",
       "provider": "Minto"
     },
@@ -76,19 +76,19 @@
       "category": "offline",
       "last_share": "2026-07-29T00:01:08.471Z"
     },
-    "everminer.02290d012b09": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "02290d012b09",
-      "group_id": "U1+U2",
-      "provider": "Dataprana"
-    },
     "everminer.aa12": {
       "account": "everminer",
       "account_name": "Everminer",
       "name": "aa12",
       "group_id": "E2",
       "provider": "AmityAge"
+    },
+    "everminer.02290d012b09": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "02290d012b09",
+      "group_id": "U1+U2",
+      "provider": "Dataprana"
     },
     "everminer.k2lx131x3x21": {
       "account": "everminer",

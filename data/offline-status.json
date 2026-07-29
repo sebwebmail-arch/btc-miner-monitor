@@ -1,13 +1,6 @@
 {
-  "last_updated": "2026-07-29T13:01:04.692Z",
+  "last_updated": "2026-07-29T14:01:10.357Z",
   "offline": {
-    "cmine.k2lx132x10x46": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "k2lx132x10x46",
-      "group_id": "R3",
-      "provider": "Minto"
-    },
     "cmine.k2lx": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
@@ -15,10 +8,10 @@
       "group_id": "R3",
       "provider": "Minto"
     },
-    "cmine.k2lx132x11x35": {
+    "cmine.k2lx132x9x47": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
-      "name": "k2lx132x11x35",
+      "name": "k2lx132x9x47",
       "group_id": "R3",
       "provider": "Minto"
     },
@@ -29,10 +22,17 @@
       "group_id": "R3",
       "provider": "Minto"
     },
-    "cmine.k2lx132x9x47": {
+    "cmine.k2lx132x10x46": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
-      "name": "k2lx132x9x47",
+      "name": "k2lx132x10x46",
+      "group_id": "R3",
+      "provider": "Minto"
+    },
+    "cmine.k2lx132x11x35": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x11x35",
       "group_id": "R3",
       "provider": "Minto"
     },
@@ -76,12 +76,12 @@
       "category": "offline",
       "last_share": "2026-07-29T00:01:08.471Z"
     },
-    "everminer.aa12": {
+    "everminer.k2lx131x3x21": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "aa12",
-      "group_id": "E2",
-      "provider": "AmityAge"
+      "name": "k2lx131x3x21",
+      "group_id": "R3",
+      "provider": "Minto"
     },
     "everminer.02290d012b09": {
       "account": "everminer",
@@ -90,12 +90,12 @@
       "group_id": "U1+U2",
       "provider": "Dataprana"
     },
-    "everminer.k2lx131x3x21": {
+    "everminer.aa12": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "k2lx131x3x21",
-      "group_id": "R3",
-      "provider": "Minto"
+      "name": "aa12",
+      "group_id": "E2",
+      "provider": "AmityAge"
     },
     "everminer.aa14": {
       "account": "everminer",

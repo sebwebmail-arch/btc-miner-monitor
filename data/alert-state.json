@@ -87,7 +87,7 @@
     "w.cmine.omxdefault": {
       "type": "worker_anomaly",
       "baselineHR": 4195000000000000,
-      "currentHR": 23583302736208.78,
+      "currentHR": 29652606921532.3,
       "worker": "omxdefault",
       "provider": "Open Mine",
       "groupId": "OM",
@@ -120,18 +120,6 @@
       "anomalyType": "volatile",
       "detectedAt": "2026-07-28T15:01:14.415Z"
     },
-    "w.everminer.e21xp014": {
-      "type": "worker_anomaly",
-      "baselineHR": 284100000000000,
-      "currentHR": 186555359564340.34,
-      "worker": "e21xp014",
-      "provider": "ValueHash (NY)",
-      "groupId": "U3",
-      "account": "everminer",
-      "accountName": "Everminer",
-      "anomalyType": "level_drop",
-      "detectedAt": "2026-07-28T21:00:59.294Z"
-    },
     "w.cmine.k2lx132x11x35": {
       "type": "worker_anomaly",
       "baselineHR": 175500000000000,
@@ -147,22 +135,10 @@
     "w.cmine.r21129": {
       "type": "worker_anomaly",
       "baselineHR": 159900000000000,
-      "currentHR": 101956491564082.06,
+      "currentHR": 98828991822852.55,
       "worker": "r21129",
       "provider": "IZTM",
       "groupId": "R1",
-      "account": "cmine",
-      "accountName": "Cyberian Mine",
-      "anomalyType": "level_drop",
-      "detectedAt": "2026-07-29T00:01:08.471Z"
-    },
-    "w.cmine.s21xphyd0002": {
-      "type": "worker_anomaly",
-      "baselineHR": 519000000000000,
-      "currentHR": 283947656193565.56,
-      "worker": "s21xphyd0002",
-      "provider": "Altos",
-      "groupId": "P1",
       "account": "cmine",
       "accountName": "Cyberian Mine",
       "anomalyType": "level_drop",
@@ -203,7 +179,7 @@
   "w.everminer.e21xp026": "2026-07-28T23:01:08.395Z",
   "w.everminer.e21xp029": "2026-07-28T23:01:08.395Z",
   "w.everminer.e21xp018": "2026-07-28T23:01:08.395Z",
-  "w.everminer.e21xp014": "2026-07-28T21:00:59.294Z",
+  "w.everminer.e21xp014": "2026-07-29T05:01:03.143Z",
   "w.cmine.s21xphyd0003": "2026-07-23T01:01:03.004Z",
   "w.cmine.s21hyd003": "2026-07-21T00:01:07.368Z",
   "w.cmine.s21hyd008": "2026-07-21T00:01:07.368Z",

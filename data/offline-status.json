@@ -1,10 +1,10 @@
 {
-  "last_updated": "2026-07-29T23:01:02.143Z",
+  "last_updated": "2026-07-30T00:01:07.107Z",
   "offline": {
-    "cmine.k2lx": {
+    "cmine.k2lx132x10x46": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
-      "name": "k2lx",
+      "name": "k2lx132x10x46",
       "group_id": "R3",
       "provider": "Minto"
     },
@@ -22,17 +22,17 @@
       "group_id": "R3",
       "provider": "Minto"
     },
-    "cmine.k2lx132x10x46": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "k2lx132x10x46",
-      "group_id": "R3",
-      "provider": "Minto"
-    },
     "cmine.k2lx131x1x42": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
       "name": "k2lx131x1x42",
+      "group_id": "R3",
+      "provider": "Minto"
+    },
+    "cmine.k2lx": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx",
       "group_id": "R3",
       "provider": "Minto"
     },
@@ -73,29 +73,8 @@
       "group_id": "R3",
       "provider": "Minto",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-07-29T00:01:08.471Z"
-    },
-    "everminer.02a13716759b": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "02a13716759b",
-      "group_id": "U1+U2",
-      "provider": "Dataprana"
-    },
-    "everminer.02a472b3361b": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "02a472b3361b",
-      "group_id": "U1+U2",
-      "provider": "Dataprana"
-    },
-    "everminer.02b18d53c9b9": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "02b18d53c9b9",
-      "group_id": "U1+U2",
-      "provider": "Dataprana"
     },
     "everminer.020e5af4a6ab": {
       "account": "everminer",
@@ -104,17 +83,31 @@
       "group_id": "U1+U2",
       "provider": "Dataprana"
     },
-    "everminer.028e78f6862a": {
+    "everminer.0216c0e82428": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "028e78f6862a",
+      "name": "0216c0e82428",
       "group_id": "U1+U2",
       "provider": "Dataprana"
     },
-    "everminer.02290d012b09": {
+    "everminer.029c3cb5f721": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "02290d012b09",
+      "name": "029c3cb5f721",
+      "group_id": "U1+U2",
+      "provider": "Dataprana"
+    },
+    "everminer.021cc0f8b327": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "021cc0f8b327",
+      "group_id": "U1+U2",
+      "provider": "Dataprana"
+    },
+    "everminer.02b3312dc91d": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "02b3312dc91d",
       "group_id": "U1+U2",
       "provider": "Dataprana"
     },
@@ -132,6 +125,55 @@
       "group_id": "U1+U2",
       "provider": "Dataprana"
     },
+    "everminer.02b4889e5c95": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "02b4889e5c95",
+      "group_id": "U1+U2",
+      "provider": "Dataprana"
+    },
+    "everminer.02a13716759b": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "02a13716759b",
+      "group_id": "U1+U2",
+      "provider": "Dataprana"
+    },
+    "everminer.023e6ccfafbd": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "023e6ccfafbd",
+      "group_id": "U1+U2",
+      "provider": "Dataprana"
+    },
+    "everminer.02b18d53c9b9": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "02b18d53c9b9",
+      "group_id": "U1+U2",
+      "provider": "Dataprana"
+    },
+    "everminer.023c6894df0b": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "023c6894df0b",
+      "group_id": "U1+U2",
+      "provider": "Dataprana"
+    },
+    "everminer.02a472b3361b": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "02a472b3361b",
+      "group_id": "U1+U2",
+      "provider": "Dataprana"
+    },
+    "everminer.02290d012b09": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "02290d012b09",
+      "group_id": "U1+U2",
+      "provider": "Dataprana"
+    },
     "everminer.029bc156a03f": {
       "account": "everminer",
       "account_name": "Everminer",
@@ -146,52 +188,10 @@
       "group_id": "U1+U2",
       "provider": "Dataprana"
     },
-    "everminer.0216c0e82428": {
+    "everminer.028e78f6862a": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "0216c0e82428",
-      "group_id": "U1+U2",
-      "provider": "Dataprana"
-    },
-    "everminer.023e6ccfafbd": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "023e6ccfafbd",
-      "group_id": "U1+U2",
-      "provider": "Dataprana"
-    },
-    "everminer.02b3312dc91d": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "02b3312dc91d",
-      "group_id": "U1+U2",
-      "provider": "Dataprana"
-    },
-    "everminer.02b4889e5c95": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "02b4889e5c95",
-      "group_id": "U1+U2",
-      "provider": "Dataprana"
-    },
-    "everminer.023c6894df0b": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "023c6894df0b",
-      "group_id": "U1+U2",
-      "provider": "Dataprana"
-    },
-    "everminer.029c3cb5f721": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "029c3cb5f721",
-      "group_id": "U1+U2",
-      "provider": "Dataprana"
-    },
-    "everminer.021cc0f8b327": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "021cc0f8b327",
+      "name": "028e78f6862a",
       "group_id": "U1+U2",
       "provider": "Dataprana"
     },

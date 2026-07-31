@@ -2015,18 +2015,6 @@
       "accountName": "Cyberian Mine",
       "anomalyType": "volatile",
       "detectedAt": "2026-07-30T15:01:09.000Z"
-    },
-    "w.cmine.c21xp024": {
-      "type": "worker_anomaly",
-      "baselineHR": 266700000000000,
-      "currentHR": 38038215602703.93,
-      "worker": "c21xp024",
-      "provider": "ValueHash (NY)",
-      "groupId": "U3",
-      "account": "cmine",
-      "accountName": "Cyberian Mine",
-      "anomalyType": "volatile",
-      "detectedAt": "2026-07-31T13:01:07.643Z"
     }
   },
   "everminer.U3": "2026-07-28T21:00:59.294Z",

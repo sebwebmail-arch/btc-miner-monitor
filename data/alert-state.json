@@ -2031,7 +2031,7 @@
     "w.cmine.s21xphyd0002": {
       "type": "worker_anomaly",
       "baselineHR": 515600000000000,
-      "currentHR": 31998231727454.438,
+      "currentHR": 165434962874349.78,
       "worker": "s21xphyd0002",
       "provider": "Altos",
       "groupId": "P1",
@@ -2043,7 +2043,7 @@
     "w.everminer.e21xp015": {
       "type": "worker_anomaly",
       "baselineHR": 279100000000000.03,
-      "currentHR": 143864988096557.5,
+      "currentHR": 147617987786032.94,
       "worker": "e21xp015",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -2055,7 +2055,7 @@
     "w.everminer.e21xp016": {
       "type": "worker_anomaly",
       "baselineHR": 269600000000000.03,
-      "currentHR": 119470490114967.33,
+      "currentHR": 120721490011459.12,
       "worker": "e21xp016",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -2067,7 +2067,7 @@
     "w.everminer.e21xp018": {
       "type": "worker_anomaly",
       "baselineHR": 271000000000000,
-      "currentHR": 93199492288639.44,
+      "currentHR": 119470490114967.33,
       "worker": "e21xp018",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -2075,6 +2075,18 @@
       "accountName": "Everminer",
       "anomalyType": "level_drop",
       "detectedAt": "2026-07-31T21:01:11.380Z"
+    },
+    "w.everminer.e21xp028": {
+      "type": "worker_anomaly",
+      "baselineHR": 275399999999999.97,
+      "currentHR": 111964490736016.5,
+      "worker": "e21xp028",
+      "provider": "ValueHash (NY)",
+      "groupId": "U3",
+      "account": "everminer",
+      "accountName": "Everminer",
+      "anomalyType": "level_drop",
+      "detectedAt": "2026-07-31T22:01:04.333Z"
     }
   },
   "everminer.U3": "2026-07-28T21:00:59.294Z",
@@ -2082,7 +2094,7 @@
   "everminer.P1": "2026-07-20T22:01:04.628Z",
   "w.everminer.e21xp023": "2026-07-28T23:01:08.395Z",
   "w.everminer.e21xp025": "2026-07-28T23:01:08.395Z",
-  "w.everminer.e21xp028": "2026-07-28T23:01:08.395Z",
+  "w.everminer.e21xp028": "2026-07-31T22:01:04.333Z",
   "w.everminer.e21xp017": "2026-07-28T23:01:08.395Z",
   "w.everminer.e21xp015": "2026-07-31T21:01:11.380Z",
   "w.everminer.e21xp020": "2026-07-28T23:01:08.395Z",

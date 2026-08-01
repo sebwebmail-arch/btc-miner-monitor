@@ -120,18 +120,6 @@
       "anomalyType": "volatile",
       "detectedAt": "2026-07-28T23:01:08.395Z"
     },
-    "w.everminer.02290d012b09": {
-      "type": "worker_anomaly",
-      "baselineHR": 235500000000000,
-      "currentHR": 0,
-      "worker": "02290d012b09",
-      "provider": "Dataprana",
-      "groupId": "U1+U2",
-      "account": "everminer",
-      "accountName": "Everminer",
-      "anomalyType": "level_drop",
-      "detectedAt": "2026-07-29T02:01:01.092Z"
-    },
     "w.cmine.k2lx132x10x46": {
       "type": "worker_anomaly",
       "baselineHR": 187600000000000,

@@ -1,31 +1,4 @@
 {
-  "last_updated": "2026-08-01T19:01:06.471Z",
-  "issues": {
-    "everminer.021cc0f8b327": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "worker": "021cc0f8b327",
-      "group_id": "U1+U2",
-      "provider": "Dataprana",
-      "type": "volatile",
-      "current_avg_ths": 189,
-      "baseline_avg_ths": 204,
-      "drop_pct": 7,
-      "cv_pct": 56,
-      "zero_rate_pct": 0
-    },
-    "everminer.02290d012b09": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "worker": "02290d012b09",
-      "group_id": "U1+U2",
-      "provider": "Dataprana",
-      "type": "volatile",
-      "current_avg_ths": 114.1,
-      "baseline_avg_ths": 251.5,
-      "drop_pct": 55,
-      "cv_pct": 100,
-      "zero_rate_pct": 50
-    }
-  }
+  "last_updated": "2026-08-01T20:01:02.596Z",
+  "issues": {}
 }

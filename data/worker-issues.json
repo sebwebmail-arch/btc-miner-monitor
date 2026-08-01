@@ -1,4 +1,18 @@
 {
-  "last_updated": "2026-08-01T14:01:05.211Z",
-  "issues": {}
+  "last_updated": "2026-08-01T15:01:04.200Z",
+  "issues": {
+    "everminer.02a472b3361b": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "worker": "02a472b3361b",
+      "group_id": "U1+U2",
+      "provider": "Dataprana",
+      "type": "volatile",
+      "current_avg_ths": 172.1,
+      "baseline_avg_ths": 205,
+      "drop_pct": 16,
+      "cv_pct": 56,
+      "zero_rate_pct": 0
+    }
+  }
 }

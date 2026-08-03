@@ -2004,17 +2004,29 @@
       "anomalyType": "volatile",
       "detectedAt": "2026-07-30T15:01:09.000Z"
     },
-    "w.cmine.aa15": {
+    "w.cmine.k2lx131x2x44": {
       "type": "worker_anomaly",
-      "baselineHR": 223000000000000,
-      "currentHR": 119626865102028.8,
-      "worker": "aa15",
-      "provider": "AmityAge",
-      "groupId": "E2",
+      "baselineHR": 173000000000000,
+      "currentHR": 0,
+      "worker": "k2lx131x2x44",
+      "provider": "Minto",
+      "groupId": "R3",
       "account": "cmine",
       "accountName": "Cyberian Mine",
       "anomalyType": "volatile",
-      "detectedAt": "2026-08-03T08:01:14.086Z"
+      "detectedAt": "2026-08-03T11:01:11.395Z"
+    },
+    "w.cmine.k2lx131x2x33": {
+      "type": "worker_anomaly",
+      "baselineHR": 181800000000000,
+      "currentHR": 0,
+      "worker": "k2lx131x2x33",
+      "provider": "Minto",
+      "groupId": "R3",
+      "account": "cmine",
+      "accountName": "Cyberian Mine",
+      "anomalyType": "volatile",
+      "detectedAt": "2026-08-03T11:01:11.395Z"
     }
   },
   "everminer.U3": "2026-07-28T21:00:59.294Z",
@@ -2157,7 +2169,7 @@
   "w.cmine.k2lx132x10x41": "2026-07-29T09:01:08.667Z",
   "w.cmine.k2lx131x1x35": "2026-07-29T09:01:08.667Z",
   "w.cmine.k2lx131x2x2": "2026-07-29T09:01:08.667Z",
-  "w.cmine.k2lx131x2x44": "2026-07-29T09:01:08.667Z",
+  "w.cmine.k2lx131x2x44": "2026-08-03T11:01:11.395Z",
   "w.cmine.k2lx132x10x31": "2026-07-29T09:01:08.667Z",
   "w.cmine.k2lx132x12x38": "2026-07-29T09:01:08.667Z",
   "w.cmine.k2lx131x1x46": "2026-07-29T09:01:08.667Z",
@@ -2182,7 +2194,7 @@
   "w.cmine.k2lx131x3x47": "2026-07-29T09:01:08.667Z",
   "w.cmine.k2lx131x4x41": "2026-07-29T09:01:08.667Z",
   "w.cmine.k2lx132x12x30": "2026-07-29T09:01:08.667Z",
-  "w.cmine.k2lx131x2x33": "2026-07-29T09:01:08.667Z",
+  "w.cmine.k2lx131x2x33": "2026-08-03T11:01:11.395Z",
   "w.cmine.k2lx131x3x29": "2026-07-29T09:01:08.667Z",
   "w.cmine.k2lx131x1x21": "2026-07-29T09:01:08.667Z",
   "w.cmine.k2lx131x5x40": "2026-07-29T18:01:03.707Z",

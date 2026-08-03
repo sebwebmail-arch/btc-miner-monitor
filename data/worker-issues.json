@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-03T12:01:15.860Z",
+  "last_updated": "2026-08-03T13:01:10.613Z",
   "issues": {
     "cmine.k2lx131x2x44": {
       "account": "cmine",
@@ -8,11 +8,11 @@
       "group_id": "R3",
       "provider": "Minto",
       "type": "volatile",
-      "current_avg_ths": 78.5,
-      "baseline_avg_ths": 173.8,
-      "drop_pct": 55,
-      "cv_pct": 106,
-      "zero_rate_pct": 50
+      "current_avg_ths": 51,
+      "baseline_avg_ths": 172.5,
+      "drop_pct": 70,
+      "cv_pct": 151,
+      "zero_rate_pct": 67
     },
     "cmine.aa15": {
       "account": "cmine",
@@ -21,11 +21,11 @@
       "group_id": "E2",
       "provider": "AmityAge",
       "type": "volatile",
-      "current_avg_ths": 54.3,
-      "baseline_avg_ths": 220.2,
-      "drop_pct": 75,
-      "cv_pct": 149,
-      "zero_rate_pct": 67
+      "current_avg_ths": 87.7,
+      "baseline_avg_ths": 210.6,
+      "drop_pct": 58,
+      "cv_pct": 105,
+      "zero_rate_pct": 50
     },
     "cmine.k2lx131x2x33": {
       "account": "cmine",
@@ -34,11 +34,11 @@
       "group_id": "R3",
       "provider": "Minto",
       "type": "volatile",
-      "current_avg_ths": 80.9,
-      "baseline_avg_ths": 182.5,
-      "drop_pct": 56,
-      "cv_pct": 103,
-      "zero_rate_pct": 50
+      "current_avg_ths": 49.9,
+      "baseline_avg_ths": 183.4,
+      "drop_pct": 73,
+      "cv_pct": 145,
+      "zero_rate_pct": 67
     }
   }
 }

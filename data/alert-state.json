@@ -2027,18 +2027,6 @@
       "accountName": "Cyberian Mine",
       "anomalyType": "volatile",
       "detectedAt": "2026-08-03T11:01:11.395Z"
-    },
-    "w.cmine.k2lx132x10x50": {
-      "type": "worker_anomaly",
-      "baselineHR": 110300000000000,
-      "currentHR": 77874743556614.83,
-      "worker": "k2lx132x10x50",
-      "provider": "Minto",
-      "groupId": "R3",
-      "account": "cmine",
-      "accountName": "Cyberian Mine",
-      "anomalyType": "volatile",
-      "detectedAt": "2026-08-03T14:01:06.052Z"
     }
   },
   "everminer.U3": "2026-07-28T21:00:59.294Z",

@@ -2015,18 +2015,6 @@
       "accountName": "Everminer",
       "anomalyType": "volatile",
       "detectedAt": "2026-08-03T23:01:03.209Z"
-    },
-    "w.everminer.e21xp014": {
-      "type": "worker_anomaly",
-      "baselineHR": 245100000000000,
-      "currentHR": 151996487423754.25,
-      "worker": "e21xp014",
-      "provider": "ValueHash (NY)",
-      "groupId": "U3",
-      "account": "everminer",
-      "accountName": "Everminer",
-      "anomalyType": "level_drop",
-      "detectedAt": "2026-08-04T01:01:07.782Z"
     }
   },
   "everminer.U3": "2026-07-28T21:00:59.294Z",

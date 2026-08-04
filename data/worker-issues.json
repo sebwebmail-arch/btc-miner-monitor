@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-04T13:01:09.196Z",
+  "last_updated": "2026-08-04T14:01:08.860Z",
   "issues": {
     "everminer.023e6ccfafbd": {
       "account": "everminer",
@@ -7,12 +7,12 @@
       "worker": "023e6ccfafbd",
       "group_id": "U1+U2",
       "provider": "Dataprana",
-      "type": "volatile",
-      "current_avg_ths": 114.4,
+      "type": "level_drop",
+      "current_avg_ths": 148.4,
       "baseline_avg_ths": 256.3,
-      "drop_pct": 55,
-      "cv_pct": 103,
-      "zero_rate_pct": 50
+      "drop_pct": 42,
+      "cv_pct": 73,
+      "zero_rate_pct": 33
     }
   }
 }

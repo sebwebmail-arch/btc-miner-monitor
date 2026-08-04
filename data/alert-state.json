@@ -1,17 +1,5 @@
 {
   "watchlist": {
-    "w.cmine.02a34725b1b2": {
-      "type": "worker_anomaly",
-      "baselineHR": 52300000000000,
-      "currentHR": 0,
-      "worker": "02a34725b1b2",
-      "provider": "Dataprana",
-      "groupId": "U1+U2",
-      "account": "cmine",
-      "accountName": "Cyberian Mine",
-      "anomalyType": "volatile",
-      "detectedAt": "2026-07-21T18:00:58.646Z"
-    },
     "w.everminer.k2lx131x5x2": {
       "type": "worker_anomaly",
       "baselineHR": 273899999999999.97,

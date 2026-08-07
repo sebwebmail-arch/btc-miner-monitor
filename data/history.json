@@ -1,29 +1,6 @@
 {
-  "last_updated": "2026-08-06T05:01:10.492Z",
+  "last_updated": "2026-08-07T05:01:07.214Z",
   "snapshots": [
-    {
-      "ts": "2026-07-04T05:30:50.238Z",
-      "by_account": {
-        "cmine": {
-          "name": "Cyberian Mine",
-          "total": 413,
-          "online": 407,
-          "offline": 6,
-          "dead": 0
-        },
-        "everminer": {
-          "name": "Everminer",
-          "total": 80,
-          "online": 76,
-          "offline": 4,
-          "dead": 0
-        }
-      },
-      "offline": 10,
-      "dead_recent": 0,
-      "dead_mid": 0,
-      "dead_old": 0
-    },
     {
       "ts": "2026-07-05T05:01:06.415Z",
       "by_account": {
@@ -805,18 +782,131 @@
       "dead_recent": 0,
       "dead_mid": 0,
       "dead_old": 0
+    },
+    {
+      "ts": "2026-08-07T05:01:07.214Z",
+      "by_account": {
+        "cmine": {
+          "name": "Cyberian Mine",
+          "total": 279,
+          "online": 279,
+          "offline": 0,
+          "dead": 0
+        },
+        "everminer": {
+          "name": "Everminer",
+          "total": 129,
+          "online": 119,
+          "offline": 10,
+          "dead": 0
+        }
+      },
+      "offline": 10,
+      "dead_recent": 0,
+      "dead_mid": 0,
+      "dead_old": 0
     }
   ],
   "workers": {},
   "current_issues": {
-    "cmine.openfallback": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "openfallback",
-      "group_id": "OM",
-      "provider": "Open Mine",
-      "host": "178.105.17.8",
-      "last_share": "2026-08-05T20:47:43.000Z",
+    "everminer.k2lx131x5x16": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x16",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-08-06T10:43:39.000Z",
+      "category": "offline"
+    },
+    "everminer.k2lx131x5x14": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x14",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-08-06T10:44:05.000Z",
+      "category": "offline"
+    },
+    "everminer.k2lx131x5x10": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x10",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "157.245.76.212",
+      "last_share": "2026-08-06T10:43:58.000Z",
+      "category": "offline"
+    },
+    "everminer.k2lx131x5x9": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x9",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-08-06T10:43:42.000Z",
+      "category": "offline"
+    },
+    "everminer.k2lx131x5x18": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x18",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-08-06T10:44:06.000Z",
+      "category": "offline"
+    },
+    "everminer.k2lx131x5x11": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x11",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "157.245.76.212",
+      "last_share": "2026-08-06T10:43:45.000Z",
+      "category": "offline"
+    },
+    "everminer.k2lx131x5x13": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x13",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-08-06T10:42:47.000Z",
+      "category": "offline"
+    },
+    "everminer.k2lx131x5x8": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x8",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "157.245.76.212",
+      "last_share": "2026-08-06T10:43:03.000Z",
+      "category": "offline"
+    },
+    "everminer.k2lx131x5x12": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x12",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-08-06T10:42:48.000Z",
+      "category": "offline"
+    },
+    "everminer.k2lx131x5x15": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x15",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "157.245.76.212",
+      "last_share": "2026-08-06T10:43:48.000Z",
       "category": "offline"
     }
   }

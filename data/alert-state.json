@@ -1899,7 +1899,7 @@
     "w.cmine.k2lx131x1x33": {
       "type": "worker_anomaly",
       "baselineHR": 369400000000000,
-      "currentHR": 157625986957967.38,
+      "currentHR": 182020484939557.53,
       "worker": "k2lx131x1x33",
       "provider": "Minto",
       "groupId": "R3",
@@ -2163,7 +2163,7 @@
     "w.cmine.k2lx132x9x43": {
       "type": "worker_anomaly",
       "baselineHR": 358800000000000,
-      "currentHR": 209073357701192.8,
+      "currentHR": 196250608762151.8,
       "worker": "k2lx132x9x43",
       "provider": "Minto",
       "groupId": "R3",
@@ -2235,7 +2235,7 @@
     "w.cmine.k2lx131x4x40": {
       "type": "worker_anomaly",
       "baselineHR": 211500000000000,
-      "currentHR": 136202613730545.2,
+      "currentHR": 148243487734278.8,
       "worker": "k2lx131x4x40",
       "provider": "Minto",
       "groupId": "R3",
@@ -2739,7 +2739,7 @@
     "w.cmine.k2lx132x10x32": {
       "type": "worker_anomaly",
       "baselineHR": 283300000000000,
-      "currentHR": 194843233878598.53,
+      "currentHR": 182645984887803.44,
       "worker": "k2lx132x10x32",
       "provider": "Minto",
       "groupId": "R3",
@@ -2747,6 +2747,18 @@
       "accountName": "Cyberian Mine",
       "anomalyType": "level_drop",
       "detectedAt": "2026-08-10T17:01:11.736Z"
+    },
+    "w.cmine.s21xp002": {
+      "type": "worker_anomaly",
+      "baselineHR": 480800000000000,
+      "currentHR": 0,
+      "worker": "s21xp002",
+      "provider": "Altos",
+      "groupId": "P1",
+      "account": "cmine",
+      "accountName": "Cyberian Mine",
+      "anomalyType": "volatile",
+      "detectedAt": "2026-08-10T20:01:07.497Z"
     }
   },
   "everminer.U3": "2026-07-28T21:00:59.294Z",
@@ -2809,7 +2821,7 @@
   "w.cmine.s21xp004": "2026-07-21T19:01:03.774Z",
   "w.cmine.c21xp001": "2026-08-08T06:01:05.821Z",
   "w.cmine.s21xphyd004": "2026-07-27T21:01:03.398Z",
-  "w.cmine.s21xp002": "2026-07-27T19:01:02.394Z",
+  "w.cmine.s21xp002": "2026-08-10T20:01:07.497Z",
   "cmine.E2": "2026-07-22T05:00:59.585Z",
   "everminer.E2": "2026-07-22T05:00:59.585Z",
   "w.everminer.k2lx131x5x2": "2026-07-22T17:01:00.534Z",

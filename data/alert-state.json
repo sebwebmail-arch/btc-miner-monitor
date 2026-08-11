@@ -1,17 +1,5 @@
 {
   "watchlist": {
-    "w.cmine.k2lx": {
-      "type": "worker_anomaly",
-      "baselineHR": 10700000000000,
-      "currentHR": 0,
-      "worker": "k2lx",
-      "provider": "Minto",
-      "groupId": "R3",
-      "account": "cmine",
-      "accountName": "Cyberian Mine",
-      "anomalyType": "volatile",
-      "detectedAt": "2026-07-28T15:01:14.415Z"
-    },
     "w.cmine.r21129": {
       "type": "worker_anomaly",
       "baselineHR": 158200000000000,
@@ -1899,7 +1887,7 @@
     "w.cmine.k2lx131x1x33": {
       "type": "worker_anomaly",
       "baselineHR": 369400000000000,
-      "currentHR": 160440736725073.9,
+      "currentHR": 185460734654910,
       "worker": "k2lx131x1x33",
       "provider": "Minto",
       "groupId": "R3",
@@ -2163,7 +2151,7 @@
     "w.cmine.k2lx132x9x43": {
       "type": "worker_anomaly",
       "baselineHR": 358800000000000,
-      "currentHR": 207040482869393.62,
+      "currentHR": 209542482662377.25,
       "worker": "k2lx132x9x43",
       "provider": "Minto",
       "groupId": "R3",
@@ -2235,7 +2223,7 @@
     "w.everminer.e21xp020": {
       "type": "worker_anomaly",
       "baselineHR": 252300000000000,
-      "currentHR": 153872987268491.94,
+      "currentHR": 145741487941295.22,
       "worker": "e21xp020",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -2739,7 +2727,7 @@
     "w.everminer.e21xp019": {
       "type": "worker_anomaly",
       "baselineHR": 243300000000000,
-      "currentHR": 93199492288639.44,
+      "currentHR": 140737488355328,
       "worker": "e21xp019",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -2758,7 +2746,7 @@
   "w.everminer.e21xp017": "2026-07-28T23:01:08.395Z",
   "w.everminer.e21xp015": "2026-08-06T05:01:10.492Z",
   "w.everminer.e21xp020": "2026-08-11T15:01:13.263Z",
-  "w.everminer.e21xp019": "2026-08-11T05:01:07.317Z",
+  "w.everminer.e21xp019": "2026-08-11T16:01:11.248Z",
   "w.everminer.e21xp021": "2026-08-09T22:01:09.591Z",
   "w.everminer.e21xp031": "2026-08-07T03:01:01.951Z",
   "w.everminer.e21xp027": "2026-07-28T23:01:08.395Z",

@@ -1887,7 +1887,7 @@
     "w.cmine.k2lx131x1x33": {
       "type": "worker_anomaly",
       "baselineHR": 369400000000000,
-      "currentHR": 159971611763889.5,
+      "currentHR": 150745487527262.44,
       "worker": "k2lx131x1x33",
       "provider": "Minto",
       "groupId": "R3",
@@ -2151,7 +2151,7 @@
     "w.cmine.k2lx132x9x43": {
       "type": "worker_anomaly",
       "baselineHR": 358800000000000,
-      "currentHR": 170448735897008.34,
+      "currentHR": 182645984887803.44,
       "worker": "k2lx132x9x43",
       "provider": "Minto",
       "groupId": "R3",
@@ -2735,13 +2735,25 @@
       "accountName": "Everminer",
       "anomalyType": "level_drop",
       "detectedAt": "2026-08-11T05:01:07.317Z"
+    },
+    "w.everminer.e21xp025": {
+      "type": "worker_anomaly",
+      "baselineHR": 281800000000000,
+      "currentHR": 0,
+      "worker": "e21xp025",
+      "provider": "ValueHash (NY)",
+      "groupId": "U3",
+      "account": "everminer",
+      "accountName": "Everminer",
+      "anomalyType": "level_drop",
+      "detectedAt": "2026-08-11T20:01:11.016Z"
     }
   },
   "everminer.U3": "2026-07-28T21:00:59.294Z",
   "cmine.P1": "2026-07-20T15:01:09.519Z",
   "everminer.P1": "2026-07-20T22:01:04.628Z",
   "w.everminer.e21xp023": "2026-07-28T23:01:08.395Z",
-  "w.everminer.e21xp025": "2026-08-11T00:01:08.159Z",
+  "w.everminer.e21xp025": "2026-08-11T20:01:11.016Z",
   "w.everminer.e21xp028": "2026-08-07T02:01:04.901Z",
   "w.everminer.e21xp017": "2026-07-28T23:01:08.395Z",
   "w.everminer.e21xp015": "2026-08-06T05:01:10.492Z",

@@ -1,34 +1,6 @@
 {
-  "last_updated": "2026-08-11T20:01:11.016Z",
+  "last_updated": "2026-08-11T21:01:06.271Z",
   "offline": {
-    "cmine.018": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "018",
-      "group_id": "E1",
-      "provider": "BitCluster"
-    },
-    "cmine.s21xp002": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "s21xp002",
-      "group_id": "P1",
-      "provider": "Altos"
-    },
-    "cmine.016": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "016",
-      "group_id": "E1",
-      "provider": "BitCluster"
-    },
-    "cmine.005": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "005",
-      "group_id": "E1",
-      "provider": "BitCluster"
-    },
     "cmine.011": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
@@ -43,12 +15,47 @@
       "group_id": "E1",
       "provider": "BitCluster"
     },
+    "cmine.016": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "016",
+      "group_id": "E1",
+      "provider": "BitCluster"
+    },
+    "cmine.018": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "018",
+      "group_id": "E1",
+      "provider": "BitCluster"
+    },
+    "cmine.s21xp002": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21xp002",
+      "group_id": "P1",
+      "provider": "Altos"
+    },
+    "cmine.005": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "005",
+      "group_id": "E1",
+      "provider": "BitCluster"
+    },
     "cmine.002": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
       "name": "002",
       "group_id": "E1",
       "provider": "BitCluster"
+    },
+    "cmine.02b19f4493b3": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "02b19f4493b3",
+      "group_id": "U1+U2",
+      "provider": "Dataprana"
     },
     "cmine.02a34725b1b2": {
       "account": "cmine",
@@ -2070,13 +2077,6 @@
       "category": "dead_recent",
       "last_share": "2026-08-10T00:01:14.479Z"
     },
-    "everminer.e21xp013": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "e21xp013",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)"
-    },
     "everminer.e21xp023": {
       "account": "everminer",
       "account_name": "Everminer",
@@ -2084,17 +2084,24 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)"
     },
-    "everminer.e21xp015": {
+    "everminer.e21xp029": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "e21xp015",
+      "name": "e21xp029",
       "group_id": "U3",
       "provider": "ValueHash (NY)"
     },
-    "everminer.e21xp019": {
+    "everminer.e21xp030": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "e21xp019",
+      "name": "e21xp030",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)"
+    },
+    "everminer.e21xp031": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "e21xp031",
       "group_id": "U3",
       "provider": "ValueHash (NY)"
     },
@@ -2112,10 +2119,31 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)"
     },
+    "everminer.e21xp019": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "e21xp019",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)"
+    },
+    "everminer.002": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "002",
+      "group_id": "E1",
+      "provider": "BitCluster"
+    },
     "everminer.e21xp017": {
       "account": "everminer",
       "account_name": "Everminer",
       "name": "e21xp017",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)"
+    },
+    "everminer.e21xp018": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "e21xp018",
       "group_id": "U3",
       "provider": "ValueHash (NY)"
     },
@@ -2126,17 +2154,10 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)"
     },
-    "everminer.007": {
+    "everminer.e21xp015": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "007",
-      "group_id": "E1",
-      "provider": "BitCluster"
-    },
-    "everminer.e21xp022": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "e21xp022",
+      "name": "e21xp015",
       "group_id": "U3",
       "provider": "ValueHash (NY)"
     },
@@ -2154,20 +2175,6 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)"
     },
-    "everminer.e21xp029": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "e21xp029",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)"
-    },
-    "everminer.e21xp018": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "e21xp018",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)"
-    },
     "everminer.e21xp024": {
       "account": "everminer",
       "account_name": "Everminer",
@@ -2175,17 +2182,17 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)"
     },
-    "everminer.e21xp031": {
+    "everminer.e21xp012": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "e21xp031",
+      "name": "e21xp012",
       "group_id": "U3",
       "provider": "ValueHash (NY)"
     },
-    "everminer.e21xp030": {
+    "everminer.e21xp013": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "e21xp030",
+      "name": "e21xp013",
       "group_id": "U3",
       "provider": "ValueHash (NY)"
     },
@@ -2196,17 +2203,24 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)"
     },
-    "everminer.002": {
+    "everminer.e21xp027": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "002",
+      "name": "e21xp027",
+      "group_id": "U3",
+      "provider": "ValueHash (NY)"
+    },
+    "everminer.007": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "007",
       "group_id": "E1",
       "provider": "BitCluster"
     },
-    "everminer.e21xp012": {
+    "everminer.e21xp022": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "e21xp012",
+      "name": "e21xp022",
       "group_id": "U3",
       "provider": "ValueHash (NY)"
     },
@@ -2214,13 +2228,6 @@
       "account": "everminer",
       "account_name": "Everminer",
       "name": "e21xp014",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)"
-    },
-    "everminer.e21xp027": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "e21xp027",
       "group_id": "U3",
       "provider": "ValueHash (NY)"
     },

@@ -1,29 +1,6 @@
 {
-  "last_updated": "2026-08-12T05:01:13.747Z",
+  "last_updated": "2026-08-13T05:01:06.030Z",
   "snapshots": [
-    {
-      "ts": "2026-07-09T05:01:20.632Z",
-      "by_account": {
-        "cmine": {
-          "name": "Cyberian Mine",
-          "total": 448,
-          "online": 434,
-          "offline": 13,
-          "dead": 1
-        },
-        "everminer": {
-          "name": "Everminer",
-          "total": 121,
-          "online": 111,
-          "offline": 10,
-          "dead": 0
-        }
-      },
-      "offline": 23,
-      "dead_recent": 1,
-      "dead_mid": 0,
-      "dead_old": 0
-    },
     {
       "ts": "2026-07-10T05:01:11.290Z",
       "by_account": {
@@ -805,88 +782,41 @@
       "dead_recent": 0,
       "dead_mid": 0,
       "dead_old": 0
+    },
+    {
+      "ts": "2026-08-13T05:01:06.030Z",
+      "by_account": {
+        "cmine": {
+          "name": "Cyberian Mine",
+          "total": 264,
+          "online": 264,
+          "offline": 0,
+          "dead": 0
+        },
+        "everminer": {
+          "name": "Everminer",
+          "total": 104,
+          "online": 103,
+          "offline": 1,
+          "dead": 0
+        }
+      },
+      "offline": 1,
+      "dead_recent": 0,
+      "dead_mid": 0,
+      "dead_old": 0
     }
   ],
   "workers": {},
   "current_issues": {
-    "cmine.014": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "014",
-      "group_id": "E1",
-      "provider": "BitCluster",
-      "host": "196.190.181.40",
-      "last_share": "2026-08-11T16:34:44.000Z",
-      "category": "offline"
-    },
-    "cmine.005": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "005",
-      "group_id": "E1",
-      "provider": "BitCluster",
-      "host": "196.189.30.133",
-      "last_share": "2026-08-11T16:33:20.000Z",
-      "category": "offline"
-    },
-    "cmine.002": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "002",
-      "group_id": "E1",
-      "provider": "BitCluster",
-      "host": "196.190.181.40",
-      "last_share": "2026-08-11T16:35:00.000Z",
-      "category": "offline"
-    },
-    "cmine.016": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "016",
-      "group_id": "E1",
-      "provider": "BitCluster",
-      "host": "196.189.30.133",
-      "last_share": "2026-08-11T16:35:06.000Z",
-      "category": "offline"
-    },
-    "cmine.018": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "018",
-      "group_id": "E1",
-      "provider": "BitCluster",
-      "host": "196.190.181.40",
-      "last_share": "2026-08-11T16:34:57.000Z",
-      "category": "offline"
-    },
-    "cmine.011": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "011",
-      "group_id": "E1",
-      "provider": "BitCluster",
-      "host": "196.190.181.40",
-      "last_share": "2026-08-11T16:35:00.000Z",
-      "category": "offline"
-    },
-    "everminer.007": {
+    "everminer.023e6ccfafbd": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "007",
-      "group_id": "E1",
-      "provider": "BitCluster",
-      "host": "196.190.181.40",
-      "last_share": "2026-08-11T16:35:01.000Z",
-      "category": "offline"
-    },
-    "everminer.002": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "002",
-      "group_id": "E1",
-      "provider": "BitCluster",
-      "host": "196.189.30.133",
-      "last_share": "2026-08-11T16:34:46.000Z",
+      "name": "023e6ccfafbd",
+      "group_id": "U1+U2",
+      "provider": "Dataprana",
+      "host": "64.186.136.18",
+      "last_share": "2026-08-12T17:11:51.000Z",
       "category": "offline"
     }
   }

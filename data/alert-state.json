@@ -1,17 +1,5 @@
 {
   "watchlist": {
-    "w.cmine.r21129": {
-      "type": "worker_anomaly",
-      "baselineHR": 158200000000000,
-      "currentHR": 0,
-      "worker": "r21129",
-      "provider": "IZTM",
-      "groupId": "R1",
-      "account": "cmine",
-      "accountName": "Cyberian Mine",
-      "anomalyType": "level_drop",
-      "detectedAt": "2026-07-30T00:01:07.107Z"
-    },
     "w.cmine.r00420": {
       "type": "worker_anomaly",
       "baselineHR": 190100000000000,
@@ -1887,7 +1875,7 @@
     "w.cmine.k2lx131x1x33": {
       "type": "worker_anomaly",
       "baselineHR": 369400000000000,
-      "currentHR": 137609988614098.48,
+      "currentHR": 148399862721340.3,
       "worker": "k2lx131x1x33",
       "provider": "Minto",
       "groupId": "R3",
@@ -2151,7 +2139,7 @@
     "w.cmine.k2lx132x9x43": {
       "type": "worker_anomaly",
       "baselineHR": 358800000000000,
-      "currentHR": 175452735482975.56,
+      "currentHR": 194843233878598.53,
       "worker": "k2lx132x9x43",
       "provider": "Minto",
       "groupId": "R3",
@@ -2223,7 +2211,7 @@
     "w.everminer.e21xp020": {
       "type": "worker_anomaly",
       "baselineHR": 252300000000000,
-      "currentHR": 146366987889541.12,
+      "currentHR": 138860988510590.3,
       "worker": "e21xp020",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -2727,7 +2715,7 @@
     "w.everminer.e21xp019": {
       "type": "worker_anomaly",
       "baselineHR": 243300000000000,
-      "currentHR": 125725489597426.34,
+      "currentHR": 130103989235147.66,
       "worker": "e21xp019",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -2739,7 +2727,7 @@
     "w.everminer.e21xp026": {
       "type": "worker_anomaly",
       "baselineHR": 245000000000000,
-      "currentHR": 163880986440426.38,
+      "currentHR": 170135985922885.4,
       "worker": "e21xp026",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -2763,7 +2751,7 @@
     "w.everminer.e21xp025": {
       "type": "worker_anomaly",
       "baselineHR": 281000000000000,
-      "currentHR": 135107988821114.88,
+      "currentHR": 122597989856196.83,
       "worker": "e21xp025",
       "provider": "ValueHash (NY)",
       "groupId": "U3",

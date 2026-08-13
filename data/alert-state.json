@@ -1875,7 +1875,7 @@
     "w.cmine.k2lx131x1x33": {
       "type": "worker_anomaly",
       "baselineHR": 369400000000000,
-      "currentHR": 143083113161250.12,
+      "currentHR": 157000487009721.47,
       "worker": "k2lx131x1x33",
       "provider": "Minto",
       "groupId": "R3",
@@ -2139,7 +2139,7 @@
     "w.cmine.k2lx132x9x43": {
       "type": "worker_anomaly",
       "baselineHR": 358800000000000,
-      "currentHR": 218309255374511.22,
+      "currentHR": 196719733723336.25,
       "worker": "k2lx132x9x43",
       "provider": "Minto",
       "groupId": "R3",
@@ -2211,7 +2211,7 @@
     "w.everminer.e21xp020": {
       "type": "worker_anomaly",
       "baselineHR": 252300000000000,
-      "currentHR": 121346989959705.03,
+      "currentHR": 121972489907950.94,
       "worker": "e21xp020",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -2715,7 +2715,7 @@
     "w.everminer.e21xp019": {
       "type": "worker_anomaly",
       "baselineHR": 243300000000000,
-      "currentHR": 131354989131639.47,
+      "currentHR": 122597989856196.83,
       "worker": "e21xp019",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -2735,30 +2735,6 @@
       "accountName": "Everminer",
       "anomalyType": "volatile",
       "detectedAt": "2026-08-12T20:01:16.755Z"
-    },
-    "w.everminer.023c6894df0b": {
-      "type": "worker_anomaly",
-      "baselineHR": 257399999999999.97,
-      "currentHR": 190151984266754.28,
-      "worker": "023c6894df0b",
-      "provider": "Dataprana",
-      "groupId": "U1+U2",
-      "account": "everminer",
-      "accountName": "Everminer",
-      "anomalyType": "level_drop",
-      "detectedAt": "2026-08-13T06:01:18.262Z"
-    },
-    "w.everminer.02290d012b09": {
-      "type": "worker_anomaly",
-      "baselineHR": 258500000000000,
-      "currentHR": 183896984784295.25,
-      "worker": "02290d012b09",
-      "provider": "Dataprana",
-      "groupId": "U1+U2",
-      "account": "everminer",
-      "accountName": "Everminer",
-      "anomalyType": "level_drop",
-      "detectedAt": "2026-08-13T06:01:18.262Z"
     }
   },
   "everminer.U3": "2026-07-28T21:00:59.294Z",

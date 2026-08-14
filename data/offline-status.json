@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-14T18:01:04.108Z",
+  "last_updated": "2026-08-14T19:06:07.775Z",
   "offline": {
     "cmine.openfallback": {
       "account": "cmine",
@@ -7,6 +7,13 @@
       "name": "openfallback",
       "group_id": "OM",
       "provider": "Open Mine"
+    },
+    "cmine.s21xphyd0002": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "s21xphyd0002",
+      "group_id": "P1",
+      "provider": "Altos"
     },
     "cmine.02a34725b1b2": {
       "account": "cmine",
@@ -2027,6 +2034,13 @@
       "dead": true,
       "category": "dead_recent",
       "last_share": "2026-08-12T00:01:12.310Z"
+    },
+    "everminer.02a13716759b": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "02a13716759b",
+      "group_id": "U1+U2",
+      "provider": "Dataprana"
     },
     "everminer.k2lx131x5x2": {
       "account": "everminer",

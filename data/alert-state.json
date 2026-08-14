@@ -39,7 +39,7 @@
     "w.cmine.k2lx131x1x33": {
       "type": "worker_anomaly",
       "baselineHR": 369400000000000,
-      "currentHR": 190464734240877.22,
+      "currentHR": 152309237397877.2,
       "worker": "k2lx131x1x33",
       "provider": "Minto",
       "groupId": "R3",
@@ -303,7 +303,7 @@
     "w.cmine.k2lx132x9x43": {
       "type": "worker_anomaly",
       "baselineHR": 358800000000000,
-      "currentHR": 191090234189123.12,
+      "currentHR": 195312358839782.97,
       "worker": "k2lx132x9x43",
       "provider": "Minto",
       "groupId": "R3",
@@ -375,7 +375,7 @@
     "w.everminer.e21xp020": {
       "type": "worker_anomaly",
       "baselineHR": 252300000000000,
-      "currentHR": 140111988407082.1,
+      "currentHR": 158876986854459.16,
       "worker": "e21xp020",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -879,7 +879,7 @@
     "w.everminer.e21xp019": {
       "type": "worker_anomaly",
       "baselineHR": 243300000000000,
-      "currentHR": 145115987993049.3,
+      "currentHR": 120721490011459.12,
       "worker": "e21xp019",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -903,7 +903,7 @@
     "w.cmine.omxdefault": {
       "type": "worker_anomaly",
       "baselineHR": 26142500000000000,
-      "currentHR": 14391502809241718,
+      "currentHR": 14541622796820734,
       "worker": "omxdefault",
       "provider": "Open Mine",
       "groupId": "OM",
@@ -912,22 +912,10 @@
       "anomalyType": "level_drop",
       "detectedAt": "2026-08-14T13:01:08.547Z"
     },
-    "w.everminer.02a13716759b": {
-      "type": "worker_anomaly",
-      "baselineHR": 246300000000000,
-      "currentHR": 48231910071773.87,
-      "worker": "02a13716759b",
-      "provider": "Dataprana",
-      "groupId": "U1+U2",
-      "account": "everminer",
-      "accountName": "Everminer",
-      "anomalyType": "volatile",
-      "detectedAt": "2026-08-14T19:06:07.775Z"
-    },
     "w.cmine.s21xphyd0002": {
       "type": "worker_anomaly",
       "baselineHR": 361400000000000,
-      "currentHR": 43804543250595.84,
+      "currentHR": 0,
       "worker": "s21xphyd0002",
       "provider": "Altos",
       "groupId": "P1",

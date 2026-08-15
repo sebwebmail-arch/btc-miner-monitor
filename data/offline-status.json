@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-15T00:01:07.105Z",
+  "last_updated": "2026-08-15T01:01:09.112Z",
   "offline": {
     "cmine.s21xphyd0002": {
       "account": "cmine",
@@ -7,13 +7,6 @@
       "name": "s21xphyd0002",
       "group_id": "P1",
       "provider": "Altos"
-    },
-    "cmine.openfallback": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "openfallback",
-      "group_id": "OM",
-      "provider": "Open Mine"
     },
     "cmine.02a34725b1b2": {
       "account": "cmine",
@@ -2035,6 +2028,16 @@
       "category": "dead_recent",
       "last_share": "2026-08-12T00:01:12.310Z"
     },
+    "cmine.openfallback": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "openfallback",
+      "group_id": "OM",
+      "provider": "Open Mine",
+      "dead": true,
+      "category": "offline",
+      "last_share": "2026-08-15T00:01:07.105Z"
+    },
     "everminer.k2lx131x5x2": {
       "account": "everminer",
       "account_name": "Everminer",
@@ -2102,7 +2105,7 @@
       "group_id": "R3",
       "provider": "Minto",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-08-08T00:01:07.680Z"
     },
     "everminer.k2lx131x5x9": {
@@ -2112,7 +2115,7 @@
       "group_id": "R3",
       "provider": "Minto",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-08-08T00:01:07.680Z"
     },
     "everminer.k2lx131x5x11": {
@@ -2122,7 +2125,7 @@
       "group_id": "R3",
       "provider": "Minto",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-08-08T00:01:07.680Z"
     },
     "everminer.k2lx131x5x8": {
@@ -2132,7 +2135,7 @@
       "group_id": "R3",
       "provider": "Minto",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-08-08T00:01:07.680Z"
     },
     "everminer.k2lx131x5x13": {
@@ -2142,7 +2145,7 @@
       "group_id": "R3",
       "provider": "Minto",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-08-08T00:01:07.680Z"
     },
     "everminer.k2lx131x5x12": {
@@ -2152,7 +2155,7 @@
       "group_id": "R3",
       "provider": "Minto",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-08-08T00:01:07.680Z"
     },
     "everminer.k2lx131x5x10": {
@@ -2162,7 +2165,7 @@
       "group_id": "R3",
       "provider": "Minto",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-08-08T00:01:07.680Z"
     },
     "everminer.k2lx131x5x16": {
@@ -2172,7 +2175,7 @@
       "group_id": "R3",
       "provider": "Minto",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-08-08T00:01:07.680Z"
     },
     "everminer.k2lx131x5x14": {
@@ -2182,7 +2185,7 @@
       "group_id": "R3",
       "provider": "Minto",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-08-08T00:01:07.680Z"
     },
     "everminer.k2lx131x5x18": {
@@ -2192,7 +2195,7 @@
       "group_id": "R3",
       "provider": "Minto",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-08-08T00:01:07.680Z"
     },
     "everminer.aa02": {

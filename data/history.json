@@ -1,29 +1,6 @@
 {
-  "last_updated": "2026-08-15T05:01:02.166Z",
+  "last_updated": "2026-08-16T05:01:05.642Z",
   "snapshots": [
-    {
-      "ts": "2026-07-12T05:01:14.274Z",
-      "by_account": {
-        "cmine": {
-          "name": "Cyberian Mine",
-          "total": 433,
-          "online": 432,
-          "offline": 1,
-          "dead": 0
-        },
-        "everminer": {
-          "name": "Everminer",
-          "total": 111,
-          "online": 111,
-          "offline": 0,
-          "dead": 0
-        }
-      },
-      "offline": 1,
-      "dead_recent": 0,
-      "dead_mid": 0,
-      "dead_old": 0
-    },
     {
       "ts": "2026-07-13T05:01:15.817Z",
       "by_account": {
@@ -797,6 +774,29 @@
           "name": "Everminer",
           "total": 106,
           "online": 106,
+          "offline": 0,
+          "dead": 0
+        }
+      },
+      "offline": 0,
+      "dead_recent": 0,
+      "dead_mid": 0,
+      "dead_old": 0
+    },
+    {
+      "ts": "2026-08-16T05:01:05.642Z",
+      "by_account": {
+        "cmine": {
+          "name": "Cyberian Mine",
+          "total": 264,
+          "online": 264,
+          "offline": 0,
+          "dead": 0
+        },
+        "everminer": {
+          "name": "Everminer",
+          "total": 105,
+          "online": 105,
           "offline": 0,
           "dead": 0
         }

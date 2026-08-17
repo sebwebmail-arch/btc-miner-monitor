@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-17T11:01:09.123Z",
+  "last_updated": "2026-08-17T12:01:07.230Z",
   "issues": {
     "cmine.s21xphyd0001": {
       "account": "cmine",
@@ -8,10 +8,10 @@
       "group_id": "P1",
       "provider": "Altos",
       "type": "level_drop",
-      "current_avg_ths": 82.3,
+      "current_avg_ths": 59.8,
       "baseline_avg_ths": 530.1,
-      "drop_pct": 84,
-      "cv_pct": 101,
+      "drop_pct": 89,
+      "cv_pct": 66,
       "zero_rate_pct": 17
     },
     "cmine.k2lx131x1x33": {
@@ -21,9 +21,9 @@
       "group_id": "R3",
       "provider": "Minto",
       "type": "level_drop",
-      "current_avg_ths": 155.9,
-      "baseline_avg_ths": 278.8,
-      "drop_pct": 44,
+      "current_avg_ths": 157.8,
+      "baseline_avg_ths": 276.5,
+      "drop_pct": 43,
       "cv_pct": 7,
       "zero_rate_pct": 0
     },
@@ -34,24 +34,11 @@
       "group_id": "OM",
       "provider": "Open Mine",
       "type": "level_drop",
-      "current_avg_ths": 13500.8,
+      "current_avg_ths": 13567.5,
       "baseline_avg_ths": 26134,
       "drop_pct": 48,
       "cv_pct": 16,
       "zero_rate_pct": 0
-    },
-    "cmine.k2lx131x4x41": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "k2lx131x4x41",
-      "group_id": "R3",
-      "provider": "Minto",
-      "type": "volatile",
-      "current_avg_ths": 114.9,
-      "baseline_avg_ths": 174.2,
-      "drop_pct": 34,
-      "cv_pct": 72,
-      "zero_rate_pct": 33
     },
     "cmine.s21xphyd0002": {
       "account": "cmine",
@@ -60,11 +47,11 @@
       "group_id": "P1",
       "provider": "Altos",
       "type": "level_drop",
-      "current_avg_ths": 62.6,
+      "current_avg_ths": 80.5,
       "baseline_avg_ths": 530.2,
-      "drop_pct": 88,
-      "cv_pct": 100,
-      "zero_rate_pct": 33
+      "drop_pct": 85,
+      "cv_pct": 71,
+      "zero_rate_pct": 17
     },
     "everminer.e21xp019": {
       "account": "everminer",
@@ -73,10 +60,10 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)",
       "type": "level_drop",
-      "current_avg_ths": 140,
-      "baseline_avg_ths": 275.2,
-      "drop_pct": 49,
-      "cv_pct": 6,
+      "current_avg_ths": 142.1,
+      "baseline_avg_ths": 275.1,
+      "drop_pct": 48,
+      "cv_pct": 5,
       "zero_rate_pct": 0
     },
     "everminer.023e6ccfafbd": {
@@ -86,7 +73,7 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "type": "level_drop",
-      "current_avg_ths": 126.2,
+      "current_avg_ths": 126.7,
       "baseline_avg_ths": 245,
       "drop_pct": 48,
       "cv_pct": 5,

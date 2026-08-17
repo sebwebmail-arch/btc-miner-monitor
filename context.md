@@ -135,4 +135,4 @@ Works for both issue workers (from `history.json`) and online workers (derived f
 - `data/alert-state.json` and `data/worker-issues.json` may not exist on first run — both scripts handle this gracefully
 - Hashrate anomaly detection requires **9h+ of data** before it can fire (needs baseline window)
 - Telegram chat IDs for cmine and everminer both point to `-4857292784` for now — separate when real groups are set up
-- Gmail blocks `raw.githubusercontent.com` images and base64 URIs → always use hosted SVG at `https://capone.market/capone-fish-avatar-48-orange.svg`
+- Gmail blocks `raw.githubusercontent.com` images and base64 URIs → use the asset served by the watcher itself: `https://watcher.capone.market/capone-fish.png` (capone.market was decommissioned on 2026-08-17)

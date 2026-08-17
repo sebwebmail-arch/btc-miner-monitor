@@ -438,7 +438,7 @@ async function sendHashrateAlert(account, groupId, provider, currentHR, refHR, d
     </table>
     <p style="font-size:13px;color:#666">Check the dashboard for worker details: <a href="https://watcher.capone.market" style="color:#D97757;font-weight:600">watcher.capone.market</a></p>
     <div style="margin-top:32px;border-top:1px solid #f0f0f0;padding-top:20px;text-align:center">
-      <img src="https://capone.market/capone-fish-avatar-48-orange.svg" alt="capone" width="56" height="56" style="display:block;margin:0 auto 8px"/>
+      <img src="https://watcher.capone.market/capone-fish.png" alt="capone" width="56" height="56" style="display:block;margin:0 auto 8px"/>
       <p style="margin:0;color:#999;font-size:11px">This email was sent automatically — please do not reply.</p>
     </div>
   </div>
@@ -816,7 +816,7 @@ function buildMorningEmail(offlineByAccount, workerIssues, watchlistEntries, noG
     ${allGoodSection}${watchlistSection}${offlineSection}${anomalySection}${noGroupSection}
     <div style="margin-top:32px;border-top:1px solid #f0f0f0;padding-top:24px;text-align:center">
       <a href="https://watcher.capone.market" style="display:inline-block;margin-bottom:16px;padding:8px 20px;background:#D97757;color:#000;text-decoration:none;border-radius:6px;font-size:13px;font-weight:600">Open dashboard →</a><br>
-      <img src="https://capone.market/capone-fish-avatar-48-orange.svg" alt="capone" width="56" height="56" style="display:block;margin:0 auto 8px"/>
+      <img src="https://watcher.capone.market/capone-fish.png" alt="capone" width="56" height="56" style="display:block;margin:0 auto 8px"/>
       <p style="margin:4px 0 2px;color:#555;font-size:13px;font-weight:600">Morning report — capone watcher</p>
       <p style="margin:0;color:#999;font-size:11px">This email was sent automatically — please do not reply.</p>
     </div>

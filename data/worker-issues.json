@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-18T11:01:04.981Z",
+  "last_updated": "2026-08-18T12:01:04.150Z",
   "issues": {
     "cmine.s21xphyd0001": {
       "account": "cmine",
@@ -7,12 +7,25 @@
       "worker": "s21xphyd0001",
       "group_id": "P1",
       "provider": "Altos",
-      "type": "level_drop",
-      "current_avg_ths": 308.2,
-      "baseline_avg_ths": 528.2,
-      "drop_pct": 42,
-      "cv_pct": 68,
+      "type": "volatile",
+      "current_avg_ths": 317,
+      "baseline_avg_ths": 527.5,
+      "drop_pct": 40,
+      "cv_pct": 69,
       "zero_rate_pct": 17
+    },
+    "cmine.k2lx132x10x50": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "worker": "k2lx132x10x50",
+      "group_id": "R3",
+      "provider": "Minto",
+      "type": "volatile",
+      "current_avg_ths": 96.5,
+      "baseline_avg_ths": 157.3,
+      "drop_pct": 39,
+      "cv_pct": 77,
+      "zero_rate_pct": 33
     },
     "cmine.r20231": {
       "account": "cmine",
@@ -21,11 +34,11 @@
       "group_id": "R1",
       "provider": "IZTM",
       "type": "volatile",
-      "current_avg_ths": 56.6,
-      "baseline_avg_ths": 168.7,
-      "drop_pct": 66,
-      "cv_pct": 123,
-      "zero_rate_pct": 50
+      "current_avg_ths": 32.2,
+      "baseline_avg_ths": 167,
+      "drop_pct": 81,
+      "cv_pct": 182,
+      "zero_rate_pct": 67
     },
     "everminer.e21xp019": {
       "account": "everminer",
@@ -34,10 +47,10 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)",
       "type": "level_drop",
-      "current_avg_ths": 141.4,
+      "current_avg_ths": 142.8,
       "baseline_avg_ths": 271.1,
-      "drop_pct": 48,
-      "cv_pct": 11,
+      "drop_pct": 47,
+      "cv_pct": 10,
       "zero_rate_pct": 0
     },
     "everminer.023e6ccfafbd": {
@@ -47,10 +60,10 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "type": "level_drop",
-      "current_avg_ths": 138.2,
+      "current_avg_ths": 136.4,
       "baseline_avg_ths": 242.3,
-      "drop_pct": 43,
-      "cv_pct": 6,
+      "drop_pct": 44,
+      "cv_pct": 5,
       "zero_rate_pct": 0
     },
     "cmine.s21xp003": {
@@ -60,10 +73,10 @@
       "group_id": "P1",
       "provider": "Altos",
       "type": "level_drop",
-      "current_avg_ths": 26.3,
-      "baseline_avg_ths": 373.7,
-      "drop_pct": 93,
-      "cv_pct": 109,
+      "current_avg_ths": 22,
+      "baseline_avg_ths": 542.1,
+      "drop_pct": 96,
+      "cv_pct": 130,
       "zero_rate_pct": 33
     }
   }

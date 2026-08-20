@@ -495,7 +495,7 @@
     "w.everminer.e21xp019": {
       "type": "worker_anomaly",
       "baselineHR": 243300000000000,
-      "currentHR": 120721490011459.12,
+      "currentHR": 141362988303573.9,
       "worker": "e21xp019",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -507,7 +507,7 @@
     "w.everminer.023e6ccfafbd": {
       "type": "worker_anomaly",
       "baselineHR": 252400000000000,
-      "currentHR": 128852989338655.86,
+      "currentHR": 126350989545672.25,
       "worker": "023e6ccfafbd",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -519,7 +519,7 @@
     "w.cmine.omxdefault": {
       "type": "worker_anomaly",
       "baselineHR": 26142500000000000,
-      "currentHR": 14291422817522374,
+      "currentHR": 13961158844848538,
       "worker": "omxdefault",
       "provider": "Open Mine",
       "groupId": "OM",
@@ -699,7 +699,7 @@
     "w.everminer.02a13716759b": {
       "type": "worker_anomaly",
       "baselineHR": 246500000000000,
-      "currentHR": 0,
+      "currentHR": 40286106041712.64,
       "worker": "02a13716759b",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -707,18 +707,6 @@
       "accountName": "Everminer",
       "anomalyType": "volatile",
       "detectedAt": "2026-08-19T21:01:07.195Z"
-    },
-    "w.everminer.0231bb5e1929": {
-      "type": "worker_anomaly",
-      "baselineHR": 229000000000000,
-      "currentHR": 161378986647442.78,
-      "worker": "0231bb5e1929",
-      "provider": "Dataprana",
-      "groupId": "U1+U2",
-      "account": "everminer",
-      "accountName": "Everminer",
-      "anomalyType": "level_drop",
-      "detectedAt": "2026-08-19T22:01:02.817Z"
     },
     "w.everminer.02831b0fd505": {
       "type": "worker_anomaly",
@@ -915,7 +903,7 @@
   "cmine.OM": "2026-07-28T20:01:03.765Z",
   "w.cmine.r20915": "2026-07-30T15:01:09.000Z",
   "w.cmine.aa14": "2026-08-08T18:01:06.185Z",
-  "w.cmine.omxdefault": "2026-08-19T20:01:06.967Z",
+  "w.cmine.omxdefault": "2026-08-20T05:01:05.218Z",
   "cmine.F1": "2026-07-24T01:00:59.134Z",
   "w.cmine.18x0x238": "2026-08-19T17:01:12.071Z",
   "w.cmine.18x0x199": "2026-08-19T17:01:12.071Z",

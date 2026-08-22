@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-22T16:01:05.280Z",
+  "last_updated": "2026-08-22T17:01:02.819Z",
   "issues": {
     "cmine.omxdefault": {
       "account": "cmine",
@@ -8,24 +8,11 @@
       "group_id": "OM",
       "provider": "Open Mine",
       "type": "level_drop",
-      "current_avg_ths": 5201,
-      "baseline_avg_ths": 24862.8,
-      "drop_pct": 79,
-      "cv_pct": 36,
+      "current_avg_ths": 5709.1,
+      "baseline_avg_ths": 24779.5,
+      "drop_pct": 77,
+      "cv_pct": 40,
       "zero_rate_pct": 0
-    },
-    "cmine.c21xp002": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "c21xp002",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)",
-      "type": "volatile",
-      "current_avg_ths": 35.7,
-      "baseline_avg_ths": 249.6,
-      "drop_pct": 86,
-      "cv_pct": 224,
-      "zero_rate_pct": 83
     },
     "everminer.e21xp019": {
       "account": "everminer",
@@ -34,9 +21,9 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)",
       "type": "level_drop",
-      "current_avg_ths": 26.7,
-      "baseline_avg_ths": 215.5,
-      "drop_pct": 88,
+      "current_avg_ths": 26.8,
+      "baseline_avg_ths": 213.7,
+      "drop_pct": 87,
       "cv_pct": 11,
       "zero_rate_pct": 0
     }

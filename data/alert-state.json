@@ -15,7 +15,7 @@
     "w.everminer.e21xp019": {
       "type": "worker_anomaly",
       "baselineHR": 243300000000000,
-      "currentHR": 27834747696942.65,
+      "currentHR": 27678372709881.17,
       "worker": "e21xp019",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -27,7 +27,7 @@
     "w.everminer.023e6ccfafbd": {
       "type": "worker_anomaly",
       "baselineHR": 252400000000000,
-      "currentHR": 112589990684262.4,
+      "currentHR": 132605989028131.27,
       "worker": "023e6ccfafbd",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -35,18 +35,6 @@
       "accountName": "Everminer",
       "anomalyType": "volatile",
       "detectedAt": "2026-08-14T00:01:15.955Z"
-    },
-    "w.cmine.omxdefault": {
-      "type": "worker_anomaly",
-      "baselineHR": 26142500000000000,
-      "currentHR": 14111278832427554,
-      "worker": "omxdefault",
-      "provider": "Open Mine",
-      "groupId": "OM",
-      "account": "cmine",
-      "accountName": "Cyberian Mine",
-      "anomalyType": "level_drop",
-      "detectedAt": "2026-08-14T13:01:08.547Z"
     },
     "w.cmine.k2lx131x2x30": {
       "type": "worker_anomaly",
@@ -477,7 +465,7 @@
   "w.everminer.028e78f6862a": "2026-08-22T06:01:08.734Z",
   "w.everminer.02b18d53c9b9": "2026-08-22T06:01:08.734Z",
   "w.everminer.029bc156a03f": "2026-08-22T06:01:08.734Z",
-  "w.everminer.023e6ccfafbd": "2026-08-22T11:01:03.517Z",
+  "w.everminer.023e6ccfafbd": "2026-08-22T20:01:08.682Z",
   "w.everminer.029c3cb5f721": "2026-08-22T06:01:08.734Z",
   "w.everminer.0231bb5e1929": "2026-08-22T06:01:08.734Z",
   "w.everminer.02831b0fd505": "2026-08-22T15:01:04.187Z",

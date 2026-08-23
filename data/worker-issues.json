@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-23T07:01:04.555Z",
+  "last_updated": "2026-08-23T08:01:06.412Z",
   "issues": {
     "cmine.omxdefault": {
       "account": "cmine",
@@ -8,8 +8,8 @@
       "group_id": "OM",
       "provider": "Open Mine",
       "type": "level_drop",
-      "current_avg_ths": 7323,
-      "baseline_avg_ths": 23681.5,
+      "current_avg_ths": 7433.3,
+      "baseline_avg_ths": 23598.2,
       "drop_pct": 69,
       "cv_pct": 10,
       "zero_rate_pct": 0
@@ -48,7 +48,7 @@
       "provider": "Dataprana",
       "type": "volatile",
       "current_avg_ths": 49.7,
-      "baseline_avg_ths": 182.3,
+      "baseline_avg_ths": 182.1,
       "drop_pct": 73,
       "cv_pct": 148,
       "zero_rate_pct": 67
@@ -61,7 +61,7 @@
       "provider": "Dataprana",
       "type": "volatile",
       "current_avg_ths": 54.5,
-      "baseline_avg_ths": 194.3,
+      "baseline_avg_ths": 194.1,
       "drop_pct": 72,
       "cv_pct": 146,
       "zero_rate_pct": 67
@@ -86,10 +86,10 @@
       "group_id": "U3",
       "provider": "ValueHash (NY)",
       "type": "level_drop",
-      "current_avg_ths": 27.9,
-      "baseline_avg_ths": 197.1,
+      "current_avg_ths": 27.2,
+      "baseline_avg_ths": 196,
       "drop_pct": 86,
-      "cv_pct": 7,
+      "cv_pct": 8,
       "zero_rate_pct": 0
     },
     "everminer.023e6ccfafbd": {
@@ -113,7 +113,7 @@
       "provider": "Dataprana",
       "type": "volatile",
       "current_avg_ths": 52.1,
-      "baseline_avg_ths": 176,
+      "baseline_avg_ths": 175.9,
       "drop_pct": 70,
       "cv_pct": 146,
       "zero_rate_pct": 67
@@ -152,7 +152,7 @@
       "provider": "Dataprana",
       "type": "volatile",
       "current_avg_ths": 55.8,
-      "baseline_avg_ths": 185.7,
+      "baseline_avg_ths": 185.5,
       "drop_pct": 70,
       "cv_pct": 149,
       "zero_rate_pct": 67
@@ -165,7 +165,7 @@
       "provider": "Dataprana",
       "type": "volatile",
       "current_avg_ths": 55.3,
-      "baseline_avg_ths": 182.6,
+      "baseline_avg_ths": 182.4,
       "drop_pct": 70,
       "cv_pct": 151,
       "zero_rate_pct": 67

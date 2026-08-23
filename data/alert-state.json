@@ -15,7 +15,7 @@
     "w.everminer.e21xp019": {
       "type": "worker_anomaly",
       "baselineHR": 243300000000000,
-      "currentHR": 25645497878081.992,
+      "currentHR": 25332747903959.04,
       "worker": "e21xp019",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -27,7 +27,7 @@
     "w.everminer.023e6ccfafbd": {
       "type": "worker_anomaly",
       "baselineHR": 252400000000000,
-      "currentHR": 111338990787770.6,
+      "currentHR": 116342990373737.81,
       "worker": "023e6ccfafbd",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -423,7 +423,7 @@
     "w.cmine.omxdefault": {
       "type": "worker_anomaly",
       "baselineHR": 24328700000000000,
-      "currentHR": 5748383618126607,
+      "currentHR": 2183346663099087,
       "worker": "omxdefault",
       "provider": "Open Mine",
       "groupId": "OM",
@@ -431,6 +431,18 @@
       "accountName": "Cyberian Mine",
       "anomalyType": "level_drop",
       "detectedAt": "2026-08-22T23:01:05.160Z"
+    },
+    "w.everminer.02a13716759b": {
+      "type": "worker_anomaly",
+      "baselineHR": 245500000000000,
+      "currentHR": 0,
+      "worker": "02a13716759b",
+      "provider": "Dataprana",
+      "groupId": "U1+U2",
+      "account": "everminer",
+      "accountName": "Everminer",
+      "anomalyType": "volatile",
+      "detectedAt": "2026-08-23T19:01:02.865Z"
     }
   },
   "everminer.U3": "2026-07-28T21:00:59.294Z",
@@ -442,7 +454,7 @@
   "w.everminer.e21xp017": "2026-08-20T13:01:06.556Z",
   "w.everminer.e21xp015": "2026-08-21T23:01:04.912Z",
   "w.everminer.e21xp020": "2026-08-20T21:01:08.170Z",
-  "w.everminer.e21xp019": "2026-08-23T10:01:07.119Z",
+  "w.everminer.e21xp019": "2026-08-23T19:01:02.865Z",
   "w.everminer.e21xp021": "2026-08-20T13:01:06.556Z",
   "w.everminer.e21xp031": "2026-08-20T13:01:06.556Z",
   "w.everminer.e21xp027": "2026-08-20T13:01:06.556Z",
@@ -469,7 +481,7 @@
   "w.everminer.s21hyd008": "2026-08-20T02:01:04.071Z",
   "w.everminer.s21hyd005": "2026-08-20T00:01:06.049Z",
   "w.cmine.s21xphyd0002": "2026-08-20T07:01:07.582Z",
-  "w.everminer.02a13716759b": "2026-08-23T09:01:08.666Z",
+  "w.everminer.02a13716759b": "2026-08-23T19:01:02.865Z",
   "w.everminer.023450c48666": "2026-08-18T04:01:08.229Z",
   "w.cmine.021741ace2c4": "2026-08-17T21:01:08.713Z",
   "w.everminer.02b4889e5c95": "2026-08-23T08:01:06.412Z",

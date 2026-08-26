@@ -3,7 +3,7 @@
     "w.everminer.023e6ccfafbd": {
       "type": "worker_anomaly",
       "baselineHR": 252400000000000,
-      "currentHR": 126976489493918.16,
+      "currentHR": 118219490218475.52,
       "worker": "023e6ccfafbd",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -399,7 +399,7 @@
     "w.cmine.omxdefault": {
       "type": "worker_anomaly",
       "baselineHR": 24328700000000000,
-      "currentHR": 5533006393759498,
+      "currentHR": 5879074013563235,
       "worker": "omxdefault",
       "provider": "Open Mine",
       "groupId": "OM",
@@ -423,7 +423,7 @@
     "w.everminer.e21xp019": {
       "type": "worker_anomaly",
       "baselineHR": 145700000000000,
-      "currentHR": 27209247748696.746,
+      "currentHR": 27991122684004.125,
       "worker": "e21xp019",
       "provider": "ValueHash (NY)",
       "groupId": "U3",
@@ -432,34 +432,10 @@
       "anomalyType": "level_drop",
       "detectedAt": "2026-08-25T13:01:13.438Z"
     },
-    "w.everminer.e21xp021": {
-      "type": "worker_anomaly",
-      "baselineHR": 288100000000000,
-      "currentHR": 161378986647442.78,
-      "worker": "e21xp021",
-      "provider": "ValueHash (NY)",
-      "groupId": "U3",
-      "account": "everminer",
-      "accountName": "Everminer",
-      "anomalyType": "level_drop",
-      "detectedAt": "2026-08-25T23:01:06.731Z"
-    },
-    "w.everminer.e21xp020": {
-      "type": "worker_anomaly",
-      "baselineHR": 254000000000000,
-      "currentHR": 157625986957967.38,
-      "worker": "e21xp020",
-      "provider": "ValueHash (NY)",
-      "groupId": "U3",
-      "account": "everminer",
-      "accountName": "Everminer",
-      "anomalyType": "level_drop",
-      "detectedAt": "2026-08-26T00:01:12.137Z"
-    },
     "w.everminer.02b4889e5c95": {
       "type": "worker_anomaly",
       "baselineHR": 244400000000000,
-      "currentHR": 0,
+      "currentHR": 44645058806051.27,
       "worker": "02b4889e5c95",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -471,7 +447,7 @@
     "w.everminer.02a13716759b": {
       "type": "worker_anomaly",
       "baselineHR": 243300000000000,
-      "currentHR": 0,
+      "currentHR": 154899198121082.88,
       "worker": "02a13716759b",
       "provider": "Dataprana",
       "groupId": "U1+U2",

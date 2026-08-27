@@ -3,7 +3,7 @@
     "w.everminer.023e6ccfafbd": {
       "type": "worker_anomaly",
       "baselineHR": 252400000000000,
-      "currentHR": 120095990063213.23,
+      "currentHR": 0,
       "worker": "023e6ccfafbd",
       "provider": "Dataprana",
       "groupId": "U1+U2",
@@ -387,7 +387,7 @@
     "w.cmine.omxdefault": {
       "type": "worker_anomaly",
       "baselineHR": 24328700000000000,
-      "currentHR": 193093788710848.28,
+      "currentHR": 456663829402965.3,
       "worker": "omxdefault",
       "provider": "Open Mine",
       "groupId": "OM",
@@ -411,7 +411,7 @@
     "w.everminer.e21xp019": {
       "type": "worker_anomaly",
       "baselineHR": 144600000000000,
-      "currentHR": 29398497567557.406,
+      "currentHR": 13448248887286.898,
       "worker": "e21xp019",
       "provider": "ValueHash (NY)",
       "groupId": "U3",

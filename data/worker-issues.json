@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-01T18:01:15.798Z",
+  "last_updated": "2026-09-01T19:01:11.171Z",
   "issues": {
     "cmine.18x0x18": {
       "account": "cmine",
@@ -9,7 +9,7 @@
       "provider": "Terahash",
       "type": "volatile",
       "current_avg_ths": 6.9,
-      "baseline_avg_ths": 344.7,
+      "baseline_avg_ths": 328.6,
       "drop_pct": 98,
       "cv_pct": 181,
       "zero_rate_pct": 67
@@ -22,7 +22,7 @@
       "provider": "Terahash",
       "type": "volatile",
       "current_avg_ths": 9.9,
-      "baseline_avg_ths": 366.7,
+      "baseline_avg_ths": 348.6,
       "drop_pct": 97,
       "cv_pct": 159,
       "zero_rate_pct": 67
@@ -34,10 +34,10 @@
       "group_id": "OM",
       "provider": "Open Mine",
       "type": "level_drop",
-      "current_avg_ths": 269.3,
-      "baseline_avg_ths": 13209.6,
+      "current_avg_ths": 258.7,
+      "baseline_avg_ths": 13155.6,
       "drop_pct": 98,
-      "cv_pct": 47,
+      "cv_pct": 53,
       "zero_rate_pct": 0
     },
     "cmine.18x0x72": {
@@ -48,7 +48,7 @@
       "provider": "Terahash",
       "type": "volatile",
       "current_avg_ths": 5.7,
-      "baseline_avg_ths": 353.2,
+      "baseline_avg_ths": 336.9,
       "drop_pct": 98,
       "cv_pct": 160,
       "zero_rate_pct": 67
@@ -61,7 +61,7 @@
       "provider": "Terahash",
       "type": "volatile",
       "current_avg_ths": 10.3,
-      "baseline_avg_ths": 364.3,
+      "baseline_avg_ths": 346.6,
       "drop_pct": 97,
       "cv_pct": 161,
       "zero_rate_pct": 67
@@ -74,8 +74,8 @@
       "provider": "Terahash",
       "type": "volatile",
       "current_avg_ths": 5.3,
-      "baseline_avg_ths": 356.7,
-      "drop_pct": 99,
+      "baseline_avg_ths": 339.2,
+      "drop_pct": 98,
       "cv_pct": 206,
       "zero_rate_pct": 83
     },
@@ -87,7 +87,7 @@
       "provider": "Terahash",
       "type": "volatile",
       "current_avg_ths": 5.9,
-      "baseline_avg_ths": 350.3,
+      "baseline_avg_ths": 332.9,
       "drop_pct": 98,
       "cv_pct": 173,
       "zero_rate_pct": 67
@@ -100,7 +100,7 @@
       "provider": "Terahash",
       "type": "volatile",
       "current_avg_ths": 6.1,
-      "baseline_avg_ths": 351.2,
+      "baseline_avg_ths": 333.3,
       "drop_pct": 98,
       "cv_pct": 163,
       "zero_rate_pct": 67
@@ -113,7 +113,7 @@
       "provider": "Terahash",
       "type": "volatile",
       "current_avg_ths": 10.3,
-      "baseline_avg_ths": 351.8,
+      "baseline_avg_ths": 336.4,
       "drop_pct": 97,
       "cv_pct": 142,
       "zero_rate_pct": 67
@@ -126,7 +126,7 @@
       "provider": "Terahash",
       "type": "volatile",
       "current_avg_ths": 9,
-      "baseline_avg_ths": 357,
+      "baseline_avg_ths": 341.4,
       "drop_pct": 97,
       "cv_pct": 149,
       "zero_rate_pct": 67
@@ -139,7 +139,7 @@
       "provider": "Terahash",
       "type": "volatile",
       "current_avg_ths": 5.7,
-      "baseline_avg_ths": 356.8,
+      "baseline_avg_ths": 341,
       "drop_pct": 98,
       "cv_pct": 173,
       "zero_rate_pct": 67
@@ -152,7 +152,7 @@
       "provider": "Terahash",
       "type": "volatile",
       "current_avg_ths": 5.7,
-      "baseline_avg_ths": 352.4,
+      "baseline_avg_ths": 334,
       "drop_pct": 98,
       "cv_pct": 173,
       "zero_rate_pct": 67
@@ -165,8 +165,8 @@
       "provider": "Terahash",
       "type": "volatile",
       "current_avg_ths": 5.3,
-      "baseline_avg_ths": 358.9,
-      "drop_pct": 99,
+      "baseline_avg_ths": 338.3,
+      "drop_pct": 98,
       "cv_pct": 170,
       "zero_rate_pct": 67
     }

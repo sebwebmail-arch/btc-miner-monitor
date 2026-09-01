@@ -1,17 +1,5 @@
 {
   "watchlist": {
-    "w.cmine.r20231": {
-      "type": "worker_anomaly",
-      "baselineHR": 168400000000000,
-      "currentHR": 0,
-      "worker": "r20231",
-      "provider": "IZTM",
-      "groupId": "R1",
-      "account": "cmine",
-      "accountName": "Cyberian Mine",
-      "anomalyType": "volatile",
-      "detectedAt": "2026-08-18T09:01:04.277Z"
-    },
     "w.cmine.k2lx132x10x50": {
       "type": "worker_anomaly",
       "baselineHR": 157300000000000,
@@ -243,7 +231,7 @@
     "w.cmine.omxdefault": {
       "type": "worker_anomaly",
       "baselineHR": 24328700000000000,
-      "currentHR": 1244832857939567.5,
+      "currentHR": 143601105305891.28,
       "worker": "omxdefault",
       "provider": "Open Mine",
       "groupId": "OM",

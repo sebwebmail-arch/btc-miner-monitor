@@ -1,6 +1,32 @@
 {
-  "last_updated": "2026-09-01T16:01:12.730Z",
+  "last_updated": "2026-09-01T17:01:18.694Z",
   "issues": {
+    "cmine.18x0x18": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "worker": "18x0x18",
+      "group_id": "F1",
+      "provider": "Terahash",
+      "type": "volatile",
+      "current_avg_ths": 5.7,
+      "baseline_avg_ths": 360.5,
+      "drop_pct": 98,
+      "cv_pct": 224,
+      "zero_rate_pct": 83
+    },
+    "cmine.18x0x238": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "worker": "18x0x238",
+      "group_id": "F1",
+      "provider": "Terahash",
+      "type": "volatile",
+      "current_avg_ths": 7,
+      "baseline_avg_ths": 380.9,
+      "drop_pct": 98,
+      "cv_pct": 224,
+      "zero_rate_pct": 83
+    },
     "cmine.omxdefault": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
@@ -8,11 +34,50 @@
       "group_id": "OM",
       "provider": "Open Mine",
       "type": "level_drop",
-      "current_avg_ths": 198,
-      "baseline_avg_ths": 13326.2,
-      "drop_pct": 99,
-      "cv_pct": 25,
+      "current_avg_ths": 204.8,
+      "baseline_avg_ths": 13261.4,
+      "drop_pct": 98,
+      "cv_pct": 21,
       "zero_rate_pct": 0
+    },
+    "cmine.18x0x199": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "worker": "18x0x199",
+      "group_id": "F1",
+      "provider": "Terahash",
+      "type": "volatile",
+      "current_avg_ths": 7.4,
+      "baseline_avg_ths": 381.7,
+      "drop_pct": 98,
+      "cv_pct": 224,
+      "zero_rate_pct": 83
+    },
+    "cmine.18x0x61": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "worker": "18x0x61",
+      "group_id": "F1",
+      "provider": "Terahash",
+      "type": "volatile",
+      "current_avg_ths": 5.3,
+      "baseline_avg_ths": 368.9,
+      "drop_pct": 99,
+      "cv_pct": 224,
+      "zero_rate_pct": 83
+    },
+    "cmine.18x1x179": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "worker": "18x1x179",
+      "group_id": "F1",
+      "provider": "Terahash",
+      "type": "volatile",
+      "current_avg_ths": 5.7,
+      "baseline_avg_ths": 375.2,
+      "drop_pct": 98,
+      "cv_pct": 224,
+      "zero_rate_pct": 83
     }
   }
 }

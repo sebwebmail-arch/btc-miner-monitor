@@ -1,17 +1,5 @@
 {
   "watchlist": {
-    "w.cmine.s21xp001": {
-      "type": "worker_anomaly",
-      "baselineHR": 470800000000000,
-      "currentHR": 0,
-      "worker": "s21xp001",
-      "provider": "Altos",
-      "groupId": "P1",
-      "account": "cmine",
-      "accountName": "Cyberian Mine",
-      "anomalyType": "level_drop",
-      "detectedAt": "2026-08-18T00:01:09.569Z"
-    },
     "w.cmine.r20231": {
       "type": "worker_anomaly",
       "baselineHR": 168400000000000,
@@ -255,7 +243,7 @@
     "w.cmine.omxdefault": {
       "type": "worker_anomaly",
       "baselineHR": 24328700000000000,
-      "currentHR": 240397222296944.62,
+      "currentHR": 243446534544643.4,
       "worker": "omxdefault",
       "provider": "Open Mine",
       "groupId": "OM",

@@ -1,29 +1,5 @@
 {
   "watchlist": {
-    "w.everminer.s21hyd001": {
-      "type": "worker_anomaly",
-      "baselineHR": 439100000000000,
-      "currentHR": 0,
-      "worker": "s21hyd001",
-      "provider": "Altos",
-      "groupId": "P1",
-      "account": "everminer",
-      "accountName": "Everminer",
-      "anomalyType": "level_drop",
-      "detectedAt": "2026-08-20T02:01:04.071Z"
-    },
-    "w.everminer.s21hyd008": {
-      "type": "worker_anomaly",
-      "baselineHR": 441700000000000,
-      "currentHR": 0,
-      "worker": "s21hyd008",
-      "provider": "Altos",
-      "groupId": "P1",
-      "account": "everminer",
-      "accountName": "Everminer",
-      "anomalyType": "level_drop",
-      "detectedAt": "2026-08-20T02:01:04.071Z"
-    },
     "w.cmine.s21xphyd002": {
       "type": "worker_anomaly",
       "baselineHR": 526000000000000,
@@ -147,7 +123,7 @@
     "w.cmine.omxdefault": {
       "type": "worker_anomaly",
       "baselineHR": 24328700000000000,
-      "currentHR": 228923207621308.88,
+      "currentHR": 237132894442036.34,
       "worker": "omxdefault",
       "provider": "Open Mine",
       "groupId": "OM",

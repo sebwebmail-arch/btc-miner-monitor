@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-05T00:01:16.136Z",
+  "last_updated": "2026-09-05T01:01:04.258Z",
   "ghosts": {
     "cmine.02a34725b1b2": {
       "account": "cmine",
@@ -3790,46 +3790,10 @@
       "lastSnapIso": "2026-08-29T00:01:14.344Z",
       "detectedAt": "2026-08-29T01:01:09.723Z"
     },
-    "cmine.18x0x18": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "18x0x18",
-      "groupId": "F1",
-      "provider": "Terahash",
-      "lastSnapIso": "2026-09-04T00:01:15.757Z",
-      "detectedAt": "2026-09-04T01:01:03.579Z"
-    },
-    "cmine.18x0x238": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "18x0x238",
-      "groupId": "F1",
-      "provider": "Terahash",
-      "lastSnapIso": "2026-09-04T00:01:15.757Z",
-      "detectedAt": "2026-09-04T01:01:03.579Z"
-    },
-    "cmine.18x0x72": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "18x0x72",
-      "groupId": "F1",
-      "provider": "Terahash",
-      "lastSnapIso": "2026-09-04T00:01:15.757Z",
-      "detectedAt": "2026-09-04T01:01:03.579Z"
-    },
     "cmine.18x0x199": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
       "name": "18x0x199",
-      "groupId": "F1",
-      "provider": "Terahash",
-      "lastSnapIso": "2026-09-04T00:01:15.757Z",
-      "detectedAt": "2026-09-04T01:01:03.579Z"
-    },
-    "cmine.18x0x94": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "18x0x94",
       "groupId": "F1",
       "provider": "Terahash",
       "lastSnapIso": "2026-09-04T00:01:15.757Z",
@@ -3844,24 +3808,6 @@
       "lastSnapIso": "2026-09-04T00:01:15.757Z",
       "detectedAt": "2026-09-04T01:01:03.579Z"
     },
-    "cmine.18x0x30": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "18x0x30",
-      "groupId": "F1",
-      "provider": "Terahash",
-      "lastSnapIso": "2026-09-04T00:01:15.757Z",
-      "detectedAt": "2026-09-04T01:01:03.579Z"
-    },
-    "cmine.18x1x68": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "18x1x68",
-      "groupId": "F1",
-      "provider": "Terahash",
-      "lastSnapIso": "2026-09-04T00:01:15.757Z",
-      "detectedAt": "2026-09-04T01:01:03.579Z"
-    },
     "cmine.18x1x179": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
@@ -3871,23 +3817,14 @@
       "lastSnapIso": "2026-09-04T00:01:15.757Z",
       "detectedAt": "2026-09-04T01:01:03.579Z"
     },
-    "cmine.18x0x168": {
+    "cmine.openfallback": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
-      "name": "18x0x168",
-      "groupId": "F1",
-      "provider": "Terahash",
-      "lastSnapIso": "2026-09-04T00:01:15.757Z",
-      "detectedAt": "2026-09-04T01:01:03.579Z"
-    },
-    "cmine.18x0x157": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "18x0x157",
-      "groupId": "F1",
-      "provider": "Terahash",
-      "lastSnapIso": "2026-09-04T00:01:15.757Z",
-      "detectedAt": "2026-09-04T01:01:03.579Z"
+      "name": "openfallback",
+      "groupId": "OM",
+      "provider": "Open Mine",
+      "lastSnapIso": "2026-09-05T00:01:16.136Z",
+      "detectedAt": "2026-09-05T01:01:04.258Z"
     }
   }
 }

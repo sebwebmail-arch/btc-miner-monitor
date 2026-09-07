@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-07T08:01:18.563Z",
+  "last_updated": "2026-09-07T09:01:15.073Z",
   "issues": {
     "cmine.omxdefault": {
       "account": "cmine",
@@ -7,11 +7,11 @@
       "worker": "omxdefault",
       "group_id": "OM",
       "provider": "Open Mine",
-      "type": "volatile",
-      "current_avg_ths": 3357.5,
+      "type": "level_drop",
+      "current_avg_ths": 2412.2,
       "baseline_avg_ths": 5254.3,
-      "drop_pct": 36,
-      "cv_pct": 74,
+      "drop_pct": 54,
+      "cv_pct": 99,
       "zero_rate_pct": 0
     }
   }

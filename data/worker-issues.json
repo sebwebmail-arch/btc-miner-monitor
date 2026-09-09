@@ -1,4 +1,18 @@
 {
-  "last_updated": "2026-09-09T07:01:18.364Z",
-  "issues": {}
+  "last_updated": "2026-09-09T08:01:19.256Z",
+  "issues": {
+    "cmine.k2lx": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "worker": "k2lx",
+      "group_id": "R3",
+      "provider": "Minto",
+      "type": "volatile",
+      "current_avg_ths": 5,
+      "baseline_avg_ths": 103.3,
+      "drop_pct": 95,
+      "cv_pct": 224,
+      "zero_rate_pct": 83
+    }
+  }
 }

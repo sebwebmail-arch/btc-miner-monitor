@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-10T17:01:16.177Z",
+  "last_updated": "2026-09-10T18:01:14.967Z",
   "issues": {
     "cmine.k2lx131x4x47": {
       "account": "cmine",
@@ -8,24 +8,11 @@
       "group_id": "R3",
       "provider": "Minto",
       "type": "volatile",
-      "current_avg_ths": 67.4,
-      "baseline_avg_ths": 200.9,
-      "drop_pct": 66,
-      "cv_pct": 118,
+      "current_avg_ths": 49.8,
+      "baseline_avg_ths": 201.8,
+      "drop_pct": 75,
+      "cv_pct": 116,
       "zero_rate_pct": 50
-    },
-    "cmine.k2lx131x2x48": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "k2lx131x2x48",
-      "group_id": "R3",
-      "provider": "Minto",
-      "type": "volatile",
-      "current_avg_ths": 132.3,
-      "baseline_avg_ths": 164.5,
-      "drop_pct": 20,
-      "cv_pct": 71,
-      "zero_rate_pct": 33
     }
   }
 }

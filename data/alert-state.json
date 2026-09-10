@@ -1,17 +1,5 @@
 {
   "watchlist": {
-    "w.everminer.e21xp019": {
-      "type": "worker_anomaly",
-      "baselineHR": 144600000000000,
-      "currentHR": 0,
-      "worker": "e21xp019",
-      "provider": "ValueHash (NY)",
-      "groupId": "U3",
-      "account": "everminer",
-      "accountName": "Everminer",
-      "anomalyType": "level_drop",
-      "detectedAt": "2026-08-27T04:01:13.925Z"
-    },
     "w.cmine.02a1db03d510": {
       "type": "worker_anomaly",
       "baselineHR": 271700000000000,

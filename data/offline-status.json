@@ -1,10 +1,17 @@
 {
-  "last_updated": "2026-09-11T08:01:16.717Z",
+  "last_updated": "2026-09-11T09:01:20.185Z",
   "offline": {
     "cmine.18x1x68": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
       "name": "18x1x68",
+      "group_id": "F1",
+      "provider": "Terahash"
+    },
+    "cmine.18x0x199": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "18x0x199",
       "group_id": "F1",
       "provider": "Terahash"
     },
@@ -15,38 +22,10 @@
       "group_id": "F1",
       "provider": "Terahash"
     },
-    "cmine.18x0x73": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "18x0x73",
-      "group_id": "F1",
-      "provider": "Terahash"
-    },
-    "cmine.18x0x238": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "18x0x238",
-      "group_id": "F1",
-      "provider": "Terahash"
-    },
-    "cmine.18x0x94": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "18x0x94",
-      "group_id": "F1",
-      "provider": "Terahash"
-    },
     "cmine.18x0x168": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
       "name": "18x0x168",
-      "group_id": "F1",
-      "provider": "Terahash"
-    },
-    "cmine.18x0x72": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "18x0x72",
       "group_id": "F1",
       "provider": "Terahash"
     },
@@ -57,34 +36,6 @@
       "group_id": "U1+U2",
       "provider": "Dataprana"
     },
-    "cmine.openfallback": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "openfallback",
-      "group_id": "OM",
-      "provider": "Open Mine"
-    },
-    "cmine.18x0x18": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "18x0x18",
-      "group_id": "F1",
-      "provider": "Terahash"
-    },
-    "cmine.18x0x91": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "18x0x91",
-      "group_id": "F1",
-      "provider": "Terahash"
-    },
-    "cmine.18x1x179": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "18x1x179",
-      "group_id": "F1",
-      "provider": "Terahash"
-    },
     "cmine.18x0x157": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
@@ -92,10 +43,10 @@
       "group_id": "F1",
       "provider": "Terahash"
     },
-    "cmine.18x0x22": {
+    "cmine.18x0x18": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
-      "name": "18x0x22",
+      "name": "18x0x18",
       "group_id": "F1",
       "provider": "Terahash"
     },
@@ -106,10 +57,59 @@
       "group_id": "F1",
       "provider": "Terahash"
     },
-    "cmine.18x0x199": {
+    "cmine.18x0x72": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
-      "name": "18x0x199",
+      "name": "18x0x72",
+      "group_id": "F1",
+      "provider": "Terahash"
+    },
+    "cmine.18x0x22": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "18x0x22",
+      "group_id": "F1",
+      "provider": "Terahash"
+    },
+    "cmine.openfallback": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "openfallback",
+      "group_id": "OM",
+      "provider": "Open Mine"
+    },
+    "cmine.18x0x94": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "18x0x94",
+      "group_id": "F1",
+      "provider": "Terahash"
+    },
+    "cmine.18x1x179": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "18x1x179",
+      "group_id": "F1",
+      "provider": "Terahash"
+    },
+    "cmine.18x0x238": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "18x0x238",
+      "group_id": "F1",
+      "provider": "Terahash"
+    },
+    "cmine.18x0x73": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "18x0x73",
+      "group_id": "F1",
+      "provider": "Terahash"
+    },
+    "cmine.18x0x91": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "18x0x91",
       "group_id": "F1",
       "provider": "Terahash"
     },

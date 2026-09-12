@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-12T00:01:18.131Z",
+  "last_updated": "2026-09-12T01:01:14.105Z",
   "ghosts": {
     "everminer.k2lx131x5x2": {
       "account": "everminer",
@@ -3789,6 +3789,24 @@
       "provider": "Dataprana",
       "lastSnapIso": "2026-09-11T00:01:53.798Z",
       "detectedAt": "2026-09-11T01:01:14.762Z"
+    },
+    "cmine.02a34725b1b2": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "02a34725b1b2",
+      "groupId": "U1+U2",
+      "provider": "Dataprana",
+      "lastSnapIso": "2026-09-12T00:01:18.131Z",
+      "detectedAt": "2026-09-12T01:01:14.105Z"
+    },
+    "cmine.openfallback": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "openfallback",
+      "groupId": "OM",
+      "provider": "Open Mine",
+      "lastSnapIso": "2026-09-12T00:01:18.131Z",
+      "detectedAt": "2026-09-12T01:01:14.105Z"
     }
   }
 }

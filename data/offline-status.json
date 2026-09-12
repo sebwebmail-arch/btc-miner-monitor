@@ -1,38 +1,24 @@
 {
-  "last_updated": "2026-09-12T00:01:18.131Z",
+  "last_updated": "2026-09-12T01:01:14.105Z",
   "offline": {
-    "cmine.18x0x72": {
+    "cmine.18x0x157": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
-      "name": "18x0x72",
+      "name": "18x0x157",
       "group_id": "F1",
       "provider": "Terahash"
     },
-    "cmine.18x0x61": {
+    "cmine.18x0x199": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
-      "name": "18x0x61",
+      "name": "18x0x199",
       "group_id": "F1",
       "provider": "Terahash"
     },
-    "cmine.18x0x168": {
+    "cmine.18x0x30": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
-      "name": "18x0x168",
-      "group_id": "F1",
-      "provider": "Terahash"
-    },
-    "cmine.18x1x68": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "18x1x68",
-      "group_id": "F1",
-      "provider": "Terahash"
-    },
-    "cmine.18x0x94": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "18x0x94",
+      "name": "18x0x30",
       "group_id": "F1",
       "provider": "Terahash"
     },
@@ -50,10 +36,17 @@
       "group_id": "F1",
       "provider": "Terahash"
     },
-    "cmine.18x0x30": {
+    "cmine.18x0x72": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
-      "name": "18x0x30",
+      "name": "18x0x72",
+      "group_id": "F1",
+      "provider": "Terahash"
+    },
+    "cmine.18x0x168": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "18x0x168",
       "group_id": "F1",
       "provider": "Terahash"
     },
@@ -64,17 +57,10 @@
       "group_id": "F1",
       "provider": "Terahash"
     },
-    "cmine.openfallback": {
+    "cmine.18x0x91": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
-      "name": "openfallback",
-      "group_id": "OM",
-      "provider": "Open Mine"
-    },
-    "cmine.18x0x199": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "18x0x199",
+      "name": "18x0x91",
       "group_id": "F1",
       "provider": "Terahash"
     },
@@ -85,6 +71,20 @@
       "group_id": "F1",
       "provider": "Terahash"
     },
+    "cmine.18x1x68": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "18x1x68",
+      "group_id": "F1",
+      "provider": "Terahash"
+    },
+    "cmine.18x0x61": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "18x0x61",
+      "group_id": "F1",
+      "provider": "Terahash"
+    },
     "cmine.18x0x22": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
@@ -92,26 +92,12 @@
       "group_id": "F1",
       "provider": "Terahash"
     },
-    "cmine.18x0x91": {
+    "cmine.18x0x94": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
-      "name": "18x0x91",
+      "name": "18x0x94",
       "group_id": "F1",
       "provider": "Terahash"
-    },
-    "cmine.18x0x157": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "18x0x157",
-      "group_id": "F1",
-      "provider": "Terahash"
-    },
-    "cmine.02a34725b1b2": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "02a34725b1b2",
-      "group_id": "U1+U2",
-      "provider": "Dataprana"
     },
     "cmine.r21033": {
       "account": "cmine",
@@ -3050,7 +3036,7 @@
       "group_id": "R3",
       "provider": "Minto",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-09-11T00:01:53.798Z"
     },
     "cmine.ynahfkabdajbh02": {
@@ -3060,8 +3046,28 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-09-11T00:01:53.798Z"
+    },
+    "cmine.02a34725b1b2": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "02a34725b1b2",
+      "group_id": "U1+U2",
+      "provider": "Dataprana",
+      "dead": true,
+      "category": "offline",
+      "last_share": "2026-09-12T00:01:18.131Z"
+    },
+    "cmine.openfallback": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "openfallback",
+      "group_id": "OM",
+      "provider": "Open Mine",
+      "dead": true,
+      "category": "offline",
+      "last_share": "2026-09-12T00:01:18.131Z"
     },
     "everminer.k2lx131x5x2": {
       "account": "everminer",

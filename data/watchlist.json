@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-18T16:01:18.026Z",
+  "last_updated": "2026-09-18T17:01:18.018Z",
   "entries": [
     {
       "key": "w.cmine.k2lx",
@@ -14,7 +14,22 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-09-09T08:01:19.256Z",
-      "duration_h": 224
+      "duration_h": 225
+    },
+    {
+      "key": "w.cmine.omxdefault",
+      "type": "worker_anomaly",
+      "provider": "Open Mine",
+      "group_id": "OM",
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "worker": "omxdefault",
+      "anomaly_type": "level_drop",
+      "baseline_hr": 5307800000000000,
+      "current_hr": 2853843513871929,
+      "drop_pct": 46,
+      "detected_at": "2026-09-18T17:01:18.018Z",
+      "duration_h": 0
     }
   ]
 }

@@ -1,10 +1,17 @@
 {
-  "last_updated": "2026-09-21T04:01:12.383Z",
+  "last_updated": "2026-09-21T05:01:12.716Z",
   "offline": {
     "cmine.18x1x68": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
       "name": "18x1x68",
+      "group_id": "F1",
+      "provider": "Terahash"
+    },
+    "cmine.18x1x179": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "18x1x179",
       "group_id": "F1",
       "provider": "Terahash"
     },
@@ -14,13 +21,6 @@
       "name": "k2lx132x9x48",
       "group_id": "R3",
       "provider": "Minto"
-    },
-    "cmine.18x1x179": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "18x1x179",
-      "group_id": "F1",
-      "provider": "Terahash"
     },
     "cmine.r21033": {
       "account": "cmine",

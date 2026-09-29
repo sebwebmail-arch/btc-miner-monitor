@@ -3,7 +3,7 @@
     "w.cmine.omxdefault": {
       "type": "worker_anomaly",
       "baselineHR": 8240200000000001,
-      "currentHR": 219237731860188.72,
+      "currentHR": 284915226426008.44,
       "worker": "omxdefault",
       "provider": "Open Mine",
       "groupId": "OM",
@@ -11,6 +11,18 @@
       "accountName": "Cyberian Mine",
       "anomalyType": "volatile",
       "detectedAt": "2026-09-21T20:01:25.548Z"
+    },
+    "w.cmine.k2lx131x1x37": {
+      "type": "worker_anomaly",
+      "baselineHR": 153100000000000,
+      "currentHR": 0,
+      "worker": "k2lx131x1x37",
+      "provider": "Minto",
+      "groupId": "R3",
+      "account": "cmine",
+      "accountName": "Cyberian Mine",
+      "anomalyType": "volatile",
+      "detectedAt": "2026-09-29T08:01:20.255Z"
     }
   },
   "everminer.U3": "2026-07-28T21:00:59.294Z",
@@ -195,7 +207,7 @@
   "w.cmine.k2lx131x4x38": "2026-08-09T17:01:09.807Z",
   "w.cmine.k2lx132x12x35": "2026-08-10T14:02:01.649Z",
   "w.cmine.k2lx131x1x34": "2026-08-10T05:01:10.855Z",
-  "w.cmine.k2lx131x1x37": "2026-08-09T13:01:14.801Z",
+  "w.cmine.k2lx131x1x37": "2026-09-29T08:01:20.255Z",
   "w.cmine.k2lx131x2x50": "2026-08-10T06:01:10.939Z",
   "w.cmine.k2lx131x3x50": "2026-08-10T10:01:16.453Z",
   "w.cmine.k2lx132x10x47": "2026-08-10T15:01:14.879Z",

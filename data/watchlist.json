@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-29T19:01:25.077Z",
+  "last_updated": "2026-09-29T20:01:14.270Z",
   "entries": [
     {
       "key": "w.cmine.omxdefault",
@@ -11,25 +11,10 @@
       "worker": "omxdefault",
       "anomaly_type": "volatile",
       "baseline_hr": 8240200000000001,
-      "current_hr": 249799268394015.84,
+      "current_hr": 270049829218476.94,
       "drop_pct": 97,
       "detected_at": "2026-09-21T20:01:25.548Z",
-      "duration_h": 191
-    },
-    {
-      "key": "w.cmine.k2lx131x1x37",
-      "type": "worker_anomaly",
-      "provider": "Minto",
-      "group_id": "R3",
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "k2lx131x1x37",
-      "anomaly_type": "volatile",
-      "baseline_hr": 153100000000000,
-      "current_hr": 53636620562086.12,
-      "drop_pct": 65,
-      "detected_at": "2026-09-29T08:01:20.255Z",
-      "duration_h": 11
+      "duration_h": 192
     }
   ]
 }

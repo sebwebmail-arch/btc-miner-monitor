@@ -1,29 +1,6 @@
 {
-  "last_updated": "2026-10-06T05:01:17.699Z",
+  "last_updated": "2026-10-07T05:01:17.236Z",
   "snapshots": [
-    {
-      "ts": "2026-09-02T05:01:13.813Z",
-      "by_account": {
-        "cmine": {
-          "name": "Cyberian Mine",
-          "total": 170,
-          "online": 156,
-          "offline": 14,
-          "dead": 0
-        },
-        "everminer": {
-          "name": "Everminer",
-          "total": 13,
-          "online": 13,
-          "offline": 0,
-          "dead": 0
-        }
-      },
-      "offline": 14,
-      "dead_recent": 0,
-      "dead_mid": 0,
-      "dead_old": 0
-    },
     {
       "ts": "2026-09-03T05:01:11.835Z",
       "by_account": {
@@ -805,10 +782,43 @@
       "dead_recent": 0,
       "dead_mid": 0,
       "dead_old": 0
+    },
+    {
+      "ts": "2026-10-07T05:01:17.236Z",
+      "by_account": {
+        "cmine": {
+          "name": "Cyberian Mine",
+          "total": 159,
+          "online": 159,
+          "offline": 0,
+          "dead": 0
+        },
+        "everminer": {
+          "name": "Everminer",
+          "total": 13,
+          "online": 11,
+          "offline": 2,
+          "dead": 0
+        }
+      },
+      "offline": 2,
+      "dead_recent": 0,
+      "dead_mid": 0,
+      "dead_old": 0
     }
   ],
   "workers": {},
   "current_issues": {
+    "everminer.02b763853aeb": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "02b763853aeb",
+      "group_id": "U1+U2",
+      "provider": "Dataprana",
+      "host": "35.131.134.226",
+      "last_share": "2026-10-06T15:04:38.000Z",
+      "category": "offline"
+    },
     "everminer.ynahfkabdjiai04": {
       "account": "everminer",
       "account_name": "Everminer",
@@ -816,7 +826,7 @@
       "group_id": "U1+U2",
       "provider": "Dataprana",
       "host": "35.131.134.226",
-      "last_share": "2026-10-05T16:45:41.000Z",
+      "last_share": "2026-10-06T13:47:12.000Z",
       "category": "offline"
     }
   }

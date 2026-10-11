@@ -1,29 +1,6 @@
 {
-  "last_updated": "2026-10-10T05:01:05.636Z",
+  "last_updated": "2026-10-11T05:01:04.188Z",
   "snapshots": [
-    {
-      "ts": "2026-09-06T05:01:11.815Z",
-      "by_account": {
-        "cmine": {
-          "name": "Cyberian Mine",
-          "total": 172,
-          "online": 159,
-          "offline": 9,
-          "dead": 4
-        },
-        "everminer": {
-          "name": "Everminer",
-          "total": 12,
-          "online": 12,
-          "offline": 0,
-          "dead": 0
-        }
-      },
-      "offline": 9,
-      "dead_recent": 4,
-      "dead_mid": 0,
-      "dead_old": 0
-    },
     {
       "ts": "2026-09-07T05:01:07.618Z",
       "by_account": {
@@ -805,18 +782,41 @@
       "dead_recent": 0,
       "dead_mid": 0,
       "dead_old": 0
+    },
+    {
+      "ts": "2026-10-11T05:01:04.188Z",
+      "by_account": {
+        "cmine": {
+          "name": "Cyberian Mine",
+          "total": 172,
+          "online": 171,
+          "offline": 1,
+          "dead": 0
+        },
+        "everminer": {
+          "name": "Everminer",
+          "total": 26,
+          "online": 26,
+          "offline": 0,
+          "dead": 0
+        }
+      },
+      "offline": 1,
+      "dead_recent": 0,
+      "dead_mid": 0,
+      "dead_old": 0
     }
   ],
   "workers": {},
   "current_issues": {
-    "cmine.k2lx131x2x31": {
+    "cmine.k2lx131x5x48": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
-      "name": "k2lx131x2x31",
+      "name": "k2lx131x5x48",
       "group_id": "R3",
       "provider": "Minto",
       "host": "64.227.74.165",
-      "last_share": "2026-10-09T11:10:52.000Z",
+      "last_share": "2026-10-10T16:52:45.000Z",
       "category": "offline"
     }
   }

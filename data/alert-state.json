@@ -3,7 +3,7 @@
     "w.cmine.omxdefault": {
       "type": "worker_anomaly",
       "baselineHR": 940900000000000,
-      "currentHR": 244042714182815.28,
+      "currentHR": 225170207931833.47,
       "worker": "omxdefault",
       "provider": "Open Mine",
       "groupId": "OM",
@@ -179,18 +179,6 @@
       "accountName": "Cyberian Mine",
       "anomalyType": "level_drop",
       "detectedAt": "2026-10-10T19:01:04.296Z"
-    },
-    "w.everminer.aa14": {
-      "type": "worker_anomaly",
-      "baselineHR": 223400000000000,
-      "currentHR": 0,
-      "worker": "aa14",
-      "provider": "AmityAge",
-      "groupId": "E2",
-      "account": "everminer",
-      "accountName": "Everminer",
-      "anomalyType": "volatile",
-      "detectedAt": "2026-10-13T05:01:08.463Z"
     }
   },
   "everminer.U3": "2026-07-28T21:00:59.294Z",

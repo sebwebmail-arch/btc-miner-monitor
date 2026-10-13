@@ -1,29 +1,6 @@
 {
-  "last_updated": "2026-10-12T05:01:06.348Z",
+  "last_updated": "2026-10-13T05:01:08.463Z",
   "snapshots": [
-    {
-      "ts": "2026-09-08T05:01:13.203Z",
-      "by_account": {
-        "cmine": {
-          "name": "Cyberian Mine",
-          "total": 174,
-          "online": 160,
-          "offline": 14,
-          "dead": 0
-        },
-        "everminer": {
-          "name": "Everminer",
-          "total": 14,
-          "online": 13,
-          "offline": 1,
-          "dead": 0
-        }
-      },
-      "offline": 15,
-      "dead_recent": 0,
-      "dead_mid": 0,
-      "dead_old": 0
-    },
     {
       "ts": "2026-09-09T05:01:12.014Z",
       "by_account": {
@@ -805,8 +782,42 @@
       "dead_recent": 0,
       "dead_mid": 0,
       "dead_old": 0
+    },
+    {
+      "ts": "2026-10-13T05:01:08.463Z",
+      "by_account": {
+        "cmine": {
+          "name": "Cyberian Mine",
+          "total": 170,
+          "online": 170,
+          "offline": 0,
+          "dead": 0
+        },
+        "everminer": {
+          "name": "Everminer",
+          "total": 26,
+          "online": 25,
+          "offline": 1,
+          "dead": 0
+        }
+      },
+      "offline": 1,
+      "dead_recent": 0,
+      "dead_mid": 0,
+      "dead_old": 0
     }
   ],
   "workers": {},
-  "current_issues": {}
+  "current_issues": {
+    "everminer.aa14": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "aa14",
+      "group_id": "E2",
+      "provider": "AmityAge",
+      "host": "196.190.214.33",
+      "last_share": "2026-10-13T02:11:08.000Z",
+      "category": "offline"
+    }
+  }
 }

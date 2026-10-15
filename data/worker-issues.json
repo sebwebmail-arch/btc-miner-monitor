@@ -1,4 +1,31 @@
 {
-  "last_updated": "2026-10-15T12:01:14.229Z",
-  "issues": {}
+  "last_updated": "2026-10-15T13:01:14.598Z",
+  "issues": {
+    "cmine.omxdefault": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "worker": "omxdefault",
+      "group_id": "OM",
+      "provider": "Open Mine",
+      "type": "volatile",
+      "current_avg_ths": 315.6,
+      "baseline_avg_ths": 231,
+      "drop_pct": -37,
+      "cv_pct": 60,
+      "zero_rate_pct": 0
+    },
+    "cmine.aa03": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "worker": "aa03",
+      "group_id": "E2",
+      "provider": "AmityAge",
+      "type": "volatile",
+      "current_avg_ths": 173.5,
+      "baseline_avg_ths": 220,
+      "drop_pct": 21,
+      "cv_pct": 57,
+      "zero_rate_pct": 17
+    }
+  }
 }

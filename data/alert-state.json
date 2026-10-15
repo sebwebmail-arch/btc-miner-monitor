@@ -503,6 +503,18 @@
       "accountName": "Everminer",
       "anomalyType": "level_drop",
       "detectedAt": "2026-10-15T14:01:12.930Z"
+    },
+    "w.everminer.aa14": {
+      "type": "worker_anomaly",
+      "baselineHR": 219000000000000,
+      "currentHR": 0,
+      "worker": "aa14",
+      "provider": "AmityAge",
+      "groupId": "E2",
+      "account": "everminer",
+      "accountName": "Everminer",
+      "anomalyType": "volatile",
+      "detectedAt": "2026-10-15T15:01:18.721Z"
     }
   },
   "everminer.U3": "2026-07-28T21:00:59.294Z",
@@ -769,7 +781,7 @@
   "w.cmine.k2lx131x4x20": "2026-08-05T02:01:02.410Z",
   "w.cmine.k2lx131x3x21": "2026-08-05T02:01:02.410Z",
   "w.everminer.aa12": "2026-10-15T14:01:12.930Z",
-  "w.everminer.aa14": "2026-10-13T05:01:08.463Z",
+  "w.everminer.aa14": "2026-10-15T15:01:18.721Z",
   "w.everminer.020e5af4a6ab": "2026-08-27T17:01:13.592Z",
   "w.everminer.02b3312dc91d": "2026-08-27T17:01:13.592Z",
   "w.everminer.02a472b3361b": "2026-08-27T17:01:13.592Z",

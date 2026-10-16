@@ -1,10 +1,10 @@
 {
-  "last_updated": "2026-10-16T10:01:15.227Z",
+  "last_updated": "2026-10-16T11:01:12.503Z",
   "offline": {
-    "cmine.aa15": {
+    "cmine.aa07": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
-      "name": "aa15",
+      "name": "aa07",
       "group_id": "E2",
       "provider": "AmityAge"
     },
@@ -12,6 +12,13 @@
       "account": "cmine",
       "account_name": "Cyberian Mine",
       "name": "aa02",
+      "group_id": "E2",
+      "provider": "AmityAge"
+    },
+    "cmine.aa09": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "aa09",
       "group_id": "E2",
       "provider": "AmityAge"
     },
@@ -29,66 +36,17 @@
       "group_id": "E2",
       "provider": "AmityAge"
     },
+    "cmine.aa15": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "aa15",
+      "group_id": "E2",
+      "provider": "AmityAge"
+    },
     "cmine.aa11": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
       "name": "aa11",
-      "group_id": "E2",
-      "provider": "AmityAge"
-    },
-    "cmine.aa13": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "aa13",
-      "group_id": "E2",
-      "provider": "AmityAge"
-    },
-    "cmine.aa03": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "aa03",
-      "group_id": "E2",
-      "provider": "AmityAge"
-    },
-    "cmine.aa06": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "aa06",
-      "group_id": "E2",
-      "provider": "AmityAge"
-    },
-    "cmine.aa09": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "aa09",
-      "group_id": "E2",
-      "provider": "AmityAge"
-    },
-    "cmine.aa12": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "aa12",
-      "group_id": "E2",
-      "provider": "AmityAge"
-    },
-    "cmine.aa04": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "aa04",
-      "group_id": "E2",
-      "provider": "AmityAge"
-    },
-    "cmine.k2lx": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "k2lx",
-      "group_id": "R3",
-      "provider": "Minto"
-    },
-    "cmine.aa07": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "aa07",
       "group_id": "E2",
       "provider": "AmityAge"
     },
@@ -99,10 +57,52 @@
       "group_id": "E2",
       "provider": "AmityAge"
     },
+    "cmine.aa04": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "aa04",
+      "group_id": "E2",
+      "provider": "AmityAge"
+    },
     "cmine.aa01": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
       "name": "aa01",
+      "group_id": "E2",
+      "provider": "AmityAge"
+    },
+    "cmine.aa06": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "aa06",
+      "group_id": "E2",
+      "provider": "AmityAge"
+    },
+    "cmine.aa13": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "aa13",
+      "group_id": "E2",
+      "provider": "AmityAge"
+    },
+    "cmine.k2lx": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx",
+      "group_id": "R3",
+      "provider": "Minto"
+    },
+    "cmine.aa03": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "aa03",
+      "group_id": "E2",
+      "provider": "AmityAge"
+    },
+    "cmine.aa12": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "aa12",
       "group_id": "E2",
       "provider": "AmityAge"
     },
@@ -3116,17 +3116,10 @@
       "category": "dead_recent",
       "last_share": "2026-10-15T00:01:11.359Z"
     },
-    "everminer.aa01": {
+    "everminer.aa05": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "aa01",
-      "group_id": "E2",
-      "provider": "AmityAge"
-    },
-    "everminer.aa04": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "aa04",
+      "name": "aa05",
       "group_id": "E2",
       "provider": "AmityAge"
     },
@@ -3137,59 +3130,10 @@
       "group_id": "E2",
       "provider": "AmityAge"
     },
-    "everminer.aa09": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "aa09",
-      "group_id": "E2",
-      "provider": "AmityAge"
-    },
-    "everminer.aa02": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "aa02",
-      "group_id": "E2",
-      "provider": "AmityAge"
-    },
-    "everminer.aa05": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "aa05",
-      "group_id": "E2",
-      "provider": "AmityAge"
-    },
-    "everminer.aa06": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "aa06",
-      "group_id": "E2",
-      "provider": "AmityAge"
-    },
     "everminer.aa08": {
       "account": "everminer",
       "account_name": "Everminer",
       "name": "aa08",
-      "group_id": "E2",
-      "provider": "AmityAge"
-    },
-    "everminer.aa11": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "aa11",
-      "group_id": "E2",
-      "provider": "AmityAge"
-    },
-    "everminer.aa15": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "aa15",
-      "group_id": "E2",
-      "provider": "AmityAge"
-    },
-    "everminer.aa03": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "aa03",
       "group_id": "E2",
       "provider": "AmityAge"
     },
@@ -3200,13 +3144,6 @@
       "group_id": "E2",
       "provider": "AmityAge"
     },
-    "everminer.aa12": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "aa12",
-      "group_id": "E2",
-      "provider": "AmityAge"
-    },
     "everminer.aa13": {
       "account": "everminer",
       "account_name": "Everminer",
@@ -3214,10 +3151,73 @@
       "group_id": "E2",
       "provider": "AmityAge"
     },
+    "everminer.aa15": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "aa15",
+      "group_id": "E2",
+      "provider": "AmityAge"
+    },
+    "everminer.aa01": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "aa01",
+      "group_id": "E2",
+      "provider": "AmityAge"
+    },
+    "everminer.aa02": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "aa02",
+      "group_id": "E2",
+      "provider": "AmityAge"
+    },
+    "everminer.aa03": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "aa03",
+      "group_id": "E2",
+      "provider": "AmityAge"
+    },
+    "everminer.aa06": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "aa06",
+      "group_id": "E2",
+      "provider": "AmityAge"
+    },
+    "everminer.aa11": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "aa11",
+      "group_id": "E2",
+      "provider": "AmityAge"
+    },
     "everminer.aa14": {
       "account": "everminer",
       "account_name": "Everminer",
       "name": "aa14",
+      "group_id": "E2",
+      "provider": "AmityAge"
+    },
+    "everminer.aa04": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "aa04",
+      "group_id": "E2",
+      "provider": "AmityAge"
+    },
+    "everminer.aa09": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "aa09",
+      "group_id": "E2",
+      "provider": "AmityAge"
+    },
+    "everminer.aa12": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "aa12",
       "group_id": "E2",
       "provider": "AmityAge"
     },

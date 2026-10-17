@@ -527,6 +527,18 @@
       "accountName": "Cyberian Mine",
       "anomalyType": "volatile",
       "detectedAt": "2026-10-15T18:01:10.810Z"
+    },
+    "w.cmine.k2lx131x3x47": {
+      "type": "worker_anomaly",
+      "baselineHR": 186600000000000,
+      "currentHR": 0,
+      "worker": "k2lx131x3x47",
+      "provider": "Minto",
+      "groupId": "R3",
+      "account": "cmine",
+      "accountName": "Cyberian Mine",
+      "anomalyType": "volatile",
+      "detectedAt": "2026-10-17T04:01:03.855Z"
     }
   },
   "everminer.U3": "2026-07-28T21:00:59.294Z",
@@ -691,7 +703,7 @@
   "w.cmine.k2lx131x3x46": "2026-10-09T00:01:11.852Z",
   "w.cmine.k2lx132x11x42": "2026-10-08T09:01:21.780Z",
   "w.cmine.k2lx132x9x40": "2026-08-05T02:01:02.410Z",
-  "w.cmine.k2lx131x3x47": "2026-10-08T09:01:21.780Z",
+  "w.cmine.k2lx131x3x47": "2026-10-17T04:01:03.855Z",
   "w.cmine.k2lx131x4x41": "2026-10-08T09:01:21.780Z",
   "w.cmine.k2lx132x12x30": "2026-08-05T02:01:02.410Z",
   "w.cmine.k2lx131x2x33": "2026-10-08T09:01:21.780Z",

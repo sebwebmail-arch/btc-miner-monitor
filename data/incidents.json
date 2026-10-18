@@ -1,19 +1,6 @@
 {
   "incidents": [
     {
-      "id": "everminer.P1.2026-07-20T22:01:04.628Z",
-      "group_id": "P1",
-      "provider": "Altos",
-      "account": "everminer",
-      "account_name": "Everminer",
-      "drop_pct": 76,
-      "hr_before": 339437971914776,
-      "hr_after": 82565993168459,
-      "started_at": "2026-07-20T22:01:04.628Z",
-      "ended_at": "2026-07-20T23:01:01.964Z",
-      "duration_min": 60
-    },
-    {
       "id": "cmine.E2.2026-07-22T05:00:59.585Z",
       "group_id": "E2",
       "provider": "AmityAge",
@@ -235,5 +222,5 @@
       "duration_min": 420
     }
   ],
-  "last_updated": "2026-10-18T21:01:07.857Z"
+  "last_updated": "2026-10-18T22:01:07.887Z"
 }

@@ -228,7 +228,13 @@ async function sendTelegram(chatId, text) {
 
 // ─── Alertes Email (Resend) ──────────────────────────────────────────────────
 
+// Envois email désactivés (rapport matin + alertes) depuis le 18/10/2026.
+// Telegram, historique, SLA et dashboard continuent normalement.
+// Pour réactiver : définir EMAIL_ENABLED=true (variable du workflow hashrate.yml).
+const EMAIL_ENABLED = process.env.EMAIL_ENABLED === 'true';
+
 async function sendEmail(to, subject, html) {
+  if (!EMAIL_ENABLED) { console.log(`✉️  Email désactivé (non envoyé) → ${to} — ${subject}`); return; }
   if (!RESEND_API_KEY) { console.warn('⚠️  RESEND_API_KEY manquant'); return; }
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',

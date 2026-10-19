@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-19T10:01:07.010Z",
+  "last_updated": "2026-10-19T11:01:08.182Z",
   "issues": {
     "cmine.omxdefault": {
       "account": "cmine",
@@ -8,8 +8,8 @@
       "group_id": "OM",
       "provider": "Open Mine",
       "type": "volatile",
-      "current_avg_ths": 302.7,
-      "baseline_avg_ths": 223.3,
+      "current_avg_ths": 302.6,
+      "baseline_avg_ths": 222.5,
       "drop_pct": -36,
       "cv_pct": 58,
       "zero_rate_pct": 0
@@ -21,9 +21,9 @@
       "group_id": "R3",
       "provider": "Minto",
       "type": "volatile",
-      "current_avg_ths": 126.4,
-      "baseline_avg_ths": 200.9,
-      "drop_pct": 37,
+      "current_avg_ths": 131.1,
+      "baseline_avg_ths": 200.6,
+      "drop_pct": 35,
       "cv_pct": 73,
       "zero_rate_pct": 33
     }

@@ -1,29 +1,6 @@
 {
-  "last_updated": "2026-10-19T05:01:07.554Z",
+  "last_updated": "2026-10-20T05:01:07.520Z",
   "snapshots": [
-    {
-      "ts": "2026-09-14T05:01:12.251Z",
-      "by_account": {
-        "cmine": {
-          "name": "Cyberian Mine",
-          "total": 175,
-          "online": 161,
-          "offline": 14,
-          "dead": 0
-        },
-        "everminer": {
-          "name": "Everminer",
-          "total": 12,
-          "online": 12,
-          "offline": 0,
-          "dead": 0
-        }
-      },
-      "offline": 14,
-      "dead_recent": 0,
-      "dead_mid": 0,
-      "dead_old": 0
-    },
     {
       "ts": "2026-09-15T05:01:48.164Z",
       "by_account": {
@@ -805,8 +782,1672 @@
       "dead_recent": 0,
       "dead_mid": 0,
       "dead_old": 0
+    },
+    {
+      "ts": "2026-10-20T05:01:07.520Z",
+      "by_account": {
+        "cmine": {
+          "name": "Cyberian Mine",
+          "total": 155,
+          "online": 1,
+          "offline": 154,
+          "dead": 0
+        },
+        "everminer": {
+          "name": "Everminer",
+          "total": 11,
+          "online": 1,
+          "offline": 10,
+          "dead": 0
+        }
+      },
+      "offline": 164,
+      "dead_recent": 0,
+      "dead_mid": 0,
+      "dead_old": 0
     }
   ],
   "workers": {},
-  "current_issues": {}
+  "current_issues": {
+    "cmine.k2lx131x4x41": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x4x41",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.98.76.17",
+      "last_share": "2026-10-19T19:58:14.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x10x35": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x10x35",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T20:46:03.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x1x38": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x1x38",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T19:58:15.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x2x41": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x2x41",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T19:59:12.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x2x49": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x2x49",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T19:59:15.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x3x38": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x3x38",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:59:15.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x3x48": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x3x48",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T19:58:58.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x2x45": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x2x45",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T19:58:13.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x11x38": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x11x38",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T20:30:16.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x1x40": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x1x40",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.98.76.17",
+      "last_share": "2026-10-19T19:59:02.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x2x44": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x2x44",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:59:06.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x2x48": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x2x48",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T19:59:02.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x11x40": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x11x40",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T20:30:26.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x12x46": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x12x46",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T20:28:58.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x1x42": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x1x42",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "157.245.76.212",
+      "last_share": "2026-10-19T19:58:55.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x3x32": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x3x32",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T19:58:58.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x3x35": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x3x35",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T19:59:07.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x3x49": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x3x49",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T19:58:58.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x9x44": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x9x44",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T20:45:03.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x10x27": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x10x27",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T20:30:01.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x10x42": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x10x42",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T20:30:25.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x11x48": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x11x48",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T20:28:28.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x10x47": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x10x47",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T20:30:03.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x1x30": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x1x30",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:59:10.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x2x30": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x2x30",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T19:58:47.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x10x43": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x10x43",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T20:46:15.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x12x44": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x12x44",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T20:30:22.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x3x41": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x3x41",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T19:59:10.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x4x43": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x4x43",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:58:33.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x4x45": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x4x45",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T19:59:02.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x4x48": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x4x48",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:58:47.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x11x42": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x11x42",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T20:30:23.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x1x46": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x1x46",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T19:58:34.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x1x49": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x1x49",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:58:46.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x2x33": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x2x33",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T19:59:06.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x2x34": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x2x34",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T19:57:46.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x11x31": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x11x31",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T20:29:31.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x12x48": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x12x48",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T20:30:20.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x1x33": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x1x33",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:58:56.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x1x39": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x1x39",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T19:59:16.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x3x42": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x3x42",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T19:59:11.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x4x32": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x4x32",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:58:56.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x12x43": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x12x43",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T20:30:03.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x1x41": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x1x41",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T19:59:10.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x1x44": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x1x44",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:59:05.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x1x45": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x1x45",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:59:14.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x4x37": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x4x37",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T19:58:51.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x12x39": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x12x39",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T20:30:19.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x12x40": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x12x40",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T20:30:18.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x9x42": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x9x42",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T20:45:09.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x9x50": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x9x50",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T20:44:58.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x4x33": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x4x33",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T19:59:01.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x4x40": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x4x40",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:59:10.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x4x47": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x4x47",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T19:58:16.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x5x45": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x5x45",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T19:55:17.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x5x49": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x5x49",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T19:55:15.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x12x35": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x12x35",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T20:30:26.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x1x37": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x1x37",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T19:58:56.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x2x40": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x2x40",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T19:59:13.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x4x34": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x4x34",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T19:58:39.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x11x41": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x11x41",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T20:30:27.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x12x41": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x12x41",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T20:29:36.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x1x31": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x1x31",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T19:58:56.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x2x35": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x2x35",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:59:14.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x5x46": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x5x46",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T19:55:03.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x10x40": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x10x40",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T20:29:52.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x11x46": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x11x46",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T20:30:19.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x3x30": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x3x30",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:59:05.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x3x31": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x3x31",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.98.76.17",
+      "last_share": "2026-10-19T19:58:39.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x10x32": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x10x32",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T20:46:34.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x11x39": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x11x39",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T20:30:10.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x12x33": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x12x33",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T20:30:23.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x2x47": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x2x47",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T19:58:59.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x3x34": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x3x34",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:59:09.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x3x44": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x3x44",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T19:58:40.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x10x33": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x10x33",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T20:46:28.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x3x36": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x3x36",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T19:58:41.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x4x39": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x4x39",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T19:59:10.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x11x49": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x11x49",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T20:29:54.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x10x44": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x10x44",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T20:30:13.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x10x46": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x10x46",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T20:46:37.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x12x37": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x12x37",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T20:29:59.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x12x45": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x12x45",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T20:30:25.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x9x47": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x9x47",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T20:45:06.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x9x49": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x9x49",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T20:45:07.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x5x44": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x5x44",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:55:22.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x10x36": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x10x36",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T20:46:38.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x10x37": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x10x37",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T20:46:03.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x11x34": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x11x34",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T20:30:26.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x11x36": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x11x36",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T20:30:20.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x12x42": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x12x42",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T20:30:16.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x12x47": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x12x47",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T20:30:14.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x12x49": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x12x49",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T20:30:27.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x1x47": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x1x47",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:59:10.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x2x36": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x2x36",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T19:59:16.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x11x32": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x11x32",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T20:30:04.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x11x37": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x11x37",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T20:30:24.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x11x44": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x11x44",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T20:30:20.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x12x50": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x12x50",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T20:30:20.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x3x39": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x3x39",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T19:59:11.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x10x45": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x10x45",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T20:46:33.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x11x50": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x11x50",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T20:30:24.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x12x36": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x12x36",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T20:30:04.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x11x35": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x11x35",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T20:30:20.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x1x34": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x1x34",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T19:59:13.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x2x37": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x2x37",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T19:59:10.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x2x43": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x2x43",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T19:59:15.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x3x43": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x3x43",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:58:40.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x4x49": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x4x49",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T19:59:01.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x5x32": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x5x32",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:55:09.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x1x35": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x1x35",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:59:02.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x3x50": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x3x50",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:59:04.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x4x36": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x4x36",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T19:59:09.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x11x45": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x11x45",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T20:30:10.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x12x31": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x12x31",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T20:30:23.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x9x46": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x9x46",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T20:45:13.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x2x46": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x2x46",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T19:59:05.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x9x48": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x9x48",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T20:44:48.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x3x40": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x3x40",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.98.76.17",
+      "last_share": "2026-10-19T19:58:44.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x10x38": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x10x38",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T20:30:25.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x9x43": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x9x43",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T20:45:12.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x1x43": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x1x43",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:58:58.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x2x42": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x2x42",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T19:58:34.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x4x42": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x4x42",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:59:04.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x4x50": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x4x50",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T19:59:10.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x2x32": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x2x32",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:59:14.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x2x50": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x2x50",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T19:59:00.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x3x33": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x3x33",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:59:10.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x5x33": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x5x33",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T19:55:16.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x10x48": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x10x48",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T20:30:01.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x4x35": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x4x35",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T19:58:11.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x10x41": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x10x41",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T20:30:16.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x11x43": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x11x43",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T20:30:03.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x12x34": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x12x34",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T20:29:08.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x1x32": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x1x32",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T19:59:15.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x1x36": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x1x36",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T19:58:42.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x2x38": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x2x38",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T19:59:10.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x2x39": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x2x39",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:59:16.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x3x45": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x3x45",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:58:39.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x5x43": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x5x43",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:54:54.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x10x39": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x10x39",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T20:30:09.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x11x47": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x11x47",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T20:30:12.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x1x50": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x1x50",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:58:47.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x4x46": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x4x46",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:59:14.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x10x34": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x10x34",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T20:46:31.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x11x33": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x11x33",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T20:29:42.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x12x32": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x12x32",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T20:30:10.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x12x38": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x12x38",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "157.245.76.212",
+      "last_share": "2026-10-19T20:30:25.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx132x9x45": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x9x45",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T20:45:10.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x1x48": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x1x48",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T19:58:57.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x4x31": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x4x31",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T19:58:53.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x5x47": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x5x47",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T19:54:58.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x3x37": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x3x37",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:59:09.000Z",
+      "category": "offline"
+    },
+    "cmine.k2lx131x4x38": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx131x4x38",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T19:59:13.000Z",
+      "category": "offline"
+    },
+    "everminer.k2lx131x5x36": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x36",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:43:35.000Z",
+      "category": "offline"
+    },
+    "everminer.k2lx131x5x37": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x37",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:43:35.000Z",
+      "category": "offline"
+    },
+    "everminer.k2lx131x5x43": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x43",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:43:27.000Z",
+      "category": "offline"
+    },
+    "everminer.k2lx131x5x38": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x38",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T19:43:37.000Z",
+      "category": "offline"
+    },
+    "everminer.k2lx131x5x39": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x39",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:43:19.000Z",
+      "category": "offline"
+    },
+    "everminer.k2lx131x5x41": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x41",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T19:43:25.000Z",
+      "category": "offline"
+    },
+    "everminer.k2lx131x5x42": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x42",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.98.76.17",
+      "last_share": "2026-10-19T19:43:31.000Z",
+      "category": "offline"
+    },
+    "everminer.k2lx131x5x44": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x44",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "91.107.201.193",
+      "last_share": "2026-10-19T19:43:12.000Z",
+      "category": "offline"
+    },
+    "everminer.k2lx131x5x50": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x50",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "159.69.86.165",
+      "last_share": "2026-10-19T19:43:00.000Z",
+      "category": "offline"
+    },
+    "everminer.k2lx131x5x35": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x35",
+      "group_id": "R3",
+      "provider": "Minto",
+      "host": "64.227.74.165",
+      "last_share": "2026-10-19T19:43:04.000Z",
+      "category": "offline"
+    }
+  }
 }

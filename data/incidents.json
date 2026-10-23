@@ -1,19 +1,6 @@
 {
   "incidents": [
     {
-      "id": "everminer.U3.2026-07-25T18:01:00.519Z",
-      "group_id": "U3",
-      "provider": "ValueHash (NY)",
-      "account": "everminer",
-      "account_name": "Everminer",
-      "drop_pct": 43,
-      "hr_before": 7307220707897848,
-      "hr_after": 4134730579765858,
-      "started_at": "2026-07-25T18:01:00.519Z",
-      "ended_at": "2026-07-25T21:01:03.982Z",
-      "duration_min": 180
-    },
-    {
       "id": "cmine.OM.2026-07-26T21:00:57.838Z",
       "group_id": "OM",
       "provider": "Open Mine",
@@ -157,5 +144,5 @@
       "duration_min": 420
     }
   ],
-  "last_updated": "2026-10-23T17:01:08.721Z"
+  "last_updated": "2026-10-23T18:01:11.062Z"
 }

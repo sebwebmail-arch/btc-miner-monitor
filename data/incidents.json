@@ -1,19 +1,6 @@
 {
   "incidents": [
     {
-      "id": "everminer.R3.2026-07-28T19:01:02.791Z",
-      "group_id": "R3",
-      "provider": "Minto",
-      "account": "everminer",
-      "account_name": "Everminer",
-      "drop_pct": 46,
-      "hr_before": 2601939698777044,
-      "hr_after": 1395998603244558,
-      "started_at": "2026-07-28T19:01:02.791Z",
-      "ended_at": "2026-07-28T23:01:08.395Z",
-      "duration_min": 240
-    },
-    {
       "id": "cmine.OM.2026-07-28T20:01:03.765Z",
       "group_id": "OM",
       "provider": "Open Mine",
@@ -66,5 +53,5 @@
       "duration_min": 420
     }
   ],
-  "last_updated": "2026-10-26T18:01:16.043Z"
+  "last_updated": "2026-10-26T19:01:12.028Z"
 }

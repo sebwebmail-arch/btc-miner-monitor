@@ -1,17 +1,5 @@
 {
   "watchlist": {
-    "w.everminer.aa14": {
-      "type": "worker_anomaly",
-      "baselineHR": 219000000000000,
-      "currentHR": 0,
-      "worker": "aa14",
-      "provider": "AmityAge",
-      "groupId": "E2",
-      "account": "everminer",
-      "accountName": "Everminer",
-      "anomalyType": "volatile",
-      "detectedAt": "2026-10-15T15:01:18.721Z"
-    },
     "w.cmine.k2lx": {
       "type": "worker_anomaly",
       "baselineHR": 187300000000000,
@@ -2019,7 +2007,7 @@
     "w.cmine.omxdefault": {
       "type": "worker_anomaly",
       "baselineHR": 31081500000000000,
-      "currentHR": 14081254834911750,
+      "currentHR": 14941942763698112,
       "worker": "omxdefault",
       "provider": "Open Mine",
       "groupId": "OM",

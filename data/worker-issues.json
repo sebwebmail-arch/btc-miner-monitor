@@ -1,4 +1,18 @@
 {
-  "last_updated": "2026-11-02T20:01:24.983Z",
-  "issues": {}
+  "last_updated": "2026-11-02T21:01:10.034Z",
+  "issues": {
+    "cmine.openfallback": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "worker": "openfallback",
+      "group_id": "OM",
+      "provider": "Open Mine",
+      "type": "volatile",
+      "current_avg_ths": 36.1,
+      "baseline_avg_ths": 12.4,
+      "drop_pct": -192,
+      "cv_pct": 224,
+      "zero_rate_pct": 83
+    }
+  }
 }

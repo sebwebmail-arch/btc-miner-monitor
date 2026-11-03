@@ -1,17 +1,5 @@
 {
   "watchlist": {
-    "w.cmine.omxdefault": {
-      "type": "worker_anomaly",
-      "baselineHR": 31081500000000000,
-      "currentHR": 19415518393552804,
-      "worker": "omxdefault",
-      "provider": "Open Mine",
-      "groupId": "OM",
-      "account": "cmine",
-      "accountName": "Cyberian Mine",
-      "anomalyType": "level_drop",
-      "detectedAt": "2026-10-28T19:01:11.446Z"
-    },
     "w.cmine.openfallback": {
       "type": "worker_anomaly",
       "baselineHR": 12400000000000,

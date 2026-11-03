@@ -1,18 +1,5 @@
 {
-  "watchlist": {
-    "w.cmine.openfallback": {
-      "type": "worker_anomaly",
-      "baselineHR": 12400000000000,
-      "currentHR": 0,
-      "worker": "openfallback",
-      "provider": "Open Mine",
-      "groupId": "OM",
-      "account": "cmine",
-      "accountName": "Cyberian Mine",
-      "anomalyType": "volatile",
-      "detectedAt": "2026-11-02T21:01:10.034Z"
-    }
-  },
+  "watchlist": {},
   "everminer.U3": "2026-07-28T21:00:59.294Z",
   "cmine.P1": "2026-07-20T15:01:09.519Z",
   "everminer.P1": "2026-07-20T22:01:04.628Z",

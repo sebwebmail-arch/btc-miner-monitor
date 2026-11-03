@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-03T01:01:12.321Z",
+  "last_updated": "2026-11-03T02:01:25.373Z",
   "entries": [
     {
       "key": "w.cmine.omxdefault",
@@ -11,10 +11,10 @@
       "worker": "omxdefault",
       "anomaly_type": "level_drop",
       "baseline_hr": 31081500000000000,
-      "current_hr": 19195342411770250,
-      "drop_pct": 38,
+      "current_hr": 18534814466422576,
+      "drop_pct": 40,
       "detected_at": "2026-10-28T19:01:11.446Z",
-      "duration_h": 126
+      "duration_h": 127
     },
     {
       "key": "w.cmine.openfallback",
@@ -29,7 +29,7 @@
       "current_hr": 0,
       "drop_pct": 100,
       "detected_at": "2026-11-02T21:01:10.034Z",
-      "duration_h": 4
+      "duration_h": 5
     }
   ]
 }

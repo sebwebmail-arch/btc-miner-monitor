@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-14T20:01:00.641Z",
+  "last_updated": "2026-11-14T21:01:01.960Z",
   "issues": {
     "cmine.k2lx131x5x41": {
       "account": "cmine",
@@ -7,12 +7,12 @@
       "worker": "k2lx131x5x41",
       "group_id": "R3",
       "provider": "Minto",
-      "type": "volatile",
-      "current_avg_ths": 102.8,
-      "baseline_avg_ths": 252.1,
-      "drop_pct": 59,
-      "cv_pct": 128,
-      "zero_rate_pct": 50
+      "type": "level_drop",
+      "current_avg_ths": 144.9,
+      "baseline_avg_ths": 252.2,
+      "drop_pct": 43,
+      "cv_pct": 91,
+      "zero_rate_pct": 33
     },
     "cmine.k2lx131x5x37": {
       "account": "cmine",
@@ -20,12 +20,12 @@
       "worker": "k2lx131x5x37",
       "group_id": "R3",
       "provider": "Minto",
-      "type": "volatile",
-      "current_avg_ths": 85.8,
-      "baseline_avg_ths": 253,
-      "drop_pct": 66,
-      "cv_pct": 136,
-      "zero_rate_pct": 50
+      "type": "level_drop",
+      "current_avg_ths": 128.3,
+      "baseline_avg_ths": 253.2,
+      "drop_pct": 49,
+      "cv_pct": 97,
+      "zero_rate_pct": 33
     },
     "cmine.omxdefault": {
       "account": "cmine",
@@ -34,7 +34,7 @@
       "group_id": "OM",
       "provider": "Open Mine",
       "type": "level_drop",
-      "current_avg_ths": 282.6,
+      "current_avg_ths": 279,
       "baseline_avg_ths": 22015.3,
       "drop_pct": 99,
       "cv_pct": 11,
@@ -47,11 +47,11 @@
       "group_id": "R3",
       "provider": "Minto",
       "type": "volatile",
-      "current_avg_ths": 107.1,
-      "baseline_avg_ths": 253.9,
-      "drop_pct": 58,
-      "cv_pct": 123,
-      "zero_rate_pct": 50
+      "current_avg_ths": 158.2,
+      "baseline_avg_ths": 254.7,
+      "drop_pct": 38,
+      "cv_pct": 88,
+      "zero_rate_pct": 33
     },
     "cmine.k2lx132x11x29": {
       "account": "cmine",
@@ -59,12 +59,12 @@
       "worker": "k2lx132x11x29",
       "group_id": "R3",
       "provider": "Minto",
-      "type": "volatile",
-      "current_avg_ths": 91.3,
-      "baseline_avg_ths": 286,
-      "drop_pct": 68,
-      "cv_pct": 127,
-      "zero_rate_pct": 50
+      "type": "level_drop",
+      "current_avg_ths": 144.4,
+      "baseline_avg_ths": 286.3,
+      "drop_pct": 50,
+      "cv_pct": 93,
+      "zero_rate_pct": 33
     },
     "cmine.k2lx132x11x30": {
       "account": "cmine",
@@ -72,12 +72,12 @@
       "worker": "k2lx132x11x30",
       "group_id": "R3",
       "provider": "Minto",
-      "type": "volatile",
-      "current_avg_ths": 97.2,
+      "type": "level_drop",
+      "current_avg_ths": 142.5,
       "baseline_avg_ths": 287.3,
-      "drop_pct": 66,
-      "cv_pct": 132,
-      "zero_rate_pct": 50
+      "drop_pct": 50,
+      "cv_pct": 94,
+      "zero_rate_pct": 33
     }
   }
 }

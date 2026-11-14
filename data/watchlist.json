@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-14T20:01:00.641Z",
+  "last_updated": "2026-11-14T21:01:01.960Z",
   "entries": [
     {
       "key": "w.cmine.omxdefault",
@@ -11,10 +11,10 @@
       "worker": "omxdefault",
       "anomaly_type": "volatile",
       "baseline_hr": 18928700000000000,
-      "current_hr": 270137790148699.03,
-      "drop_pct": 99,
+      "current_hr": 299458100222725.7,
+      "drop_pct": 98,
       "detected_at": "2026-11-14T10:01:03.056Z",
-      "duration_h": 10
+      "duration_h": 11
     },
     {
       "key": "w.cmine.k2lx132x10x39",
@@ -26,10 +26,10 @@
       "worker": "k2lx132x10x39",
       "anomaly_type": "volatile",
       "baseline_hr": 297200000000000,
-      "current_hr": 220801481730803.5,
-      "drop_pct": 26,
+      "current_hr": 191402984163246.1,
+      "drop_pct": 36,
       "detected_at": "2026-11-14T19:01:01.053Z",
-      "duration_h": 1
+      "duration_h": 2
     },
     {
       "key": "w.cmine.k2lx132x10x47",
@@ -41,10 +41,10 @@
       "worker": "k2lx132x10x47",
       "anomaly_type": "volatile",
       "baseline_hr": 290200000000000,
-      "current_hr": 188275484422016.56,
-      "drop_pct": 35,
+      "current_hr": 183427859823110.8,
+      "drop_pct": 37,
       "detected_at": "2026-11-14T19:01:01.053Z",
-      "duration_h": 1
+      "duration_h": 2
     },
     {
       "key": "w.cmine.k2lx132x10x42",
@@ -56,10 +56,10 @@
       "worker": "k2lx132x10x42",
       "anomaly_type": "volatile",
       "baseline_hr": 296100000000000,
-      "current_hr": 199847233464565.75,
-      "drop_pct": 33,
+      "current_hr": 182333234913680.5,
+      "drop_pct": 38,
       "detected_at": "2026-11-14T19:01:01.053Z",
-      "duration_h": 1
+      "duration_h": 2
     },
     {
       "key": "w.cmine.k2lx132x9x47",
@@ -71,10 +71,10 @@
       "worker": "k2lx132x9x47",
       "anomaly_type": "volatile",
       "baseline_hr": 209200000000000,
-      "current_hr": 115091990477246.02,
-      "drop_pct": 45,
+      "current_hr": 121659739933827.98,
+      "drop_pct": 42,
       "detected_at": "2026-11-14T19:01:01.053Z",
-      "duration_h": 1
+      "duration_h": 2
     }
   ]
 }

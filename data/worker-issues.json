@@ -1,4 +1,18 @@
 {
-  "last_updated": "2026-11-14T09:01:02.646Z",
-  "issues": {}
+  "last_updated": "2026-11-14T10:01:03.056Z",
+  "issues": {
+    "cmine.omxdefault": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "worker": "omxdefault",
+      "group_id": "OM",
+      "provider": "Open Mine",
+      "type": "volatile",
+      "current_avg_ths": 13918.5,
+      "baseline_avg_ths": 18928.7,
+      "drop_pct": 26,
+      "cv_pct": 68,
+      "zero_rate_pct": 0
+    }
+  }
 }

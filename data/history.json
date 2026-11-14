@@ -1,29 +1,6 @@
 {
-  "last_updated": "2026-11-13T05:01:04.144Z",
+  "last_updated": "2026-11-14T05:01:04.707Z",
   "snapshots": [
-    {
-      "ts": "2026-10-09T05:01:07.729Z",
-      "by_account": {
-        "cmine": {
-          "name": "Cyberian Mine",
-          "total": 169,
-          "online": 157,
-          "offline": 12,
-          "dead": 0
-        },
-        "everminer": {
-          "name": "Everminer",
-          "total": 11,
-          "online": 11,
-          "offline": 0,
-          "dead": 0
-        }
-      },
-      "offline": 12,
-      "dead_recent": 0,
-      "dead_mid": 0,
-      "dead_old": 0
-    },
     {
       "ts": "2026-10-10T05:01:05.636Z",
       "by_account": {
@@ -805,18 +782,171 @@
       "dead_recent": 0,
       "dead_mid": 0,
       "dead_old": 0
+    },
+    {
+      "ts": "2026-11-14T05:01:04.707Z",
+      "by_account": {
+        "cmine": {
+          "name": "Cyberian Mine",
+          "total": 18,
+          "online": 4,
+          "offline": 14,
+          "dead": 0
+        },
+        "everminer": {
+          "name": "Everminer",
+          "total": 1,
+          "online": 1,
+          "offline": 0,
+          "dead": 0
+        }
+      },
+      "offline": 14,
+      "dead_recent": 0,
+      "dead_mid": 0,
+      "dead_old": 0
     }
   ],
   "workers": {},
   "current_issues": {
-    "cmine.openfallback": {
+    "cmine.18x1x179": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
-      "name": "openfallback",
-      "group_id": "OM",
-      "provider": "Open Mine",
-      "host": "178.105.17.8",
-      "last_share": "2026-11-12T07:27:20.000Z",
+      "name": "18x1x179",
+      "group_id": "F1",
+      "provider": "Terahash",
+      "host": "85.29.64.253",
+      "last_share": "2026-11-13T21:22:15.000Z",
+      "category": "offline"
+    },
+    "cmine.18x0x61": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "18x0x61",
+      "group_id": "F1",
+      "provider": "Terahash",
+      "host": "85.29.64.253",
+      "last_share": "2026-11-13T21:22:19.000Z",
+      "category": "offline"
+    },
+    "cmine.18x0x91": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "18x0x91",
+      "group_id": "F1",
+      "provider": "Terahash",
+      "host": "85.29.64.253",
+      "last_share": "2026-11-13T21:21:59.000Z",
+      "category": "offline"
+    },
+    "cmine.18x0x18": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "18x0x18",
+      "group_id": "F1",
+      "provider": "Terahash",
+      "host": "85.29.64.253",
+      "last_share": "2026-11-13T21:21:15.000Z",
+      "category": "offline"
+    },
+    "cmine.18x0x22": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "18x0x22",
+      "group_id": "F1",
+      "provider": "Terahash",
+      "host": "85.29.64.253",
+      "last_share": "2026-11-13T21:22:23.000Z",
+      "category": "offline"
+    },
+    "cmine.18x0x238": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "18x0x238",
+      "group_id": "F1",
+      "provider": "Terahash",
+      "host": "85.29.64.253",
+      "last_share": "2026-11-13T21:22:19.000Z",
+      "category": "offline"
+    },
+    "cmine.18x0x72": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "18x0x72",
+      "group_id": "F1",
+      "provider": "Terahash",
+      "host": "85.29.64.253",
+      "last_share": "2026-11-13T21:22:10.000Z",
+      "category": "offline"
+    },
+    "cmine.18x0x94": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "18x0x94",
+      "group_id": "F1",
+      "provider": "Terahash",
+      "host": "85.29.64.253",
+      "last_share": "2026-11-13T21:20:28.000Z",
+      "category": "offline"
+    },
+    "cmine.18x0x168": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "18x0x168",
+      "group_id": "F1",
+      "provider": "Terahash",
+      "host": "85.29.64.253",
+      "last_share": "2026-11-13T21:22:22.000Z",
+      "category": "offline"
+    },
+    "cmine.18x1x68": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "18x1x68",
+      "group_id": "F1",
+      "provider": "Terahash",
+      "host": "85.29.64.253",
+      "last_share": "2026-11-13T21:20:39.000Z",
+      "category": "offline"
+    },
+    "cmine.18x0x73": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "18x0x73",
+      "group_id": "F1",
+      "provider": "Terahash",
+      "host": "85.29.64.253",
+      "last_share": "2026-11-13T21:21:28.000Z",
+      "category": "offline"
+    },
+    "cmine.18x0x157": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "18x0x157",
+      "group_id": "F1",
+      "provider": "Terahash",
+      "host": "85.29.64.253",
+      "last_share": "2026-11-13T21:22:19.000Z",
+      "category": "offline"
+    },
+    "cmine.18x0x199": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "18x0x199",
+      "group_id": "F1",
+      "provider": "Terahash",
+      "host": "85.29.64.253",
+      "last_share": "2026-11-13T21:22:22.000Z",
+      "category": "offline"
+    },
+    "cmine.18x0x30": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "18x0x30",
+      "group_id": "F1",
+      "provider": "Terahash",
+      "host": "85.29.64.253",
+      "last_share": "2026-11-13T21:22:28.000Z",
       "category": "offline"
     }
   }

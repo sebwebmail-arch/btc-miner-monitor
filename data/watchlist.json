@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-14T19:01:01.053Z",
+  "last_updated": "2026-11-14T20:01:00.641Z",
   "entries": [
     {
       "key": "w.cmine.omxdefault",
@@ -11,10 +11,10 @@
       "worker": "omxdefault",
       "anomaly_type": "volatile",
       "baseline_hr": 18928700000000000,
-      "current_hr": 233731738473449.25,
+      "current_hr": 270137790148699.03,
       "drop_pct": 99,
       "detected_at": "2026-11-14T10:01:03.056Z",
-      "duration_h": 9
+      "duration_h": 10
     },
     {
       "key": "w.cmine.k2lx132x10x39",
@@ -26,25 +26,10 @@
       "worker": "k2lx132x10x39",
       "anomaly_type": "volatile",
       "baseline_hr": 297200000000000,
-      "current_hr": 185147984680787.06,
-      "drop_pct": 38,
+      "current_hr": 220801481730803.5,
+      "drop_pct": 26,
       "detected_at": "2026-11-14T19:01:01.053Z",
-      "duration_h": 0
-    },
-    {
-      "key": "w.cmine.k2lx132x10x41",
-      "type": "worker_anomaly",
-      "provider": "Minto",
-      "group_id": "R3",
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "k2lx132x10x41",
-      "anomaly_type": "volatile",
-      "baseline_hr": 294600000000000,
-      "current_hr": 192653984059737.88,
-      "drop_pct": 35,
-      "detected_at": "2026-11-14T19:01:01.053Z",
-      "duration_h": 0
+      "duration_h": 1
     },
     {
       "key": "w.cmine.k2lx132x10x47",
@@ -56,10 +41,10 @@
       "worker": "k2lx132x10x47",
       "anomaly_type": "volatile",
       "baseline_hr": 290200000000000,
-      "current_hr": 184366109745479.7,
-      "drop_pct": 36,
+      "current_hr": 188275484422016.56,
+      "drop_pct": 35,
       "detected_at": "2026-11-14T19:01:01.053Z",
-      "duration_h": 0
+      "duration_h": 1
     },
     {
       "key": "w.cmine.k2lx132x10x42",
@@ -71,10 +56,10 @@
       "worker": "k2lx132x10x42",
       "anomaly_type": "volatile",
       "baseline_hr": 296100000000000,
-      "current_hr": 201723733309303.47,
-      "drop_pct": 32,
+      "current_hr": 199847233464565.75,
+      "drop_pct": 33,
       "detected_at": "2026-11-14T19:01:01.053Z",
-      "duration_h": 0
+      "duration_h": 1
     },
     {
       "key": "w.cmine.k2lx132x9x47",
@@ -86,10 +71,10 @@
       "worker": "k2lx132x9x47",
       "anomaly_type": "volatile",
       "baseline_hr": 209200000000000,
-      "current_hr": 111651740761893.55,
-      "drop_pct": 47,
+      "current_hr": 115091990477246.02,
+      "drop_pct": 45,
       "detected_at": "2026-11-14T19:01:01.053Z",
-      "duration_h": 0
+      "duration_h": 1
     }
   ]
 }

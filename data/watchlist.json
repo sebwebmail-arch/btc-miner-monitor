@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-15T04:01:02.152Z",
+  "last_updated": "2026-11-15T05:01:01.930Z",
   "entries": [
     {
       "key": "w.cmine.omxdefault",
@@ -11,25 +11,10 @@
       "worker": "omxdefault",
       "anomaly_type": "volatile",
       "baseline_hr": 18928700000000000,
-      "current_hr": 239507839558032.5,
+      "current_hr": 227936090515483.3,
       "drop_pct": 99,
       "detected_at": "2026-11-14T10:01:03.056Z",
-      "duration_h": 18
-    },
-    {
-      "key": "w.cmine.k2lx132x10x39",
-      "type": "worker_anomaly",
-      "provider": "Minto",
-      "group_id": "R3",
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "k2lx132x10x39",
-      "anomaly_type": "volatile",
-      "baseline_hr": 297200000000000,
-      "current_hr": 205163983024655.94,
-      "drop_pct": 31,
-      "detected_at": "2026-11-14T19:01:01.053Z",
-      "duration_h": 9
+      "duration_h": 19
     },
     {
       "key": "w.cmine.k2lx132x10x47",
@@ -41,10 +26,10 @@
       "worker": "k2lx132x10x47",
       "anomaly_type": "volatile",
       "baseline_hr": 290200000000000,
-      "current_hr": 208604232740008.4,
-      "drop_pct": 28,
+      "current_hr": 199241280389702.53,
+      "drop_pct": 31,
       "detected_at": "2026-11-14T19:01:01.053Z",
-      "duration_h": 9
+      "duration_h": 10
     },
     {
       "key": "w.cmine.k2lx132x10x42",
@@ -56,10 +41,10 @@
       "worker": "k2lx132x10x42",
       "anomaly_type": "volatile",
       "baseline_hr": 296100000000000,
-      "current_hr": 196094233775090.34,
-      "drop_pct": 34,
+      "current_hr": 192028484111491.97,
+      "drop_pct": 35,
       "detected_at": "2026-11-14T19:01:01.053Z",
-      "duration_h": 9
+      "duration_h": 10
     },
     {
       "key": "w.cmine.k2lx132x9x47",
@@ -71,10 +56,10 @@
       "worker": "k2lx132x9x47",
       "anomaly_type": "volatile",
       "baseline_hr": 209200000000000,
-      "current_hr": 130416739209270.61,
-      "drop_pct": 38,
+      "current_hr": 120408740037336.17,
+      "drop_pct": 42,
       "detected_at": "2026-11-14T19:01:01.053Z",
-      "duration_h": 9
+      "duration_h": 10
     }
   ]
 }

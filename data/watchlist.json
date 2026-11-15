@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-15T02:01:04.250Z",
+  "last_updated": "2026-11-15T03:01:02.450Z",
   "entries": [
     {
       "key": "w.cmine.omxdefault",
@@ -11,10 +11,10 @@
       "worker": "omxdefault",
       "anomaly_type": "volatile",
       "baseline_hr": 18928700000000000,
-      "current_hr": 614006386696883.8,
-      "drop_pct": 97,
+      "current_hr": 405226232096431.2,
+      "drop_pct": 98,
       "detected_at": "2026-11-14T10:01:03.056Z",
-      "duration_h": 16
+      "duration_h": 17
     },
     {
       "key": "w.cmine.k2lx132x10x39",
@@ -26,10 +26,10 @@
       "worker": "k2lx132x10x39",
       "anomaly_type": "volatile",
       "baseline_hr": 297200000000000,
-      "current_hr": 168884986026393.6,
-      "drop_pct": 43,
+      "current_hr": 196094233775090.34,
+      "drop_pct": 34,
       "detected_at": "2026-11-14T19:01:01.053Z",
-      "duration_h": 7
+      "duration_h": 8
     },
     {
       "key": "w.cmine.k2lx132x10x47",
@@ -41,10 +41,10 @@
       "worker": "k2lx132x10x47",
       "anomaly_type": "volatile",
       "baseline_hr": 290200000000000,
-      "current_hr": 188900984370262.47,
-      "drop_pct": 35,
+      "current_hr": 181727281838817.28,
+      "drop_pct": 37,
       "detected_at": "2026-11-14T19:01:01.053Z",
-      "duration_h": 7
+      "duration_h": 8
     },
     {
       "key": "w.cmine.k2lx132x10x42",
@@ -56,10 +56,10 @@
       "worker": "k2lx132x10x42",
       "anomaly_type": "volatile",
       "baseline_hr": 296100000000000,
-      "current_hr": 217673981989573.97,
-      "drop_pct": 26,
+      "current_hr": 201410983335180.5,
+      "drop_pct": 32,
       "detected_at": "2026-11-14T19:01:01.053Z",
-      "duration_h": 7
+      "duration_h": 8
     },
     {
       "key": "w.cmine.k2lx132x9x47",
@@ -71,10 +71,10 @@
       "worker": "k2lx132x9x47",
       "anomaly_type": "volatile",
       "baseline_hr": 209200000000000,
-      "current_hr": 136984488665852.6,
+      "current_hr": 136046238743483.73,
       "drop_pct": 35,
       "detected_at": "2026-11-14T19:01:01.053Z",
-      "duration_h": 7
+      "duration_h": 8
     }
   ]
 }

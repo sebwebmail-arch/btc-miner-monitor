@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-15T02:01:04.250Z",
+  "last_updated": "2026-11-15T03:01:02.450Z",
   "issues": {
     "cmine.omxdefault": {
       "account": "cmine",
@@ -8,23 +8,10 @@
       "group_id": "OM",
       "provider": "Open Mine",
       "type": "level_drop",
-      "current_avg_ths": 343.7,
+      "current_avg_ths": 401,
       "baseline_avg_ths": 21983.8,
       "drop_pct": 98,
-      "cv_pct": 31,
-      "zero_rate_pct": 0
-    },
-    "cmine.k2lx132x9x47": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "worker": "k2lx132x9x47",
-      "group_id": "R3",
-      "provider": "Minto",
-      "type": "level_drop",
-      "current_avg_ths": 123.7,
-      "baseline_avg_ths": 209,
-      "drop_pct": 41,
-      "cv_pct": 8,
+      "cv_pct": 35,
       "zero_rate_pct": 0
     }
   }

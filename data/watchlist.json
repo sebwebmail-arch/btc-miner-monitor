@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-15T00:01:03.161Z",
+  "last_updated": "2026-11-15T01:01:04.631Z",
   "entries": [
     {
       "key": "w.cmine.omxdefault",
@@ -11,10 +11,10 @@
       "worker": "omxdefault",
       "anomaly_type": "volatile",
       "baseline_hr": 18928700000000000,
-      "current_hr": 279490969062313.53,
+      "current_hr": 282286171956037.4,
       "drop_pct": 99,
       "detected_at": "2026-11-14T10:01:03.056Z",
-      "duration_h": 14
+      "duration_h": 15
     },
     {
       "key": "w.cmine.k2lx132x10x39",
@@ -26,10 +26,10 @@
       "worker": "k2lx132x10x39",
       "anomaly_type": "volatile",
       "baseline_hr": 297200000000000,
-      "current_hr": 198908983542196.9,
-      "drop_pct": 33,
+      "current_hr": 192966734033860.84,
+      "drop_pct": 35,
       "detected_at": "2026-11-14T19:01:01.053Z",
-      "duration_h": 5
+      "duration_h": 6
     },
     {
       "key": "w.cmine.k2lx132x10x47",
@@ -41,10 +41,10 @@
       "worker": "k2lx132x10x47",
       "anomaly_type": "volatile",
       "baseline_hr": 290200000000000,
-      "current_hr": 183896984784295.25,
+      "current_hr": 182333234913680.5,
       "drop_pct": 37,
       "detected_at": "2026-11-14T19:01:01.053Z",
-      "duration_h": 5
+      "duration_h": 6
     },
     {
       "key": "w.cmine.k2lx132x10x42",
@@ -56,10 +56,10 @@
       "worker": "k2lx132x10x42",
       "anomaly_type": "volatile",
       "baseline_hr": 296100000000000,
-      "current_hr": 214546482248344.47,
-      "drop_pct": 28,
+      "current_hr": 206727732895270.7,
+      "drop_pct": 30,
       "detected_at": "2026-11-14T19:01:01.053Z",
-      "duration_h": 5
+      "duration_h": 6
     },
     {
       "key": "w.cmine.k2lx132x9x47",
@@ -71,10 +71,10 @@
       "worker": "k2lx132x9x47",
       "anomaly_type": "volatile",
       "baseline_hr": 209200000000000,
-      "current_hr": 126976489493918.16,
-      "drop_pct": 39,
+      "current_hr": 118844990166721.42,
+      "drop_pct": 43,
       "detected_at": "2026-11-14T19:01:01.053Z",
-      "duration_h": 5
+      "duration_h": 6
     }
   ]
 }

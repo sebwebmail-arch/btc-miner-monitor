@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-15T08:01:00.892Z",
+  "last_updated": "2026-11-15T09:01:05.224Z",
   "entries": [
     {
       "key": "w.cmine.omxdefault",
@@ -11,10 +11,10 @@
       "worker": "omxdefault",
       "anomaly_type": "volatile",
       "baseline_hr": 18928700000000000,
-      "current_hr": 312202661668235.94,
-      "drop_pct": 98,
+      "current_hr": 235930761729001.25,
+      "drop_pct": 99,
       "detected_at": "2026-11-14T10:01:03.056Z",
-      "duration_h": 22
+      "duration_h": 23
     },
     {
       "key": "w.cmine.k2lx132x10x47",
@@ -26,10 +26,10 @@
       "worker": "k2lx132x10x47",
       "anomaly_type": "volatile",
       "baseline_hr": 290200000000000,
-      "current_hr": 194217733930352.62,
+      "current_hr": 194843233878598.53,
       "drop_pct": 33,
       "detected_at": "2026-11-14T19:01:01.053Z",
-      "duration_h": 13
+      "duration_h": 14
     },
     {
       "key": "w.cmine.k2lx132x10x42",
@@ -41,10 +41,10 @@
       "worker": "k2lx132x10x42",
       "anomaly_type": "volatile",
       "baseline_hr": 296100000000000,
-      "current_hr": 203287483179918.22,
-      "drop_pct": 31,
+      "current_hr": 175139985508852.62,
+      "drop_pct": 41,
       "detected_at": "2026-11-14T19:01:01.053Z",
-      "duration_h": 13
+      "duration_h": 14
     },
     {
       "key": "w.cmine.k2lx132x9x47",
@@ -56,10 +56,10 @@
       "worker": "k2lx132x9x47",
       "anomaly_type": "volatile",
       "baseline_hr": 209200000000000,
-      "current_hr": 113059115645446.83,
-      "drop_pct": 46,
+      "current_hr": 126663739519795.2,
+      "drop_pct": 39,
       "detected_at": "2026-11-14T19:01:01.053Z",
-      "duration_h": 13
+      "duration_h": 14
     }
   ]
 }

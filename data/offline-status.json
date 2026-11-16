@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-15T23:01:09.919Z",
+  "last_updated": "2026-11-16T00:01:04.851Z",
   "offline": {
     "cmine.k2lx131x2x28": {
       "account": "cmine",
@@ -1278,7 +1278,7 @@
       "group_id": "F1",
       "provider": "Terahash",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-11-15T00:01:03.161Z"
     },
     "cmine.18x0x238": {
@@ -1288,7 +1288,7 @@
       "group_id": "F1",
       "provider": "Terahash",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-11-15T00:01:03.161Z"
     },
     "cmine.18x0x72": {
@@ -1298,7 +1298,7 @@
       "group_id": "F1",
       "provider": "Terahash",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-11-15T00:01:03.161Z"
     },
     "cmine.18x0x199": {
@@ -1308,7 +1308,7 @@
       "group_id": "F1",
       "provider": "Terahash",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-11-15T00:01:03.161Z"
     },
     "cmine.18x0x94": {
@@ -1318,7 +1318,7 @@
       "group_id": "F1",
       "provider": "Terahash",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-11-15T00:01:03.161Z"
     },
     "cmine.18x0x22": {
@@ -1328,7 +1328,7 @@
       "group_id": "F1",
       "provider": "Terahash",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-11-15T00:01:03.161Z"
     },
     "cmine.18x0x73": {
@@ -1338,7 +1338,7 @@
       "group_id": "F1",
       "provider": "Terahash",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-11-15T00:01:03.161Z"
     },
     "cmine.18x0x30": {
@@ -1348,7 +1348,7 @@
       "group_id": "F1",
       "provider": "Terahash",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-11-15T00:01:03.161Z"
     },
     "cmine.18x0x61": {
@@ -1358,7 +1358,7 @@
       "group_id": "F1",
       "provider": "Terahash",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-11-15T00:01:03.161Z"
     },
     "cmine.18x1x68": {
@@ -1368,7 +1368,7 @@
       "group_id": "F1",
       "provider": "Terahash",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-11-15T00:01:03.161Z"
     },
     "cmine.18x1x179": {
@@ -1378,7 +1378,7 @@
       "group_id": "F1",
       "provider": "Terahash",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-11-15T00:01:03.161Z"
     },
     "cmine.18x0x168": {
@@ -1388,7 +1388,7 @@
       "group_id": "F1",
       "provider": "Terahash",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-11-15T00:01:03.161Z"
     },
     "cmine.18x0x91": {
@@ -1398,7 +1398,7 @@
       "group_id": "F1",
       "provider": "Terahash",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-11-15T00:01:03.161Z"
     },
     "cmine.18x0x157": {
@@ -1408,22 +1408,8 @@
       "group_id": "F1",
       "provider": "Terahash",
       "dead": true,
-      "category": "offline",
+      "category": "dead_recent",
       "last_share": "2026-11-15T00:01:03.161Z"
-    },
-    "everminer.k2lx131x5x36": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "k2lx131x5x36",
-      "group_id": "R3",
-      "provider": "Minto"
-    },
-    "everminer.k2lx131x5x39": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "k2lx131x5x39",
-      "group_id": "R3",
-      "provider": "Minto"
     },
     "everminer.k2lx131x5x41": {
       "account": "everminer",
@@ -1439,10 +1425,10 @@
       "group_id": "R3",
       "provider": "Minto"
     },
-    "everminer.k2lx131x5x43": {
+    "everminer.k2lx131x5x44": {
       "account": "everminer",
       "account_name": "Everminer",
-      "name": "k2lx131x5x43",
+      "name": "k2lx131x5x44",
       "group_id": "R3",
       "provider": "Minto"
     },
@@ -1460,6 +1446,20 @@
       "group_id": "R3",
       "provider": "Minto"
     },
+    "everminer.k2lx131x5x39": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x39",
+      "group_id": "R3",
+      "provider": "Minto"
+    },
+    "everminer.k2lx131x5x43": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x43",
+      "group_id": "R3",
+      "provider": "Minto"
+    },
     "everminer.k2lx131x5x35": {
       "account": "everminer",
       "account_name": "Everminer",
@@ -1467,17 +1467,17 @@
       "group_id": "R3",
       "provider": "Minto"
     },
+    "everminer.k2lx131x5x36": {
+      "account": "everminer",
+      "account_name": "Everminer",
+      "name": "k2lx131x5x36",
+      "group_id": "R3",
+      "provider": "Minto"
+    },
     "everminer.k2lx131x5x40": {
       "account": "everminer",
       "account_name": "Everminer",
       "name": "k2lx131x5x40",
-      "group_id": "R3",
-      "provider": "Minto"
-    },
-    "everminer.k2lx131x5x44": {
-      "account": "everminer",
-      "account_name": "Everminer",
-      "name": "k2lx131x5x44",
       "group_id": "R3",
       "provider": "Minto"
     },

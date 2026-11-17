@@ -3,7 +3,7 @@
     "w.cmine.omxdefault": {
       "type": "worker_anomaly",
       "baselineHR": 18928700000000000,
-      "currentHR": 261263509632960.28,
+      "currentHR": 1374497042523604.8,
       "worker": "omxdefault",
       "provider": "Open Mine",
       "groupId": "OM",
@@ -15,7 +15,7 @@
     "w.cmine.k2lx132x9x47": {
       "type": "worker_anomaly",
       "baselineHR": 209200000000000,
-      "currentHR": 116655740347860.77,
+      "currentHR": 37842746868877.086,
       "worker": "k2lx132x9x47",
       "provider": "Minto",
       "groupId": "R3",
@@ -35,6 +35,18 @@
       "accountName": "Cyberian Mine",
       "anomalyType": "volatile",
       "detectedAt": "2026-11-16T12:01:10.514Z"
+    },
+    "w.cmine.k2lx131x1x30": {
+      "type": "worker_anomaly",
+      "baselineHR": 202000000000000,
+      "currentHR": 0,
+      "worker": "k2lx131x1x30",
+      "provider": "Minto",
+      "groupId": "R3",
+      "account": "cmine",
+      "accountName": "Cyberian Mine",
+      "anomalyType": "volatile",
+      "detectedAt": "2026-11-17T14:01:04.781Z"
     }
   },
   "everminer.U3": "2026-07-28T21:00:59.294Z",
@@ -250,7 +262,7 @@
   "w.cmine.k2lx132x11x29": "2026-11-14T18:01:01.270Z",
   "w.cmine.k2lx132x11x48": "2026-10-20T00:01:12.787Z",
   "w.cmine.k2lx132x12x42": "2026-11-14T19:01:01.053Z",
-  "w.cmine.k2lx131x1x30": "2026-10-19T23:01:08.804Z",
+  "w.cmine.k2lx131x1x30": "2026-11-17T14:01:04.781Z",
   "w.cmine.k2lx131x1x42": "2026-10-19T23:01:08.804Z",
   "w.cmine.k2lx132x9x45": "2026-11-14T19:01:01.053Z",
   "w.cmine.k2lx131x3x34": "2026-10-19T23:01:08.804Z",
@@ -297,7 +309,7 @@
   "w.cmine.k2lx131x2x25": "2026-08-05T02:01:02.410Z",
   "w.cmine.k2lx132x11x38": "2026-11-14T18:01:01.270Z",
   "w.cmine.k2lx132x12x39": "2026-11-14T19:01:01.053Z",
-  "w.cmine.k2lx132x9x47": "2026-11-17T04:01:03.930Z",
+  "w.cmine.k2lx132x9x47": "2026-11-17T14:01:04.781Z",
   "w.cmine.k2lx131x4x20": "2026-08-05T02:01:02.410Z",
   "w.cmine.k2lx131x3x21": "2026-08-05T02:01:02.410Z",
   "w.everminer.aa12": "2026-10-15T14:01:12.930Z",

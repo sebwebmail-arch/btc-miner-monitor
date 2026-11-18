@@ -1,15 +1,6 @@
 {
-  "last_updated": "2026-11-18T00:01:02.266Z",
+  "last_updated": "2026-11-18T01:01:04.760Z",
   "ghosts": {
-    "cmine.r20231": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "r20231",
-      "groupId": "R1",
-      "provider": "IZTM",
-      "lastSnapIso": "2026-08-20T00:01:06.049Z",
-      "detectedAt": "2026-08-20T01:00:58.602Z"
-    },
     "cmine.s21hyd003": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
@@ -2358,6 +2349,15 @@
       "provider": "Minto",
       "lastSnapIso": "2026-11-16T00:01:04.851Z",
       "detectedAt": "2026-11-16T01:01:07.127Z"
+    },
+    "cmine.k2lx132x11x33": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "k2lx132x11x33",
+      "groupId": "R3",
+      "provider": "Minto",
+      "lastSnapIso": "2026-11-18T00:01:02.266Z",
+      "detectedAt": "2026-11-18T01:01:04.760Z"
     }
   }
 }

@@ -1,29 +1,6 @@
 {
-  "last_updated": "2026-11-26T05:01:05.389Z",
+  "last_updated": "2026-11-27T05:01:08.762Z",
   "snapshots": [
-    {
-      "ts": "2026-10-23T05:01:04.534Z",
-      "by_account": {
-        "cmine": {
-          "name": "Cyberian Mine",
-          "total": 2,
-          "online": 2,
-          "offline": 0,
-          "dead": 0
-        },
-        "everminer": {
-          "name": "Everminer",
-          "total": 1,
-          "online": 1,
-          "offline": 0,
-          "dead": 0
-        }
-      },
-      "offline": 0,
-      "dead_recent": 0,
-      "dead_mid": 0,
-      "dead_old": 0
-    },
     {
       "ts": "2026-10-24T05:01:11.478Z",
       "by_account": {
@@ -805,6 +782,29 @@
       "dead_recent": 0,
       "dead_mid": 0,
       "dead_old": 0
+    },
+    {
+      "ts": "2026-11-27T05:01:08.762Z",
+      "by_account": {
+        "cmine": {
+          "name": "Cyberian Mine",
+          "total": 3,
+          "online": 2,
+          "offline": 0,
+          "dead": 1
+        },
+        "everminer": {
+          "name": "Everminer",
+          "total": 1,
+          "online": 1,
+          "offline": 0,
+          "dead": 0
+        }
+      },
+      "offline": 0,
+      "dead_recent": 1,
+      "dead_mid": 0,
+      "dead_old": 0
     }
   ],
   "workers": {},
@@ -815,9 +815,9 @@
       "name": "openfallback",
       "group_id": "OM",
       "provider": "Open Mine",
-      "host": "178.105.17.8",
+      "host": "?",
       "last_share": "2026-11-26T01:56:18.000Z",
-      "category": "offline"
+      "category": "dead_recent"
     }
   }
 }

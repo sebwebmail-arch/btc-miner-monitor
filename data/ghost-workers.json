@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-28T00:01:06.213Z",
+  "last_updated": "2026-11-28T01:01:15.502Z",
   "ghosts": {
     "everminer.023313547937": {
       "account": "everminer",
@@ -2241,6 +2241,15 @@
       "provider": "Terahash",
       "lastSnapIso": "2026-11-26T00:01:12.087Z",
       "detectedAt": "2026-11-26T01:01:12.642Z"
+    },
+    "cmine.openfallback": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "openfallback",
+      "groupId": "OM",
+      "provider": "Open Mine",
+      "lastSnapIso": "2026-11-28T00:01:06.213Z",
+      "detectedAt": "2026-11-28T01:01:15.502Z"
     }
   }
 }

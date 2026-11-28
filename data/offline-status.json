@@ -1,13 +1,6 @@
 {
-  "last_updated": "2026-11-28T00:01:06.213Z",
+  "last_updated": "2026-11-28T01:01:15.502Z",
   "offline": {
-    "cmine.openfallback": {
-      "account": "cmine",
-      "account_name": "Cyberian Mine",
-      "name": "openfallback",
-      "group_id": "OM",
-      "provider": "Open Mine"
-    },
     "cmine.ynahfkabdajbh02": {
       "account": "cmine",
       "account_name": "Cyberian Mine",
@@ -2065,7 +2058,7 @@
       "group_id": "F1",
       "provider": "Terahash",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-11-21T00:01:02.483Z"
     },
     "cmine.18x0x238": {
@@ -2075,7 +2068,7 @@
       "group_id": "F1",
       "provider": "Terahash",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-11-21T00:01:02.483Z"
     },
     "cmine.18x0x72": {
@@ -2085,7 +2078,7 @@
       "group_id": "F1",
       "provider": "Terahash",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-11-21T00:01:02.483Z"
     },
     "cmine.18x0x199": {
@@ -2095,7 +2088,7 @@
       "group_id": "F1",
       "provider": "Terahash",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-11-21T00:01:02.483Z"
     },
     "cmine.18x0x22": {
@@ -2105,7 +2098,7 @@
       "group_id": "F1",
       "provider": "Terahash",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-11-21T00:01:02.483Z"
     },
     "cmine.18x0x73": {
@@ -2115,7 +2108,7 @@
       "group_id": "F1",
       "provider": "Terahash",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-11-21T00:01:02.483Z"
     },
     "cmine.18x0x30": {
@@ -2125,7 +2118,7 @@
       "group_id": "F1",
       "provider": "Terahash",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-11-21T00:01:02.483Z"
     },
     "cmine.18x0x61": {
@@ -2135,7 +2128,7 @@
       "group_id": "F1",
       "provider": "Terahash",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-11-21T00:01:02.483Z"
     },
     "cmine.18x1x68": {
@@ -2145,7 +2138,7 @@
       "group_id": "F1",
       "provider": "Terahash",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-11-21T00:01:02.483Z"
     },
     "cmine.18x1x179": {
@@ -2155,7 +2148,7 @@
       "group_id": "F1",
       "provider": "Terahash",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-11-21T00:01:02.483Z"
     },
     "cmine.18x0x91": {
@@ -2165,7 +2158,7 @@
       "group_id": "F1",
       "provider": "Terahash",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-11-21T00:01:02.483Z"
     },
     "cmine.18x0x157": {
@@ -2175,7 +2168,7 @@
       "group_id": "F1",
       "provider": "Terahash",
       "dead": true,
-      "category": "dead_recent",
+      "category": "dead_mid",
       "last_share": "2026-11-21T00:01:02.483Z"
     },
     "cmine.18x0x94": {
@@ -2197,6 +2190,16 @@
       "dead": true,
       "category": "dead_recent",
       "last_share": "2026-11-26T00:01:12.087Z"
+    },
+    "cmine.openfallback": {
+      "account": "cmine",
+      "account_name": "Cyberian Mine",
+      "name": "openfallback",
+      "group_id": "OM",
+      "provider": "Open Mine",
+      "dead": true,
+      "category": "offline",
+      "last_share": "2026-11-28T00:01:06.213Z"
     },
     "everminer.023313547937": {
       "account": "everminer",
